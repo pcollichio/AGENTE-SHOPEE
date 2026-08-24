@@ -66,8 +66,10 @@ def sugerir_produtos_do_dia(quantidade=5, subcategoria=None):
     ranqueados.sort(key=lambda p: p["score"], reverse=True)
     selecionados = ranqueados[:quantidade]
 
-    # Já anexa o link de afiliado pronto para cada um
+    # Já anexa o link de afiliado pronto para cada um (no modo real ele já
+    # vem preenchido por buscar_produtos(), então só busca se faltar)
     for produto in selecionados:
-        produto["affiliate_link"] = client.gerar_link_afiliado(produto["product_id"])
+        if not produto.get("affiliate_link"):
+            produto["affiliate_link"] = client.gerar_link_afiliado(produto["product_id"])
 
     return selecionados

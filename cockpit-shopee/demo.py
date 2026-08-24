@@ -24,7 +24,10 @@ def main():
         print(f"    Frete grátis: {'Sim' if produto['free_shipping'] else 'Não'}")
         print(f"    Link de afiliado: {produto['affiliate_link']}")
 
-        indicadores = client.obter_indicadores_vendas(produto["product_id"])
+        try:
+            indicadores = client.obter_indicadores_vendas(produto["product_id"])
+        except NotImplementedError:
+            indicadores = None
         if indicadores:
             print(f"    Comissão acumulada (simulada): "
                   f"R${indicadores['total_commission_earned']:.2f}")
