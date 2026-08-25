@@ -18,6 +18,8 @@ NOTA: a Shopee Affiliate API não expõe o status de frete grátis, então
 esse critério do blueprint não é filtrado automaticamente aqui.
 """
 
+from datetime import date
+
 from shopee_integration import client, config, curadoria
 
 SUBCATEGORIAS_PRIORITARIAS = ["ferramentas", "organizacao", "iluminacao", "hidraulica"]
@@ -59,6 +61,24 @@ def buscar_leva():
     return ranqueados[:10]
 
 
+def formatar_markdown(produtos):
+    """Formata a leva de produtos como uma tabela Markdown, pronta para ser
+    salva como histórico (legível tanto no terminal quanto no GitHub)."""
+    linhas = [
+        f"# Leva de produtos do dia — {date.today().isoformat()}",
+        "",
+        "| # | Produto | Preço | Comissão | Avaliação | Vendidos | Link de afiliado |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for i, p in enumerate(produtos, start=1):
+        nome = (p["name"] or "(sem nome)").replace("|", "-")
+        linhas.append(
+            f"| {i} | {nome} | R${p['price']:.2f} | {p['commission_rate']*100:.0f}% | "
+            f"{p['rating']:.1f}⭐ | {p['total_sold']} | [link]({p['affiliate_link']}) |"
+        )
+    return "\n".join(linhas)
+
+
 def main():
     if config.USE_MOCK_DATA:
         print(
@@ -71,6 +91,7 @@ def main():
 
     if not top10:
         print(
+            f"# Leva de produtos do dia — {date.today().isoformat()}\n\n"
             "Nenhum produto encontrado com os critérios atuais. Pode ser que "
             "os termos de busca não retornaram resultados, ou que os nomes "
             "dos campos da API precisem de ajuste (veja os comentários em "
@@ -78,17 +99,7 @@ def main():
         )
         return
 
-    print(
-        f"{'Produto':<40} {'Preço':>9} {'Comissão':>9} {'Avaliação':>10} "
-        f"{'Vendidos':>9}  Link de afiliado"
-    )
-    print("-" * 140)
-    for p in top10:
-        nome = (p["name"] or "(sem nome)")[:38]
-        print(
-            f"{nome:<40} R${p['price']:>6.2f} {p['commission_rate']*100:>7.0f}% "
-            f"{p['rating']:>9.1f}⭐ {p['total_sold']:>9}  {p['affiliate_link']}"
-        )
+    print(formatar_markdown(top10))
 
 
 if __name__ == "__main__":

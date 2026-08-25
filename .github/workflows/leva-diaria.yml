@@ -1,0 +1,47 @@
+name: Leva diária de produtos Shopee
+
+on:
+  schedule:
+    # 12:00 UTC = 09:00 no horário de Brasília
+    - cron: "0 12 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  buscar-produtos:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cockpit-shopee
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Buscar produtos do dia
+        env:
+          SHOPEE_APP_ID: ${{ secrets.SHOPEE_APP_ID }}
+          SHOPEE_APP_SECRET: ${{ secrets.SHOPEE_APP_SECRET }}
+          USE_MOCK_DATA: "false"
+        run: |
+          mkdir -p historico
+          data=$(date +%F)
+          python buscar_leva_lancamento.py | tee "historico/${data}.md"
+          cp "historico/${data}.md" leva_do_dia.md
+
+      - name: Salvar resultado no repositório
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add historico/ leva_do_dia.md
+          git diff --cached --quiet || git commit -m "Atualiza leva de produtos do dia ($(date +%F))"
+          git push
