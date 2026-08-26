@@ -1,0 +1,357 @@
+"""
+Gera o painel visual (HTML autônomo, sem dependências externas) com a leva
+de produtos do dia, para ser aberto direto no navegador ou publicado via
+GitHub Pages.
+"""
+
+from datetime import date
+
+TIER_LABELS = {
+    "baixo": "Baixo",
+    "medio": "Médio",
+    "alto": "Alto",
+}
+
+
+def _linha_produto(produto, posicao):
+    p = produto
+    nome = (p["name"] or "(sem nome)").replace("<", "&lt;").replace(">", "&gt;")
+    loja = (p.get("shop_name") or "").replace("<", "&lt;").replace(">", "&gt;")
+    return f"""
+        <tr data-tier="{p['tier']}">
+          <td class="col-pos">{posicao:02d}</td>
+          <td class="col-nome">
+            <div class="nome">{nome}</div>
+            <div class="loja">{loja}</div>
+          </td>
+          <td class="col-tier"><span class="selo selo-{p['tier']}">{TIER_LABELS[p['tier']]}</span></td>
+          <td class="col-num">R$&nbsp;{p['price']:.2f}</td>
+          <td class="col-num destaque">{p['commission_rate']*100:.0f}%</td>
+          <td class="col-num">{p['rating']:.1f}&#9733;</td>
+          <td class="col-num">{p['total_sold']:,}</td>
+          <td class="col-link"><a href="{p['affiliate_link']}" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+        </tr>"""
+
+
+def gerar_html(produtos, titulo="Painel Shopee — Casa & Construção"):
+    """Recebe uma lista de produtos (cada um já com a chave 'tier':
+    'baixo'/'medio'/'alto') e devolve uma página HTML autônoma."""
+
+    contagem = {"baixo": 0, "medio": 0, "alto": 0}
+    for p in produtos:
+        contagem[p["tier"]] = contagem.get(p["tier"], 0) + 1
+
+    comissao_media = (
+        sum(p["commission_rate"] for p in produtos) / len(produtos) * 100
+        if produtos
+        else 0
+    )
+
+    linhas_html = "".join(
+        _linha_produto(p, i) for i, p in enumerate(produtos, start=1)
+    )
+
+    return f"""<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{titulo}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {{
+    --bg: #eef1f0;
+    --grid-line: rgba(20, 60, 90, 0.07);
+    --card: #ffffff;
+    --text: #14202b;
+    --muted: #5b6b74;
+    --border: #d7dfe0;
+    --accent: #d9670c;
+    --accent-ink: #a84e08;
+    --accent-soft: #fbe7d4;
+    --baixo: #1f8a5f;
+    --baixo-soft: #dcf1e7;
+    --medio: #1d64b0;
+    --medio-soft: #dde9f7;
+    --alto: #a13c2f;
+    --alto-soft: #f6e2df;
+    --focus: #1d64b0;
+  }}
+  @media (prefers-color-scheme: dark) {{
+    :root:not([data-theme="light"]) {{
+      --bg: #0f1417;
+      --grid-line: rgba(255, 255, 255, 0.05);
+      --card: #171e22;
+      --text: #e7edf0;
+      --muted: #93a2a9;
+      --border: #2a3338;
+      --accent: #ff9439;
+      --accent-ink: #ffb066;
+      --accent-soft: #3a2a17;
+      --baixo: #3fbf8a;
+      --baixo-soft: #16332a;
+      --medio: #6badf0;
+      --medio-soft: #182a3d;
+      --alto: #e0776a;
+      --alto-soft: #3a201c;
+      --focus: #6badf0;
+    }}
+  }}
+  :root[data-theme="dark"] {{
+    --bg: #0f1417;
+    --grid-line: rgba(255, 255, 255, 0.05);
+    --card: #171e22;
+    --text: #e7edf0;
+    --muted: #93a2a9;
+    --border: #2a3338;
+    --accent: #ff9439;
+    --accent-ink: #ffb066;
+    --accent-soft: #3a2a17;
+    --baixo: #3fbf8a;
+    --baixo-soft: #16332a;
+    --medio: #6badf0;
+    --medio-soft: #182a3d;
+    --alto: #e0776a;
+    --alto-soft: #3a201c;
+    --focus: #6badf0;
+  }}
+  * {{ box-sizing: border-box; }}
+  html {{ -webkit-text-size-adjust: 100%; }}
+  body {{
+    margin: 0;
+    padding: 40px 24px 64px;
+    background:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      var(--bg);
+    color: var(--text);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }}
+  .wrap {{ max-width: 1120px; margin: 0 auto; }}
+
+  .cabecalho {{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 20px;
+  }}
+  .eyebrow {{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin: 0 0 8px;
+    font-weight: 600;
+  }}
+  h1 {{
+    font-family: "Archivo", system-ui, sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    margin: 0;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }}
+  .atualizado {{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-align: right;
+  }}
+
+  .resumo {{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }}
+  .stat {{
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }}
+  .stat .n {{
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.1;
+  }}
+  .stat.stat-baixo .n {{ color: var(--baixo); }}
+  .stat.stat-medio .n {{ color: var(--medio); }}
+  .stat.stat-alto .n {{ color: var(--alto); }}
+  .stat.stat-comissao .n {{ color: var(--accent-ink); }}
+  .stat .l {{
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }}
+
+  .filtros {{
+    display: inline-flex;
+    gap: 4px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 4px;
+    margin-bottom: 18px;
+  }}
+  .filtro {{
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.84rem;
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    padding: 7px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }}
+  .filtro:hover {{ color: var(--text); }}
+  .filtro:focus-visible {{ outline: 2px solid var(--focus); outline-offset: 2px; }}
+  .filtro.ativo {{ background: var(--accent); color: #fff; }}
+
+  .tabela-scroll {{
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+  }}
+  table {{ width: 100%; border-collapse: collapse; min-width: 720px; }}
+  th, td {{ padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 0.88rem; }}
+  th {{
+    text-align: left;
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-family: "IBM Plex Mono", monospace;
+  }}
+  tbody tr:last-child td {{ border-bottom: none; }}
+  tbody tr:hover {{ background: var(--accent-soft); }}
+  .col-pos {{
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }}
+  .col-num {{
+    text-align: right;
+    white-space: nowrap;
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+  }}
+  .destaque {{ font-weight: 600; color: var(--accent-ink); }}
+  .nome {{ font-weight: 600; }}
+  .loja {{ font-size: 0.76rem; color: var(--muted); margin-top: 2px; }}
+
+  .selo {{
+    display: inline-block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+  }}
+  .selo-baixo {{ color: var(--baixo); background: var(--baixo-soft); border-color: var(--baixo); }}
+  .selo-medio {{ color: var(--medio); background: var(--medio-soft); border-color: var(--medio); }}
+  .selo-alto {{ color: var(--alto); background: var(--alto-soft); border-color: var(--alto); }}
+
+  .col-link a {{
+    color: var(--accent-ink);
+    text-decoration: none;
+    font-weight: 600;
+    white-space: nowrap;
+  }}
+  .col-link a:hover {{ text-decoration: underline; }}
+  .col-link a:focus-visible {{ outline: 2px solid var(--focus); outline-offset: 2px; }}
+
+  .rodape {{
+    margin-top: 20px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-family: "IBM Plex Mono", monospace;
+  }}
+
+  @media (max-width: 640px) {{
+    .resumo {{ grid-template-columns: repeat(2, 1fr); }}
+  }}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="cabecalho">
+      <div>
+        <p class="eyebrow">Cockpit de Afiliação &middot; @papairesolve_br</p>
+        <h1>{titulo}</h1>
+      </div>
+      <p class="atualizado">Atualizado&nbsp;{date.today().strftime('%d/%m/%Y')}<br>{len(produtos)} produtos</p>
+    </header>
+
+    <section class="resumo" aria-label="Resumo da leva">
+      <div class="stat stat-baixo"><div class="n">{contagem.get('baixo', 0):02d}</div><div class="l">Ticket baixo (até R$50)</div></div>
+      <div class="stat stat-medio"><div class="n">{contagem.get('medio', 0):02d}</div><div class="l">Ticket médio (R$50&ndash;150)</div></div>
+      <div class="stat stat-alto"><div class="n">{contagem.get('alto', 0):02d}</div><div class="l">Ticket alto (acima de R$150)</div></div>
+      <div class="stat stat-comissao"><div class="n">{comissao_media:.0f}%</div><div class="l">Comissão média da leva</div></div>
+    </section>
+
+    <div class="filtros" role="tablist" aria-label="Filtrar por faixa de ticket">
+      <button class="filtro ativo" data-filtro="todos" role="tab" aria-selected="true">Todos</button>
+      <button class="filtro" data-filtro="baixo" role="tab" aria-selected="false">Ticket baixo</button>
+      <button class="filtro" data-filtro="medio" role="tab" aria-selected="false">Ticket médio</button>
+      <button class="filtro" data-filtro="alto" role="tab" aria-selected="false">Ticket alto</button>
+    </div>
+
+    <div class="tabela-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Produto</th><th>Faixa</th><th>Preço</th><th>Comissão</th>
+            <th>Avaliação</th><th>Vendidos</th><th>Link</th>
+          </tr>
+        </thead>
+        <tbody id="corpo-tabela">{linhas_html}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="rodape">Gerado a partir da Shopee Affiliate API &middot; Cockpit de Afiliação IA-First</p>
+  </div>
+
+  <script>
+    document.querySelectorAll('.filtro').forEach(function (botao) {{
+      botao.addEventListener('click', function () {{
+        document.querySelectorAll('.filtro').forEach(function (b) {{
+          b.classList.remove('ativo');
+          b.setAttribute('aria-selected', 'false');
+        }});
+        botao.classList.add('ativo');
+        botao.setAttribute('aria-selected', 'true');
+        var filtro = botao.getAttribute('data-filtro');
+        document.querySelectorAll('#corpo-tabela tr').forEach(function (linha) {{
+          linha.style.display = (filtro === 'todos' || linha.getAttribute('data-tier') === filtro) ? '' : 'none';
+        }});
+      }});
+    }});
+  </script>
+</body>
+</html>
+"""
+
+
+def salvar_painel(produtos, caminho, titulo="Painel Shopee — Casa & Construção"):
+    html = gerar_html(produtos, titulo=titulo)
+    with open(caminho, "w", encoding="utf-8") as f:
+        f.write(html)
+    return caminho
