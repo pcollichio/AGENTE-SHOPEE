@@ -49,6 +49,8 @@ TICKET_MEDIO_MAX = 150.0
 
 QUANTIDADE_TOTAL = 20
 
+ARQUIVO_PRODUTOS_MANUAIS = "produtos_manuais.txt"
+
 
 def _classificar_tier(preco):
     if preco <= TICKET_BAIXO_MAX:
@@ -124,24 +126,74 @@ def montar_leva_variada(quantidade_total=QUANTIDADE_TOTAL):
     return selecionados
 
 
-def formatar_markdown(produtos):
-    """Formata a leva de produtos como uma tabela Markdown, pronta para ser
-    salva como histórico (legível tanto no terminal quanto no GitHub)."""
-    linhas = [
-        f"# Leva de produtos do dia — {date.today().isoformat()}",
-        "",
-        "| # | Produto | Faixa | Preço | Comissão | Avaliação | Vendidos | Link de afiliado |",
-        "|---|---|---|---|---|---|---|---|",
-    ]
+def carregar_termos_manuais(caminho=ARQUIVO_PRODUTOS_MANUAIS):
+    """Lê produtos_manuais.txt: uma palavra-chave por linha, ignorando
+    linhas em branco e comentários (#)."""
+    try:
+        with open(caminho, encoding="utf-8") as f:
+            linhas = f.readlines()
+    except FileNotFoundError:
+        return []
+
+    termos = []
+    for linha in linhas:
+        termo = linha.strip()
+        if termo and not termo.startswith("#"):
+            termos.append(termo)
+    return termos
+
+
+def buscar_produtos_manuais(termos, ids_ja_incluidos=None):
+    """Busca produtos específicos pedidos manualmente (via
+    produtos_manuais.txt). Ao contrário da leva automática, não aplica
+    filtro de comissão/avaliação — o usuário pediu esse produto de
+    propósito, então ele entra do jeito que a Shopee retornar."""
+    ids_ja_incluidos = ids_ja_incluidos or set()
+    encontrados = []
+    vistos = set(ids_ja_incluidos)
+
+    for termo in termos:
+        try:
+            produtos = client.buscar_produtos(keyword=termo, limite=5)
+        except Exception as e:
+            print(f"Aviso: busca manual por '{termo}' falhou: {e}")
+            continue
+
+        for p in produtos:
+            if p["product_id"] in vistos:
+                continue
+            vistos.add(p["product_id"])
+            encontrados.append({**p, "tier": _classificar_tier(p["price"]), "termo_busca": termo})
+
+    return encontrados
+
+
+def formatar_markdown(produtos, titulo="Leva de produtos do dia", extras=None):
+    """Formata a leva de produtos (e, opcionalmente, os adicionados
+    manualmente) como tabelas Markdown, prontas para ser salvas como
+    histórico (legível tanto no terminal quanto no GitHub)."""
     faixa_label = {"baixo": "Baixo", "medio": "Médio", "alto": "Alto"}
-    for i, p in enumerate(produtos, start=1):
-        nome = (p["name"] or "(sem nome)").replace("|", "-")
-        linhas.append(
-            f"| {i} | {nome} | {faixa_label[p['tier']]} | R${p['price']:.2f} | "
-            f"{p['commission_rate']*100:.0f}% | {p['rating']:.1f}⭐ | "
-            f"{p['total_sold']} | [link]({p['affiliate_link']}) |"
-        )
-    return "\n".join(linhas)
+
+    def _tabela(lista):
+        linhas = [
+            "| # | Produto | Faixa | Preço | Comissão | Avaliação | Vendidos | Link de afiliado |",
+            "|---|---|---|---|---|---|---|---|",
+        ]
+        for i, p in enumerate(lista, start=1):
+            nome = (p["name"] or "(sem nome)").replace("|", "-")
+            linhas.append(
+                f"| {i} | {nome} | {faixa_label[p['tier']]} | R${p['price']:.2f} | "
+                f"{p['commission_rate']*100:.0f}% | {p['rating']:.1f}⭐ | "
+                f"{p['total_sold']} | [link]({p['affiliate_link']}) |"
+            )
+        return "\n".join(linhas)
+
+    partes = [f"# {titulo} — {date.today().isoformat()}", "", _tabela(produtos)]
+
+    if extras:
+        partes += ["", "## Adicionados manualmente (produtos_manuais.txt)", "", _tabela(extras)]
+
+    return "\n".join(partes)
 
 
 def main():
@@ -164,9 +216,14 @@ def main():
         )
         return
 
-    print(formatar_markdown(leva))
+    termos_manuais = carregar_termos_manuais()
+    extras = buscar_produtos_manuais(
+        termos_manuais, ids_ja_incluidos={p["product_id"] for p in leva}
+    )
 
-    caminho_painel = painel.salvar_painel(leva, "painel.html")
+    print(formatar_markdown(leva, extras=extras))
+
+    caminho_painel = painel.salvar_painel(leva, "painel.html", extras=extras)
     print(f"Painel visual salvo em: {caminho_painel}", file=sys.stderr)
 
 

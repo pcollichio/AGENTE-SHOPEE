@@ -2,6 +2,11 @@
 Gera o painel visual (HTML autônomo, sem dependências externas) com a leva
 de produtos do dia, para ser aberto direto no navegador ou publicado via
 GitHub Pages.
+
+O painel permite marcar produtos (da leva automática ou dos adicionados
+manualmente via produtos_manuais.txt) e baixar a lista marcada como um
+arquivo Markdown — essa lista é o que segue para a esteira de produção de
+conteúdo (criativos e texto).
 """
 
 from datetime import date
@@ -13,15 +18,22 @@ TIER_LABELS = {
 }
 
 
-def _linha_produto(produto, posicao):
+def _linha_produto(produto, posicao, id_prefixo):
     p = produto
     nome = (p["name"] or "(sem nome)").replace("<", "&lt;").replace(">", "&gt;")
     loja = (p.get("shop_name") or "").replace("<", "&lt;").replace(">", "&gt;")
+    row_id = f"{id_prefixo}-{p['product_id']}"
     return f"""
         <tr data-tier="{p['tier']}">
+          <td class="col-check">
+            <input type="checkbox" class="chk-produto" id="{row_id}"
+              data-nome="{nome}" data-preco="{p['price']:.2f}"
+              data-comissao="{p['commission_rate']*100:.0f}"
+              data-link="{p['affiliate_link']}">
+          </td>
           <td class="col-pos">{posicao:02d}</td>
           <td class="col-nome">
-            <div class="nome">{nome}</div>
+            <label for="{row_id}" class="nome">{nome}</label>
             <div class="loja">{loja}</div>
           </td>
           <td class="col-tier"><span class="selo selo-{p['tier']}">{TIER_LABELS[p['tier']]}</span></td>
@@ -33,9 +45,41 @@ def _linha_produto(produto, posicao):
         </tr>"""
 
 
-def gerar_html(produtos, titulo="Painel Shopee — Casa & Construção"):
-    """Recebe uma lista de produtos (cada um já com a chave 'tier':
-    'baixo'/'medio'/'alto') e devolve uma página HTML autônoma."""
+def _tabela(produtos, id_prefixo, com_filtro=True):
+    linhas_html = "".join(
+        _linha_produto(p, i, id_prefixo) for i, p in enumerate(produtos, start=1)
+    )
+    filtro_html = ""
+    if com_filtro:
+        filtro_html = """
+    <div class="filtros" role="tablist" aria-label="Filtrar por faixa de ticket">
+      <button class="filtro ativo" data-filtro="todos" data-alvo="tabela-principal" role="tab" aria-selected="true">Todos</button>
+      <button class="filtro" data-filtro="baixo" data-alvo="tabela-principal" role="tab" aria-selected="false">Ticket baixo</button>
+      <button class="filtro" data-filtro="medio" data-alvo="tabela-principal" role="tab" aria-selected="false">Ticket médio</button>
+      <button class="filtro" data-filtro="alto" data-alvo="tabela-principal" role="tab" aria-selected="false">Ticket alto</button>
+    </div>"""
+    return f"""{filtro_html}
+    <div class="tabela-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th></th><th>#</th><th>Produto</th><th>Faixa</th><th>Preço</th><th>Comissão</th>
+            <th>Avaliação</th><th>Vendidos</th><th>Link</th>
+          </tr>
+        </thead>
+        <tbody id="{id_prefixo}-corpo">{linhas_html}
+        </tbody>
+      </table>
+    </div>"""
+
+
+def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construção"):
+    """Recebe a leva de produtos (cada um já com a chave 'tier':
+    'baixo'/'medio'/'alto') e, opcionalmente, uma lista `extras` de produtos
+    buscados manualmente (via produtos_manuais.txt). Devolve uma página
+    HTML autônoma, com seleção por checkbox e exportação para a esteira."""
+
+    extras = extras or []
 
     contagem = {"baixo": 0, "medio": 0, "alto": 0}
     for p in produtos:
@@ -47,9 +91,15 @@ def gerar_html(produtos, titulo="Painel Shopee — Casa & Construção"):
         else 0
     )
 
-    linhas_html = "".join(
-        _linha_produto(p, i) for i, p in enumerate(produtos, start=1)
-    )
+    tabela_principal_html = _tabela(produtos, "tabela-principal", com_filtro=True)
+
+    secao_extras_html = ""
+    if extras:
+        tabela_extras_html = _tabela(extras, "tabela-extras", com_filtro=False)
+        secao_extras_html = f"""
+    <h2 class="titulo-secao">Adicionados manualmente</h2>
+    <p class="descricao-secao">Produtos buscados via <code>produtos_manuais.txt</code>, fora da curadoria automática.</p>
+    {tabela_extras_html}"""
 
     return f"""<!doctype html>
 <html lang="pt-br">
@@ -78,6 +128,8 @@ def gerar_html(produtos, titulo="Painel Shopee — Casa & Construção"):
     --alto: #a13c2f;
     --alto-soft: #f6e2df;
     --focus: #1d64b0;
+    --barra-bg: #14202b;
+    --barra-texto: #eef1f0;
   }}
   @media (prefers-color-scheme: dark) {{
     :root:not([data-theme="light"]) {{
@@ -97,6 +149,8 @@ def gerar_html(produtos, titulo="Painel Shopee — Casa & Construção"):
       --alto: #e0776a;
       --alto-soft: #3a201c;
       --focus: #6badf0;
+      --barra-bg: #232c32;
+      --barra-texto: #e7edf0;
     }}
   }}
   :root[data-theme="dark"] {{
@@ -116,12 +170,14 @@ def gerar_html(produtos, titulo="Painel Shopee — Casa & Construção"):
     --alto: #e0776a;
     --alto-soft: #3a201c;
     --focus: #6badf0;
+    --barra-bg: #232c32;
+    --barra-texto: #e7edf0;
   }}
   * {{ box-sizing: border-box; }}
   html {{ -webkit-text-size-adjust: 100%; }}
   body {{
     margin: 0;
-    padding: 40px 24px 64px;
+    padding: 40px 24px 96px;
     background:
       repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
       repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
@@ -195,6 +251,25 @@ def gerar_html(produtos, titulo="Painel Shopee — Casa & Construção"):
     margin-top: 4px;
   }}
 
+  .titulo-secao {{
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 36px 0 4px;
+  }}
+  .descricao-secao {{
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0 0 14px;
+  }}
+  .descricao-secao code {{
+    font-family: "IBM Plex Mono", monospace;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }}
+
   .filtros {{
     display: inline-flex;
     gap: 4px;
@@ -225,7 +300,7 @@ def gerar_html(produtos, titulo="Painel Shopee — Casa & Construção"):
     border-radius: 8px;
     background: var(--card);
   }}
-  table {{ width: 100%; border-collapse: collapse; min-width: 720px; }}
+  table {{ width: 100%; border-collapse: collapse; min-width: 760px; }}
   th, td {{ padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 0.88rem; }}
   th {{
     text-align: left;
@@ -238,6 +313,8 @@ def gerar_html(produtos, titulo="Painel Shopee — Casa & Construção"):
   }}
   tbody tr:last-child td {{ border-bottom: none; }}
   tbody tr:hover {{ background: var(--accent-soft); }}
+  .col-check {{ width: 20px; }}
+  .col-check input {{ width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; }}
   .col-pos {{
     font-family: "IBM Plex Mono", monospace;
     color: var(--muted);
@@ -250,7 +327,7 @@ def gerar_html(produtos, titulo="Painel Shopee — Casa & Construção"):
     font-variant-numeric: tabular-nums;
   }}
   .destaque {{ font-weight: 600; color: var(--accent-ink); }}
-  .nome {{ font-weight: 600; }}
+  .nome {{ font-weight: 600; cursor: pointer; }}
   .loja {{ font-size: 0.76rem; color: var(--muted); margin-top: 2px; }}
 
   .selo {{
@@ -284,8 +361,47 @@ def gerar_html(produtos, titulo="Painel Shopee — Casa & Construção"):
     font-family: "IBM Plex Mono", monospace;
   }}
 
+  .barra-selecao {{
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+    pointer-events: none;
+  }}
+  .barra-selecao-conteudo {{
+    pointer-events: auto;
+    background: var(--barra-bg);
+    color: var(--barra-texto);
+    border-radius: 10px;
+    padding: 12px 14px 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }}
+  .barra-contagem {{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.85rem;
+  }}
+  .barra-contagem b {{ font-size: 1rem; }}
+  .btn-baixar {{
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 7px;
+    cursor: pointer;
+  }}
+  .btn-baixar:disabled {{ opacity: 0.4; cursor: not-allowed; }}
+  .btn-baixar:focus-visible {{ outline: 2px solid #fff; outline-offset: 2px; }}
+
   @media (max-width: 640px) {{
     .resumo {{ grid-template-columns: repeat(2, 1fr); }}
+    .barra-selecao-conteudo {{ flex-direction: column; align-items: stretch; text-align: center; }}
   }}
 </style>
 </head>
@@ -306,43 +422,72 @@ def gerar_html(produtos, titulo="Painel Shopee — Casa & Construção"):
       <div class="stat stat-comissao"><div class="n">{comissao_media:.0f}%</div><div class="l">Comissão média da leva</div></div>
     </section>
 
-    <div class="filtros" role="tablist" aria-label="Filtrar por faixa de ticket">
-      <button class="filtro ativo" data-filtro="todos" role="tab" aria-selected="true">Todos</button>
-      <button class="filtro" data-filtro="baixo" role="tab" aria-selected="false">Ticket baixo</button>
-      <button class="filtro" data-filtro="medio" role="tab" aria-selected="false">Ticket médio</button>
-      <button class="filtro" data-filtro="alto" role="tab" aria-selected="false">Ticket alto</button>
-    </div>
-
-    <div class="tabela-scroll">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th><th>Produto</th><th>Faixa</th><th>Preço</th><th>Comissão</th>
-            <th>Avaliação</th><th>Vendidos</th><th>Link</th>
-          </tr>
-        </thead>
-        <tbody id="corpo-tabela">{linhas_html}
-        </tbody>
-      </table>
-    </div>
+    {tabela_principal_html}
+    {secao_extras_html}
 
     <p class="rodape">Gerado a partir da Shopee Affiliate API &middot; Cockpit de Afiliação IA-First</p>
+  </div>
+
+  <div class="barra-selecao">
+    <div class="barra-selecao-conteudo">
+      <span class="barra-contagem"><b id="contagem-selecionados">0</b> selecionado(s)</span>
+      <button class="btn-baixar" id="btn-baixar-selecao" disabled>Baixar seleção para a esteira</button>
+    </div>
   </div>
 
   <script>
     document.querySelectorAll('.filtro').forEach(function (botao) {{
       botao.addEventListener('click', function () {{
-        document.querySelectorAll('.filtro').forEach(function (b) {{
+        var grupo = document.querySelectorAll('.filtro[data-alvo="' + botao.getAttribute('data-alvo') + '"]');
+        grupo.forEach(function (b) {{
           b.classList.remove('ativo');
           b.setAttribute('aria-selected', 'false');
         }});
         botao.classList.add('ativo');
         botao.setAttribute('aria-selected', 'true');
         var filtro = botao.getAttribute('data-filtro');
-        document.querySelectorAll('#corpo-tabela tr').forEach(function (linha) {{
+        document.querySelectorAll('#' + botao.getAttribute('data-alvo') + '-corpo tr').forEach(function (linha) {{
           linha.style.display = (filtro === 'todos' || linha.getAttribute('data-tier') === filtro) ? '' : 'none';
         }});
       }});
+    }});
+
+    function atualizarBarraSelecao() {{
+      var marcados = document.querySelectorAll('.chk-produto:checked');
+      document.getElementById('contagem-selecionados').textContent = marcados.length;
+      document.getElementById('btn-baixar-selecao').disabled = marcados.length === 0;
+    }}
+    document.querySelectorAll('.chk-produto').forEach(function (chk) {{
+      chk.addEventListener('change', atualizarBarraSelecao);
+    }});
+
+    document.getElementById('btn-baixar-selecao').addEventListener('click', function () {{
+      var marcados = document.querySelectorAll('.chk-produto:checked');
+      var hoje = new Date().toISOString().slice(0, 10);
+      var linhas = [
+        '# Seleção para a esteira de produção — ' + hoje,
+        '',
+        '| Produto | Preço | Comissão | Link de afiliado |',
+        '|---|---|---|---|'
+      ];
+      marcados.forEach(function (chk) {{
+        linhas.push(
+          '| ' + chk.getAttribute('data-nome') +
+          ' | R$' + chk.getAttribute('data-preco') +
+          ' | ' + chk.getAttribute('data-comissao') + '%' +
+          ' | ' + chk.getAttribute('data-link') + ' |'
+        );
+      }});
+      var conteudo = linhas.join('\\n');
+      var blob = new Blob([conteudo], {{ type: 'text/markdown;charset=utf-8' }});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'esteira-' + hoje + '.md';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }});
   </script>
 </body>
@@ -350,8 +495,8 @@ def gerar_html(produtos, titulo="Painel Shopee — Casa & Construção"):
 """
 
 
-def salvar_painel(produtos, caminho, titulo="Painel Shopee — Casa & Construção"):
-    html = gerar_html(produtos, titulo=titulo)
+def salvar_painel(produtos, caminho, extras=None, titulo="Painel Shopee — Casa & Construção"):
+    html = gerar_html(produtos, extras=extras, titulo=titulo)
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(html)
     return caminho

@@ -1,0 +1,12 @@
+# Liste aqui, uma palavra-chave por linha, produtos que você quer garantir
+# que apareçam no painel, mesmo que não tenham sido selecionados
+# automaticamente pela curadoria dos 20.
+#
+# Linhas começando com # são ignoradas. Depois de editar este arquivo,
+# rode buscar_leva_lancamento.py de novo (ou dispare o workflow "Leva
+# diária de produtos Shopee" manualmente no GitHub Actions) para ver o
+# resultado no painel, na seção "Adicionados manualmente".
+#
+# Exemplo (remova o # das linhas abaixo para ativar):
+# escada de madeira
+# aspirador de po
