@@ -22,6 +22,7 @@ cobrindo os principais subnichos da casa.
 """
 
 import sys
+import unicodedata
 from datetime import date
 
 from shopee_integration import client, config, curadoria, painel
@@ -50,6 +51,7 @@ TICKET_MEDIO_MAX = 150.0
 QUANTIDADE_TOTAL = 20
 
 ARQUIVO_PRODUTOS_MANUAIS = "produtos_manuais.txt"
+ARQUIVO_PRODUTOS_EXCLUIR = "produtos_excluir.txt"
 
 
 def _classificar_tier(preco):
@@ -60,8 +62,42 @@ def _classificar_tier(preco):
     return "alto"
 
 
+def _normalizar(texto):
+    """Remove acentos e caixa alta, para comparar texto sem depender de
+    acentuação exata (ex: 'balão' e 'balao' batem igual)."""
+    texto = unicodedata.normalize("NFKD", texto or "")
+    return "".join(c for c in texto if not unicodedata.combining(c)).lower()
+
+
+def carregar_termos_excluidos(caminho=ARQUIVO_PRODUTOS_EXCLUIR):
+    """Lê produtos_excluir.txt: palavras que, se aparecerem no nome do
+    produto, tiram ele da leva automática (a busca por palavra-chave da
+    Shopee é ampla e às vezes traz produtos fora do nicho, ex: brinquedos,
+    itens pet, peças de carro)."""
+    try:
+        with open(caminho, encoding="utf-8") as f:
+            linhas = f.readlines()
+    except FileNotFoundError:
+        return []
+
+    termos = []
+    for linha in linhas:
+        termo = linha.strip()
+        if termo and not termo.startswith("#"):
+            termos.append(_normalizar(termo))
+    return termos
+
+
+def _produto_fora_do_nicho(nome, termos_excluidos):
+    nome_normalizado = _normalizar(nome)
+    return any(termo in nome_normalizado for termo in termos_excluidos)
+
+
 def buscar_produtos_do_nicho():
-    """Busca produtos em todas as palavras-chave do nicho e remove duplicados."""
+    """Busca produtos em todas as palavras-chave do nicho, remove duplicados
+    e descarta os que batem com produtos_excluir.txt (fora do nicho)."""
+    termos_excluidos = carregar_termos_excluidos()
+
     todos_produtos = []
     for termo in SUBCATEGORIAS_CASA_CONSTRUCAO:
         try:
@@ -75,9 +111,12 @@ def buscar_produtos_do_nicho():
     vistos = set()
     produtos_unicos = []
     for p in todos_produtos:
-        if p["product_id"] not in vistos:
-            vistos.add(p["product_id"])
-            produtos_unicos.append(p)
+        if p["product_id"] in vistos:
+            continue
+        if _produto_fora_do_nicho(p["name"], termos_excluidos):
+            continue
+        vistos.add(p["product_id"])
+        produtos_unicos.append(p)
     return produtos_unicos
 
 

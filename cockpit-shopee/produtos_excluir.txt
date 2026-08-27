@@ -1,0 +1,37 @@
+# Palavras que, se aparecerem no nome de um produto, tiram ele da leva
+# automática — a busca por palavra-chave da Shopee é ampla e às vezes traz
+# produtos fora do nicho casa e construção (brinquedos, itens de festa,
+# pet, roupas, peças de carro etc.)
+#
+# Uma palavra por linha. Não precisa se preocupar com acento (maiúscula/
+# minúscula e com/sem acento dão no mesmo). Linhas com # são ignoradas.
+# Edite como quiser: adicione palavras que ainda estejam passando, ou
+# remova as que estiverem cortando produto bom por engano.
+
+infantil
+bebe
+brinquedo
+boneca
+bexiga
+balao
+festa
+pintura a dedo
+giz de cera
+lapis de cor
+aniversario
+pet
+gato
+cachorro
+cao
+carro
+moto
+caminhao
+veicular
+automotivo
+automotiva
+escolar
+maquiagem
+roupa
+vestido
+sapato
+tenis
