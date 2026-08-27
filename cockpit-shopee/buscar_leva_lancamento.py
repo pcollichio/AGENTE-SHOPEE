@@ -206,23 +206,26 @@ def main():
 
     leva = montar_leva_variada()
 
-    if not leva:
-        print(
-            f"# Leva de produtos do dia — {date.today().isoformat()}\n\n"
-            "Nenhum produto encontrado com os critérios atuais. Pode ser que "
-            "os termos de busca não retornaram resultados, ou que os nomes "
-            "dos campos da API precisem de ajuste (veja os comentários em "
-            "shopee_integration/client.py)."
-        )
-        return
-
     termos_manuais = carregar_termos_manuais()
     extras = buscar_produtos_manuais(
         termos_manuais, ids_ja_incluidos={p["product_id"] for p in leva}
     )
 
-    print(formatar_markdown(leva, extras=extras))
+    if not leva and not extras:
+        print(
+            f"# Leva de produtos do dia — {date.today().isoformat()}\n\n"
+            "Nenhum produto encontrado hoje. Pode ser que os termos de busca "
+            "não retornaram resultados, que os nomes dos campos da API "
+            "precisem de ajuste, ou que a Shopee tenha recusado a "
+            "autenticação — veja os avisos acima (se houver) para o motivo "
+            "exato."
+        )
+    else:
+        print(formatar_markdown(leva, extras=extras))
 
+    # Sempre salva o painel, mesmo com a leva vazia (ex: falha temporária na
+    # API), para o passo seguinte do workflow sempre ter um arquivo pra
+    # commitar e não quebrar a automação.
     caminho_painel = painel.salvar_painel(leva, "painel.html", extras=extras)
     print(f"Painel visual salvo em: {caminho_painel}", file=sys.stderr)
 
