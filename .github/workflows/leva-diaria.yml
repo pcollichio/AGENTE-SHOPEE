@@ -38,10 +38,13 @@ jobs:
           python buscar_leva_lancamento.py | tee "historico/${data}.md"
           cp "historico/${data}.md" leva_do_dia.md
 
+      - name: Atualizar painel de ROI
+        run: python gerar_roi.py
+
       - name: Salvar resultado no repositório
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add historico/ leva_do_dia.md painel.html
-          git diff --cached --quiet || git commit -m "Atualiza leva de produtos do dia ($(date +%F))"
+          git add historico/ leva_do_dia.md painel.html painel_roi.html
+          git diff --cached --quiet || git commit -m "Atualiza leva de produtos e ROI do dia ($(date +%F))"
           git push
