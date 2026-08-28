@@ -104,6 +104,8 @@ def buscar_produtos_do_nicho():
             produtos = client.buscar_produtos(
                 keyword=termo, min_comissao=curadoria.COMISSAO_MINIMA, limite=20
             )
+            for p in produtos:
+                p["termo_busca"] = termo
             todos_produtos.extend(produtos)
         except Exception as e:
             print(f"Aviso: busca por '{termo}' falhou: {e}")

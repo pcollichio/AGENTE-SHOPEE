@@ -9,6 +9,7 @@ arquivo Markdown — essa lista é o que segue para a esteira de produção de
 conteúdo (criativos e texto).
 """
 
+import json
 from datetime import date
 
 TIER_LABELS = {
@@ -17,11 +18,71 @@ TIER_LABELS = {
     "alto": "Alto",
 }
 
+# Banco de "ganchos" do modelo de narração Papai Resolve: para cada
+# categoria de busca, um problema comum de casa (o gancho inicial) e o
+# motivo pelo qual o produto resolve. Usado para montar o roteiro
+# automaticamente a partir do produto marcado no painel.
+GANCHOS_ROTEIRO = {
+    "ferramentas": {
+        "problema": "Aquele reparo simples que vira perrengue por falta da ferramenta certa?",
+        "motivo": "resolve porque entrega o que precisa pro serviço, sem chamar ninguém",
+    },
+    "organizacao": {
+        "problema": "Cansado de procurar as coisas porque nada tem lugar certo?",
+        "motivo": "resolve porque dá um lugar fixo pra cada coisa, sem obra",
+    },
+    "iluminacao": {
+        "problema": "Aquele cantinho de casa que fica sempre escuro?",
+        "motivo": "resolve porque instala em minutos e muda o ambiente na hora",
+    },
+    "hidraulica": {
+        "problema": "Vazamento ou entupimento que não para de voltar?",
+        "motivo": "resolve porque se ajusta sem precisar chamar encanador",
+    },
+    "decoracao": {
+        "problema": "Ambiente parecendo sem graça, meio vazio?",
+        "motivo": "resolve porque transforma o visual sem reforma",
+    },
+    "cozinha": {
+        "problema": "Cozinha bagunçada na hora de cozinhar?",
+        "motivo": "resolve porque organiza e agiliza o dia a dia",
+    },
+    "banheiro": {
+        "problema": "Banheiro pequeno e sem espaço pra nada?",
+        "motivo": "resolve porque aproveita cada cantinho",
+    },
+    "jardim": {
+        "problema": "Plantas morrendo por falta de cuidado?",
+        "motivo": "resolve porque facilita a rotina de cuidar delas",
+    },
+    "eletrica": {
+        "problema": "Tomada que não dá conta de tudo que você precisa ligar?",
+        "motivo": "resolve porque multiplica os pontos com segurança",
+    },
+    "pintura": {
+        "problema": "Parede desbotada mas dá preguiça de chamar pintor?",
+        "motivo": "resolve porque você mesmo aplica numa tarde",
+    },
+    "limpeza": {
+        "problema": "Aquela sujeira que não sai de jeito nenhum?",
+        "motivo": "resolve porque foi feito pra esse tipo de sujeira",
+    },
+    "moveis": {
+        "problema": "Espaço apertado que não cabe móvel grande?",
+        "motivo": "resolve porque é compacto e multifuncional",
+    },
+    "_padrao": {
+        "problema": "Aquele probleminha de casa que ninguém resolve direito?",
+        "motivo": "resolve na prática, sem complicação",
+    },
+}
+
 
 def _linha_produto(produto, posicao, id_prefixo):
     p = produto
     nome = (p["name"] or "(sem nome)").replace("<", "&lt;").replace(">", "&gt;")
     loja = (p.get("shop_name") or "").replace("<", "&lt;").replace(">", "&gt;")
+    categoria = p.get("termo_busca") or ""
     row_id = f"{id_prefixo}-{p['product_id']}"
     return f"""
         <tr data-tier="{p['tier']}">
@@ -29,7 +90,8 @@ def _linha_produto(produto, posicao, id_prefixo):
             <input type="checkbox" class="chk-produto" id="{row_id}"
               data-nome="{nome}" data-preco="{p['price']:.2f}"
               data-comissao="{p['commission_rate']*100:.0f}"
-              data-link="{p['affiliate_link']}">
+              data-link="{p['affiliate_link']}"
+              data-categoria="{categoria}">
           </td>
           <td class="col-pos">{posicao:02d}</td>
           <td class="col-nome">
@@ -92,6 +154,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
     )
 
     tabela_principal_html = _tabela(produtos, "tabela-principal", com_filtro=True)
+    ganchos_json = json.dumps(GANCHOS_ROTEIRO, ensure_ascii=False)
 
     secao_extras_html = ""
     if extras:
@@ -461,11 +524,39 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
       chk.addEventListener('change', atualizarBarraSelecao);
     }});
 
+    var GANCHOS_ROTEIRO = {ganchos_json};
+
+    function montarRoteiro(chk) {{
+      var categoria = chk.getAttribute('data-categoria');
+      var gancho = GANCHOS_ROTEIRO[categoria] || GANCHOS_ROTEIRO['_padrao'];
+      var nome = chk.getAttribute('data-nome');
+      var preco = chk.getAttribute('data-preco');
+      var link = chk.getAttribute('data-link');
+      return [
+        '## ' + nome,
+        '',
+        '**Link de afiliado:** ' + link + '  ',
+        '**Preço:** R$' + preco + '  ',
+        '**Comissão:** ' + chk.getAttribute('data-comissao') + '%',
+        '',
+        '**Roteiro (modelo Papai Resolve, ~20s):**',
+        '',
+        '1. *(0-3s, Problema)* — "' + gancho['problema'] + '"',
+        '2. *(3-6s, Agravar)* — "Já tentei de tudo e nada resolvia direito."',
+        '3. *(6-12s, Solução)* — "Até eu achar ' + nome + ' — ' + gancho['motivo'] + '."',
+        '4. *(12-18s, Prova)* — [mostra o produto resolvendo o problema na prática, sem falar]',
+        '5. *(18-22s, Oferta + CTA)* — "Tá com preço especial agora, R$' + preco + ' — link na bio, comenta \\'QUERO\\' que eu mando."',
+        ''
+      ].join('\\n');
+    }}
+
     document.getElementById('btn-baixar-selecao').addEventListener('click', function () {{
       var marcados = document.querySelectorAll('.chk-produto:checked');
       var hoje = new Date().toISOString().slice(0, 10);
       var linhas = [
-        '# Seleção para a esteira de produção — ' + hoje,
+        '# Esteira de produção — ' + hoje,
+        '',
+        '## Resumo',
         '',
         '| Produto | Preço | Comissão | Link de afiliado |',
         '|---|---|---|---|'
@@ -477,6 +568,10 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
           ' | ' + chk.getAttribute('data-comissao') + '%' +
           ' | ' + chk.getAttribute('data-link') + ' |'
         );
+      }});
+      linhas.push('', '---', '', '# Roteiros', '');
+      marcados.forEach(function (chk) {{
+        linhas.push(montarRoteiro(chk));
       }});
       var conteudo = linhas.join('\\n');
       var blob = new Blob([conteudo], {{ type: 'text/markdown;charset=utf-8' }});
