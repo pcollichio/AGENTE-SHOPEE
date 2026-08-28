@@ -17,7 +17,7 @@ erro, me manda a mensagem de erro completa que eu ajusto o nome do campo.
 import csv
 import sys
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from shopee_integration import client, config
 
@@ -58,13 +58,13 @@ def buscar_todas_conversoes(inicio_ts, fim_ts):
 def montar_linhas(conversoes):
     linhas = []
     for conv in conversoes:
-        status = conv.get("orderStatus")
+        status = conv.get("conversionStatus")
         if not _status_confirmado(status):
             continue
 
         purchase_time = conv.get("purchaseTime")
         try:
-            data_iso = datetime.utcfromtimestamp(int(purchase_time)).strftime("%Y-%m-%d")
+            data_iso = datetime.fromtimestamp(int(purchase_time), tz=timezone.utc).strftime("%Y-%m-%d")
         except (TypeError, ValueError):
             data_iso = ""
 
@@ -109,7 +109,7 @@ def main():
         )
         return
 
-    fim = datetime.utcnow()
+    fim = datetime.now(timezone.utc)
     inicio = fim - timedelta(days=DIAS_PARA_TRAS)
     inicio_ts, fim_ts = int(inicio.timestamp()), int(fim.timestamp())
 

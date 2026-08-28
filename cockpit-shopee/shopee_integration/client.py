@@ -211,12 +211,12 @@ def buscar_conversoes(purchase_time_start, purchase_time_end, limit=100, scroll_
     Returns:
         dict com "nodes" (lista de conversões) e "pageInfo" (paginação)
 
-    NOTA: ao contrário de buscar_produtos(), o schema usado aqui (nomes de
-    campos como conversionId, totalCommission, orders/items) NÃO foi
-    validado contra uma resposta real da Shopee — não encontramos a
-    documentação técnica oficial (Postman Collection), só referências de
-    terceiros. Se a Shopee devolver erro de "campo desconhecido", ajuste o
-    nome do campo aqui conforme a mensagem de erro indicar.
+    NOTA: validado parcialmente contra uma resposta real da Shopee em
+    2026-08-30 — ela apontou dois ajustes (tipo Int64 nas variáveis de
+    data, e o campo chama-se "conversionStatus", não "orderStatus" no
+    nível da conversão) já corrigidos abaixo. O restante dos campos
+    ainda não foi confirmado; se aparecer outro erro de "campo
+    desconhecido", ajuste aqui conforme a mensagem indicar.
     """
     if config.USE_MOCK_DATA:
         raise NotImplementedError(
@@ -225,12 +225,12 @@ def buscar_conversoes(purchase_time_start, purchase_time_end, limit=100, scroll_
         )
 
     query = """
-    query BuscarConversoes($inicio: Int, $fim: Int, $limit: Int, $scrollId: String) {
+    query BuscarConversoes($inicio: Int64, $fim: Int64, $limit: Int, $scrollId: String) {
       conversionReport(purchaseTimeStart: $inicio, purchaseTimeEnd: $fim, limit: $limit, scrollId: $scrollId) {
         nodes {
           conversionId
           purchaseTime
-          orderStatus
+          conversionStatus
           totalCommission
           orders {
             orderId
