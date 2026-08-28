@@ -13,6 +13,7 @@ ROI_META = 3.0
 
 CAMINHO_INVESTIMENTOS = "financeiro/investimentos.csv"
 CAMINHO_VENDAS = "financeiro/vendas.csv"
+CAMINHO_VENDAS_SHOPEE = "financeiro/vendas_shopee.csv"
 
 
 def _ler_csv(caminho):
@@ -44,18 +45,35 @@ def carregar_investimentos(caminho=CAMINHO_INVESTIMENTOS):
     ]
 
 
-def carregar_vendas(caminho=CAMINHO_VENDAS):
-    linhas = _ler_csv(caminho)
-    return [
+def carregar_vendas(caminho=CAMINHO_VENDAS, caminho_shopee=CAMINHO_VENDAS_SHOPEE):
+    """Junta as vendas digitadas manualmente (vendas.csv) com as
+    sincronizadas automaticamente da Shopee (vendas_shopee.csv, gerado
+    por sincronizar_vendas.py) — são arquivos separados de propósito, pra
+    a sincronização automática nunca sobrescrever o que você digitou."""
+    linhas_manuais = _ler_csv(caminho)
+    linhas_shopee = _ler_csv(caminho_shopee)
+
+    vendas = [
         {
             "data": l.get("data", "").strip(),
             "produto": l.get("produto", "").strip(),
             "valor": _float_seguro(l.get("comissao_recebida")),
             "observacao": l.get("observacao", "").strip(),
         }
-        for l in linhas
+        for l in linhas_manuais
         if l.get("data")
     ]
+    vendas += [
+        {
+            "data": l.get("data", "").strip(),
+            "produto": l.get("produto", "").strip(),
+            "valor": _float_seguro(l.get("comissao_recebida")),
+            "observacao": f"Sincronizado da Shopee (conversão {l.get('conversion_id', '')})",
+        }
+        for l in linhas_shopee
+        if l.get("data")
+    ]
+    return vendas
 
 
 def status_roi(roi):

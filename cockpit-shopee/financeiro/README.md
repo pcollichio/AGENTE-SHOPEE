@@ -21,7 +21,7 @@ data,produto,valor_investido,observacao
 - **valor_investido**: só o número, com ponto para casas decimais (ex: 20.00, não R$20,00)
 - **observacao**: opcional, qualquer nota que ajude a lembrar
 
-## `vendas.csv` — quanto você realmente vendeu/recebeu de comissão
+## `vendas.csv` — quanto você realmente vendeu/recebeu de comissão (manual)
 
 Preencha conferindo no seu painel de afiliado da Shopee (a comissão de
 verdade que caiu pra você, não a comissão "possível" que o painel mostra
@@ -33,6 +33,19 @@ data,produto,comissao_recebida,observacao
 ```
 
 Mesmas regras de formato do arquivo acima.
+
+## `vendas_shopee.csv` — puxado automaticamente (não editar à mão)
+
+Rodando `python sincronizar_vendas.py` (no seu computador ou no Colab,
+igual fazemos com a busca de produtos), o sistema busca direto na Shopee
+as vendas confirmadas dos últimos 30 dias e sobrescreve esse arquivo
+sozinho. Ele é **separado** do `vendas.csv` de propósito — assim a
+sincronização automática nunca apaga o que você digitou manualmente. O
+painel de ROI soma os dois.
+
+Essa parte é nova e ainda não foi validada contra uma resposta real da
+Shopee (não achamos a documentação técnica oficial). Se der erro ao
+rodar, me manda a mensagem completa que eu ajusto.
 
 ## O que acontece com esses dados
 

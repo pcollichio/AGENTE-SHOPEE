@@ -195,3 +195,65 @@ def gerar_link_afiliado(product_id, produtos_cache=None):
             "produto retornado por buscar_produtos() em vez de chamar esta "
             "função separadamente."
         )
+
+
+def buscar_conversoes(purchase_time_start, purchase_time_end, limit=100, scroll_id=None):
+    """
+    Busca o relatório de conversões (vendas reais geradas pelos seus links
+    de afiliado) num período, via a query conversionReport.
+
+    Args:
+        purchase_time_start: início do período, timestamp Unix (segundos)
+        purchase_time_end: fim do período, timestamp Unix (segundos)
+        limit: quantos registros pedir por página (a Shopee costuma limitar a 500)
+        scroll_id: cursor de paginação devolvido pela página anterior
+
+    Returns:
+        dict com "nodes" (lista de conversões) e "pageInfo" (paginação)
+
+    NOTA: ao contrário de buscar_produtos(), o schema usado aqui (nomes de
+    campos como conversionId, totalCommission, orders/items) NÃO foi
+    validado contra uma resposta real da Shopee — não encontramos a
+    documentação técnica oficial (Postman Collection), só referências de
+    terceiros. Se a Shopee devolver erro de "campo desconhecido", ajuste o
+    nome do campo aqui conforme a mensagem de erro indicar.
+    """
+    if config.USE_MOCK_DATA:
+        raise NotImplementedError(
+            "buscar_conversoes ainda não tem versão simulada — só funciona "
+            "com USE_MOCK_DATA=false e credenciais reais."
+        )
+
+    query = """
+    query BuscarConversoes($inicio: Int, $fim: Int, $limit: Int, $scrollId: String) {
+      conversionReport(purchaseTimeStart: $inicio, purchaseTimeEnd: $fim, limit: $limit, scrollId: $scrollId) {
+        nodes {
+          conversionId
+          purchaseTime
+          orderStatus
+          totalCommission
+          orders {
+            orderId
+            orderStatus
+            items {
+              itemId
+              itemName
+              itemTotalCommission
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          scrollId
+        }
+      }
+    }
+    """
+    variables = {
+        "inicio": purchase_time_start,
+        "fim": purchase_time_end,
+        "limit": limit,
+        "scrollId": scroll_id,
+    }
+    data = _executar_graphql(query, variables)
+    return data.get("conversionReport") or {"nodes": [], "pageInfo": {}}
