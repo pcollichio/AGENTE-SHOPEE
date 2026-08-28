@@ -250,8 +250,10 @@ def buscar_conversoes(purchase_time_start, purchase_time_end, limit=100, scroll_
     }
     """
     variables = {
-        "inicio": purchase_time_start,
-        "fim": purchase_time_end,
+        # Int64 na Shopee parece exigir o valor como texto (string), não
+        # como número JSON puro — mandar como int deu erro "wrong type".
+        "inicio": str(int(purchase_time_start)),
+        "fim": str(int(purchase_time_end)),
         "limit": limit,
         "scrollId": scroll_id,
     }
