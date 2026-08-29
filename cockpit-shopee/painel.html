@@ -300,23 +300,32 @@
     .resumo { grid-template-columns: repeat(2, 1fr); }
     .barra-selecao-conteudo { flex-direction: column; align-items: stretch; text-align: center; }
   }
+
+  .menu-cockpit { display: flex; gap: 4px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 4px; margin-bottom: 24px; flex-wrap: wrap; }
+  .menu-item { font-family: "IBM Plex Sans", sans-serif; font-size: 0.84rem; font-weight: 600;
+    color: var(--muted); text-decoration: none; padding: 8px 14px; border-radius: 6px; }
+  .menu-item:hover { color: var(--text); background: var(--bg); }
+  .menu-item.ativo { background: var(--accent); color: #fff; }
+
 </style>
 </head>
 <body>
   <div class="wrap">
+    <nav class="menu-cockpit"><a class="menu-item" href="index.html">Início</a><a class="menu-item ativo" href="painel.html">Produtos</a><a class="menu-item" href="importar.html">Importar</a><a class="menu-item" href="painel_roi.html">ROI</a><a class="menu-item" href="https://claude.ai/code/artifact/a5421828-0ecd-4bd1-8c5f-d3a2799c26bf" target="_blank" rel="noopener">Identidade&nbsp;&#8599;</a></nav>
     <header class="cabecalho">
       <div>
         <p class="eyebrow">Cockpit de Afiliação &middot; @papairesolve_br</p>
         <h1>Painel Shopee — Casa & Construção</h1>
       </div>
-      <p class="atualizado">Atualizado&nbsp;28/08/2026<br>20 produtos</p>
+      <p class="atualizado">Atualizado&nbsp;29/08/2026<br>20 produtos</p>
     </header>
 
     <section class="resumo" aria-label="Resumo da leva">
-      <div class="stat stat-baixo"><div class="n">13</div><div class="l">Ticket baixo (até R$50)</div></div>
-      <div class="stat stat-medio"><div class="n">02</div><div class="l">Ticket médio (R$50&ndash;150)</div></div>
-      <div class="stat stat-alto"><div class="n">05</div><div class="l">Ticket alto (acima de R$150)</div></div>
-      <div class="stat stat-comissao"><div class="n">50%</div><div class="l">Comissão média da leva</div></div>
+      <div class="stat stat-baixo"><div class="n">12</div><div class="l">Ticket baixo (até R$50)</div></div>
+      <div class="stat stat-medio"><div class="n">04</div><div class="l">Ticket médio (R$50&ndash;150)</div></div>
+      <div class="stat stat-alto"><div class="n">04</div><div class="l">Ticket alto (acima de R$150)</div></div>
+      <div class="stat stat-comissao"><div class="n">42%</div><div class="l">Comissão média da leva</div></div>
     </section>
 
     
@@ -337,23 +346,23 @@
         <tbody id="tabela-principal-corpo">
         <tr data-tier="baixo">
           <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-21848964602"
-              data-nome="Lixadeira Manual De Pvc Com Lixa 8x22cm Max" data-preco="43.90"
-              data-comissao="83"
-              data-link="https://s.shopee.com.br/3Vjnbo0a9E"
+            <input type="checkbox" class="chk-produto" id="tabela-principal-23098943224"
+              data-nome="Kit Parafuso e Bucha 10mm - 8mm - 6mm" data-preco="45.52"
+              data-comissao="35"
+              data-link="https://s.shopee.com.br/7Ad8dzEGaI"
               data-categoria="ferramentas">
           </td>
           <td class="col-pos">01</td>
           <td class="col-nome">
-            <label for="tabela-principal-21848964602" class="nome">Lixadeira Manual De Pvc Com Lixa 8x22cm Max</label>
-            <div class="loja">centerbaluarte</div>
+            <label for="tabela-principal-23098943224" class="nome">Kit Parafuso e Bucha 10mm - 8mm - 6mm</label>
+            <div class="loja">ANANIAS TUDO</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;43.90</td>
-          <td class="col-num destaque">83%</td>
+          <td class="col-num">R$&nbsp;45.52</td>
+          <td class="col-num destaque">35%</td>
           <td class="col-num">5.0&#9733;</td>
-          <td class="col-num">0</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/3Vjnbo0a9E" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-num">1</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/7Ad8dzEGaI" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo">
           <td class="col-check">
@@ -380,7 +389,7 @@
             <input type="checkbox" class="chk-produto" id="tabela-principal-23398167957"
               data-nome="KIT Cabeceira Estofada Nuvem 60x20cm Para Cama de Casal(7 PEÇAS)" data-preco="49.90"
               data-comissao="46"
-              data-link="https://s.shopee.com.br/4LIubLJXvx"
+              data-link="https://s.shopee.com.br/4VcNT5xcHD"
               data-categoria="moveis">
           </td>
           <td class="col-pos">03</td>
@@ -393,14 +402,14 @@
           <td class="col-num destaque">46%</td>
           <td class="col-num">5.0&#9733;</td>
           <td class="col-num">1</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/4LIubLJXvx" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/4VcNT5xcHD" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-23397142238"
               data-nome="Capa Maquina Lavar Electrolux Consul 10 11 12 Kg C/zíper Protetora Impermeável Lavanderia" data-preco="42.30"
               data-comissao="43"
-              data-link="https://s.shopee.com.br/8fRvP3bVvS"
+              data-link="https://s.shopee.com.br/60RBFqruEe"
               data-categoria="moveis">
           </td>
           <td class="col-pos">04</td>
@@ -413,14 +422,14 @@
           <td class="col-num destaque">43%</td>
           <td class="col-num">5.0&#9733;</td>
           <td class="col-num">0</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/8fRvP3bVvS" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/60RBFqruEe" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-19199070549"
               data-nome="Capa Maquina Lavar Electrolux Brastemp 13 15 16 Kg Zíper Protetora Impermeável Lavanderia" data-preco="42.30"
               data-comissao="43"
-              data-link="https://s.shopee.com.br/8plLbMasaV"
+              data-link="https://s.shopee.com.br/6AkbS9rGth"
               data-categoria="moveis">
           </td>
           <td class="col-pos">05</td>
@@ -433,7 +442,47 @@
           <td class="col-num destaque">43%</td>
           <td class="col-num">5.0&#9733;</td>
           <td class="col-num">0</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/8plLbMasaV" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/6AkbS9rGth" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+        </tr>
+        <tr data-tier="medio">
+          <td class="col-check">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-23194447772"
+              data-nome="Kit Buchas 6 8 e 10mm com Parafusos Philips Bucha com Anel" data-preco="60.72"
+              data-comissao="35"
+              data-link="https://s.shopee.com.br/7pspRDBjEU"
+              data-categoria="ferramentas">
+          </td>
+          <td class="col-pos">06</td>
+          <td class="col-nome">
+            <label for="tabela-principal-23194447772" class="nome">Kit Buchas 6 8 e 10mm com Parafusos Philips Bucha com Anel</label>
+            <div class="loja">ANANIAS TUDO</div>
+          </td>
+          <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-num">R$&nbsp;60.72</td>
+          <td class="col-num destaque">35%</td>
+          <td class="col-num">4.9&#9733;</td>
+          <td class="col-num">0</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/7pspRDBjEU" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+        </tr>
+        <tr data-tier="medio">
+          <td class="col-check">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-23098943293"
+              data-nome="Kit Buchas Sem Anel com Parafuso 5 6  8 10 com 500 Peças Kit Parafusos e Bucha 5mm 6mm 7mm 8mm 10mm" data-preco="58.32"
+              data-comissao="35"
+              data-link="https://s.shopee.com.br/7fZPEuCMZT"
+              data-categoria="ferramentas">
+          </td>
+          <td class="col-pos">07</td>
+          <td class="col-nome">
+            <label for="tabela-principal-23098943293" class="nome">Kit Buchas Sem Anel com Parafuso 5 6  8 10 com 500 Peças Kit Parafusos e Bucha 5mm 6mm 7mm 8mm 10mm</label>
+            <div class="loja">ANANIAS TUDO</div>
+          </td>
+          <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-num">R$&nbsp;58.32</td>
+          <td class="col-num destaque">35%</td>
+          <td class="col-num">4.9&#9733;</td>
+          <td class="col-num">0</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/7fZPEuCMZT" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="medio">
           <td class="col-check">
@@ -443,7 +492,7 @@
               data-link="https://s.shopee.com.br/9fKSasuB9e"
               data-categoria="organizacao">
           </td>
-          <td class="col-pos">06</td>
+          <td class="col-pos">08</td>
           <td class="col-nome">
             <label for="tabela-principal-22698844933" class="nome">Kit Prateleiras Batman 32x20cm Suporte Organizador para quarto sala</label>
             <div class="loja">Gloss Box</div>
@@ -460,10 +509,10 @@
             <input type="checkbox" class="chk-produto" id="tabela-principal-21297265277"
               data-nome="Lancheira Bolsa Térmica Para Marmita" data-preco="55.90"
               data-comissao="53"
-              data-link="https://s.shopee.com.br/9pdsnCB0Nl"
+              data-link="https://s.shopee.com.br/8fRwQkLtSV"
               data-categoria="cozinha">
           </td>
-          <td class="col-pos">07</td>
+          <td class="col-pos">09</td>
           <td class="col-nome">
             <label for="tabela-principal-21297265277" class="nome">Lancheira Bolsa Térmica Para Marmita</label>
             <div class="loja">PORTA FECHADA.COM</div>
@@ -473,7 +522,7 @@
           <td class="col-num destaque">53%</td>
           <td class="col-num">5.0&#9733;</td>
           <td class="col-num">3</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/9pdsnCB0Nl" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/8fRwQkLtSV" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo">
           <td class="col-check">
@@ -483,7 +532,7 @@
               data-link="https://s.shopee.com.br/20v1SnepJ9"
               data-categoria="banheiro">
           </td>
-          <td class="col-pos">08</td>
+          <td class="col-pos">10</td>
           <td class="col-nome">
             <label for="tabela-principal-58206741724" class="nome">Torneira De Banheiro Para Cozinha Parede 1/4 Volta Valeplast</label>
             <div class="loja">QueroObra</div>
@@ -498,18 +547,18 @@
         <tr data-tier="alto">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-23193669351"
-              data-nome="Quadro Natureza Quadro Com Moldura E Vidro Quadro Decorativo Sala Quarto Casal Quadro Folhagem Trio" data-preco="229.52"
+              data-nome="Quadro Natureza Quadro Com Moldura E Vidro Quadro Decorativo Sala Quarto Casal Quadro Folhagem Trio" data-preco="226.65"
               data-comissao="44"
               data-link="https://s.shopee.com.br/AAGjBoN0Jz"
               data-categoria="pintura">
           </td>
-          <td class="col-pos">09</td>
+          <td class="col-pos">11</td>
           <td class="col-nome">
             <label for="tabela-principal-23193669351" class="nome">Quadro Natureza Quadro Com Moldura E Vidro Quadro Decorativo Sala Quarto Casal Quadro Folhagem Trio</label>
             <div class="loja">GQ Decoração</div>
           </td>
           <td class="col-tier"><span class="selo selo-alto">Alto</span></td>
-          <td class="col-num">R$&nbsp;229.52</td>
+          <td class="col-num">R$&nbsp;226.65</td>
           <td class="col-num destaque">44%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">74</td>
@@ -517,59 +566,39 @@
         </tr>
         <tr data-tier="baixo">
           <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-22997894569"
-              data-nome="Sifão Sanfonado Preto Ajustável Extensivo Flexível Pia Banheiro Cozinha Black - Astra" data-preco="17.01"
-              data-comissao="83"
-              data-link="https://s.shopee.com.br/30nX0t2UA7"
+            <input type="checkbox" class="chk-produto" id="tabela-principal-20398184435"
+              data-nome="Veda Trinca; fissuras; rachaduras; calhas galvanizadas; microfissuras; Branco" data-preco="20.99"
+              data-comissao="53"
+              data-link="https://s.shopee.com.br/5foKrEJyct"
               data-categoria="ferramentas">
           </td>
-          <td class="col-pos">10</td>
+          <td class="col-pos">12</td>
           <td class="col-nome">
-            <label for="tabela-principal-22997894569" class="nome">Sifão Sanfonado Preto Ajustável Extensivo Flexível Pia Banheiro Cozinha Black - Astra</label>
-            <div class="loja">centerbaluarte</div>
-          </td>
-          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;17.01</td>
-          <td class="col-num destaque">83%</td>
-          <td class="col-num">5.0&#9733;</td>
-          <td class="col-num">0</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/30nX0t2UA7" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
-        </tr>
-        <tr data-tier="alto">
-          <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-22898484053"
-              data-nome="Veda + Tec 4 em 1 Bi Componente Para Laje; Parede; caixa d'agua; piscina 20kg" data-preco="199.93"
-              data-comissao="55"
-              data-link="https://s.shopee.com.br/7fZODD1eeq"
-              data-categoria="ferramentas">
-          </td>
-          <td class="col-pos">11</td>
-          <td class="col-nome">
-            <label for="tabela-principal-22898484053" class="nome">Veda + Tec 4 em 1 Bi Componente Para Laje; Parede; caixa d'agua; piscina 20kg</label>
+            <label for="tabela-principal-20398184435" class="nome">Veda Trinca; fissuras; rachaduras; calhas galvanizadas; microfissuras; Branco</label>
             <div class="loja">Veda+ Impermeabilizantes</div>
           </td>
-          <td class="col-tier"><span class="selo selo-alto">Alto</span></td>
-          <td class="col-num">R$&nbsp;199.93</td>
-          <td class="col-num destaque">55%</td>
-          <td class="col-num">5.0&#9733;</td>
-          <td class="col-num">0</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/7fZODD1eeq" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-num">R$&nbsp;20.99</td>
+          <td class="col-num destaque">53%</td>
+          <td class="col-num">4.8&#9733;</td>
+          <td class="col-num">19</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/5foKrEJyct" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="alto">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-23393667285"
-              data-nome="Quadro Abstrato Para Sala Trio De Quadros Decorativos Com Moldura Quadro Moderno Arte Estilo Gesso" data-preco="226.65"
+              data-nome="Quadro Abstrato Para Sala Trio De Quadros Decorativos Com Moldura Quadro Moderno Arte Estilo Gesso" data-preco="229.52"
               data-comissao="42"
               data-link="https://s.shopee.com.br/gPdsLxAbG"
               data-categoria="pintura">
           </td>
-          <td class="col-pos">12</td>
+          <td class="col-pos">13</td>
           <td class="col-nome">
             <label for="tabela-principal-23393667285" class="nome">Quadro Abstrato Para Sala Trio De Quadros Decorativos Com Moldura Quadro Moderno Arte Estilo Gesso</label>
             <div class="loja">GQ Decoração</div>
           </td>
           <td class="col-tier"><span class="selo selo-alto">Alto</span></td>
-          <td class="col-num">R$&nbsp;226.65</td>
+          <td class="col-num">R$&nbsp;229.52</td>
           <td class="col-num destaque">42%</td>
           <td class="col-num">4.6&#9733;</td>
           <td class="col-num">15</td>
@@ -578,18 +607,18 @@
         <tr data-tier="alto">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-22998166030"
-              data-nome="Quadro Folhagem Com Moldura Quadro Natureza Para Sala Quarto Escritório Quadro Paisagem Floral Duo" data-preco="157.92"
+              data-nome="Quadro Folhagem Com Moldura Quadro Natureza Para Sala Quarto Escritório Quadro Paisagem Floral Duo" data-preco="159.92"
               data-comissao="41"
               data-link="https://s.shopee.com.br/qj44ewXGJ"
               data-categoria="pintura">
           </td>
-          <td class="col-pos">13</td>
+          <td class="col-pos">14</td>
           <td class="col-nome">
             <label for="tabela-principal-22998166030" class="nome">Quadro Folhagem Com Moldura Quadro Natureza Para Sala Quarto Escritório Quadro Paisagem Floral Duo</label>
             <div class="loja">GQ Decoração</div>
           </td>
           <td class="col-tier"><span class="selo selo-alto">Alto</span></td>
-          <td class="col-num">R$&nbsp;157.92</td>
+          <td class="col-num">R$&nbsp;159.92</td>
           <td class="col-num destaque">41%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">30</td>
@@ -600,10 +629,10 @@
             <input type="checkbox" class="chk-produto" id="tabela-principal-22598466115"
               data-nome="Cadeira de Escritorio Presidente Reclinavel Home Office Até 150kg Giratória Apoio Braço Encosto Cabeça Suporte Coluna" data-preco="399.92"
               data-comissao="44"
-              data-link="https://s.shopee.com.br/8Kp50RcmbI"
+              data-link="https://s.shopee.com.br/50Ye40viGM"
               data-categoria="moveis">
           </td>
-          <td class="col-pos">14</td>
+          <td class="col-pos">15</td>
           <td class="col-nome">
             <label for="tabela-principal-22598466115" class="nome">Cadeira de Escritorio Presidente Reclinavel Home Office Até 150kg Giratória Apoio Braço Encosto Cabeça Suporte Coluna</label>
             <div class="loja">VTO.VENDAS</div>
@@ -613,127 +642,107 @@
           <td class="col-num destaque">44%</td>
           <td class="col-num">4.6&#9733;</td>
           <td class="col-num">7</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/8Kp50RcmbI" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/50Ye40viGM" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo">
           <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-23594180518"
-              data-nome="🐱🐶 Kit Cortadores Biscoito Animais Boobie | Impressão 3D PLA | 5 Modelos | 6cm/8cm | Tamanho Personalizável 🍪✨" data-preco="19.20"
-              data-comissao="53"
-              data-link="https://s.shopee.com.br/9V12OaCH3j"
-              data-categoria="cozinha">
-          </td>
-          <td class="col-pos">15</td>
-          <td class="col-nome">
-            <label for="tabela-principal-23594180518" class="nome">🐱🐶 Kit Cortadores Biscoito Animais Boobie | Impressão 3D PLA | 5 Modelos | 6cm/8cm | Tamanho Personalizável 🍪✨</label>
-            <div class="loja">Biscoitoteca</div>
-          </td>
-          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;19.20</td>
-          <td class="col-num destaque">53%</td>
-          <td class="col-num">5.0&#9733;</td>
-          <td class="col-num">3</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/9V12OaCH3j" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
-        </tr>
-        <tr data-tier="baixo">
-          <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-58202787310"
-              data-nome="touca TNT 100 unidades" data-preco="15.00"
-              data-comissao="56"
-              data-link="https://s.shopee.com.br/AAGhY3ffgz"
-              data-categoria="banheiro">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-22998742789"
+              data-nome="Bucha 8mm Para Tijolo Bloco Parede Oca Com Parafuso 100 Pçs" data-preco="38.01"
+              data-comissao="35"
+              data-link="https://s.shopee.com.br/6L41eSHRH5"
+              data-categoria="ferramentas">
           </td>
           <td class="col-pos">16</td>
           <td class="col-nome">
-            <label for="tabela-principal-58202787310" class="nome">touca TNT 100 unidades</label>
-            <div class="loja">MaryEdy </div>
+            <label for="tabela-principal-22998742789" class="nome">Bucha 8mm Para Tijolo Bloco Parede Oca Com Parafuso 100 Pçs</label>
+            <div class="loja">ANANIAS TUDO</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;15.00</td>
-          <td class="col-num destaque">56%</td>
-          <td class="col-num">5.0&#9733;</td>
-          <td class="col-num">3</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/AAGhY3ffgz" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-num">R$&nbsp;38.01</td>
+          <td class="col-num destaque">35%</td>
+          <td class="col-num">4.9&#9733;</td>
+          <td class="col-num">9</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/6L41eSHRH5" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo">
           <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-23294365987"
-              data-nome="Kit c/3 Bucha Vegetal Natural para Banho Esfoliante - Cores Sortidas" data-preco="25.90"
-              data-comissao="46"
-              data-link="https://s.shopee.com.br/1gIB4Bg5yz"
-              data-categoria="banheiro">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-23194447770"
+              data-nome="Bucha  para Tijolo Oco Baiano 120 Peças Buchas 6-8 Bloco Vazado Parafuso Combo Bucha Bloco Furado" data-preco="31.92"
+              data-comissao="35"
+              data-link="https://s.shopee.com.br/6q0IFNFXGC"
+              data-categoria="ferramentas">
           </td>
           <td class="col-pos">17</td>
           <td class="col-nome">
-            <label for="tabela-principal-23294365987" class="nome">Kit c/3 Bucha Vegetal Natural para Banho Esfoliante - Cores Sortidas</label>
-            <div class="loja">Modinha de Bebê</div>
+            <label for="tabela-principal-23194447770" class="nome">Bucha  para Tijolo Oco Baiano 120 Peças Buchas 6-8 Bloco Vazado Parafuso Combo Bucha Bloco Furado</label>
+            <div class="loja">ANANIAS TUDO</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;25.90</td>
-          <td class="col-num destaque">46%</td>
+          <td class="col-num">R$&nbsp;31.92</td>
+          <td class="col-num destaque">35%</td>
           <td class="col-num">4.9&#9733;</td>
-          <td class="col-num">4</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/1gIB4Bg5yz" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-num">12</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/6q0IFNFXGC" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo">
           <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-58257613637"
-              data-nome="Porta Papel Higiênico Suporte Preto de Papel Para Banheiro " data-preco="10.91"
-              data-comissao="46"
-              data-link="https://s.shopee.com.br/1VykrsgjJy"
-              data-categoria="banheiro">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-22998742827"
+              data-nome="Kit Parafuso Phillips Com Bucha 6 6mm 50 100 200 Unidades" data-preco="20.72"
+              data-comissao="35"
+              data-link="https://s.shopee.com.br/6fgs34GAbB"
+              data-categoria="ferramentas">
           </td>
           <td class="col-pos">18</td>
           <td class="col-nome">
-            <label for="tabela-principal-58257613637" class="nome">Porta Papel Higiênico Suporte Preto de Papel Para Banheiro </label>
-            <div class="loja">Best Bazar & Papelaria</div>
+            <label for="tabela-principal-22998742827" class="nome">Kit Parafuso Phillips Com Bucha 6 6mm 50 100 200 Unidades</label>
+            <div class="loja">ANANIAS TUDO</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;10.91</td>
-          <td class="col-num destaque">46%</td>
-          <td class="col-num">5.0&#9733;</td>
+          <td class="col-num">R$&nbsp;20.72</td>
+          <td class="col-num destaque">35%</td>
+          <td class="col-num">4.8&#9733;</td>
           <td class="col-num">1</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/1VykrsgjJy" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/6fgs34GAbB" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo">
           <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-12168314632"
-              data-nome="Ralo redondo 10 x 10 inox" data-preco="29.50"
-              data-comissao="43"
-              data-link="https://s.shopee.com.br/2VrI3icvIC"
-              data-categoria="banheiro">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-23194447774"
+              data-nome="Kit Parafusos para Madeira MDF Móveis Marcenaria Parafuso Philips Chipboard 14 - 20 - 25 - 30 - 40mm" data-preco="30.32"
+              data-comissao="35"
+              data-link="https://s.shopee.com.br/7KwYqIDdFN"
+              data-categoria="ferramentas">
           </td>
           <td class="col-pos">19</td>
           <td class="col-nome">
-            <label for="tabela-principal-12168314632" class="nome">Ralo redondo 10 x 10 inox</label>
-            <div class="loja">Metais.Com</div>
+            <label for="tabela-principal-23194447774" class="nome">Kit Parafusos para Madeira MDF Móveis Marcenaria Parafuso Philips Chipboard 14 - 20 - 25 - 30 - 40mm</label>
+            <div class="loja">ANANIAS TUDO</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;29.50</td>
-          <td class="col-num destaque">43%</td>
-          <td class="col-num">5.0&#9733;</td>
+          <td class="col-num">R$&nbsp;30.32</td>
+          <td class="col-num destaque">35%</td>
+          <td class="col-num">4.9&#9733;</td>
           <td class="col-num">0</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/2VrI3icvIC" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/7KwYqIDdFN" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo">
           <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-58256725457"
-              data-nome="Sifão Universal Sanfonado Flexível Tubo Pia Cozinha Banheiro Lavatório Tanques Branco 71cm Valeplast" data-preco="14.99"
-              data-comissao="43"
-              data-link="https://s.shopee.com.br/80CEbpHz8K"
-              data-categoria="banheiro">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-22899121779"
+              data-nome="Kit C/300 Pregos (100) 10x10 (100) 12x12 (100) 15x15 Cod.1037" data-preco="31.92"
+              data-comissao="35"
+              data-link="https://s.shopee.com.br/8AVfppASYa"
+              data-categoria="ferramentas">
           </td>
           <td class="col-pos">20</td>
           <td class="col-nome">
-            <label for="tabela-principal-58256725457" class="nome">Sifão Universal Sanfonado Flexível Tubo Pia Cozinha Banheiro Lavatório Tanques Branco 71cm Valeplast</label>
-            <div class="loja">QueroObra</div>
+            <label for="tabela-principal-22899121779" class="nome">Kit C/300 Pregos (100) 10x10 (100) 12x12 (100) 15x15 Cod.1037</label>
+            <div class="loja">ANANIAS TUDO</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;14.99</td>
-          <td class="col-num destaque">43%</td>
-          <td class="col-num">4.9&#9733;</td>
-          <td class="col-num">10</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/80CEbpHz8K" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-num">R$&nbsp;31.92</td>
+          <td class="col-num destaque">35%</td>
+          <td class="col-num">5.0&#9733;</td>
+          <td class="col-num">0</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/8AVfppASYa" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         </tbody>
       </table>
