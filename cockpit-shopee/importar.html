@@ -36,9 +36,6 @@
     color: var(--text); font-family: "IBM Plex Sans", system-ui, sans-serif;
   }
   .wrap { max-width: 720px; margin: 0 auto; }
-  .voltar { font-family: "IBM Plex Mono", monospace; font-size: 0.8rem; color: var(--muted);
-    text-decoration: none; display: inline-block; margin-bottom: 16px; }
-  .voltar:hover { color: var(--accent-ink); }
   .cabecalho { border-bottom: 2px solid var(--border); padding-bottom: 20px; margin-bottom: 28px; }
   .eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; letter-spacing: 0.12em;
     text-transform: uppercase; color: var(--accent-ink); margin: 0 0 8px; font-weight: 600; }
@@ -84,11 +81,24 @@
   .instrucao a { color: var(--accent-ink); }
 
   .rodape { margin-top: 20px; font-size: 0.78rem; color: var(--muted); font-family: "IBM Plex Mono", monospace; }
+
+  .menu-cockpit { display: flex; gap: 4px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 4px; margin-bottom: 24px; flex-wrap: wrap; }
+  .menu-item { font-family: "IBM Plex Sans", sans-serif; font-size: 0.84rem; font-weight: 600;
+    color: var(--muted); text-decoration: none; padding: 8px 14px; border-radius: 6px; }
+  .menu-item:hover { color: var(--text); background: var(--bg); }
+  .menu-item.ativo { background: var(--accent); color: #fff; }
 </style>
 </head>
 <body>
   <div class="wrap">
-    <a class="voltar" href="index.html">&larr; Voltar pro cockpit</a>
+    <nav class="menu-cockpit">
+      <a class="menu-item" href="index.html">In&iacute;cio</a>
+      <a class="menu-item" href="painel.html">Produtos</a>
+      <a class="menu-item ativo" href="importar.html">Importar</a>
+      <a class="menu-item" href="painel_roi.html">ROI</a>
+      <a class="menu-item" href="https://claude.ai/code/artifact/a5421828-0ecd-4bd1-8c5f-d3a2799c26bf" target="_blank" rel="noopener">Identidade&nbsp;&#8599;</a>
+    </nav>
     <header class="cabecalho">
       <p class="eyebrow">Cockpit de Afiliação &middot; @papairesolve_br</p>
       <h1>Importar dados</h1>

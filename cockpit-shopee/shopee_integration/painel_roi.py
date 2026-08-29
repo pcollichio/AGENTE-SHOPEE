@@ -6,6 +6,7 @@ investido x comissão recebida, e ROI por produto/campanha.
 import json
 from datetime import date
 
+from . import nav
 from . import roi as roi_calc
 
 # Paleta de status reservada (fixa, não temática) — usada só pra estado
@@ -238,10 +239,12 @@ def gerar_html(investimentos, vendas, titulo="Painel de ROI — Papai Resolve"):
   .rodape {{ margin-top: 24px; font-size: 0.78rem; color: var(--muted); font-family: "IBM Plex Mono", monospace; }}
 
   @media (max-width: 640px) {{ .resumo {{ grid-template-columns: repeat(2, 1fr); }} }}
+{nav.MENU_CSS}
 </style>
 </head>
 <body>
   <div class="wrap">
+    {nav.gerar_menu_html("painel_roi.html")}
     <header class="cabecalho">
       <div>
         <p class="eyebrow">Cockpit de Afiliação &middot; @papairesolve_br</p>

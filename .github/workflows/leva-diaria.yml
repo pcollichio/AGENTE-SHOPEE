@@ -41,10 +41,13 @@ jobs:
       - name: Atualizar painel de ROI
         run: python gerar_roi.py
 
+      - name: Atualizar cockpit central (coach do dia)
+        run: python gerar_index.py
+
       - name: Salvar resultado no repositório
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add historico/ leva_do_dia.md painel.html painel_roi.html
-          git diff --cached --quiet || git commit -m "Atualiza leva de produtos e ROI do dia ($(date +%F))"
+          git add historico/ leva_do_dia.md painel.html painel_roi.html index.html
+          git diff --cached --quiet || git commit -m "Atualiza leva de produtos, ROI e cockpit do dia ($(date +%F))"
           git push

@@ -16,6 +16,7 @@
     --bom: #0ca30c; --bom-soft: #e3f6e0;
     --manual: #a5730a; --manual-soft: #fdf1d9;
     --proximo: #5b6b74; --proximo-soft: #e4e8e7;
+    --alta: #d03b3b; --alta-soft: #f8e2e2;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -26,6 +27,7 @@
       --bom: #3fbf8a; --bom-soft: #16332a;
       --manual: #e0b64b; --manual-soft: #3a2f13;
       --proximo: #93a2a9; --proximo-soft: #232c30;
+      --alta: #e0776a; --alta-soft: #3a201c;
     }
   }
   :root[data-theme="dark"] {
@@ -36,6 +38,7 @@
     --bom: #3fbf8a; --bom-soft: #16332a;
     --manual: #e0b64b; --manual-soft: #3a2f13;
     --proximo: #93a2a9; --proximo-soft: #232c30;
+    --alta: #e0776a; --alta-soft: #3a201c;
   }
   * { box-sizing: border-box; }
   body {
@@ -46,14 +49,38 @@
   }
   .wrap { max-width: 900px; margin: 0 auto; }
 
+  .menu-cockpit { display: flex; gap: 4px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 4px; margin-bottom: 24px; flex-wrap: wrap; }
+  .menu-item { font-family: "IBM Plex Sans", sans-serif; font-size: 0.84rem; font-weight: 600;
+    color: var(--muted); text-decoration: none; padding: 8px 14px; border-radius: 6px; }
+  .menu-item:hover { color: var(--text); background: var(--bg); }
+  .menu-item.ativo { background: var(--accent); color: #fff; }
+
   .cabecalho { display: flex; align-items: center; gap: 16px; border-bottom: 2px solid var(--border);
-    padding-bottom: 24px; margin-bottom: 8px; }
+    padding-bottom: 24px; margin-bottom: 28px; }
   svg.logo { flex-shrink: 0; }
   .cabecalho-texto .eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; letter-spacing: 0.12em;
     text-transform: uppercase; color: var(--accent-ink); margin: 0 0 6px; font-weight: 600; }
   h1 { font-family: "Archivo", sans-serif; font-weight: 800; font-size: 1.7rem; margin: 0; }
 
-  .legenda { display: flex; gap: 18px; flex-wrap: wrap; margin: 20px 0 32px; font-size: 0.8rem; color: var(--muted); }
+  .secao-titulo { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.1rem; margin: 0 0 4px; }
+  .secao-sub { color: var(--muted); font-size: 0.85rem; margin: 0 0 16px; }
+
+  .recomendacoes { display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }
+  .recomendacao { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--border);
+    border-radius: 8px; padding: 14px 18px; }
+  .recomendacao-alta { border-left-color: var(--alta); }
+  .recomendacao-topo { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+  .tag { font-family: "IBM Plex Mono", monospace; font-size: 0.65rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.05em; padding: 2px 8px; border-radius: 999px; }
+  .tag-alta { color: var(--alta); background: var(--alta-soft); }
+  .tag-normal { color: var(--muted); background: var(--proximo-soft); }
+  .recomendacao-titulo { font-weight: 600; font-size: 0.95rem; }
+  .recomendacao-desc { color: var(--muted); font-size: 0.85rem; margin: 0 0 8px; }
+  .recomendacao-link { font-size: 0.82rem; font-weight: 600; color: var(--accent-ink); text-decoration: none; }
+  .recomendacao-link:hover { text-decoration: underline; }
+
+  .legenda { display: flex; gap: 18px; flex-wrap: wrap; margin: 4px 0 20px; font-size: 0.8rem; color: var(--muted); }
   .legenda span { display: inline-flex; align-items: center; gap: 6px; }
   .ponto { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
   .ponto-bom { background: var(--bom); }
@@ -79,6 +106,8 @@
   .status-manual { color: var(--manual); background: var(--manual-soft); }
   .status-proximo { color: var(--proximo); background: var(--proximo-soft); }
   .etapa-desc { color: var(--muted); font-size: 0.88rem; margin: 4px 0 10px; max-width: 62ch; }
+  .etapa-desc code { font-family: "IBM Plex Mono", monospace; background: var(--accent-soft); color: var(--accent-ink);
+    padding: 1px 5px; border-radius: 3px; }
   .etapa-links { display: flex; gap: 10px; flex-wrap: wrap; }
   .etapa-links a { font-family: "IBM Plex Sans", sans-serif; font-size: 0.82rem; font-weight: 600;
     color: var(--accent-ink); text-decoration: none; border: 1px solid var(--accent-ink);
@@ -92,6 +121,8 @@
 </head>
 <body>
   <div class="wrap">
+    <nav class="menu-cockpit"><a class="menu-item ativo" href="index.html">Início</a><a class="menu-item" href="painel.html">Produtos</a><a class="menu-item" href="importar.html">Importar</a><a class="menu-item" href="painel_roi.html">ROI</a><a class="menu-item" href="https://claude.ai/code/artifact/a5421828-0ecd-4bd1-8c5f-d3a2799c26bf" target="_blank" rel="noopener">Identidade&nbsp;&#8599;</a></nav>
+
     <header class="cabecalho">
       <svg class="logo" width="44" height="44" viewBox="0 0 120 120" fill="none">
         <circle cx="60" cy="60" r="52" stroke="#a84e08" stroke-width="5"/>
@@ -104,6 +135,28 @@
       </div>
     </header>
 
+    <div class="secao-titulo">O que fazer hoje</div>
+    <p class="secao-sub">Atualizado 29/08/2026 &middot; calculado a partir dos seus dados reais</p>
+    <div class="recomendacoes">
+        <div class="recomendacao recomendacao-alta">
+          <div class="recomendacao-topo">
+            <span class="tag tag-alta">Prioridade</span>
+            <span class="recomendacao-titulo">Registrar seu primeiro investimento e venda</span>
+          </div>
+          <p class="recomendacao-desc">Ainda não há nenhum dado financeiro registrado — sem isso o painel de ROI fica vazio.</p>
+          <a class="recomendacao-link" href="importar.html">Importar dados &rarr;</a>
+        </div>
+        <div class="recomendacao recomendacao-normal">
+          <div class="recomendacao-topo">
+            <span class="tag tag-normal">Rotina</span>
+            <span class="recomendacao-titulo">Revisar os produtos do dia e marcar a esteira</span>
+          </div>
+          <p class="recomendacao-desc">Confira a leva de hoje no painel e marque o que vai virar conteúdo — o roteiro já sai pronto.</p>
+          <a class="recomendacao-link" href="painel.html">Abrir painel de produtos &rarr;</a>
+        </div>
+    </div>
+
+    <div class="secao-titulo">Como a esteira funciona, ponta a ponta</div>
     <div class="legenda">
       <span><span class="ponto ponto-bom"></span> Automático</span>
       <span><span class="ponto ponto-manual"></span> Manual (com apoio do cockpit)</span>
@@ -111,7 +164,6 @@
     </div>
 
     <div class="fluxo">
-
       <div class="etapa">
         <div class="etapa-marca">1</div>
         <div class="etapa-corpo">
@@ -120,13 +172,9 @@
             <span class="status status-bom">Automático</span>
           </div>
           <p class="etapa-desc">Todo dia às 9h, busca produtos reais do nicho, filtra fora do que não é casa &amp; construção, e monta a leva de 20 (baixo/médio/alto ticket).</p>
-          <div class="etapa-links">
-            <a href="painel.html">Ver painel de produtos</a>
-            <a href="historico/">Ver histórico</a>
-          </div>
+          <div class="etapa-links"><a href="painel.html">Ver painel de produtos</a><a href="historico/">Ver histórico</a></div>
         </div>
       </div>
-
       <div class="etapa">
         <div class="etapa-marca">2</div>
         <div class="etapa-corpo">
@@ -135,12 +183,9 @@
             <span class="status status-manual">Manual</span>
           </div>
           <p class="etapa-desc">Você marca os produtos no painel (ou adiciona um específico via <code>produtos_manuais.txt</code>) e baixa a seleção.</p>
-          <div class="etapa-links">
-            <a href="painel.html">Marcar produtos</a>
-          </div>
+          <div class="etapa-links"><a href="painel.html">Marcar produtos</a></div>
         </div>
       </div>
-
       <div class="etapa">
         <div class="etapa-marca">3</div>
         <div class="etapa-corpo">
@@ -149,12 +194,9 @@
             <span class="status status-bom">Automático</span>
           </div>
           <p class="etapa-desc">Ao baixar a seleção, cada produto já sai com o roteiro pronto (Problema &rarr; Agrava &rarr; Solução &rarr; Prova &rarr; Oferta), no modelo Papai Resolve.</p>
-          <div class="etapa-links">
-            <a href="painel.html">Fica dentro do painel de produtos</a>
-          </div>
+          <div class="etapa-links"><a href="painel.html">Fica dentro do painel de produtos</a></div>
         </div>
       </div>
-
       <div class="etapa">
         <div class="etapa-marca">4</div>
         <div class="etapa-corpo">
@@ -163,12 +205,9 @@
             <span class="status status-bom">Pronta</span>
           </div>
           <p class="etapa-desc">Logo, paleta e uma capa de exemplo pra Reels — pra usar como marca d'água e referência visual dos vídeos.</p>
-          <div class="etapa-links">
-            <a class="externo" href="https://claude.ai/code/artifact/a5421828-0ecd-4bd1-8c5f-d3a2799c26bf" target="_blank" rel="noopener">Ver identidade visual</a>
-          </div>
+          <div class="etapa-links"><a class="externo" target="_blank" rel="noopener" href="https://claude.ai/code/artifact/a5421828-0ecd-4bd1-8c5f-d3a2799c26bf">Ver identidade visual</a></div>
         </div>
       </div>
-
       <div class="etapa">
         <div class="etapa-marca">5</div>
         <div class="etapa-corpo">
@@ -177,9 +216,9 @@
             <span class="status status-manual">Manual</span>
           </div>
           <p class="etapa-desc">CapCut, usando o roteiro da etapa 3 e a mídia oficial do produto — narração por IA, sem precisar aparecer.</p>
+          
         </div>
       </div>
-
       <div class="etapa">
         <div class="etapa-marca">6</div>
         <div class="etapa-corpo">
@@ -188,9 +227,9 @@
             <span class="status status-proximo">Não construído</span>
           </div>
           <p class="etapa-desc">Instagram: publicação + impulsionamento manual por enquanto. WhatsApp (fila de mensagens com imagem + texto pro grupo): ainda não começamos.</p>
+          
         </div>
       </div>
-
       <div class="etapa">
         <div class="etapa-marca">7</div>
         <div class="etapa-corpo">
@@ -199,12 +238,9 @@
             <span class="status status-manual">Manual</span>
           </div>
           <p class="etapa-desc">Depois de impulsionar ou confirmar uma venda, registra aqui — vira uma linha pronta pra colar nos arquivos do financeiro.</p>
-          <div class="etapa-links">
-            <a href="importar.html">Importar dados</a>
-          </div>
+          <div class="etapa-links"><a href="importar.html">Importar dados</a></div>
         </div>
       </div>
-
       <div class="etapa">
         <div class="etapa-marca">8</div>
         <div class="etapa-corpo">
@@ -213,12 +249,9 @@
             <span class="status status-bom">Automático</span>
           </div>
           <p class="etapa-desc">Cruza investimento x comissão recebida, mostra o progresso da meta de R$10.000/mês e o ROI por produto (meta: 3x).</p>
-          <div class="etapa-links">
-            <a href="painel_roi.html">Ver painel de ROI</a>
-          </div>
+          <div class="etapa-links"><a href="painel_roi.html">Ver painel de ROI</a></div>
         </div>
       </div>
-
     </div>
 
     <p class="rodape">Cockpit de Afiliação IA-First &middot; @papairesolve_br &middot; Fase 1</p>

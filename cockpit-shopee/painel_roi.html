@@ -92,16 +92,25 @@
   .rodape { margin-top: 24px; font-size: 0.78rem; color: var(--muted); font-family: "IBM Plex Mono", monospace; }
 
   @media (max-width: 640px) { .resumo { grid-template-columns: repeat(2, 1fr); } }
+
+  .menu-cockpit { display: flex; gap: 4px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 4px; margin-bottom: 24px; flex-wrap: wrap; }
+  .menu-item { font-family: "IBM Plex Sans", sans-serif; font-size: 0.84rem; font-weight: 600;
+    color: var(--muted); text-decoration: none; padding: 8px 14px; border-radius: 6px; }
+  .menu-item:hover { color: var(--text); background: var(--bg); }
+  .menu-item.ativo { background: var(--accent); color: #fff; }
+
 </style>
 </head>
 <body>
   <div class="wrap">
+    <nav class="menu-cockpit"><a class="menu-item" href="index.html">Início</a><a class="menu-item" href="painel.html">Produtos</a><a class="menu-item" href="importar.html">Importar</a><a class="menu-item ativo" href="painel_roi.html">ROI</a><a class="menu-item" href="https://claude.ai/code/artifact/a5421828-0ecd-4bd1-8c5f-d3a2799c26bf" target="_blank" rel="noopener">Identidade&nbsp;&#8599;</a></nav>
     <header class="cabecalho">
       <div>
         <p class="eyebrow">Cockpit de Afiliação &middot; @papairesolve_br</p>
         <h1>Painel de ROI</h1>
       </div>
-      <p class="atualizado">Atualizado 28/08/2026</p>
+      <p class="atualizado">Atualizado 29/08/2026</p>
     </header>
 
     <div class="meta-card">

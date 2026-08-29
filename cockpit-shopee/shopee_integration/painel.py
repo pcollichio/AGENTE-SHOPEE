@@ -12,6 +12,8 @@ conteúdo (criativos e texto).
 import json
 from datetime import date
 
+from . import nav
+
 TIER_LABELS = {
     "baixo": "Baixo",
     "medio": "Médio",
@@ -466,10 +468,12 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
     .resumo {{ grid-template-columns: repeat(2, 1fr); }}
     .barra-selecao-conteudo {{ flex-direction: column; align-items: stretch; text-align: center; }}
   }}
+{nav.MENU_CSS}
 </style>
 </head>
 <body>
   <div class="wrap">
+    {nav.gerar_menu_html("painel.html")}
     <header class="cabecalho">
       <div>
         <p class="eyebrow">Cockpit de Afiliação &middot; @papairesolve_br</p>
