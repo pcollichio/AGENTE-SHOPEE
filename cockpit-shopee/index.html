@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cockpit Papai Resolve</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #eef1f0; --grid-line: rgba(20, 60, 90, 0.07); --card: #ffffff;
+    --text: #14202b; --muted: #5b6b74; --border: #d7dfe0;
+    --accent: #d9670c; --accent-ink: #a84e08; --accent-soft: #fbe7d4;
+    --focus: #1d64b0;
+    --bom: #0ca30c; --bom-soft: #e3f6e0;
+    --manual: #a5730a; --manual-soft: #fdf1d9;
+    --proximo: #5b6b74; --proximo-soft: #e4e8e7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
+      --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
+      --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
+      --focus: #6badf0;
+      --bom: #3fbf8a; --bom-soft: #16332a;
+      --manual: #e0b64b; --manual-soft: #3a2f13;
+      --proximo: #93a2a9; --proximo-soft: #232c30;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
+    --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
+    --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
+    --focus: #6badf0;
+    --bom: #3fbf8a; --bom-soft: #16332a;
+    --manual: #e0b64b; --manual-soft: #3a2f13;
+    --proximo: #93a2a9; --proximo-soft: #232c30;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 40px 24px 64px;
+    background: repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px), var(--bg);
+    color: var(--text); font-family: "IBM Plex Sans", system-ui, sans-serif;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; }
+
+  .cabecalho { display: flex; align-items: center; gap: 16px; border-bottom: 2px solid var(--border);
+    padding-bottom: 24px; margin-bottom: 8px; }
+  svg.logo { flex-shrink: 0; }
+  .cabecalho-texto .eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent-ink); margin: 0 0 6px; font-weight: 600; }
+  h1 { font-family: "Archivo", sans-serif; font-weight: 800; font-size: 1.7rem; margin: 0; }
+
+  .legenda { display: flex; gap: 18px; flex-wrap: wrap; margin: 20px 0 32px; font-size: 0.8rem; color: var(--muted); }
+  .legenda span { display: inline-flex; align-items: center; gap: 6px; }
+  .ponto { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .ponto-bom { background: var(--bom); }
+  .ponto-manual { background: var(--manual); }
+  .ponto-proximo { background: var(--proximo); }
+
+  .fluxo { display: flex; flex-direction: column; }
+  .etapa { display: flex; gap: 18px; position: relative; }
+  .etapa:not(:last-child)::before {
+    content: ''; position: absolute; left: 15px; top: 38px; bottom: -18px; width: 2px;
+    background: var(--border);
+  }
+  .etapa-marca { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: var(--card);
+    border: 2px solid var(--border); display: flex; align-items: center; justify-content: center;
+    font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; font-weight: 600; color: var(--muted);
+    z-index: 1; }
+  .etapa-corpo { flex: 1; padding-bottom: 26px; }
+  .etapa-topo { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+  .etapa-titulo { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.05rem; }
+  .status { font-family: "IBM Plex Mono", monospace; font-size: 0.68rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 9px; border-radius: 999px; }
+  .status-bom { color: var(--bom); background: var(--bom-soft); }
+  .status-manual { color: var(--manual); background: var(--manual-soft); }
+  .status-proximo { color: var(--proximo); background: var(--proximo-soft); }
+  .etapa-desc { color: var(--muted); font-size: 0.88rem; margin: 4px 0 10px; max-width: 62ch; }
+  .etapa-links { display: flex; gap: 10px; flex-wrap: wrap; }
+  .etapa-links a { font-family: "IBM Plex Sans", sans-serif; font-size: 0.82rem; font-weight: 600;
+    color: var(--accent-ink); text-decoration: none; border: 1px solid var(--accent-ink);
+    padding: 6px 14px; border-radius: 6px; }
+  .etapa-links a:hover { background: var(--accent-soft); }
+  .etapa-links a.externo::after { content: ' \2197'; }
+
+  .rodape { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border);
+    font-size: 0.78rem; color: var(--muted); font-family: "IBM Plex Mono", monospace; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="cabecalho">
+      <svg class="logo" width="44" height="44" viewBox="0 0 120 120" fill="none">
+        <circle cx="60" cy="60" r="52" stroke="#a84e08" stroke-width="5"/>
+        <circle cx="60" cy="60" r="42" stroke="#5b6b74" stroke-width="1.5" stroke-dasharray="2 6"/>
+        <path d="M38 62 L54 78 L86 40" stroke="#d9670c" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="cabecalho-texto">
+        <p class="eyebrow">Papai Resolve &middot; Casa &amp; Construção</p>
+        <h1>Cockpit de Afiliação</h1>
+      </div>
+    </header>
+
+    <div class="legenda">
+      <span><span class="ponto ponto-bom"></span> Automático</span>
+      <span><span class="ponto ponto-manual"></span> Manual (com apoio do cockpit)</span>
+      <span><span class="ponto ponto-proximo"></span> Ainda não construído</span>
+    </div>
+
+    <div class="fluxo">
+
+      <div class="etapa">
+        <div class="etapa-marca">1</div>
+        <div class="etapa-corpo">
+          <div class="etapa-topo">
+            <span class="etapa-titulo">Buscar produtos na Shopee</span>
+            <span class="status status-bom">Automático</span>
+          </div>
+          <p class="etapa-desc">Todo dia às 9h, busca produtos reais do nicho, filtra fora do que não é casa &amp; construção, e monta a leva de 20 (baixo/médio/alto ticket).</p>
+          <div class="etapa-links">
+            <a href="painel.html">Ver painel de produtos</a>
+            <a href="historico/">Ver histórico</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="etapa">
+        <div class="etapa-marca">2</div>
+        <div class="etapa-corpo">
+          <div class="etapa-topo">
+            <span class="etapa-titulo">Selecionar o que vai pra esteira</span>
+            <span class="status status-manual">Manual</span>
+          </div>
+          <p class="etapa-desc">Você marca os produtos no painel (ou adiciona um específico via <code>produtos_manuais.txt</code>) e baixa a seleção.</p>
+          <div class="etapa-links">
+            <a href="painel.html">Marcar produtos</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="etapa">
+        <div class="etapa-marca">3</div>
+        <div class="etapa-corpo">
+          <div class="etapa-topo">
+            <span class="etapa-titulo">Texto e roteiro</span>
+            <span class="status status-bom">Automático</span>
+          </div>
+          <p class="etapa-desc">Ao baixar a seleção, cada produto já sai com o roteiro pronto (Problema &rarr; Agrava &rarr; Solução &rarr; Prova &rarr; Oferta), no modelo Papai Resolve.</p>
+          <div class="etapa-links">
+            <a href="painel.html">Fica dentro do painel de produtos</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="etapa">
+        <div class="etapa-marca">4</div>
+        <div class="etapa-corpo">
+          <div class="etapa-topo">
+            <span class="etapa-titulo">Identidade visual</span>
+            <span class="status status-bom">Pronta</span>
+          </div>
+          <p class="etapa-desc">Logo, paleta e uma capa de exemplo pra Reels — pra usar como marca d'água e referência visual dos vídeos.</p>
+          <div class="etapa-links">
+            <a class="externo" href="https://claude.ai/code/artifact/a5421828-0ecd-4bd1-8c5f-d3a2799c26bf" target="_blank" rel="noopener">Ver identidade visual</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="etapa">
+        <div class="etapa-marca">5</div>
+        <div class="etapa-corpo">
+          <div class="etapa-topo">
+            <span class="etapa-titulo">Gravar/editar o vídeo</span>
+            <span class="status status-manual">Manual</span>
+          </div>
+          <p class="etapa-desc">CapCut, usando o roteiro da etapa 3 e a mídia oficial do produto — narração por IA, sem precisar aparecer.</p>
+        </div>
+      </div>
+
+      <div class="etapa">
+        <div class="etapa-marca">6</div>
+        <div class="etapa-corpo">
+          <div class="etapa-topo">
+            <span class="etapa-titulo">Publicar (Instagram / WhatsApp)</span>
+            <span class="status status-proximo">Não construído</span>
+          </div>
+          <p class="etapa-desc">Instagram: publicação + impulsionamento manual por enquanto. WhatsApp (fila de mensagens com imagem + texto pro grupo): ainda não começamos.</p>
+        </div>
+      </div>
+
+      <div class="etapa">
+        <div class="etapa-marca">7</div>
+        <div class="etapa-corpo">
+          <div class="etapa-topo">
+            <span class="etapa-titulo">Registrar investimento e vendas</span>
+            <span class="status status-manual">Manual</span>
+          </div>
+          <p class="etapa-desc">Depois de impulsionar ou confirmar uma venda, registra aqui — vira uma linha pronta pra colar nos arquivos do financeiro.</p>
+          <div class="etapa-links">
+            <a href="importar.html">Importar dados</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="etapa">
+        <div class="etapa-marca">8</div>
+        <div class="etapa-corpo">
+          <div class="etapa-topo">
+            <span class="etapa-titulo">Acompanhar ROI e meta mensal</span>
+            <span class="status status-bom">Automático</span>
+          </div>
+          <p class="etapa-desc">Cruza investimento x comissão recebida, mostra o progresso da meta de R$10.000/mês e o ROI por produto (meta: 3x).</p>
+          <div class="etapa-links">
+            <a href="painel_roi.html">Ver painel de ROI</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="rodape">Cockpit de Afiliação IA-First &middot; @papairesolve_br &middot; Fase 1</p>
+  </div>
+</body>
+</html>

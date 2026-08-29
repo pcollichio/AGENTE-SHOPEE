@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Importar dados — Cockpit Papai Resolve</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #eef1f0; --grid-line: rgba(20, 60, 90, 0.07); --card: #ffffff;
+    --text: #14202b; --muted: #5b6b74; --border: #d7dfe0;
+    --accent: #d9670c; --accent-ink: #a84e08; --accent-soft: #fbe7d4;
+    --focus: #1d64b0; --sucesso: #0ca30c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
+      --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
+      --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
+      --focus: #6badf0; --sucesso: #3fbf8a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
+    --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
+    --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
+    --focus: #6badf0; --sucesso: #3fbf8a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 40px 24px 64px;
+    background: repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px), var(--bg);
+    color: var(--text); font-family: "IBM Plex Sans", system-ui, sans-serif;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  .voltar { font-family: "IBM Plex Mono", monospace; font-size: 0.8rem; color: var(--muted);
+    text-decoration: none; display: inline-block; margin-bottom: 16px; }
+  .voltar:hover { color: var(--accent-ink); }
+  .cabecalho { border-bottom: 2px solid var(--border); padding-bottom: 20px; margin-bottom: 28px; }
+  .eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent-ink); margin: 0 0 8px; font-weight: 600; }
+  h1 { font-family: "Archivo", sans-serif; font-weight: 800; font-size: 1.7rem; margin: 0 0 8px; }
+  .subtitulo { color: var(--muted); font-size: 0.92rem; margin: 0; max-width: 60ch; }
+
+  .cartao { background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 24px 28px; margin-bottom: 24px; }
+  .cartao h2 { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.1rem; margin: 0 0 4px; }
+  .cartao .destino { font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; color: var(--muted);
+    margin: 0 0 20px; }
+  .cartao .destino code { background: var(--accent-soft); color: var(--accent-ink); padding: 1px 5px; border-radius: 3px; }
+
+  .campo { margin-bottom: 14px; }
+  .campo label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 6px; }
+  .campo input {
+    width: 100%; font-family: "IBM Plex Sans", sans-serif; font-size: 0.92rem;
+    padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px;
+    background: var(--bg); color: var(--text);
+  }
+  .campo input:focus { outline: 2px solid var(--focus); outline-offset: 1px; }
+  .linha-dupla { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .btn-gerar { font-family: "IBM Plex Sans", sans-serif; font-size: 0.88rem; font-weight: 600;
+    background: var(--accent); color: #fff; border: none; padding: 11px 20px; border-radius: 7px;
+    cursor: pointer; margin-top: 6px; }
+  .btn-gerar:hover { background: var(--accent-ink); }
+
+  .resultado { margin-top: 18px; display: none; }
+  .resultado.visivel { display: block; }
+  .resultado-linha {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.85rem; background: var(--bg);
+    border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px;
+    word-break: break-all; margin-bottom: 10px;
+  }
+  .btn-copiar { font-family: "IBM Plex Sans", sans-serif; font-size: 0.82rem; font-weight: 600;
+    background: transparent; color: var(--accent-ink); border: 1px solid var(--accent-ink);
+    padding: 8px 16px; border-radius: 6px; cursor: pointer; }
+  .btn-copiar:hover { background: var(--accent-soft); }
+  .btn-copiar.copiado { color: var(--sucesso); border-color: var(--sucesso); }
+
+  .instrucao { font-size: 0.82rem; color: var(--muted); margin-top: 12px; line-height: 1.5; }
+  .instrucao a { color: var(--accent-ink); }
+
+  .rodape { margin-top: 20px; font-size: 0.78rem; color: var(--muted); font-family: "IBM Plex Mono", monospace; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="voltar" href="index.html">&larr; Voltar pro cockpit</a>
+    <header class="cabecalho">
+      <p class="eyebrow">Cockpit de Afiliação &middot; @papairesolve_br</p>
+      <h1>Importar dados</h1>
+      <p class="subtitulo">Preenche o formulário, copia a linha gerada e cola no arquivo certo do GitHub. Sem precisar me chamar toda vez.</p>
+    </header>
+
+    <section class="cartao">
+      <h2>Registrar investimento (impulsionamento)</h2>
+      <p class="destino">Vai para <code>financeiro/investimentos.csv</code></p>
+      <div class="linha-dupla">
+        <div class="campo">
+          <label for="inv-data">Data</label>
+          <input type="date" id="inv-data">
+        </div>
+        <div class="campo">
+          <label for="inv-valor">Valor investido (R$)</label>
+          <input type="number" id="inv-valor" step="0.01" placeholder="20.00">
+        </div>
+      </div>
+      <div class="campo">
+        <label for="inv-produto">Produto ou campanha</label>
+        <input type="text" id="inv-produto" placeholder="Sifão Ajustável Universal">
+      </div>
+      <div class="campo">
+        <label for="inv-obs">Observação (opcional)</label>
+        <input type="text" id="inv-obs" placeholder="Impulsionamento post Instagram">
+      </div>
+      <button class="btn-gerar" onclick="gerarLinha('inv')">Gerar linha</button>
+      <div class="resultado" id="inv-resultado">
+        <div class="resultado-linha" id="inv-linha"></div>
+        <button class="btn-copiar" id="inv-btn-copiar" onclick="copiar('inv')">Copiar linha</button>
+      </div>
+    </section>
+
+    <section class="cartao">
+      <h2>Registrar venda (comissão confirmada)</h2>
+      <p class="destino">Vai para <code>financeiro/vendas.csv</code></p>
+      <div class="linha-dupla">
+        <div class="campo">
+          <label for="ven-data">Data</label>
+          <input type="date" id="ven-data">
+        </div>
+        <div class="campo">
+          <label for="ven-valor">Comissão recebida (R$)</label>
+          <input type="number" id="ven-valor" step="0.01" placeholder="15.50">
+        </div>
+      </div>
+      <div class="campo">
+        <label for="ven-produto">Produto</label>
+        <input type="text" id="ven-produto" placeholder="Sifão Ajustável Universal">
+      </div>
+      <div class="campo">
+        <label for="ven-obs">Observação (opcional)</label>
+        <input type="text" id="ven-obs" placeholder="Confirmado no painel Shopee">
+      </div>
+      <button class="btn-gerar" onclick="gerarLinha('ven')">Gerar linha</button>
+      <div class="resultado" id="ven-resultado">
+        <div class="resultado-linha" id="ven-linha"></div>
+        <button class="btn-copiar" id="ven-btn-copiar" onclick="copiar('ven')">Copiar linha</button>
+      </div>
+    </section>
+
+    <p class="instrucao">
+      <b>Como colar no GitHub:</b> abra o arquivo (<code>financeiro/investimentos.csv</code> ou
+      <code>financeiro/vendas.csv</code>) no repositório, clique no ícone de lápis (editar),
+      clique no final da última linha, aperte Enter para pular linha, cole (Ctrl+V ou Cmd+V),
+      e clique em "Commit changes" no final da página.
+    </p>
+
+    <p class="rodape">Gera só o texto da linha — nada é salvo automaticamente por esta página.</p>
+  </div>
+
+  <script>
+    function escaparCsv(valor) {
+      valor = (valor || '').trim();
+      if (valor.includes(',') || valor.includes('"')) {
+        return '"' + valor.replace(/"/g, '""') + '"';
+      }
+      return valor;
+    }
+
+    function gerarLinha(prefixo) {
+      var data = document.getElementById(prefixo + '-data').value;
+      var produto = document.getElementById(prefixo + '-produto').value;
+      var valor = document.getElementById(prefixo + '-valor').value;
+      var obs = document.getElementById(prefixo + '-obs').value;
+
+      if (!data || !produto || !valor) {
+        alert('Preenche pelo menos a data, o produto e o valor.');
+        return;
+      }
+
+      var valorNum = parseFloat(valor).toFixed(2);
+      var linha = [data, escaparCsv(produto), valorNum, escaparCsv(obs)].join(',');
+
+      document.getElementById(prefixo + '-linha').textContent = linha;
+      document.getElementById(prefixo + '-resultado').classList.add('visivel');
+      var btn = document.getElementById(prefixo + '-btn-copiar');
+      btn.textContent = 'Copiar linha';
+      btn.classList.remove('copiado');
+    }
+
+    function copiar(prefixo) {
+      var texto = document.getElementById(prefixo + '-linha').textContent;
+      var btn = document.getElementById(prefixo + '-btn-copiar');
+      navigator.clipboard.writeText(texto).then(function () {
+        btn.textContent = 'Copiado!';
+        btn.classList.add('copiado');
+      }).catch(function () {
+        alert('Não consegui copiar automaticamente. Seleciona o texto acima e copia manualmente.');
+      });
+    }
+  </script>
+</body>
+</html>

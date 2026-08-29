@@ -1,47 +1,39 @@
-# Cockpit Shopee — Integração inicial (Fase 1)
+# Cockpit de Afiliação IA-First — Papai Resolve (Fase 1)
 
-## O que já está pronto
+## Comece aqui
 
-- `shopee_integration/config.py` — gerencia credenciais (usa dados mockados
-  automaticamente até você configurar a API real)
-- `shopee_integration/mock_data.py` — 8 produtos simulados do nicho casa e
-  construção, no formato esperado da API real
-- `shopee_integration/client.py` — funções de busca de produtos, comissão,
-  indicadores de venda e geração de link de afiliado
-- `shopee_integration/curadoria.py` — aplica os critérios do blueprint
-  (comissão, avaliação, vendas, faixa de preço, frete grátis) e ranqueia
-  os melhores produtos do dia
-- `demo.py` — script pronto para rodar e ver tudo funcionando
+Abra **`index.html`** — é o painel central que mostra o fluxo inteiro,
+o que já é automático e o que ainda depende de você, com link pra cada
+parte.
 
-## Como rodar
+## As partes do sistema
+
+- **`index.html`** — visão geral do fluxo completo
+- **`painel.html`** — produtos do dia (gerado automaticamente todo dia
+  às 9h), com seleção e roteiro pronto pra esteira de conteúdo
+- **`importar.html`** — formulário simples pra registrar investimento em
+  campanha e vendas confirmadas
+- **`painel_roi.html`** — progresso da meta mensal e ROI por produto
+- `buscar_leva_lancamento.py` — busca os produtos reais na Shopee
+- `gerar_roi.py` — calcula o ROI a partir dos arquivos em `financeiro/`
+- `sincronizar_vendas.py` — tenta puxar vendas reais direto da Shopee
+  (experimental, ainda sendo validado contra a API)
+- `financeiro/` — onde ficam os dados de investimento e vendas
+  (`README.md` ali explica o formato)
+- `produtos_manuais.txt` / `produtos_excluir.txt` — ajustes finos da
+  curadoria automática
+
+## Automação
+
+Um workflow do GitHub Actions (`.github/workflows/leva-diaria.yml`)
+roda `buscar_leva_lancamento.py` e `gerar_roi.py` todo dia de manhã,
+usando as credenciais guardadas como Secrets do repositório.
+
+## Testar localmente
 
 ```bash
-python demo.py
+pip install -r requirements.txt
+python buscar_leva_lancamento.py   # busca produtos (precisa de USE_MOCK_DATA=false + credenciais)
+python gerar_roi.py                # gera o painel de ROI
+python demo.py                     # demonstração com dados simulados
 ```
-
-Isso vai imprimir os 5 melhores produtos do dia (por enquanto com dados
-simulados), já com o link de afiliado pronto para colar no Creatify.
-
-## Quando a Shopee aprovar sua API
-
-1. Crie um arquivo `.env` na raiz do projeto com:
-   ```
-   SHOPEE_APP_ID=seu_app_id_real
-   SHOPEE_APP_SECRET=seu_app_secret_real
-   USE_MOCK_DATA=false
-   ```
-2. Rode `pip install python-dotenv` (para carregar o `.env` automaticamente)
-3. Em `shopee_integration/client.py`, procure os comentários `# TODO:` —
-   é ali que entra a chamada real à API GraphQL da Shopee, substituindo os
-   dados mockados
-
-Nenhuma outra parte do código precisa mudar — a curadoria e o resto do
-sistema já foram construídos para funcionar igual, seja com dados mockados
-ou reais.
-
-## Próximo passo sugerido
-
-- Ajustar `curadoria.py` se quiser mudar os pesos dos critérios de score
-- Pegar os links de afiliado gerados pelo `demo.py` e testar no Creatify
-- Depois: começar o dashboard web que exibe isso visualmente (ao invés de
-  só imprimir no terminal)
