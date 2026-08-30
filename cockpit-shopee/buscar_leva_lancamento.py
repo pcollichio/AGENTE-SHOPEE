@@ -124,7 +124,12 @@ def buscar_produtos_do_nicho():
 
 def montar_leva_variada(quantidade_total=QUANTIDADE_TOTAL):
     """Busca produtos do nicho e seleciona os melhores, distribuídos entre
-    ticket baixo/médio/alto, para dar opções de preço variadas."""
+    ticket baixo/médio/alto, para dar opções de preço variadas.
+
+    Devolve (selecionados, qualificados): os 20 escolhidos para a leva do
+    dia, e o conjunto completo de produtos que passaram no filtro de
+    qualidade (comissão + avaliação) — esse segundo grupo é a base do
+    "produto aleatório" no painel, pra ter opções além dos 20 fixos."""
     produtos = buscar_produtos_do_nicho()
 
     # Critério mínimo de qualidade (comissão e avaliação); sem filtro de
@@ -164,7 +169,7 @@ def montar_leva_variada(quantidade_total=QUANTIDADE_TOTAL):
         selecionados.extend(restantes[:faltam])
 
     selecionados.sort(key=lambda p: p["score"], reverse=True)
-    return selecionados
+    return selecionados, qualificados
 
 
 def carregar_termos_manuais(caminho=ARQUIVO_PRODUTOS_MANUAIS):
@@ -245,7 +250,7 @@ def main():
         )
         return
 
-    leva = montar_leva_variada()
+    leva, qualificados = montar_leva_variada()
 
     termos_manuais = carregar_termos_manuais()
     extras = buscar_produtos_manuais(
@@ -269,6 +274,14 @@ def main():
     # commitar e não quebrar a automação.
     caminho_painel = painel.salvar_painel(leva, "painel.html", extras=extras)
     print(f"Painel visual salvo em: {caminho_painel}", file=sys.stderr)
+
+    # Banco de produtos pro botão "produto aleatório" do painel: tudo que
+    # passou no filtro de qualidade mas não entrou na leva fixa de hoje
+    # (nem nos extras manuais) — dá pra sortear algo diferente dos 20.
+    ids_na_leva = {p["product_id"] for p in leva} | {p["product_id"] for p in extras}
+    banco_aleatorio = [p for p in qualificados if p["product_id"] not in ids_na_leva]
+    caminho_pool = painel.salvar_pool_json(banco_aleatorio, "produtos_pool.json")
+    print(f"Banco de produtos aleatórios salvo em: {caminho_pool}", file=sys.stderr)
 
 
 if __name__ == "__main__":

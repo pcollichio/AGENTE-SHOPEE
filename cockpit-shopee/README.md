@@ -13,7 +13,9 @@ de verdade com o coach (veja "O chat com IA" abaixo pra colocar no ar).
 - **`index.html`** — visão geral do fluxo completo ("o que fazer hoje")
 - **`chat.html`** — chat de verdade com o coach (usa `api/chat.js`)
 - **`painel.html`** — produtos do dia (gerado automaticamente todo dia
-  às 9h), com foto, seleção e roteiro pronto pra esteira de conteúdo
+  às 9h), com foto, seleção, roteiro pronto pra esteira de conteúdo e um
+  botão "Sortear produto" pra ver opções fora da leva fixa dos 20
+  (banco em `produtos_pool.json`, gerado junto)
 - **`importar.html`** — formulário simples pra registrar investimento em
   campanha e vendas confirmadas
 - **`painel_roi.html`** — progresso da meta mensal e ROI por produto

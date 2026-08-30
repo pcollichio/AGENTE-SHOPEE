@@ -478,6 +478,29 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
   .btn-baixar:disabled {{ opacity: 0.4; cursor: not-allowed; }}
   .btn-baixar:focus-visible {{ outline: 2px solid #fff; outline-offset: 2px; }}
 
+  .aleatorio-caixa {{
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px; margin-bottom: 36px;
+  }}
+  .aleatorio-vazio {{ color: var(--muted); font-size: 0.88rem; margin: 0 0 16px; }}
+  .aleatorio-cartao-conteudo {{
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 16px;
+  }}
+  .aleatorio-cartao-conteudo .foto-produto {{ width: 64px; height: 64px; }}
+  .aleatorio-info {{ flex: 1; min-width: 180px; }}
+  .aleatorio-meta {{ display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    font-size: 0.85rem; margin-top: 4px; }}
+  .aleatorio-abrir {{ font-size: 0.85rem; font-weight: 600; color: var(--accent-ink); text-decoration: none;
+    white-space: nowrap; }}
+  .aleatorio-abrir:hover {{ text-decoration: underline; }}
+  .btn-sortear {{
+    font-family: "IBM Plex Sans", sans-serif; font-size: 0.85rem; font-weight: 600;
+    background: var(--accent-soft); color: var(--accent-ink); border: 1px solid var(--accent);
+    padding: 10px 18px; border-radius: 7px; cursor: pointer;
+  }}
+  .btn-sortear:disabled {{ opacity: 0.5; cursor: not-allowed; }}
+  .aleatorio-aviso {{ color: var(--muted); font-size: 0.82rem; margin: 10px 0 0; }}
+
   @media (max-width: 640px) {{
     .resumo {{ grid-template-columns: repeat(2, 1fr); }}
     .barra-selecao-conteudo {{ flex-direction: column; align-items: stretch; text-align: center; }}
@@ -505,6 +528,15 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
 
     {tabela_principal_html}
     {secao_extras_html}
+
+    <h2 class="titulo-secao">Produto aleatório</h2>
+    <p class="descricao-secao">Fora da leva fixa de hoje — sorteia uma opção diferente do banco de produtos que também passou no filtro de qualidade.</p>
+    <div class="aleatorio-caixa">
+      <div class="aleatorio-vazio" id="aleatorio-vazio">Clique no botão para sortear um produto.</div>
+      <div id="aleatorio-cartao"></div>
+      <button class="btn-sortear" id="btn-sortear" type="button">&#127922; Sortear produto</button>
+      <p class="aleatorio-aviso" id="aleatorio-aviso" hidden></p>
+    </div>
 
     <p class="rodape">Gerado a partir da Shopee Affiliate API &middot; Cockpit de Afiliação IA-First</p>
   </div>
@@ -568,6 +600,144 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
       ].join('\\n');
     }}
 
+    (function () {{
+      var botaoSortear = document.getElementById('btn-sortear');
+      var caixaVazia = document.getElementById('aleatorio-vazio');
+      var caixaCartao = document.getElementById('aleatorio-cartao');
+      var aviso = document.getElementById('aleatorio-aviso');
+      var pool = null;
+      var jaSorteados = [];
+
+      function mostrarAviso(texto) {{
+        aviso.textContent = texto;
+        aviso.hidden = false;
+      }}
+
+      function criarSelo(tier) {{
+        var rotulos = {{ baixo: 'Baixo', medio: 'Médio', alto: 'Alto' }};
+        var span = document.createElement('span');
+        span.className = 'selo selo-' + tier;
+        span.textContent = rotulos[tier] || tier;
+        return span;
+      }}
+
+      function montarCartao(p) {{
+        var rowId = 'aleatorio-' + p.product_id;
+
+        var chk = document.createElement('input');
+        chk.type = 'checkbox';
+        chk.className = 'chk-produto';
+        chk.id = rowId;
+        chk.setAttribute('data-nome', p.name || '(sem nome)');
+        chk.setAttribute('data-preco', Number(p.price || 0).toFixed(2));
+        chk.setAttribute('data-comissao', Math.round((p.commission_rate || 0) * 100));
+        chk.setAttribute('data-link', p.affiliate_link || '');
+        chk.setAttribute('data-categoria', p.termo_busca || '');
+        chk.addEventListener('change', atualizarBarraSelecao);
+
+        var linkFoto = document.createElement('a');
+        linkFoto.href = p.affiliate_link || '#';
+        linkFoto.target = '_blank';
+        linkFoto.rel = 'noopener';
+        var foto = document.createElement('img');
+        foto.className = 'foto-produto';
+        foto.loading = 'lazy';
+        foto.alt = '';
+        foto.src = p.image_url || '';
+        foto.onerror = function () {{ foto.style.display = 'none'; }};
+        linkFoto.appendChild(foto);
+
+        var label = document.createElement('label');
+        label.setAttribute('for', rowId);
+        label.className = 'nome';
+        label.textContent = p.name || '(sem nome)';
+
+        var loja = document.createElement('div');
+        loja.className = 'loja';
+        loja.textContent = p.shop_name || '';
+
+        var meta = document.createElement('div');
+        meta.className = 'aleatorio-meta';
+        meta.appendChild(criarSelo(p.tier));
+        var preco = document.createElement('span');
+        preco.textContent = 'R$ ' + Number(p.price || 0).toFixed(2);
+        meta.appendChild(preco);
+        var comissao = document.createElement('span');
+        comissao.className = 'destaque';
+        comissao.textContent = Math.round((p.commission_rate || 0) * 100) + '%';
+        meta.appendChild(comissao);
+        var avaliacao = document.createElement('span');
+        avaliacao.textContent = Number(p.rating || 0).toFixed(1) + '\\u2605';
+        meta.appendChild(avaliacao);
+        var vendidos = document.createElement('span');
+        vendidos.textContent = (p.total_sold || 0).toLocaleString('pt-BR') + ' vendidos';
+        meta.appendChild(vendidos);
+
+        var info = document.createElement('div');
+        info.className = 'aleatorio-info';
+        info.appendChild(label);
+        info.appendChild(loja);
+        info.appendChild(meta);
+
+        var abrir = document.createElement('a');
+        abrir.className = 'aleatorio-abrir';
+        abrir.href = p.affiliate_link || '#';
+        abrir.target = '_blank';
+        abrir.rel = 'noopener';
+        abrir.textContent = 'Abrir \\u2197';
+
+        var conteudo = document.createElement('div');
+        conteudo.className = 'aleatorio-cartao-conteudo';
+        conteudo.appendChild(chk);
+        conteudo.appendChild(linkFoto);
+        conteudo.appendChild(info);
+        conteudo.appendChild(abrir);
+
+        caixaCartao.innerHTML = '';
+        caixaCartao.appendChild(conteudo);
+        caixaVazia.hidden = true;
+        atualizarBarraSelecao();
+      }}
+
+      function sortear() {{
+        if (!pool || pool.length === 0) {{
+          mostrarAviso('Não há produtos no banco de hoje além da leva fixa.');
+          return;
+        }}
+        var disponiveis = pool.filter(function (p) {{ return jaSorteados.indexOf(p.product_id) === -1; }});
+        if (disponiveis.length === 0) {{
+          jaSorteados = [];
+          disponiveis = pool;
+        }}
+        var escolhido = disponiveis[Math.floor(Math.random() * disponiveis.length)];
+        jaSorteados.push(escolhido.product_id);
+        montarCartao(escolhido);
+      }}
+
+      botaoSortear.addEventListener('click', function () {{
+        if (pool !== null) {{
+          sortear();
+          return;
+        }}
+        botaoSortear.disabled = true;
+        fetch('produtos_pool.json')
+          .then(function (resposta) {{
+            if (!resposta.ok) throw new Error('não encontrado');
+            return resposta.json();
+          }})
+          .then(function (dados) {{
+            pool = dados;
+            botaoSortear.disabled = false;
+            sortear();
+          }})
+          .catch(function () {{
+            pool = [];
+            botaoSortear.disabled = false;
+            mostrarAviso('Banco de produtos ainda não disponível — ele é gerado junto com a leva do dia.');
+          }});
+      }});
+    }})();
+
     document.getElementById('btn-baixar-selecao').addEventListener('click', function () {{
       var marcados = document.querySelectorAll('.chk-produto:checked');
       var hoje = new Date().toISOString().slice(0, 10);
@@ -612,4 +782,20 @@ def salvar_painel(produtos, caminho, extras=None, titulo="Painel Shopee — Casa
     html = gerar_html(produtos, extras=extras, titulo=titulo)
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(html)
+    return caminho
+
+
+CAMPOS_POOL = (
+    "product_id", "name", "shop_name", "price", "commission_rate",
+    "rating", "total_sold", "affiliate_link", "image_url", "tier", "termo_busca",
+)
+
+
+def salvar_pool_json(produtos, caminho="produtos_pool.json"):
+    """Salva o banco de produtos que passaram no filtro de qualidade mas
+    não entraram na leva fixa do dia — é nele que o botão "Sortear outro
+    produto" do painel busca opções."""
+    pool = [{campo: p.get(campo) for campo in CAMPOS_POOL} for p in produtos]
+    with open(caminho, "w", encoding="utf-8") as f:
+        json.dump(pool, f, ensure_ascii=False, indent=2)
     return caminho
