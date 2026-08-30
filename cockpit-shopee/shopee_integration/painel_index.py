@@ -11,15 +11,21 @@ from . import coach, nav
 PRIORIDADE_LABEL = {"alta": "Prioridade", "normal": "Rotina"}
 
 
-def _cartao_recomendacao(r):
+def _cartao_recomendacao(r, indice):
     destaque = "alta" if r["prioridade"] == "alta" else "normal"
+    tarefa_id = f"tarefa-{indice}"
     return f"""
-        <div class="recomendacao recomendacao-{destaque}">
-          <div class="recomendacao-topo">
-            <span class="tag tag-{destaque}">{PRIORIDADE_LABEL[r['prioridade']]}</span>
-            <span class="recomendacao-titulo">{r['titulo']}</span>
-          </div>
-          <p class="recomendacao-desc">{r['descricao']}</p>
+        <div class="recomendacao recomendacao-{destaque}" data-tarefa-id="{tarefa_id}">
+          <label class="recomendacao-check">
+            <input type="checkbox" class="chk-tarefa" data-tarefa-id="{tarefa_id}">
+            <div class="recomendacao-corpo">
+              <div class="recomendacao-topo">
+                <span class="tag tag-{destaque}">{PRIORIDADE_LABEL[r['prioridade']]}</span>
+                <span class="recomendacao-titulo">{r['titulo']}</span>
+              </div>
+              <p class="recomendacao-desc">{r['descricao']}</p>
+            </div>
+          </label>
           <a class="recomendacao-link" href="{r['link']}">{r['rotulo_link']} &rarr;</a>
         </div>"""
 
@@ -94,7 +100,9 @@ def _etapa_html(numero, etapa):
 
 def gerar_html():
     recomendacoes = coach.gerar_recomendacoes()
-    recomendacoes_html = "".join(_cartao_recomendacao(r) for r in recomendacoes)
+    recomendacoes_html = "".join(
+        _cartao_recomendacao(r, i) for i, r in enumerate(recomendacoes)
+    )
     etapas_html = "".join(_etapa_html(i, e) for i, e in enumerate(ETAPAS, start=1))
 
     return f"""<!doctype html>
@@ -157,11 +165,20 @@ def gerar_html():
 
   .secao-titulo {{ font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.1rem; margin: 0 0 4px; }}
   .secao-sub {{ color: var(--muted); font-size: 0.85rem; margin: 0 0 16px; }}
+  .secao-topo-flex {{ display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }}
+  .progresso-dia {{ font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; font-weight: 600;
+    color: var(--accent-ink); background: var(--accent-soft); padding: 6px 12px; border-radius: 999px;
+    white-space: nowrap; }}
 
   .recomendacoes {{ display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }}
   .recomendacao {{ background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--border);
-    border-radius: 8px; padding: 14px 18px; }}
+    border-radius: 8px; padding: 14px 18px; display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap; }}
   .recomendacao-alta {{ border-left-color: var(--alta); }}
+  .recomendacao-check {{ display: flex; align-items: flex-start; gap: 12px; cursor: pointer; flex: 1; min-width: 220px; }}
+  .chk-tarefa {{ margin-top: 3px; width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }}
+  .recomendacao.concluida {{ opacity: 0.55; }}
+  .recomendacao.concluida .recomendacao-titulo {{ text-decoration: line-through; }}
   .recomendacao-topo {{ display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }}
   .tag {{ font-family: "IBM Plex Mono", monospace; font-size: 0.65rem; font-weight: 600; text-transform: uppercase;
     letter-spacing: 0.05em; padding: 2px 8px; border-radius: 999px; }}
@@ -227,9 +244,14 @@ def gerar_html():
       </div>
     </header>
 
-    <div class="secao-titulo">O que fazer hoje</div>
-    <p class="secao-sub">Atualizado {date.today().strftime('%d/%m/%Y')} &middot; calculado a partir dos seus dados reais</p>
-    <div class="recomendacoes">{recomendacoes_html}
+    <div class="secao-topo-flex">
+      <div>
+        <div class="secao-titulo">O que fazer hoje</div>
+        <p class="secao-sub">Atualizado {date.today().strftime('%d/%m/%Y')} &middot; calculado a partir dos seus dados reais</p>
+      </div>
+      <div class="progresso-dia" id="progresso-dia">0 de {len(recomendacoes)} feitas hoje</div>
+    </div>
+    <div class="recomendacoes" id="lista-recomendacoes" data-total="{len(recomendacoes)}">{recomendacoes_html}
     </div>
 
     <div class="secao-titulo">Como a esteira funciona, ponta a ponta</div>
@@ -244,6 +266,50 @@ def gerar_html():
 
     <p class="rodape">Cockpit de Afiliação IA-First &middot; @papairesolve_br &middot; Fase 1</p>
   </div>
+
+  <script>
+    (function () {{
+      var hoje = new Date().toISOString().slice(0, 10);
+      var chave = 'coach-' + hoje;
+      var feitas = [];
+      try {{ feitas = JSON.parse(localStorage.getItem(chave) || '[]'); }} catch (e) {{ feitas = []; }}
+
+      var lista = document.getElementById('lista-recomendacoes');
+      var total = lista ? (parseInt(lista.getAttribute('data-total'), 10) || 0) : 0;
+      var contador = document.getElementById('progresso-dia');
+
+      function salvar() {{
+        try {{ localStorage.setItem(chave, JSON.stringify(feitas)); }} catch (e) {{}}
+      }}
+
+      function atualizarProgresso() {{
+        if (contador) contador.textContent = feitas.length + ' de ' + total + ' feitas hoje';
+      }}
+
+      document.querySelectorAll('.chk-tarefa').forEach(function (chk) {{
+        var id = chk.getAttribute('data-tarefa-id');
+        var cartao = chk.closest('.recomendacao');
+        if (feitas.indexOf(id) !== -1) {{
+          chk.checked = true;
+          if (cartao) cartao.classList.add('concluida');
+        }}
+        chk.addEventListener('change', function () {{
+          var idx = feitas.indexOf(id);
+          if (chk.checked) {{
+            if (idx === -1) feitas.push(id);
+            if (cartao) cartao.classList.add('concluida');
+          }} else {{
+            if (idx !== -1) feitas.splice(idx, 1);
+            if (cartao) cartao.classList.remove('concluida');
+          }}
+          salvar();
+          atualizarProgresso();
+        }});
+      }});
+
+      atualizarProgresso();
+    }})();
+  </script>
 </body>
 </html>
 """
