@@ -6,6 +6,7 @@ index.html toda vez.
 
 PAGINAS = [
     ("index.html", "Início"),
+    ("chat.html", "Chat"),
     ("painel.html", "Produtos"),
     ("importar.html", "Importar"),
     ("painel_roi.html", "ROI"),

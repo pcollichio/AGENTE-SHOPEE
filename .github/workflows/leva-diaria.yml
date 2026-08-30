@@ -48,6 +48,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add historico/ leva_do_dia.md painel.html painel_roi.html index.html
+          git add historico/ leva_do_dia.md painel.html painel_roi.html index.html financeiro/resumo.json
           git diff --cached --quiet || git commit -m "Atualiza leva de produtos, ROI e cockpit do dia ($(date +%F))"
           git push

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chat do coach &middot; Cockpit Papai Resolve</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #eef1f0; --grid-line: rgba(20, 60, 90, 0.07); --card: #ffffff;
+    --text: #14202b; --muted: #5b6b74; --border: #d7dfe0;
+    --accent: #d9670c; --accent-ink: #a84e08; --accent-soft: #fbe7d4;
+    --focus: #1d64b0; --bolha-usuario: #d9670c; --bolha-coach: #ffffff;
+    --erro: #d03b3b; --erro-soft: #f8e2e2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
+      --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
+      --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
+      --focus: #6badf0; --bolha-usuario: #ff9439; --bolha-coach: #171e22;
+      --erro: #e0776a; --erro-soft: #3a201c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
+    --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
+    --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
+    --focus: #6badf0; --bolha-usuario: #ff9439; --bolha-coach: #171e22;
+    --erro: #e0776a; --erro-soft: #3a201c;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; padding: 24px; height: 100%;
+    background: repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px), var(--bg);
+    color: var(--text); font-family: "IBM Plex Sans", system-ui, sans-serif;
+    display: flex; flex-direction: column;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; width: 100%; display: flex; flex-direction: column;
+    flex: 1; min-height: 0; }
+
+  .menu-cockpit { display: flex; gap: 4px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 4px; margin-bottom: 24px; flex-wrap: wrap; }
+  .menu-item { font-family: "IBM Plex Sans", sans-serif; font-size: 0.84rem; font-weight: 600;
+    color: var(--muted); text-decoration: none; padding: 8px 14px; border-radius: 6px; }
+  .menu-item:hover { color: var(--text); background: var(--bg); }
+  .menu-item.ativo { background: var(--accent); color: #fff; }
+
+  .cabecalho { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  svg.logo { flex-shrink: 0; }
+  .cabecalho-texto .eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent-ink); margin: 0 0 4px; font-weight: 600; }
+  h1 { font-family: "Archivo", sans-serif; font-weight: 800; font-size: 1.4rem; margin: 0; }
+
+  .caixa-chat { flex: 1; min-height: 0; display: flex; flex-direction: column; background: var(--card);
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .mensagens { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .msg { display: flex; }
+  .msg-coach { justify-content: flex-start; }
+  .msg-usuario { justify-content: flex-end; }
+  .bolha { max-width: 82%; padding: 10px 14px; border-radius: 12px; font-size: 0.92rem; line-height: 1.5;
+    white-space: pre-wrap; }
+  .msg-coach .bolha { background: var(--bg); border: 1px solid var(--border); border-bottom-left-radius: 3px; }
+  .msg-usuario .bolha { background: var(--bolha-usuario); color: #fff; border-bottom-right-radius: 3px; }
+  .msg-erro .bolha { background: var(--erro-soft); color: var(--erro); border: 1px solid var(--erro); }
+  .msg-carregando .bolha { color: var(--muted); font-style: italic; }
+
+  .sugestoes { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 20px 14px; }
+  .sugestao { font-family: "IBM Plex Sans", sans-serif; font-size: 0.8rem; font-weight: 600;
+    color: var(--accent-ink); background: var(--accent-soft); border: none; border-radius: 999px;
+    padding: 7px 14px; cursor: pointer; }
+  .sugestao:hover { opacity: 0.85; }
+
+  .form-msg { display: flex; gap: 10px; padding: 14px; border-top: 1px solid var(--border); }
+  .form-msg input { flex: 1; font-family: "IBM Plex Sans", sans-serif; font-size: 0.92rem; padding: 11px 14px;
+    border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+  .form-msg input:focus { outline: 2px solid var(--focus); outline-offset: 1px; }
+  .form-msg button { font-family: "IBM Plex Sans", sans-serif; font-size: 0.9rem; font-weight: 700;
+    color: #fff; background: var(--accent); border: none; border-radius: 8px; padding: 0 20px; cursor: pointer; }
+  .form-msg button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .aviso-config { font-size: 0.8rem; color: var(--muted); margin-top: 10px; font-family: "IBM Plex Mono", monospace; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="menu-cockpit"><a class="menu-item" href="index.html">Início</a><a class="menu-item ativo" href="chat.html">Chat</a><a class="menu-item" href="painel.html">Produtos</a><a class="menu-item" href="importar.html">Importar</a><a class="menu-item" href="painel_roi.html">ROI</a><a class="menu-item" href="https://claude.ai/code/artifact/a5421828-0ecd-4bd1-8c5f-d3a2799c26bf" target="_blank" rel="noopener">Identidade&nbsp;&#8599;</a></nav>
+
+    <header class="cabecalho">
+      <svg class="logo" width="36" height="36" viewBox="0 0 120 120" fill="none">
+        <circle cx="60" cy="60" r="52" stroke="#a84e08" stroke-width="5"/>
+        <path d="M38 62 L54 78 L86 40" stroke="#d9670c" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="cabecalho-texto">
+        <p class="eyebrow">Papai Resolve &middot; Coach</p>
+        <h1>Converse com o coach</h1>
+      </div>
+    </header>
+
+    <div class="caixa-chat">
+      <div class="mensagens" id="mensagens">
+        <div class="msg msg-coach">
+          <div class="bolha">Oi! Sou o coach do seu cockpit. Posso te dizer o que fazer agora, explicar os números do ROI ou ajudar a decidir o próximo produto. O que você precisa?</div>
+        </div>
+      </div>
+      <div class="sugestoes">
+        <button class="sugestao" type="button" data-msg="O que eu faço agora?">O que eu faço agora?</button>
+        <button class="sugestao" type="button" data-msg="Como está o ROI do mês?">Como está o ROI do mês?</button>
+        <button class="sugestao" type="button" data-msg="Qual produto da leva de hoje eu escolho?">Qual produto escolher hoje?</button>
+      </div>
+      <form class="form-msg" id="form-msg">
+        <input type="text" id="campo-msg" placeholder="Escreva sua pergunta..." autocomplete="off">
+        <button type="submit" id="botao-enviar">Enviar</button>
+      </form>
+    </div>
+    <p class="aviso-config" id="aviso-config" hidden>
+      O chat ainda não está configurado neste servidor (falta a chave da Anthropic). Peça pra configurar
+      a variável ANTHROPIC_API_KEY no Vercel.
+    </p>
+  </div>
+
+  <script>
+    (function () {
+      var historico = [];
+      var lista = document.getElementById('mensagens');
+      var form = document.getElementById('form-msg');
+      var campo = document.getElementById('campo-msg');
+      var botao = document.getElementById('botao-enviar');
+      var avisoConfig = document.getElementById('aviso-config');
+
+      function rolarParaFinal() {
+        lista.scrollTop = lista.scrollHeight;
+      }
+
+      function adicionarBolha(texto, tipo) {
+        var div = document.createElement('div');
+        div.className = 'msg msg-' + tipo;
+        var bolha = document.createElement('div');
+        bolha.className = 'bolha';
+        bolha.textContent = texto;
+        div.appendChild(bolha);
+        lista.appendChild(div);
+        rolarParaFinal();
+        return div;
+      }
+
+      async function enviar(texto) {
+        if (!texto.trim()) return;
+        adicionarBolha(texto, 'usuario');
+        historico.push({ role: 'user', content: texto });
+        campo.value = '';
+        botao.disabled = true;
+        var carregando = adicionarBolha('Pensando...', 'carregando');
+
+        try {
+          var resposta = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ mensagens: historico }),
+          });
+          var dados = await resposta.json();
+          carregando.remove();
+
+          if (!resposta.ok) {
+            if (resposta.status === 500 && dados.erro && dados.erro.indexOf('ANTHROPIC_API_KEY') !== -1) {
+              avisoConfig.hidden = false;
+            }
+            adicionarBolha(dados.erro || 'Deu um erro ao falar com o coach.', 'erro');
+            return;
+          }
+
+          adicionarBolha(dados.resposta, 'coach');
+          historico.push({ role: 'assistant', content: dados.resposta });
+        } catch (e) {
+          carregando.remove();
+          adicionarBolha('Não consegui falar com o servidor do chat. Verifique sua conexão.', 'erro');
+        } finally {
+          botao.disabled = false;
+          campo.focus();
+        }
+      }
+
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        enviar(campo.value);
+      });
+
+      document.querySelectorAll('.sugestao').forEach(function (b) {
+        b.addEventListener('click', function () {
+          enviar(b.getAttribute('data-msg'));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

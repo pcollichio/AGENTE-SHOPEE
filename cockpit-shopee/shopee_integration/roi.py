@@ -5,6 +5,7 @@ usados pelo painel de ROI.
 """
 
 import csv
+import json
 from collections import defaultdict
 from datetime import date, datetime
 
@@ -14,6 +15,7 @@ ROI_META = 3.0
 CAMINHO_INVESTIMENTOS = "financeiro/investimentos.csv"
 CAMINHO_VENDAS = "financeiro/vendas.csv"
 CAMINHO_VENDAS_SHOPEE = "financeiro/vendas_shopee.csv"
+CAMINHO_RESUMO_JSON = "financeiro/resumo.json"
 
 
 def _ler_csv(caminho):
@@ -167,3 +169,26 @@ def calcular_resumo(investimentos, vendas):
         "progresso_meta": progresso_meta,
         "meta_mensal": META_MENSAL,
     }
+
+
+def exportar_resumo_json(caminho=CAMINHO_RESUMO_JSON):
+    """Escreve um retrato do estado financeiro em JSON — é o que o chat do
+    coach (api/chat.js) lê pra responder com dados reais, sem precisar
+    entender o HTML dos painéis."""
+    investimentos = carregar_investimentos()
+    vendas = carregar_vendas()
+    resumo = calcular_resumo(investimentos, vendas)
+    por_produto = calcular_roi_por_produto(investimentos, vendas)
+    serie = calcular_serie_acumulada(vendas)
+
+    dados = {
+        "atualizado_em": datetime.now().isoformat(timespec="seconds"),
+        "resumo": resumo,
+        "roi_por_produto": por_produto,
+        "serie_acumulada_mes": serie,
+    }
+
+    with open(caminho, "w", encoding="utf-8") as f:
+        json.dump(dados, f, ensure_ascii=False, indent=2)
+
+    return caminho

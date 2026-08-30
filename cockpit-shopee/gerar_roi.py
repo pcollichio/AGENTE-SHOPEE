@@ -17,6 +17,9 @@ def main():
     caminho = painel_roi.salvar_painel(investimentos, vendas, "painel_roi.html")
     print(f"Painel de ROI salvo em: {caminho}")
 
+    caminho_json = roi.exportar_resumo_json()
+    print(f"Resumo em JSON salvo em: {caminho_json}")
+
     resumo = roi.calcular_resumo(investimentos, vendas)
     roi_texto = f"{resumo['roi_medio']:.1f}x" if resumo["roi_medio"] is not None else "sem dados ainda"
     print(f"Investido: R${resumo['total_investido']:.2f} | "
