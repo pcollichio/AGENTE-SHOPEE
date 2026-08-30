@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cockpit Papai Resolve</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=IBM+Plex+Sans:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #eef1f0; --card: #ffffff; --text: #14202b; --muted: #5b6b74;
+    --border: #d7dfe0; --accent: #d9670c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1417; --card: #171e22; --text: #e7edf0; --muted: #93a2a9;
+      --border: #2a3338; --accent: #ff9439;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1417; --card: #171e22; --text: #e7edf0; --muted: #93a2a9;
+    --border: #2a3338; --accent: #ff9439;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg); color: var(--text); font-family: "IBM Plex Sans", system-ui, sans-serif;
+    display: flex; flex-direction: column;
+  }
+  .barra {
+    display: flex; align-items: center; gap: 16px; padding: 10px 20px;
+    background: var(--card); border-bottom: 1px solid var(--border); flex-shrink: 0;
+  }
+  .marca { display: flex; align-items: center; gap: 8px; font-family: "Archivo", sans-serif;
+    font-weight: 800; font-size: 0.95rem; margin-right: 8px; white-space: nowrap; }
+  .abas { display: flex; gap: 4px; flex-wrap: wrap; }
+  .aba {
+    font-family: "IBM Plex Sans", sans-serif; font-size: 0.85rem; font-weight: 600;
+    color: var(--muted); text-decoration: none; padding: 8px 14px; border-radius: 6px;
+    border: none; background: transparent; cursor: pointer;
+  }
+  .aba:hover { color: var(--text); background: var(--bg); }
+  .aba.ativa { background: var(--accent); color: #fff; }
+  .conteudo { flex: 1; border: none; width: 100%; }
+</style>
+</head>
+<body>
+  <div class="barra">
+    <div class="marca">
+      <svg width="22" height="22" viewBox="0 0 120 120" fill="none">
+        <circle cx="60" cy="60" r="52" stroke="#a84e08" stroke-width="6"/>
+        <path d="M38 62 L54 78 L86 40" stroke="#d9670c" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Cockpit
+    </div>
+    <nav class="abas" id="abas">
+      <button class="aba ativa" data-arquivo="index.html">Início</button>
+      <button class="aba" data-arquivo="painel.html">Produtos</button>
+      <button class="aba" data-arquivo="importar.html">Importar</button>
+      <button class="aba" data-arquivo="painel_roi.html">ROI</button>
+      <a class="aba" href="https://claude.ai/code/artifact/a5421828-0ecd-4bd1-8c5f-d3a2799c26bf" target="_blank" rel="noopener">Identidade&nbsp;&#8599;</a>
+    </nav>
+  </div>
+
+  <iframe class="conteudo" id="conteudo" src="index.html" title="Conteúdo do cockpit"></iframe>
+
+  <script>
+    document.querySelectorAll('.aba[data-arquivo]').forEach(function (botao) {
+      botao.addEventListener('click', function () {
+        document.querySelectorAll('.aba[data-arquivo]').forEach(function (b) { b.classList.remove('ativa'); });
+        botao.classList.add('ativa');
+        document.getElementById('conteudo').src = botao.getAttribute('data-arquivo');
+      });
+    });
+  </script>
+</body>
+</html>

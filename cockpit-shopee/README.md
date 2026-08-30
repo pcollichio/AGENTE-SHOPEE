@@ -2,13 +2,14 @@
 
 ## Comece aqui
 
-Abra **`index.html`** — é o painel central que mostra o fluxo inteiro,
-o que já é automático e o que ainda depende de você, com link pra cada
-parte.
+Abra **`cockpit.html`** — é o único arquivo que você precisa abrir. Ele
+tem um menu fixo no topo; clicar em cada aba troca o conteúdo ali
+mesmo, sem precisar abrir outro arquivo.
 
 ## As partes do sistema
 
-- **`index.html`** — visão geral do fluxo completo
+- **`cockpit.html`** — arquivo único de entrada (abre os outros por dentro)
+- **`index.html`** — visão geral do fluxo completo ("o que fazer hoje")
 - **`painel.html`** — produtos do dia (gerado automaticamente todo dia
   às 9h), com seleção e roteiro pronto pra esteira de conteúdo
 - **`importar.html`** — formulário simples pra registrar investimento em
