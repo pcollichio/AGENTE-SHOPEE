@@ -10,8 +10,8 @@
 | 6 | Lancheira Bolsa Térmica Para Marmita | Médio | R$55.90 | 53% | 5.0⭐ | 3 | [link](https://s.shopee.com.br/8Kp7nom8oI) |
 | 7 | Torneira De Banheiro Para Cozinha Parede 1/4 Volta Valeplast | Baixo | R$25.90 | 43% | 4.8⭐ | 170 | [link](https://s.shopee.com.br/9AOEnLn5rD) |
 | 8 | Quadro Natureza Quadro Com Moldura E Vidro Quadro Decorativo Sala Quarto Casal Quadro Folhagem Trio | Alto | R$229.52 | 44% | 4.9⭐ | 69 | [link](https://s.shopee.com.br/1BLxmEnVKe) |
-| 9 | Lixadeira Manual De Pvc Com Lixa 8x22cm Max | Baixo | R$39.95 | 83% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/5foMcurkvT) |
-| 10 | Sifão Sanfonado Preto Ajustável Extensivo Flexível Pia Banheiro Cozinha Black - Astra | Baixo | R$17.01 | 83% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/5q7mpDr7aU) |
+| 9 | Lixadeira Manual De Pvc Com Lixa 8x22cm Max | Baixo | R$39.95 | 83% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/1LfNyXVGrw) |
+| 10 | Sifão Sanfonado Preto Ajustável Extensivo Flexível Pia Banheiro Cozinha Black - Astra | Baixo | R$17.01 | 83% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/1BLxmEVuCt) |
 | 11 | Veda + Tec 4 em 1 Bi Componente Para Laje; Parede; caixa d'agua; piscina 20kg | Alto | R$186.59 | 55% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/2gAl3OpqC9) |
 | 12 | Quadro Abstrato Para Sala Trio De Quadros Decorativos Com Moldura Quadro Moderno Arte Estilo Gesso | Alto | R$226.65 | 42% | 4.6⭐ | 16 | [link](https://s.shopee.com.br/1LfNyXmrzn) |
 | 13 | Quadro Folhagem Com Moldura Quadro Natureza Para Sala Quarto Escritório Quadro Paisagem Floral Duo | Alto | R$157.92 | 41% | 4.9⭐ | 31 | [link](https://s.shopee.com.br/2VrLMgiQd2) |
