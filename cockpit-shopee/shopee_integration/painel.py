@@ -86,6 +86,11 @@ def _linha_produto(produto, posicao, id_prefixo):
     loja = (p.get("shop_name") or "").replace("<", "&lt;").replace(">", "&gt;")
     categoria = p.get("termo_busca") or ""
     row_id = f"{id_prefixo}-{p['product_id']}"
+    imagem_url = p.get("image_url") or ""
+    if imagem_url:
+        foto_html = f'<img class="foto-produto" src="{imagem_url}" alt="" loading="lazy" onerror="this.style.display=\'none\'">'
+    else:
+        foto_html = '<div class="foto-produto foto-vazia" aria-hidden="true"></div>'
     return f"""
         <tr data-tier="{p['tier']}">
           <td class="col-check">
@@ -96,6 +101,9 @@ def _linha_produto(produto, posicao, id_prefixo):
               data-categoria="{categoria}">
           </td>
           <td class="col-pos">{posicao:02d}</td>
+          <td class="col-foto">
+            <a href="{p['affiliate_link']}" target="_blank" rel="noopener">{foto_html}</a>
+          </td>
           <td class="col-nome">
             <label for="{row_id}" class="nome">{nome}</label>
             <div class="loja">{loja}</div>
@@ -127,7 +135,7 @@ def _tabela(produtos, id_prefixo, com_filtro=True):
       <table>
         <thead>
           <tr>
-            <th></th><th>#</th><th>Produto</th><th>Faixa</th><th>Preço</th><th>Comissão</th>
+            <th></th><th>#</th><th>Foto</th><th>Produto</th><th>Faixa</th><th>Preço</th><th>Comissão</th>
             <th>Avaliação</th><th>Vendidos</th><th>Link</th>
           </tr>
         </thead>
@@ -380,6 +388,12 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
   tbody tr:hover {{ background: var(--accent-soft); }}
   .col-check {{ width: 20px; }}
   .col-check input {{ width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; }}
+  .col-foto {{ width: 56px; padding: 8px 10px; }}
+  .foto-produto {{
+    width: 48px; height: 48px; border-radius: 6px; object-fit: cover;
+    border: 1px solid var(--border); display: block; background: var(--bg);
+  }}
+  .foto-vazia {{ background: var(--bg); }}
   .col-pos {{
     font-family: "IBM Plex Mono", monospace;
     color: var(--muted);
