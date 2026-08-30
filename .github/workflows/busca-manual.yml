@@ -1,0 +1,36 @@
+name: Buscar produto específico (sob demanda)
+
+on:
+  workflow_dispatch:
+    inputs:
+      termo:
+        description: "Nome ou palavra-chave do produto a buscar"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  buscar:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cockpit-shopee
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Buscar produto
+        env:
+          SHOPEE_APP_ID: ${{ secrets.SHOPEE_APP_ID }}
+          SHOPEE_APP_SECRET: ${{ secrets.SHOPEE_APP_SECRET }}
+          USE_MOCK_DATA: "false"
+        run: python buscar_um_produto.py "${{ inputs.termo }}"
