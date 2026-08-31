@@ -79,3 +79,12 @@ nova deve ler isto (junto com `CLAUDE.md`) antes de agir.
   imagens externas (mesma restrição de rede), então a seleção visual
   fica no `painel.html` mesmo; o Claude aponta o link e resume os
   dados em texto/tabela.
+- **Critério de curadoria endurecido**: usuário pediu produtos
+  "validados" — comissão boa, nota boa e **volume de vendas alto
+  (acima de 150)**, não mais aposta sem histórico. Adicionado
+  `VENDIDOS_MINIMO = 150` como filtro em `montar_leva_variada()`
+  (`buscar_leva_lancamento.py`), e a leva do dia caiu de 20 pra
+  **10 produtos** (`QUANTIDADE_TOTAL = 10`), ainda distribuídos entre
+  ticket baixo/médio/alto. Efeito colateral esperado: como poucos
+  produtos de ticket alto vendem 150+, a faixa "alto" pode vir mais
+  curta que baixo/médio em alguns dias — acompanhar.

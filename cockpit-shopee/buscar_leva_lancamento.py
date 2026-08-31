@@ -1,12 +1,15 @@
 """
 Busca produtos reais da Shopee no nicho casa e construção e monta uma leva
-de 20 oportunidades para @papairesolve_br escolher o que divulgar,
-distribuídas entre ticket baixo, médio e alto (para dar variedade de preço,
-não só produtos de compra por impulso).
+de 10 oportunidades validadas para @papairesolve_br escolher o que
+divulgar, distribuídas entre ticket baixo, médio e alto (para dar
+variedade de preço, não só produtos de compra por impulso).
 
-Critérios de qualidade (blueprint, seção 5):
+Critérios de qualidade (blueprint, seção 5, + pedido do usuário em
+2026-08-30 de só trazer produtos "validados"):
   - Comissão acima de 10-12%
   - Avaliação acima de 4,5 estrelas
+  - Volume de vendas acima de 150 (produto já validado no mercado, não
+    aposta sem histórico)
 
 Rode com: python buscar_leva_lancamento.py
 
@@ -48,7 +51,11 @@ SUBCATEGORIAS_CASA_CONSTRUCAO = [
 TICKET_BAIXO_MAX = 50.0
 TICKET_MEDIO_MAX = 150.0
 
-QUANTIDADE_TOTAL = 20
+# Só entram produtos "validados": já com volume de venda comprovado —
+# tira aposta sem histórico (pedido do usuário em 2026-08-30)
+VENDIDOS_MINIMO = 150
+
+QUANTIDADE_TOTAL = 10
 
 ARQUIVO_PRODUTOS_MANUAIS = "produtos_manuais.txt"
 ARQUIVO_PRODUTOS_EXCLUIR = "produtos_excluir.txt"
@@ -127,13 +134,15 @@ def montar_leva_variada(quantidade_total=QUANTIDADE_TOTAL):
     ticket baixo/médio/alto, para dar opções de preço variadas."""
     produtos = buscar_produtos_do_nicho()
 
-    # Critério mínimo de qualidade (comissão e avaliação); sem filtro de
-    # preço aqui, pois é justamente a variação de preço que queremos.
+    # Critério mínimo de qualidade (comissão, avaliação e vendas — só
+    # produtos "validados"); sem filtro de preço aqui, pois é justamente
+    # a variação de preço que queremos.
     qualificados = [
         {**p, "tier": _classificar_tier(p["price"]), "score": curadoria.calcular_score(p)}
         for p in produtos
         if p["commission_rate"] >= curadoria.COMISSAO_MINIMA
         and p["rating"] >= curadoria.AVALIACAO_MINIMA
+        and p["total_sold"] >= VENDIDOS_MINIMO
     ]
 
     por_tier = {"baixo": [], "medio": [], "alto": []}
