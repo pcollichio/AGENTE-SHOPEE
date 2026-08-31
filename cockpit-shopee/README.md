@@ -2,36 +2,34 @@
 
 ## Comece aqui
 
-Por enquanto (MVP), o jeito principal de usar o cockpit é **conversando
-com o Claude** — veja "Como usar agora: o agente dentro do Claude"
-logo abaixo. Além disso, `cockpit.html` é o painel visual: um arquivo
-único com um menu fixo no topo, pra ver os produtos do dia, o ROI e
-importar dados, sem precisar abrir outro arquivo.
+O cockpit tem duas partes que trabalham junto: você **conversa com o
+Claude** pra decisão, roteiro e "o que fazer agora", e usa o
+**`cockpit.html`** (publicado na Vercel — veja "Colocar o cockpit no
+ar" abaixo) pra tudo visual: produtos do dia com foto, seleção, ROI e
+importar dados.
 
-## Como usar agora: o agente dentro do Claude (MVP)
+Desde 31/08, a seleção de produtos feita no painel é salva
+automaticamente (botão "Salvar seleção agora") direto no GitHub — é
+assim que o Claude sabe o que você escolheu, sem precisar digitar de
+novo no chat.
 
-Não é necessário publicar nada na Vercel pra começar a usar. O "agente"
-do cockpit, por enquanto, é o próprio Claude, numa conversa com você:
+## O agente dentro do Claude
 
 - **Pergunte o que fazer hoje** — o Claude lê os dados reais do
-  projeto (leva do dia, ROI, financeiro) e te diz.
+  projeto (leva do dia, ROI, financeiro, sua última seleção salva) e
+  te diz.
 - **Peça pra buscar um produto específico** — ex: "busca torneira de
   cozinha pra mim". O Claude dispara o workflow
   `.github/workflows/busca-manual.yml` (que roda `buscar_um_produto.py`
   com acesso real à API da Shopee) e te traz os resultados na hora.
-- **Peça uma leitura do ROI, um roteiro pra um produto, ajuda com
-  qualquer parte do fluxo** — o Claude já tem contexto de todo o
-  projeto.
+- **Peça o roteiro de um produto que você selecionou no painel** — o
+  Claude lê `selecao_atual.json` (salvo pelo botão do painel) e já
+  monta o texto pronto pra gravação.
 
 Essa abordagem existe porque a sessão do Claude, por segurança, não
 acessa a API da Shopee diretamente — só o GitHub Actions tem esse
 acesso real. Por isso a busca de produto passa por um workflow, não
 por uma chamada direta.
-
-O `chat.html` e a busca ao vivo no site (`api/`) continuam existindo,
-prontos pra quando/se você quiser um chat que funcione sozinho, sem
-precisar de mim na conversa — veja "Opcional: colocar o site no ar com
-Chat" mais abaixo. Não é necessário pro MVP.
 
 ## As partes do sistema
 
@@ -59,15 +57,18 @@ Chat" mais abaixo. Não é necessário pro MVP.
 - `api/chat.js` — função serverless (Vercel) que fala com a Anthropic
 - `api/buscar_produto.py` — função serverless (Vercel) que busca um
   produto específico direto na Shopee
+- `api/selecionar.js` — função serverless (Vercel) que salva a seleção
+  do painel em `selecao_atual.json`, direto no GitHub
+- `selecao_atual.json` — a última seleção de produtos feita no painel
+  (escrito pelo botão "Salvar seleção agora"; é o que o Claude lê pra
+  saber o que você escolheu)
 
-## Opcional: colocar o site no ar com Chat (Vercel)
+## Colocar o cockpit no ar (Vercel)
 
-**Não é necessário pro MVP** — veja "Como usar agora" no topo deste
-arquivo. Isso aqui só é preciso se um dia você quiser um chat que
-funcione sozinho no site, sem precisar de mim na conversa. O chat e a
-busca de produto específico do site só funcionam depois de publicar o
-cockpit num servidor — não funcionam abrindo os arquivos direto do
-computador. O jeito mais simples é a Vercel (gratuita pra esse uso):
+O chat, a busca de produto específico e o botão "Salvar seleção agora"
+só funcionam depois de publicar o cockpit num servidor — não funcionam
+abrindo os arquivos direto do computador. O jeito mais simples é a
+Vercel (gratuita pra esse uso):
 
 1. Entre em [vercel.com](https://vercel.com) e faça login com sua conta
    do GitHub.
@@ -82,16 +83,33 @@ computador. O jeito mais simples é a Vercel (gratuita pra esse uso):
      já estão nos Secrets do GitHub (usadas pela automação diária).
      Usadas pela busca de produto específico.
    - `USE_MOCK_DATA` com o valor `false`.
+   - `GITHUB_TOKEN` — um token de acesso pessoal do GitHub, só pra
+     este repositório, com permissão de escrever conteúdo. Veja como
+     criar logo abaixo. Usado pelo botão "Salvar seleção agora".
 
    **Nunca** coloque nenhum desses valores em nenhum arquivo do
    repositório — só aqui, nas variáveis de ambiente da Vercel.
 5. Clique em "Deploy". Em ~1 minuto a Vercel te dá uma URL (algo como
    `agente-shopee.vercel.app`) — é ela que você abre no lugar do
-   `cockpit.html` local a partir de agora, porque só nela o chat e a
-   busca funcionam.
+   `cockpit.html` local a partir de agora, porque só nela o chat, a
+   busca e o salvamento de seleção funcionam.
 
 Depois do primeiro deploy, toda vez que o robô diário (GitHub Actions)
 atualizar o repositório, a Vercel republica sozinha.
+
+### Criando o `GITHUB_TOKEN`
+
+1. No GitHub, vá em **Settings** (da sua conta, não do repositório) →
+   **Developer settings** → **Personal access tokens** →
+   **Fine-grained tokens** → **Generate new token**.
+2. Em "Repository access", escolha **Only select repositories** e
+   selecione `AGENTE-SHOPEE`.
+3. Em "Permissions" → "Repository permissions", ache **Contents** e
+   mude de "No access" pra **Read and write**.
+4. Gere o token e copie o valor (começa com `github_pat_...`) — só
+   aparece uma vez.
+5. Cole esse valor como a variável `GITHUB_TOKEN` na Vercel (passo 4
+   acima).
 
 ## Automação
 

@@ -100,3 +100,23 @@ nova deve ler isto (junto com `CLAUDE.md`) antes de agir.
   busca, etc.), a resposta do Claude é o link do `painel.html`, nunca
   uma lista item a item aqui. Comentários pontuais sobre destaques
   específicos continuam ok. Registrado em `CLAUDE.md`.
+- Usuário pediu roteiro + vídeo sem marca d'água de um produto: roteiro
+  eu gero, vídeo eu recusei (não tenho como baixar mídia externa, e
+  tirar marca d'água de conteúdo do vendedor não é algo que devo
+  fazer) — expliquei o fluxo real (CapCut com mídia oficial + roteiro).
+- Usuário pediu "um agente que saiba o que selecionei e me guie" —
+  ficou claro que não existia conexão nenhuma entre o clique no painel
+  e o Claude. Propus duas opções (GitHub Issues sem Vercel, ou Vercel
+  com sync instantâneo) — **usuário escolheu Vercel**.
+- **Vercel confirmada como parte do stack.** Construído
+  `api/selecionar.js`: o botão "Salvar seleção agora" no painel
+  (novo, ao lado do botão de baixar) grava a seleção instantaneamente
+  em `selecao_atual.json` via GitHub Contents API (usa um
+  `GITHUB_TOKEN` — Personal Access Token fine-grained, só deste
+  repositório, permissão Contents: Read and write — configurado como
+  variável de ambiente na Vercel, nunca no código). O Claude passa a
+  ler esse arquivo pra saber o que foi selecionado, sem precisar que o
+  usuário digite de novo. README atualizado com o passo a passo de
+  criar o token. Pendente: usuário ainda precisa fazer o deploy na
+  Vercel e configurar as variáveis de ambiente (ANTHROPIC_API_KEY,
+  SHOPEE_APP_ID, SHOPEE_APP_SECRET, USE_MOCK_DATA=false, GITHUB_TOKEN).
