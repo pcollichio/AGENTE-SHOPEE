@@ -1,0 +1,81 @@
+# Histórico do projeto — Cockpit Papai Resolve
+
+Log cronológico de decisões e marcos, mantido pelo Claude. Toda sessão
+nova deve ler isto (junto com `CLAUDE.md`) antes de agir.
+
+## 2026-08-25 a 2026-08-28 — Fundação
+
+- Integração real com a Shopee Affiliate API (GraphQL) validada —
+  `productOfferV2` funciona, traz produtos reais com foto, preço,
+  comissão, avaliação e link de afiliado.
+- Curadoria diária automática: busca por palavra-chave (sem categoria
+  oficial "casa & construção" na API), filtro de comissão mínima +
+  avaliação mínima, distribuição em 20 produtos entre ticket
+  baixo/médio/alto. Refinada com `produtos_excluir.txt` (tira produtos
+  fora do nicho) e `produtos_manuais.txt` (garante produtos específicos).
+- Automação diária via GitHub Actions (`leva-diaria.yml`), 9h de
+  Brasília, credenciais em Secrets do repositório.
+- Painel visual (`painel.html`) com seleção por checkbox e exportação
+  da esteira (roteiro pronto, estilo Papai Resolve) em Markdown.
+- Identidade visual (logo, paleta, exemplo de Reels) publicada como
+  Claude Design.
+
+## 2026-08-29 — ROI e sincronização de vendas
+
+- Painel de ROI (`painel_roi.html`) com progresso da meta mensal
+  (R$10.000) e ROI por produto (meta 3x), a partir de
+  `financeiro/investimentos.csv` e `financeiro/vendas.csv`.
+- **Tentativa de sincronizar vendas automaticamente via API
+  (`conversionReport`) — abandonada.** Depois de 3 rodadas de debug
+  real contra a API (tipo `Int64` precisa ser string, campo é
+  `conversionStatus` não `orderStatus`, erro genérico "wrong type"
+  sem mais detalhe), o usuário decidiu parar e manter o financeiro
+  100% manual/importado. `sincronizar_vendas.py` fica só como
+  histórico/experimento, não faz parte do fluxo.
+- `index.html` virou o "cockpit central" com um agente coach real
+  (`coach.py`): calcula recomendações do dia a partir dos dados reais
+  (financeiro desatualizado, ritmo da meta, ROI crítico), com checklist
+  que persiste no localStorage.
+- Menu de navegação compartilhado (`nav.py`) em todas as páginas.
+
+## 2026-08-30 — Consolidação, chat, e pivô pro "agente dentro do Claude"
+
+- `cockpit.html`: entrada única com abas (iframe). Descoberto e
+  documentado um bug real do Chrome — iframe de `file://` bloqueia
+  navegação entre abas; resolvido publicando via GitHub Pages (HTTPS).
+- GitHub Pages ativado com sucesso:
+  `https://pcollichio.github.io/AGENTE-SHOPEE/cockpit-shopee/cockpit.html`
+  — confirmado funcionando pelo usuário.
+- Fotos de produto adicionadas ao `painel.html` (usuário pediu — "não
+  dá pra pegar só com o título").
+- **Construído e depois pausado**: chat de verdade (`chat.html` +
+  `api/chat.js`, função serverless na Vercel chamando a API da
+  Anthropic) e busca de produto específico no site (`api/buscar_produto.py`,
+  Python na Vercel, reaproveitando `client.py`). Ambos continuam no
+  repositório, prontos, mas **não são o modo de operação atual** — ver
+  decisão abaixo.
+- Testado um "banco de produtos aleatórios" pré-gerado
+  (`produtos_pool.json`) — **removido a pedido do usuário**: a ideia
+  certa era buscar ao vivo na API, não sortear de um banco estático.
+  Virou a busca ao vivo acima.
+- **Decisão final do dia**: o usuário perguntou "pra que a Vercel se eu
+  já tenho o Claude?" — decisão foi usar **o Claude como o agente do
+  MVP**, não o chat do site. Testado e confirmado: esta sessão do
+  Claude não acessa a API da Shopee diretamente (proxy de rede
+  bloqueia), então foi criado `buscar_um_produto.py` +
+  `.github/workflows/busca-manual.yml` — um workflow disparável sob
+  demanda (`workflow_dispatch` com input `termo`) que roda com acesso
+  real à internet do GitHub Actions. O Claude dispara esse workflow e
+  lê o resultado nos logs quando o usuário pede pra buscar algo.
+  Testado ao vivo com sucesso ("torneira de cozinha" trouxe resultados
+  reais).
+- README reorganizado: a seção "Como usar agora" (o agente dentro do
+  Claude) vira a principal; a Vercel vira seção opcional.
+- Confirmado o modelo operacional definitivo (ver `CLAUDE.md`): chat
+  aqui com o Claude, visual/interativo no `painel.html` arquivado no
+  GitHub, Claude mantém o histórico neste arquivo.
+- Testando o fluxo de seleção de produtos: usuário pediu pra ver fotos
+  no meio da conversa — confirmado que a sessão do Claude não carrega
+  imagens externas (mesma restrição de rede), então a seleção visual
+  fica no `painel.html` mesmo; o Claude aponta o link e resume os
+  dados em texto/tabela.
