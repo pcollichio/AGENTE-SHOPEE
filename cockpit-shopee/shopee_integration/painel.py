@@ -252,10 +252,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
   body {{
     margin: 0;
     padding: 40px 24px 96px;
-    background:
-      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
-      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
-      var(--bg);
+    background: var(--bg);
     color: var(--text);
     font-family: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;

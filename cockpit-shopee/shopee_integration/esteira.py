@@ -163,8 +163,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
   * {{ box-sizing: border-box; }}
   body {{
     margin: 0; padding: 40px 24px 64px;
-    background: repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
-      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px), var(--bg);
+    background: var(--bg);
     color: var(--text); font-family: "IBM Plex Sans", system-ui, sans-serif;
   }}
   .wrap {{ max-width: 1080px; margin: 0 auto; }}

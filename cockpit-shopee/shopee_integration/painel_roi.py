@@ -130,7 +130,7 @@ def _grafico_svg(serie):
     </script>"""
 
 
-def gerar_html(investimentos, vendas, titulo="Painel de ROI — Papai Resolve"):
+def gerar_html(investimentos, vendas, titulo="Dashboard — Papai Resolve"):
     resumo = roi_calc.calcular_resumo(investimentos, vendas)
     por_produto = roi_calc.calcular_roi_por_produto(investimentos, vendas)
     serie = roi_calc.calcular_serie_acumulada(vendas)
@@ -178,8 +178,7 @@ def gerar_html(investimentos, vendas, titulo="Painel de ROI — Papai Resolve"):
   * {{ box-sizing: border-box; }}
   body {{
     margin: 0; padding: 40px 24px 64px;
-    background: repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
-      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px), var(--bg);
+    background: var(--bg);
     color: var(--text); font-family: "IBM Plex Sans", system-ui, sans-serif;
   }}
   .wrap {{ max-width: 1000px; margin: 0 auto; }}
@@ -248,7 +247,7 @@ def gerar_html(investimentos, vendas, titulo="Painel de ROI — Papai Resolve"):
     <header class="cabecalho">
       <div>
         <p class="eyebrow">Cockpit de Afiliação &middot; @papairesolve_br</p>
-        <h1>Painel de ROI</h1>
+        <h1>Dashboard</h1>
       </div>
       <p class="atualizado">Atualizado {date.today().strftime('%d/%m/%Y')}</p>
     </header>
@@ -286,7 +285,7 @@ def gerar_html(investimentos, vendas, titulo="Painel de ROI — Papai Resolve"):
 """
 
 
-def salvar_painel(investimentos, vendas, caminho, titulo="Painel de ROI — Papai Resolve"):
+def salvar_painel(investimentos, vendas, caminho, titulo="Dashboard — Papai Resolve"):
     html = gerar_html(investimentos, vendas, titulo=titulo)
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(html)

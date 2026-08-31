@@ -46,8 +46,7 @@ def gerar_html():
   html, body {{ height: 100%; }}
   body {{
     margin: 0; padding: 24px; height: 100%;
-    background: repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
-      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px), var(--bg);
+    background: var(--bg);
     color: var(--text); font-family: "IBM Plex Sans", system-ui, sans-serif;
     display: flex; flex-direction: column;
   }}

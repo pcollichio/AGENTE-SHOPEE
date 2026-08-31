@@ -10,7 +10,7 @@ PAGINAS = [
     ("painel.html", "Produtos"),
     ("esteira.html", "Esteira"),
     ("importar.html", "Importar"),
-    ("painel_roi.html", "ROI"),
+    ("painel_roi.html", "Dashboard"),
 ]
 
 IDENTIDADE_URL = "https://claude.ai/code/artifact/a5421828-0ecd-4bd1-8c5f-d3a2799c26bf"

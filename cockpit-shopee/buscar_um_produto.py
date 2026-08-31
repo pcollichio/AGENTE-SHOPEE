@@ -4,20 +4,57 @@ automática do dia. Pensado pra ser disparado manualmente (pelo GitHub
 Actions, geralmente a pedido no chat com o Claude) quando você quiser
 achar algo fora da leva.
 
-Rode com: python buscar_um_produto.py "nome do produto"
+Aceita tanto um nome/termo de busca quanto um link da Shopee (link
+curto s.shopee.com.br ou o link completo do produto) — nesse caso,
+segue o link, extrai o nome do produto a partir da URL e busca por ele
+(pedido do usuário em 2026-08-31: "olhar o produto no app e entregar o
+link pra relacionar").
+
+Rode com:
+    python buscar_um_produto.py "nome do produto"
+    python buscar_um_produto.py "https://s.shopee.com.br/xxxxxxxx"
 """
 
+import re
 import sys
+
+import requests
 
 from shopee_integration import client, config
 
 
+def _eh_link(texto):
+    return texto.startswith("http://") or texto.startswith("https://")
+
+
+def _resolver_link(url):
+    """Segue redirecionamentos (caso de link curto s.shopee.com.br) e
+    devolve a URL final do produto."""
+    resposta = requests.get(url, allow_redirects=True, timeout=15)
+    return resposta.url
+
+
+def _extrair_info_link(url):
+    """Tenta extrair um termo de busca (a partir do slug da URL) e o
+    itemId do produto (formato .../i.<shopId>.<itemId>), quando presente."""
+    item_id = None
+    m = re.search(r"-i\.(\d+)\.(\d+)", url)
+    if m:
+        item_id = m.group(2)
+
+    caminho = url.split("?")[0].rstrip("/")
+    slug = caminho.rsplit("/", 1)[-1]
+    slug = re.sub(r"-i\.\d+\.\d+$", "", slug)
+    termo = re.sub(r"[-_]+", " ", slug).strip()
+    return termo, item_id
+
+
 def main():
     if len(sys.argv) < 2:
-        print('Uso: python buscar_um_produto.py "termo de busca"')
+        print('Uso: python buscar_um_produto.py "termo de busca ou link da Shopee"')
         return
 
-    termo = " ".join(sys.argv[1:])
+    entrada = " ".join(sys.argv[1:]).strip()
 
     if config.USE_MOCK_DATA:
         print(
@@ -25,6 +62,22 @@ def main():
             "para buscar produtos reais."
         )
         return
+
+    item_id_alvo = None
+    if _eh_link(entrada):
+        try:
+            url_final = _resolver_link(entrada)
+        except Exception as e:
+            print(f"Não consegui abrir o link: {e}")
+            return
+        termo, item_id_alvo = _extrair_info_link(url_final)
+        if not termo:
+            print(f"Não consegui identificar o produto a partir do link ({url_final}).")
+            return
+        print(f'Link resolvido — buscando por: "{termo}"' + (f" (item {item_id_alvo})" if item_id_alvo else ""))
+        print()
+    else:
+        termo = entrada
 
     try:
         produtos = client.buscar_produtos(keyword=termo, limite=8)
@@ -36,7 +89,16 @@ def main():
         print(f'Nenhum produto encontrado para "{termo}".')
         return
 
-    print(f'# Resultados para "{termo}"\n')
+    if item_id_alvo:
+        exato = next((p for p in produtos if p["product_id"] == item_id_alvo), None)
+        if exato:
+            print("# Produto encontrado (correspondência exata pelo link)\n")
+            produtos = [exato]
+        else:
+            print(f'# Não achei correspondência exata pelo link — resultados mais prováveis para "{termo}"\n')
+    else:
+        print(f'# Resultados para "{termo}"\n')
+
     for i, p in enumerate(produtos, start=1):
         print(f"{i}. {p['name']}")
         print(

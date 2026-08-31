@@ -162,5 +162,23 @@ nova deve ler isto (junto com `CLAUDE.md`) antes de agir.
   próprio menu horizontal pra quando é aberta sozinha (fora do
   cockpit.html) — `nav.py` agora detecta se está dentro de um iframe
   (`window.self !== window.top`) e esconde esse menu duplicado nesse
-  caso. Testado em desktop e mobile com Playwright. Itens 2 e 4 ainda
-  pendentes.
+  caso. Testado em desktop e mobile com Playwright.
+- **Ajustes finos pedidos pelo usuário**: fundo quadriculado (grid de
+  linhas) removido de todas as páginas — usuário achou ruim; agora é
+  fundo liso (`var(--bg)`). Label "ROI" virou "Dashboard" no menu e no
+  título/H1 de `painel_roi.html` (conteúdo interno continua chamando
+  os números de ROI, só a marca da página mudou).
+- **Resolvido o item 2 (colar link do produto)**: `buscar_um_produto.py`
+  agora aceita link da Shopee além de nome — segue o link (inclusive
+  link curto `s.shopee.com.br/...`), extrai o nome do produto do slug
+  da URL e o itemId (quando o padrão `-i.<shopId>.<itemId>` aparece),
+  busca por esse nome e prioriza o resultado com itemId exatamente
+  igual, se achar.
+- **Resolvido o item 4 (agenda simples)**: a seção "Como a esteira
+  funciona, ponta a ponta" (8 passos com descrição longa) virou um
+  `<details>` recolhido por padrão, com cada passo compactado numa
+  linha (era um card grande com parágrafo). "O que fazer hoje" (a
+  agenda de verdade) passa a ser o conteúdo dominante da página —
+  o resto fica escondido atrás de um clique, disponível se precisar.
+
+Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.

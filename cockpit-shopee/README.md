@@ -23,10 +23,12 @@ cruzando com o financeiro.
 - **Pergunte o que fazer hoje** — o Claude lê os dados reais do
   projeto (leva do dia, ROI, financeiro, sua última seleção salva) e
   te diz.
-- **Peça pra buscar um produto específico** — ex: "busca torneira de
-  cozinha pra mim". O Claude dispara o workflow
+- **Peça pra buscar um produto específico** — por nome ("busca
+  torneira de cozinha pra mim") ou **colando o link do produto que
+  você viu no app da Shopee**. O Claude dispara o workflow
   `.github/workflows/busca-manual.yml` (que roda `buscar_um_produto.py`
-  com acesso real à API da Shopee) e te traz os resultados na hora.
+  com acesso real à API da Shopee — segue o link, identifica o produto
+  e busca) e te traz os resultados na hora.
 - **Peça o roteiro de um produto que você selecionou no painel** — o
   Claude lê `esteira.json` (salvo pelo botão do painel) e já monta o
   texto pronto pra gravação.

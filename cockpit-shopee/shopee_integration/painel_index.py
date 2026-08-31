@@ -87,14 +87,9 @@ def _etapa_html(numero, etapa):
     return f"""
       <div class="etapa">
         <div class="etapa-marca">{numero}</div>
-        <div class="etapa-corpo">
-          <div class="etapa-topo">
-            <span class="etapa-titulo">{etapa['titulo']}</span>
-            <span class="status status-{etapa['status']}">{etapa['status_label']}</span>
-          </div>
-          <p class="etapa-desc">{etapa['desc']}</p>
-          {links_bloco}
-        </div>
+        <span class="etapa-titulo">{etapa['titulo']}</span>
+        <span class="status status-{etapa['status']}">{etapa['status_label']}</span>
+        {links_bloco}
       </div>"""
 
 
@@ -150,8 +145,7 @@ def gerar_html():
   * {{ box-sizing: border-box; }}
   body {{
     margin: 0; padding: 40px 24px 64px;
-    background: repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
-      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px), var(--bg);
+    background: var(--bg);
     color: var(--text); font-family: "IBM Plex Sans", system-ui, sans-serif;
   }}
   .wrap {{ max-width: 900px; margin: 0 auto; }}
@@ -189,39 +183,43 @@ def gerar_html():
   .recomendacao-link {{ font-size: 0.82rem; font-weight: 600; color: var(--accent-ink); text-decoration: none; }}
   .recomendacao-link:hover {{ text-decoration: underline; }}
 
-  .legenda {{ display: flex; gap: 18px; flex-wrap: wrap; margin: 4px 0 20px; font-size: 0.8rem; color: var(--muted); }}
+  .legenda {{ display: flex; gap: 18px; flex-wrap: wrap; margin: 12px 0 16px; font-size: 0.8rem; color: var(--muted); }}
   .legenda span {{ display: inline-flex; align-items: center; gap: 6px; }}
   .ponto {{ width: 9px; height: 9px; border-radius: 50%; display: inline-block; }}
   .ponto-bom {{ background: var(--bom); }}
   .ponto-manual {{ background: var(--manual); }}
   .ponto-proximo {{ background: var(--proximo); }}
 
-  .fluxo {{ display: flex; flex-direction: column; }}
-  .etapa {{ display: flex; gap: 18px; position: relative; }}
-  .etapa:not(:last-child)::before {{
-    content: ''; position: absolute; left: 15px; top: 38px; bottom: -18px; width: 2px;
-    background: var(--border);
+  .fluxo-details {{ margin: 8px 0 0; }}
+  .fluxo-details summary {{
+    cursor: pointer; list-style: none; font-family: "Archivo", sans-serif; font-weight: 700;
+    font-size: 1.05rem; padding: 4px 0; display: flex; align-items: center; gap: 8px;
   }}
-  .etapa-marca {{ flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: var(--card);
-    border: 2px solid var(--border); display: flex; align-items: center; justify-content: center;
-    font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; font-weight: 600; color: var(--muted);
-    z-index: 1; }}
-  .etapa-corpo {{ flex: 1; padding-bottom: 26px; }}
-  .etapa-topo {{ display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }}
-  .etapa-titulo {{ font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.05rem; }}
-  .status {{ font-family: "IBM Plex Mono", monospace; font-size: 0.68rem; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 9px; border-radius: 999px; }}
+  .fluxo-details summary::-webkit-details-marker {{ display: none; }}
+  .fluxo-details summary::before {{
+    content: '\\25B8'; font-size: 0.8em; color: var(--muted); transition: transform 0.15s;
+    display: inline-block;
+  }}
+  .fluxo-details[open] summary::before {{ transform: rotate(90deg); }}
+
+  .fluxo {{ display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }}
+  .etapa {{
+    display: flex; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 14px;
+  }}
+  .etapa-marca {{ flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--bg);
+    border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center;
+    font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; font-weight: 600; color: var(--muted); }}
+  .etapa-titulo {{ font-weight: 600; font-size: 0.9rem; flex: 1; min-width: 140px; }}
+  .status {{ font-family: "IBM Plex Mono", monospace; font-size: 0.65rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }}
   .status-bom {{ color: var(--bom); background: var(--bom-soft); }}
   .status-manual {{ color: var(--manual); background: var(--manual-soft); }}
   .status-proximo {{ color: var(--proximo); background: var(--proximo-soft); }}
-  .etapa-desc {{ color: var(--muted); font-size: 0.88rem; margin: 4px 0 10px; max-width: 62ch; }}
-  .etapa-desc code {{ font-family: "IBM Plex Mono", monospace; background: var(--accent-soft); color: var(--accent-ink);
-    padding: 1px 5px; border-radius: 3px; }}
-  .etapa-links {{ display: flex; gap: 10px; flex-wrap: wrap; }}
-  .etapa-links a {{ font-family: "IBM Plex Sans", sans-serif; font-size: 0.82rem; font-weight: 600;
-    color: var(--accent-ink); text-decoration: none; border: 1px solid var(--accent-ink);
-    padding: 6px 14px; border-radius: 6px; }}
-  .etapa-links a:hover {{ background: var(--accent-soft); }}
+  .etapa-links {{ display: flex; gap: 8px; flex-wrap: wrap; }}
+  .etapa-links a {{ font-family: "IBM Plex Sans", sans-serif; font-size: 0.78rem; font-weight: 600;
+    color: var(--accent-ink); text-decoration: none; white-space: nowrap; }}
+  .etapa-links a:hover {{ text-decoration: underline; }}
   .etapa-links a.externo::after {{ content: ' \\2197'; }}
 
   .rodape {{ margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border);
@@ -254,15 +252,16 @@ def gerar_html():
     <div class="recomendacoes" id="lista-recomendacoes" data-total="{len(recomendacoes)}">{recomendacoes_html}
     </div>
 
-    <div class="secao-titulo">Como a esteira funciona, ponta a ponta</div>
-    <div class="legenda">
-      <span><span class="ponto ponto-bom"></span> Automático</span>
-      <span><span class="ponto ponto-manual"></span> Manual (com apoio do cockpit)</span>
-      <span><span class="ponto ponto-proximo"></span> Ainda não construído</span>
-    </div>
-
-    <div class="fluxo">{etapas_html}
-    </div>
+    <details class="fluxo-details">
+      <summary>Como a esteira funciona, ponta a ponta</summary>
+      <div class="legenda">
+        <span><span class="ponto ponto-bom"></span> Automático</span>
+        <span><span class="ponto ponto-manual"></span> Manual (com apoio do cockpit)</span>
+        <span><span class="ponto ponto-proximo"></span> Ainda não construído</span>
+      </div>
+      <div class="fluxo">{etapas_html}
+      </div>
+    </details>
 
     <p class="rodape">Cockpit de Afiliação IA-First &middot; @papairesolve_br &middot; Fase 1</p>
   </div>
