@@ -42,3 +42,8 @@ roupa
 vestido
 sapato
 tenis
+casamento
+noivado
+alianca
+padrinho
+madrinha
