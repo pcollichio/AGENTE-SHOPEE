@@ -91,4 +91,12 @@ nova deve ler isto (junto com `CLAUDE.md`) antes de agir.
   **`VENDIDOS_MINIMO = 50`** é o valor final — ainda validado, mas com
   candidato suficiente pra preencher as 3 faixas de preço. Também
   aumentado `limite` da busca por palavra-chave de 20 pra 50, pra ter
-  mais candidatos antes do filtro.
+  mais candidatos antes do filtro. Teste real com esse valor trouxe 9
+  de 10 produtos, bem distribuídos — um item (porta aliança de
+  casamento) escapou do nicho, sinal de que `produtos_excluir.txt`
+  precisa de um ajuste fino nesse tipo de item.
+- **Regra explícita: nunca listar a relação de produtos em texto/tabela
+  no chat.** O usuário pediu — sempre que quiser ver os produtos (leva,
+  busca, etc.), a resposta do Claude é o link do `painel.html`, nunca
+  uma lista item a item aqui. Comentários pontuais sobre destaques
+  específicos continuam ok. Registrado em `CLAUDE.md`.

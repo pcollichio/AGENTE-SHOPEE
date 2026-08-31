@@ -20,6 +20,12 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
   de ROI): fica no `painel.html` e nas outras páginas do
   `cockpit-shopee/`, publicadas no GitHub Pages, tudo versionado no
   GitHub. O Claude não tenta recriar isso em texto — aponta pro link.
+- **Regra explícita (usuário, 31/08): a relação/lista de produtos
+  NUNCA é exibida em texto/tabela no chat.** Quando o usuário pedir pra
+  ver os produtos (da leva, de uma busca, etc.), a resposta é sempre o
+  link do `painel.html` (ou da página relevante) — nunca listar item a
+  item aqui. Pode comentar destaques pontuais (ex: "o #7 tem prova
+  social forte") sem recriar a lista inteira.
 - **Toda decisão e marco importante entra em `HISTORICO.md`**, com
   data. Ao começar uma sessão nova, releia esse arquivo antes de agir.
 - A sessão do Claude tem uma restrição de rede: não acessa a API da
