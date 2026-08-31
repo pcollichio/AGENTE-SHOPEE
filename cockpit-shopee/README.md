@@ -6,7 +6,10 @@ O cockpit tem duas partes que trabalham junto: você **conversa com o
 Claude** pra decisão, roteiro e "o que fazer agora", e usa o
 **`cockpit.html`** (publicado na Vercel — veja "Colocar o cockpit no
 ar" abaixo) pra tudo visual: produtos do dia com foto, seleção, ROI e
-importar dados.
+importar dados. O `cockpit.html` tem um menu lateral fixo (Início,
+Produtos, Esteira, Importar, ROI) e um painel de chat fixo à direita
+— o chat conversa com a mesma IA de sempre, sempre visível, sem
+precisar trocar de aba pra perguntar algo.
 
 Desde 31/08, todo produto que você seleciona no painel e salva (botão
 "Salvar seleção agora") entra numa lista viva, a **esteira**

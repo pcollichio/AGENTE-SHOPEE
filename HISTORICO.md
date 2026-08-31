@@ -150,4 +150,17 @@ nova deve ler isto (junto com `CLAUDE.md`) antes de agir.
   financeiro é digitado à mão) — selecionado → impulsionado (tem
   investimento) → vendido (tem comissão), com ROI por produto quando
   aplicável. Nova página no menu, novo script `gerar_esteira.py`
-  integrado à automação diária. Itens 2, 4 e 5 ainda pendentes.
+  integrado à automação diária.
+- **Resolvido o item 5 (layout)**: `cockpit.html` redesenhado —
+  antes era um menu horizontal em cima + iframe embaixo; agora é
+  **menu lateral fixo à esquerda + área de conteúdo + painel de chat
+  fixo à direita** (modelo Claude), com o chat sempre visível
+  "apoiando em tudo", falando direto com `api/chat.js` sem precisar
+  trocar de aba. Responsivo: no celular, o menu lateral vira uma barra
+  horizontal no topo e o chat vira um botão flutuante que abre em tela
+  cheia. Cada página (`painel.html`, `esteira.html` etc.) ainda tem seu
+  próprio menu horizontal pra quando é aberta sozinha (fora do
+  cockpit.html) — `nav.py` agora detecta se está dentro de um iframe
+  (`window.self !== window.top`) e esconde esse menu duplicado nesse
+  caso. Testado em desktop e mobile com Playwright. Itens 2 e 4 ainda
+  pendentes.

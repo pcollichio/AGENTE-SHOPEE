@@ -33,4 +33,11 @@ def gerar_menu_html(pagina_atual):
     itens.append(
         f'<a class="menu-item" href="{IDENTIDADE_URL}" target="_blank" rel="noopener">Identidade&nbsp;&#8599;</a>'
     )
-    return '<nav class="menu-cockpit">' + "".join(itens) + "</nav>"
+    menu = '<nav class="menu-cockpit" id="menu-cockpit">' + "".join(itens) + "</nav>"
+    # Quando a página abre dentro do cockpit.html (iframe com o menu
+    # lateral), esconde esse menu horizontal pra não duplicar a navegação.
+    script_embutido = (
+        "<script>if (window.self !== window.top) { "
+        "document.getElementById('menu-cockpit').style.display = 'none'; }</script>"
+    )
+    return menu + script_embutido
