@@ -117,6 +117,27 @@ nova deve ler isto (junto com `CLAUDE.md`) antes de agir.
   variável de ambiente na Vercel, nunca no código). O Claude passa a
   ler esse arquivo pra saber o que foi selecionado, sem precisar que o
   usuário digite de novo. README atualizado com o passo a passo de
-  criar o token. Pendente: usuário ainda precisa fazer o deploy na
-  Vercel e configurar as variáveis de ambiente (ANTHROPIC_API_KEY,
-  SHOPEE_APP_ID, SHOPEE_APP_SECRET, USE_MOCK_DATA=false, GITHUB_TOKEN).
+  criar o token.
+- **Vercel ativada e testada em produção** (`agente-shopee.vercel.app`).
+  Troubleshooting real: primeiro deploy deu 404 (Root Directory não
+  configurado como `cockpit-shopee` — corrigido em Settings → General
+  → Redeploy); GITHUB_TOKEN criado via fine-grained personal access
+  token (usuário confundiu com "Deploy keys" na primeira tentativa —
+  o caminho certo é github.com/settings/personal-access-tokens/new,
+  configurações da conta, não do repositório).
+- **5 melhorias pedidas pelo usuário** (lote de 31/08): (1) a leva não
+  estava batendo a quantidade combinada; (2) processo alternativo de
+  colar link de produto olhado no app; (3) precisa de um ambiente pra
+  gerenciar a esteira (produtos selecionados → impulsionados →
+  vendidos), com o chat dando apoio a toda decisão; (4) agenda de
+  atividades mais simples; (5) layout pouco funcional, ideia de menu
+  lateral + chat central (modelo Claude). Prioridade combinada: 3 → 5
+  → 1 → 4 → 2.
+- **Resolvido o item 1 (quantidade)**: usuário decidiu não fixar mais
+  um número — `montar_leva_variada()` agora devolve TODOS os produtos
+  que passam no filtro de comissão + avaliação (sem piso de vendas,
+  sem cap de quantidade nem distribuição forçada por tier). A seleção
+  de quantos/quais usar fica inteiramente com o usuário, no painel
+  (que já tem filtro por faixa de preço). `VENDIDOS_MINIMO` e
+  `QUANTIDADE_TOTAL` removidos do código. Itens 2, 3, 4 e 5 ainda
+  pendentes.

@@ -1,15 +1,16 @@
 """
-Busca produtos reais da Shopee no nicho casa e construção e monta uma leva
-de 10 oportunidades validadas para @papairesolve_br escolher o que
-divulgar, distribuídas entre ticket baixo, médio e alto (para dar
-variedade de preço, não só produtos de compra por impulso).
+Busca produtos reais da Shopee no nicho casa e construção e traz TODOS os
+que passam no filtro de qualidade — sem capar num número fixo — pra
+@papairesolve_br selecionar direto no painel (que já tem filtro por faixa
+de preço). Pedido do usuário em 2026-08-31: "traga todos e deixe que eu
+faça a seleção; se tiver que filtrar, exclua aqueles com avaliação ruim."
 
-Critérios de qualidade (blueprint, seção 5, + pedido do usuário em
-2026-08-30 de só trazer produtos "validados"):
+Critérios de qualidade (blueprint, seção 5):
   - Comissão acima de 10-12%
   - Avaliação acima de 4,5 estrelas
-  - Volume de vendas acima de 150 (produto já validado no mercado, não
-    aposta sem histórico)
+
+(Não há mais piso de volume de vendas nem número máximo de produtos —
+já foram testados e descartados: ver HISTORICO.md de 31/08.)
 
 Rode com: python buscar_leva_lancamento.py
 
@@ -50,14 +51,6 @@ SUBCATEGORIAS_CASA_CONSTRUCAO = [
 # Faixas de ticket médio (em reais)
 TICKET_BAIXO_MAX = 50.0
 TICKET_MEDIO_MAX = 150.0
-
-# Só entram produtos "validados": já com volume de venda comprovado —
-# tira aposta sem histórico (pedido do usuário em 2026-08-30). Calibrado
-# com dados reais: 150 deixava só 1 produto no catálogo do nicho; 50
-# ainda é validado e dá candidato o suficiente pra preencher a leva.
-VENDIDOS_MINIMO = 50
-
-QUANTIDADE_TOTAL = 10
 
 ARQUIVO_PRODUTOS_MANUAIS = "produtos_manuais.txt"
 ARQUIVO_PRODUTOS_EXCLUIR = "produtos_excluir.txt"
@@ -110,10 +103,9 @@ def buscar_produtos_do_nicho():
     todos_produtos = []
     for termo in SUBCATEGORIAS_CASA_CONSTRUCAO:
         try:
-            # limite mais alto que o necessário pra leva final: com o
-            # filtro de vendas mínimas (VENDIDOS_MINIMO), boa parte dos
-            # primeiros resultados de cada busca não vai se qualificar,
-            # então buscamos mais fundo pra ter candidato o suficiente.
+            # limite alto porque agora trazemos todo mundo que qualifica,
+            # não só os N melhores — buscar mais fundo dá mais opções
+            # pro usuário escolher no painel.
             produtos = client.buscar_produtos(
                 keyword=termo, min_comissao=curadoria.COMISSAO_MINIMA, limite=50
             )
@@ -135,51 +127,22 @@ def buscar_produtos_do_nicho():
     return produtos_unicos
 
 
-def montar_leva_variada(quantidade_total=QUANTIDADE_TOTAL):
-    """Busca produtos do nicho e seleciona os melhores, distribuídos entre
-    ticket baixo/médio/alto, para dar opções de preço variadas."""
+def montar_leva_variada():
+    """Busca produtos do nicho e devolve TODOS os que passam no filtro de
+    qualidade (comissão + avaliação), classificados por faixa de preço e
+    ordenados por score — sem cortar num número fixo. A seleção de quais
+    (e quantos) usar fica por conta do usuário, no painel."""
     produtos = buscar_produtos_do_nicho()
 
-    # Critério mínimo de qualidade (comissão, avaliação e vendas — só
-    # produtos "validados"); sem filtro de preço aqui, pois é justamente
-    # a variação de preço que queremos.
     qualificados = [
         {**p, "tier": _classificar_tier(p["price"]), "score": curadoria.calcular_score(p)}
         for p in produtos
         if p["commission_rate"] >= curadoria.COMISSAO_MINIMA
         and p["rating"] >= curadoria.AVALIACAO_MINIMA
-        and p["total_sold"] >= VENDIDOS_MINIMO
     ]
 
-    por_tier = {"baixo": [], "medio": [], "alto": []}
-    for p in qualificados:
-        por_tier[p["tier"]].append(p)
-    for tier in por_tier:
-        por_tier[tier].sort(key=lambda p: p["score"], reverse=True)
-
-    # Distribui a quantidade igualmente entre as 3 faixas (com sobra pros
-    # dois primeiros tiers), pegando o que houver disponível em cada uma
-    base = quantidade_total // 3
-    metas = {"baixo": base + 1, "medio": base + 1, "alto": base}
-
-    selecionados = []
-    for tier, meta in metas.items():
-        selecionados.extend(por_tier[tier][:meta])
-
-    # Se alguma faixa não tinha produtos suficientes, completa com o
-    # restante disponível (de qualquer faixa), até atingir a quantidade
-    if len(selecionados) < quantidade_total:
-        ja_selecionados_ids = {p["product_id"] for p in selecionados}
-        restantes = sorted(
-            (p for p in qualificados if p["product_id"] not in ja_selecionados_ids),
-            key=lambda p: p["score"],
-            reverse=True,
-        )
-        faltam = quantidade_total - len(selecionados)
-        selecionados.extend(restantes[:faltam])
-
-    selecionados.sort(key=lambda p: p["score"], reverse=True)
-    return selecionados
+    qualificados.sort(key=lambda p: p["score"], reverse=True)
+    return qualificados
 
 
 def carregar_termos_manuais(caminho=ARQUIVO_PRODUTOS_MANUAIS):

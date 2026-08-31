@@ -1,6 +1,6 @@
 # Liste aqui, uma palavra-chave por linha, produtos que você quer garantir
 # que apareçam no painel, mesmo que não tenham sido selecionados
-# automaticamente pela curadoria dos 10.
+# automaticamente pela curadoria (comissão ou avaliação abaixo do piso).
 #
 # Linhas começando com # são ignoradas. Depois de editar este arquivo,
 # rode buscar_leva_lancamento.py de novo (ou dispare o workflow "Leva
