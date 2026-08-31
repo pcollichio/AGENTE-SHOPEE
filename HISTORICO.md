@@ -139,5 +139,15 @@ nova deve ler isto (junto com `CLAUDE.md`) antes de agir.
   sem cap de quantidade nem distribuição forçada por tier). A seleção
   de quantos/quais usar fica inteiramente com o usuário, no painel
   (que já tem filtro por faixa de preço). `VENDIDOS_MINIMO` e
-  `QUANTIDADE_TOTAL` removidos do código. Itens 2, 3, 4 e 5 ainda
-  pendentes.
+  `QUANTIDADE_TOTAL` removidos do código.
+- **Resolvido o item 3 (ambiente de gestão da esteira)**: `esteira.json`
+  deixou de ser sobrescrito a cada seleção — `api/selecionar.js` agora
+  acrescenta (dedup por `produto_id`). Novo módulo
+  `shopee_integration/esteira.py` gera `esteira.html`: lista todo
+  produto já selecionado, com status calculado sozinho cruzando o nome
+  do produto com `financeiro/investimentos.csv` e `vendas.csv`
+  (comparação tolerante — um nome "contém" o outro, já que o campo do
+  financeiro é digitado à mão) — selecionado → impulsionado (tem
+  investimento) → vendido (tem comissão), com ROI por produto quando
+  aplicável. Nova página no menu, novo script `gerar_esteira.py`
+  integrado à automação diária. Itens 2, 4 e 5 ainda pendentes.

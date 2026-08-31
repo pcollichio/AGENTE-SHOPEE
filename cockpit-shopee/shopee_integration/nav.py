@@ -8,6 +8,7 @@ PAGINAS = [
     ("index.html", "Início"),
     ("chat.html", "Chat"),
     ("painel.html", "Produtos"),
+    ("esteira.html", "Esteira"),
     ("importar.html", "Importar"),
     ("painel_roi.html", "ROI"),
 ]

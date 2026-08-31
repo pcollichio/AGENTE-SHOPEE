@@ -95,6 +95,7 @@ def _linha_produto(produto, posicao, id_prefixo):
         <tr data-tier="{p['tier']}">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="{row_id}"
+              data-produto-id="{p['product_id']}"
               data-nome="{nome}" data-preco="{p['price']:.2f}"
               data-comissao="{p['commission_rate']*100:.0f}"
               data-link="{p['affiliate_link']}"
@@ -656,6 +657,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
         chk.type = 'checkbox';
         chk.className = 'chk-produto';
         chk.id = rowId;
+        chk.setAttribute('data-produto-id', p.product_id || '');
         chk.setAttribute('data-nome', p.name || '(sem nome)');
         chk.setAttribute('data-preco', Number(p.price || 0).toFixed(2));
         chk.setAttribute('data-comissao', Math.round((p.commission_rate || 0) * 100));
@@ -769,6 +771,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
       var marcados = document.querySelectorAll('.chk-produto:checked');
       var produtos = Array.prototype.map.call(marcados, function (chk) {{
         return {{
+          produto_id: chk.getAttribute('data-produto-id'),
           nome: chk.getAttribute('data-nome'),
           preco: chk.getAttribute('data-preco'),
           comissao: chk.getAttribute('data-comissao'),

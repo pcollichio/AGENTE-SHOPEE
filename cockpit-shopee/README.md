@@ -8,10 +8,12 @@ Claude** pra decisão, roteiro e "o que fazer agora", e usa o
 ar" abaixo) pra tudo visual: produtos do dia com foto, seleção, ROI e
 importar dados.
 
-Desde 31/08, a seleção de produtos feita no painel é salva
-automaticamente (botão "Salvar seleção agora") direto no GitHub — é
-assim que o Claude sabe o que você escolheu, sem precisar digitar de
-novo no chat.
+Desde 31/08, todo produto que você seleciona no painel e salva (botão
+"Salvar seleção agora") entra numa lista viva, a **esteira**
+(`esteira.html`) — é assim que o Claude sabe o que você já escolheu ao
+longo do tempo, sem precisar digitar de novo no chat. O status de cada
+produto (selecionado / impulsionado / vendido) é calculado sozinho,
+cruzando com o financeiro.
 
 ## O agente dentro do Claude
 
@@ -23,8 +25,11 @@ novo no chat.
   `.github/workflows/busca-manual.yml` (que roda `buscar_um_produto.py`
   com acesso real à API da Shopee) e te traz os resultados na hora.
 - **Peça o roteiro de um produto que você selecionou no painel** — o
-  Claude lê `selecao_atual.json` (salvo pelo botão do painel) e já
-  monta o texto pronto pra gravação.
+  Claude lê `esteira.json` (salvo pelo botão do painel) e já monta o
+  texto pronto pra gravação.
+- **Pergunte o que está na esteira** — o Claude sabe quais produtos
+  já foram selecionados, quais já foram impulsionados e quais já
+  venderam.
 
 Essa abordagem existe porque a sessão do Claude, por segurança, não
 acessa a API da Shopee diretamente — só o GitHub Actions tem esse
@@ -36,10 +41,13 @@ por uma chamada direta.
 - **`cockpit.html`** — arquivo único de entrada (abre os outros por dentro)
 - **`index.html`** — visão geral do fluxo completo ("o que fazer hoje")
 - **`chat.html`** — chat de verdade com o coach (usa `api/chat.js`)
-- **`painel.html`** — produtos do dia (gerado automaticamente todo dia
-  às 9h), com foto, seleção, roteiro pronto pra esteira de conteúdo e
-  uma busca ao vivo (por nome) pra achar um produto específico que não
+- **`painel.html`** — todos os produtos do dia que passam no filtro de
+  qualidade (gerado automaticamente todo dia às 9h, sem número fixo),
+  com foto, seleção, roteiro pronto pra esteira de conteúdo e uma
+  busca ao vivo (por nome) pra achar um produto específico que não
   apareceu na leva (usa `api/buscar_produto.py`)
+- **`esteira.html`** — a lista viva de produtos selecionados, com
+  status automático (selecionado / impulsionado / vendido)
 - **`importar.html`** — formulário simples pra registrar investimento em
   campanha e vendas confirmadas
 - **`painel_roi.html`** — progresso da meta mensal e ROI por produto
@@ -48,6 +56,8 @@ por uma chamada direta.
   (usado pelo workflow `busca-manual.yml`, a pedido no chat com o Claude)
 - `gerar_roi.py` — calcula o ROI a partir dos arquivos em `financeiro/`
   e também escreve `financeiro/resumo.json` (o chat lê esse arquivo)
+- `gerar_esteira.py` — recalcula o status da esteira (`esteira.html`)
+  cruzando `esteira.json` com o financeiro
 - `sincronizar_vendas.py` — tenta puxar vendas reais direto da Shopee
   (experimental, ainda sendo validado contra a API)
 - `financeiro/` — onde ficam os dados de investimento e vendas
@@ -57,11 +67,11 @@ por uma chamada direta.
 - `api/chat.js` — função serverless (Vercel) que fala com a Anthropic
 - `api/buscar_produto.py` — função serverless (Vercel) que busca um
   produto específico direto na Shopee
-- `api/selecionar.js` — função serverless (Vercel) que salva a seleção
-  do painel em `selecao_atual.json`, direto no GitHub
-- `selecao_atual.json` — a última seleção de produtos feita no painel
-  (escrito pelo botão "Salvar seleção agora"; é o que o Claude lê pra
-  saber o que você escolheu)
+- `api/selecionar.js` — função serverless (Vercel) que acrescenta a
+  seleção do painel em `esteira.json`, direto no GitHub
+- `esteira.json` — todos os produtos já selecionados no painel ao
+  longo do tempo (escrito pelo botão "Salvar seleção agora"; é o que
+  o Claude e o `esteira.html` leem)
 
 ## Colocar o cockpit no ar (Vercel)
 

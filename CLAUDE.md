@@ -36,11 +36,11 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
 - **Decisão de 31/08: o cockpit roda na Vercel.** O usuário pediu uma
   conexão de verdade entre o painel (onde ele seleciona produtos) e o
   Claude — decidiu usar a Vercel em vez do fluxo manual por GitHub
-  Issues. O botão "Salvar seleção agora" no `painel.html` grava a
-  seleção instantaneamente em `cockpit-shopee/selecao_atual.json`
-  (via `api/selecionar.js`, que escreve no GitHub usando um
-  `GITHUB_TOKEN`). O Claude lê esse arquivo pra saber o que foi
-  selecionado, sem precisar que o usuário digite de novo no chat.
+  Issues. O botão "Salvar seleção agora" no `painel.html` acrescenta
+  (não sobrescreve) a seleção em `cockpit-shopee/esteira.json` (via
+  `api/selecionar.js`, que escreve no GitHub usando um `GITHUB_TOKEN`).
+  `esteira.html` mostra o status de cada produto (selecionado /
+  impulsionado / vendido), calculado cruzando com o financeiro.
 - Chat (`chat.html` + `api/chat.js`) e busca ao vivo no site
   (`api/buscar_produto.py`) também rodam na Vercel — todos os três
   (chat, busca, seleção) dependem do deploy estar ativo.
@@ -54,9 +54,12 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
 - `cockpit-shopee/financeiro/` — investimento e vendas (import manual,
   não automatizado — ver decisão em `HISTORICO.md`).
 - `cockpit-shopee/financeiro/resumo.json` — resumo do ROI em JSON.
-- `cockpit-shopee/selecao_atual.json` — última seleção de produtos
-  feita no painel (leia antes de gerar roteiro, se o usuário mencionar
-  que já selecionou algo no painel).
+- `cockpit-shopee/esteira.json` — lista viva (acumulada, não
+  sobrescrita) de todos os produtos já selecionados no painel; leia
+  antes de gerar roteiro ou responder sobre o que já foi selecionado.
+- `cockpit-shopee/esteira.html` — visão da esteira com status calculado
+  automaticamente (selecionado / impulsionado / vendido), cruzando
+  `esteira.json` com o financeiro.
 - Links publicados: GitHub Pages em
   `https://pcollichio.github.io/AGENTE-SHOPEE/cockpit-shopee/cockpit.html`
   (e `/painel.html`, `/painel_roi.html`, etc.)
