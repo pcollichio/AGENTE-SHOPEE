@@ -74,6 +74,9 @@ por uma chamada direta.
   produto específico direto na Shopee
 - `api/selecionar.js` — função serverless (Vercel) que acrescenta a
   seleção do painel em `esteira.json`, direto no GitHub
+- `api/importar_arquivo.js` — função serverless (Vercel) que recebe um
+  arquivo enviado em `importar.html` (relatório de vendas, Meta Ads
+  etc.) e salva em `financeiro/importados/`, direto no GitHub
 - `esteira.json` — todos os produtos já selecionados no painel ao
   longo do tempo (escrito pelo botão "Salvar seleção agora"; é o que
   o Claude e o `esteira.html` leem)

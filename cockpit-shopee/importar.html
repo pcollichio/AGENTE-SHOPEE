@@ -170,7 +170,26 @@
       e clique em "Commit changes" no final da página.
     </p>
 
-    <p class="rodape">Gera só o texto da linha — nada é salvo automaticamente por esta página.</p>
+    <section class="cartao">
+      <h2>Importar arquivo (relatório de vendas ou de anúncios)</h2>
+      <p class="destino">Envia o arquivo pro GitHub, em <code>financeiro/importados/</code> — depois é só pedir pro Claude processar ("importei o relatório de vendas, confere pra mim")</p>
+      <div class="campo">
+        <label for="arq-tipo">O que é esse arquivo?</label>
+        <select id="arq-tipo">
+          <option value="vendas_shopee">Relatório de vendas (Shopee)</option>
+          <option value="meta_ads">Investimento em anúncios (Meta Ads / Gerenciador)</option>
+          <option value="outro">Outro</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label for="arq-arquivo">Arquivo (CSV, XLSX, PDF ou print/imagem — até ~3MB)</label>
+        <input type="file" id="arq-arquivo" accept=".csv,.xlsx,.xls,.pdf,image/*">
+      </div>
+      <button class="btn-gerar" id="btn-enviar-arquivo" disabled>Enviar arquivo</button>
+      <p class="instrucao" id="arq-status"></p>
+    </section>
+
+    <p class="rodape">As duas primeiras seções geram só o texto da linha — nada é salvo automaticamente. A seção de arquivo envia direto pro GitHub.</p>
   </div>
 
   <script>
@@ -213,6 +232,71 @@
         alert('Não consegui copiar automaticamente. Seleciona o texto acima e copia manualmente.');
       });
     }
+
+    (function () {
+      var campoArquivo = document.getElementById('arq-arquivo');
+      var campoTipo = document.getElementById('arq-tipo');
+      var botao = document.getElementById('btn-enviar-arquivo');
+      var status = document.getElementById('arq-status');
+
+      campoArquivo.addEventListener('change', function () {
+        botao.disabled = !campoArquivo.files.length;
+        status.textContent = '';
+      });
+
+      botao.addEventListener('click', function () {
+        var arquivo = campoArquivo.files[0];
+        if (!arquivo) return;
+
+        botao.disabled = true;
+        var textoOriginal = botao.textContent;
+        botao.textContent = 'Enviando...';
+        status.textContent = '';
+
+        var leitor = new FileReader();
+        leitor.onload = function () {
+          var base64 = String(leitor.result).split(',')[1] || '';
+          fetch('/api/importar_arquivo', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+              tipo: campoTipo.value,
+              nome_arquivo: arquivo.name,
+              conteudo_base64: base64,
+            }),
+          })
+            .then(function (resposta) {
+              return resposta.json().then(function (dados) { return { ok: resposta.ok, dados: dados }; });
+            })
+            .then(function (r) {
+              if (r.ok) {
+                botao.textContent = 'Enviado! ✓';
+                status.textContent = 'Salvo em ' + r.dados.caminho + '. Agora é só avisar o Claude pra processar.';
+                campoArquivo.value = '';
+              } else {
+                botao.textContent = textoOriginal;
+                status.textContent = r.dados.erro || 'Não consegui enviar o arquivo.';
+              }
+            })
+            .catch(function () {
+              botao.textContent = textoOriginal;
+              status.textContent = 'Não consegui falar com o servidor. Essa função só funciona no cockpit publicado na Vercel.';
+            })
+            .finally(function () {
+              setTimeout(function () {
+                botao.disabled = !campoArquivo.files.length;
+                botao.textContent = textoOriginal;
+              }, 3000);
+            });
+        };
+        leitor.onerror = function () {
+          botao.disabled = false;
+          botao.textContent = textoOriginal;
+          status.textContent = 'Não consegui ler o arquivo.';
+        };
+        leitor.readAsDataURL(arquivo);
+      });
+    })();
   </script>
 </body>
 </html>

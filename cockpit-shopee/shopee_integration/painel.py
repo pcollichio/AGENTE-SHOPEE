@@ -475,19 +475,6 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
   }}
   .btn-baixar:disabled {{ opacity: 0.4; cursor: not-allowed; }}
   .btn-baixar:focus-visible {{ outline: 2px solid #fff; outline-offset: 2px; }}
-  .btn-salvar {{
-    font-family: "IBM Plex Sans", sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    background: transparent;
-    color: var(--barra-texto);
-    border: 1px solid var(--barra-texto);
-    padding: 10px 18px;
-    border-radius: 7px;
-    cursor: pointer;
-  }}
-  .btn-salvar:disabled {{ opacity: 0.4; cursor: not-allowed; }}
-  .btn-salvar:focus-visible {{ outline: 2px solid #fff; outline-offset: 2px; }}
 
   .busca-caixa {{
     background: var(--card); border: 1px solid var(--border); border-radius: 10px;
@@ -565,8 +552,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
   <div class="barra-selecao">
     <div class="barra-selecao-conteudo">
       <span class="barra-contagem"><b id="contagem-selecionados">0</b> selecionado(s)</span>
-      <button class="btn-salvar" id="btn-salvar-selecao" disabled>Salvar seleção agora</button>
-      <button class="btn-baixar" id="btn-baixar-selecao" disabled>Baixar seleção para a esteira</button>
+      <button class="btn-baixar" id="btn-baixar-selecao" disabled>Baixar roteiro e salvar na esteira</button>
     </div>
   </div>
 
@@ -591,7 +577,6 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
       var marcados = document.querySelectorAll('.chk-produto:checked');
       document.getElementById('contagem-selecionados').textContent = marcados.length;
       document.getElementById('btn-baixar-selecao').disabled = marcados.length === 0;
-      document.getElementById('btn-salvar-selecao').disabled = marcados.length === 0;
     }}
     document.querySelectorAll('.chk-produto').forEach(function (chk) {{
       chk.addEventListener('change', atualizarBarraSelecao);
@@ -763,9 +748,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
       }});
     }})();
 
-    document.getElementById('btn-salvar-selecao').addEventListener('click', function () {{
-      var botao = this;
-      var marcados = document.querySelectorAll('.chk-produto:checked');
+    function salvarNaEsteira(marcados) {{
       var produtos = Array.prototype.map.call(marcados, function (chk) {{
         return {{
           produto_id: chk.getAttribute('data-produto-id'),
@@ -776,41 +759,16 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
           categoria: chk.getAttribute('data-categoria'),
         }};
       }});
-
-      botao.disabled = true;
-      var textoOriginal = botao.textContent;
-      botao.textContent = 'Salvando...';
-
-      fetch('/api/selecionar', {{
+      return fetch('/api/selecionar', {{
         method: 'POST',
         headers: {{ 'content-type': 'application/json' }},
         body: JSON.stringify({{ produtos: produtos }}),
-      }})
-        .then(function (resposta) {{
-          return resposta.json().then(function (dados) {{ return {{ ok: resposta.ok, dados: dados }}; }});
-        }})
-        .then(function (r) {{
-          if (r.ok) {{
-            botao.textContent = 'Salvo! \\u2713';
-          }} else {{
-            botao.textContent = textoOriginal;
-            alert(r.dados.erro || 'Não consegui salvar a seleção.');
-          }}
-        }})
-        .catch(function () {{
-          botao.textContent = textoOriginal;
-          alert('Não consegui falar com o servidor. Essa função só funciona no cockpit publicado na Vercel (veja o README).');
-        }})
-        .finally(function () {{
-          setTimeout(function () {{
-            botao.disabled = document.querySelectorAll('.chk-produto:checked').length === 0;
-            botao.textContent = textoOriginal;
-          }}, 2500);
-        }});
-    }});
+      }}).then(function (resposta) {{
+        return resposta.json().then(function (dados) {{ return {{ ok: resposta.ok, dados: dados }}; }});
+      }});
+    }}
 
-    document.getElementById('btn-baixar-selecao').addEventListener('click', function () {{
-      var marcados = document.querySelectorAll('.chk-produto:checked');
+    function baixarRoteiro(marcados) {{
       var hoje = new Date().toISOString().slice(0, 10);
       var linhas = [
         '# Esteira de produção — ' + hoje,
@@ -842,6 +800,36 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
+    }}
+
+    document.getElementById('btn-baixar-selecao').addEventListener('click', function () {{
+      var botao = this;
+      var marcados = document.querySelectorAll('.chk-produto:checked');
+      var textoOriginal = botao.textContent;
+
+      baixarRoteiro(marcados);
+
+      botao.disabled = true;
+      botao.textContent = 'Salvando na esteira...';
+      salvarNaEsteira(marcados)
+        .then(function (r) {{
+          if (r.ok) {{
+            botao.textContent = 'Salvo na esteira! \\u2713';
+          }} else {{
+            botao.textContent = textoOriginal;
+            alert((r.dados.erro || 'Não consegui salvar na esteira.') + ' O roteiro baixou normalmente, mas registre a seleção depois.');
+          }}
+        }})
+        .catch(function () {{
+          botao.textContent = textoOriginal;
+          alert('O roteiro baixou, mas não consegui salvar na esteira (essa parte só funciona no cockpit publicado na Vercel — veja o README).');
+        }})
+        .finally(function () {{
+          setTimeout(function () {{
+            botao.disabled = document.querySelectorAll('.chk-produto:checked').length === 0;
+            botao.textContent = textoOriginal;
+          }}, 3000);
+        }});
     }});
   </script>
 </body>

@@ -44,6 +44,12 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
 - Chat (`chat.html` + `api/chat.js`) e busca ao vivo no site
   (`api/buscar_produto.py`) também rodam na Vercel — todos os três
   (chat, busca, seleção) dependem do deploy estar ativo.
+- `importar.html` tem um campo de **upload de arquivo** (relatório de
+  vendas Shopee, extrato/print do Meta Ads) — envia pro GitHub em
+  `financeiro/importados/` via `api/importar_arquivo.js`, sem tentar
+  parsear automaticamente (formato varia demais). Quando o usuário
+  avisar que subiu um arquivo, leia-o de lá e converta pros CSVs de
+  `financeiro/` (investimentos.csv / vendas.csv) você mesmo.
 
 ## Onde as coisas estão
 

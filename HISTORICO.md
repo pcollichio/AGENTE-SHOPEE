@@ -182,3 +182,28 @@ nova deve ler isto (junto com `CLAUDE.md`) antes de agir.
   o resto fica escondido atrás de um clique, disponível se precisar.
 
 Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
+
+## 2026-08-31 (continuação) — bug real de uso + mais 3 pedidos
+
+- **Bug real reportado pelo usuário**: produtos selecionados e
+  baixados no painel não apareciam na esteira. Causa: existiam dois
+  botões parecidos — "Salvar seleção agora" (chamava `/api/selecionar`)
+  e "Baixar seleção para a esteira" (só baixava o arquivo .md, sem
+  chamar a API) — o usuário usava o segundo, que nunca salvava de
+  verdade. **Corrigido fundindo os dois num só**: "Baixar roteiro e
+  salvar na esteira" agora baixa o arquivo E chama `/api/selecionar`
+  ao mesmo tempo. Testado com Playwright confirmando as duas ações.
+- **Upload de arquivo em `importar.html`**: novo campo (tipo + arquivo)
+  que envia relatório de vendas da Shopee ou extrato/print do Meta Ads
+  pro GitHub, em `financeiro/importados/`, via nova função serverless
+  `api/importar_arquivo.js`. Não tenta parsear automaticamente (os
+  formatos desses relatórios ainda não foram vistos de verdade) — o
+  Claude lê e converte manualmente quando avisado. Limite prático de
+  ~3MB por arquivo (limite de payload da Vercel no plano gratuito).
+- **Dashboard ganhou mais indicadores**: além de investido/comissão/ROI
+  médio, agora tem "Comissão média por venda" e uma seção nova, **Funil
+  da esteira** (Selecionados / Impulsionados / Venderam / Taxa de
+  conversão), lendo `esteira.json` cruzado com o financeiro — mesma
+  lógica de `esteira.py`, reaproveitada. Testado com dados simulados
+  (3 selecionados, 2 impulsionados, 1 vendeu → 50% conversão, valores
+  batendo certinho no screenshot).

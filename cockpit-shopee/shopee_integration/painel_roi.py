@@ -1,11 +1,13 @@
 """
 Gera o painel visual de ROI (HTML autônomo): progresso da meta mensal,
-investido x comissão recebida, e ROI por produto/campanha.
+investido x comissão recebida, funil da esteira (selecionado -> impulsionado
+-> vendido) e ROI por produto/campanha.
 """
 
 import json
 from datetime import date
 
+from . import esteira as esteira_calc
 from . import nav
 from . import roi as roi_calc
 
@@ -145,6 +147,19 @@ def gerar_html(investimentos, vendas, titulo="Dashboard — Papai Resolve"):
     roi_medio_texto = f"{resumo['roi_medio']:.1f}x" if resumo["roi_medio"] is not None else "—"
     progresso_pct = resumo["progresso_meta"] * 100
 
+    # Funil da esteira: quantos produtos selecionados já foram
+    # impulsionados (tem investimento) e quantos já venderam.
+    lista_esteira = esteira_calc.calcular_status(esteira_calc.carregar_esteira(), investimentos, vendas)
+    total_selecionados = len(lista_esteira)
+    com_investimento = sum(1 for p in lista_esteira if p["investido"] > 0)
+    com_venda = sum(1 for p in lista_esteira if p["comissao_recebida"] > 0)
+    taxa_conversao_texto = (
+        f"{com_venda / com_investimento * 100:.0f}%" if com_investimento else "—"
+    )
+
+    comissao_media_venda = (resumo["total_comissao"] / len(vendas)) if vendas else None
+    comissao_media_texto = f"R$ {comissao_media_venda:.2f}" if comissao_media_venda is not None else "—"
+
     return f"""<!doctype html>
 <html lang="pt-br">
 <head>
@@ -264,7 +279,15 @@ def gerar_html(investimentos, vendas, titulo="Dashboard — Papai Resolve"):
       <div class="stat"><div class="n">R$ {resumo['total_investido']:.2f}</div><div class="l">Total investido</div></div>
       <div class="stat"><div class="n">R$ {resumo['total_comissao']:.2f}</div><div class="l">Total em comissão</div></div>
       <div class="stat"><div class="n">{roi_medio_texto}</div><div class="l">ROI médio (meta: 3x)</div></div>
-      <div class="stat"><div class="n">{len(por_produto)}</div><div class="l">Produtos/campanhas com dado</div></div>
+      <div class="stat"><div class="n">{comissao_media_texto}</div><div class="l">Comissão média por venda</div></div>
+    </section>
+
+    <div class="secao-titulo">Funil da esteira</div>
+    <section class="resumo">
+      <div class="stat"><div class="n">{total_selecionados}</div><div class="l">Selecionados</div></div>
+      <div class="stat"><div class="n">{com_investimento}</div><div class="l">Impulsionados</div></div>
+      <div class="stat"><div class="n">{com_venda}</div><div class="l">Venderam</div></div>
+      <div class="stat"><div class="n">{taxa_conversao_texto}</div><div class="l">Taxa de conversão (impulsionado &rarr; venda)</div></div>
     </section>
 
     <div class="secao-titulo">Comissão acumulada no mês</div>
