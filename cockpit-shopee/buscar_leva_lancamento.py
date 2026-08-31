@@ -108,8 +108,12 @@ def buscar_produtos_do_nicho():
     todos_produtos = []
     for termo in SUBCATEGORIAS_CASA_CONSTRUCAO:
         try:
+            # limite mais alto que o necessário pra leva final: com o
+            # filtro de vendas mínimas (VENDIDOS_MINIMO), boa parte dos
+            # primeiros resultados de cada busca não vai se qualificar,
+            # então buscamos mais fundo pra ter candidato o suficiente.
             produtos = client.buscar_produtos(
-                keyword=termo, min_comissao=curadoria.COMISSAO_MINIMA, limite=20
+                keyword=termo, min_comissao=curadoria.COMISSAO_MINIMA, limite=50
             )
             for p in produtos:
                 p["termo_busca"] = termo
