@@ -52,8 +52,10 @@ TICKET_BAIXO_MAX = 50.0
 TICKET_MEDIO_MAX = 150.0
 
 # Só entram produtos "validados": já com volume de venda comprovado —
-# tira aposta sem histórico (pedido do usuário em 2026-08-30)
-VENDIDOS_MINIMO = 150
+# tira aposta sem histórico (pedido do usuário em 2026-08-30). Calibrado
+# com dados reais: 150 deixava só 1 produto no catálogo do nicho; 50
+# ainda é validado e dá candidato o suficiente pra preencher a leva.
+VENDIDOS_MINIMO = 50
 
 QUANTIDADE_TOTAL = 10
 
@@ -137,17 +139,6 @@ def montar_leva_variada(quantidade_total=QUANTIDADE_TOTAL):
     """Busca produtos do nicho e seleciona os melhores, distribuídos entre
     ticket baixo/médio/alto, para dar opções de preço variadas."""
     produtos = buscar_produtos_do_nicho()
-
-    # DIAGNÓSTICO TEMPORÁRIO (2026-08-31): entender quantos produtos
-    # passam em cada critério isoladamente, pra calibrar VENDIDOS_MINIMO.
-    print(f"[diagnóstico] total de produtos únicos encontrados: {len(produtos)}", file=sys.stderr)
-    print(f"[diagnóstico] com comissão >= {curadoria.COMISSAO_MINIMA*100:.0f}%: "
-          f"{sum(1 for p in produtos if p['commission_rate'] >= curadoria.COMISSAO_MINIMA)}", file=sys.stderr)
-    print(f"[diagnóstico] com avaliação >= {curadoria.AVALIACAO_MINIMA}: "
-          f"{sum(1 for p in produtos if p['rating'] >= curadoria.AVALIACAO_MINIMA)}", file=sys.stderr)
-    for limiar in (150, 100, 50, 20, 10, 1):
-        n = sum(1 for p in produtos if p['total_sold'] >= limiar)
-        print(f"[diagnóstico] com vendidos >= {limiar}: {n}", file=sys.stderr)
 
     # Critério mínimo de qualidade (comissão, avaliação e vendas — só
     # produtos "validados"); sem filtro de preço aqui, pois é justamente
