@@ -1,16 +1,19 @@
 """
-Busca produtos reais da Shopee no nicho casa e construção e traz TODOS os
-que passam no filtro de qualidade — sem capar num número fixo — pra
-@papairesolve_br selecionar direto no painel (que já tem filtro por faixa
-de preço). Pedido do usuário em 2026-08-31: "traga todos e deixe que eu
-faça a seleção; se tiver que filtrar, exclua aqueles com avaliação ruim."
+Busca produtos reais da Shopee no nicho casa e construção e traz TODOS
+eles (sem filtro de comissão, avaliação, vendas ou número máximo) pra
+@papairesolve_br selecionar direto no painel — que tem os filtros
+(faixa de preço, comissão mínima, avaliação mínima) pra aplicar no
+momento da escolha, não antes.
 
-Critérios de qualidade (blueprint, seção 5):
-  - Comissão acima de 10-12%
-  - Avaliação acima de 4,5 estrelas
+Pedido do usuário (31/08 e 01/09): primeiro "traga todos e deixe que eu
+faça a seleção", depois "todos que fazem parte do nicho de casa e
+construção... o filtro no momento das escolhas dos produtos" — ou seja,
+o único corte que acontece aqui é o de nicho (produtos_excluir.txt);
+qualidade (comissão, avaliação) vira filtro interativo no painel.
 
-(Não há mais piso de volume de vendas nem número máximo de produtos —
-já foram testados e descartados: ver HISTORICO.md de 31/08.)
+(Não há piso de volume de vendas, comissão, avaliação, nem número
+máximo de produtos na busca — todos testados e descartados/movidos pro
+painel: ver HISTORICO.md de 31/08 e 01/09.)
 
 Rode com: python buscar_leva_lancamento.py
 
@@ -103,12 +106,10 @@ def buscar_produtos_do_nicho():
     todos_produtos = []
     for termo in SUBCATEGORIAS_CASA_CONSTRUCAO:
         try:
-            # limite alto porque agora trazemos todo mundo que qualifica,
-            # não só os N melhores — buscar mais fundo dá mais opções
-            # pro usuário escolher no painel.
-            produtos = client.buscar_produtos(
-                keyword=termo, min_comissao=curadoria.COMISSAO_MINIMA, limite=50
-            )
+            # Sem filtro de comissão aqui — trazemos todo mundo do nicho,
+            # o filtro de qualidade é interativo, no painel. Limite alto
+            # (50) só pra dar mais opções de produto por palavra-chave.
+            produtos = client.buscar_produtos(keyword=termo, limite=50)
             for p in produtos:
                 p["termo_busca"] = termo
             todos_produtos.extend(produtos)
@@ -128,21 +129,22 @@ def buscar_produtos_do_nicho():
 
 
 def montar_leva_variada():
-    """Busca produtos do nicho e devolve TODOS os que passam no filtro de
-    qualidade (comissão + avaliação), classificados por faixa de preço e
-    ordenados por score — sem cortar num número fixo. A seleção de quais
-    (e quantos) usar fica por conta do usuário, no painel."""
+    """Busca produtos do nicho e devolve TODOS eles (sem filtro de
+    comissão/avaliação — só o filtro de nicho já aplicado em
+    buscar_produtos_do_nicho), classificados por faixa de preço e
+    ordenados por score. Pedido do usuário em 2026-09-01: o filtro de
+    qualidade (comissão, avaliação) deve acontecer no momento da
+    seleção, no painel — não antes, cortando produto do nicho fora da
+    leva."""
     produtos = buscar_produtos_do_nicho()
 
-    qualificados = [
+    todos = [
         {**p, "tier": _classificar_tier(p["price"]), "score": curadoria.calcular_score(p)}
         for p in produtos
-        if p["commission_rate"] >= curadoria.COMISSAO_MINIMA
-        and p["rating"] >= curadoria.AVALIACAO_MINIMA
     ]
 
-    qualificados.sort(key=lambda p: p["score"], reverse=True)
-    return qualificados
+    todos.sort(key=lambda p: p["score"], reverse=True)
+    return todos
 
 
 def carregar_termos_manuais(caminho=ARQUIVO_PRODUTOS_MANUAIS):

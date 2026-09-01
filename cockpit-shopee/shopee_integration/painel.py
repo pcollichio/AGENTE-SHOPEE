@@ -97,7 +97,7 @@ def _linha_produto(produto, posicao, id_prefixo):
     else:
         foto_html = '<div class="foto-produto foto-vazia" aria-hidden="true"></div>'
     return f"""
-        <tr data-tier="{p['tier']}">
+        <tr data-tier="{p['tier']}" data-comissao="{p['commission_rate']*100:.0f}" data-avaliacao="{p['rating']:.1f}">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="{row_id}"
               data-produto-id="{p['product_id']}"
@@ -130,11 +130,30 @@ def _tabela(produtos, id_prefixo, com_filtro=True):
     filtro_html = ""
     if com_filtro:
         filtro_html = """
-    <div class="filtros" role="tablist" aria-label="Filtrar por faixa de ticket">
-      <button class="filtro ativo" data-filtro="todos" data-alvo="tabela-principal" role="tab" aria-selected="true">Todos</button>
-      <button class="filtro" data-filtro="baixo" data-alvo="tabela-principal" role="tab" aria-selected="false">Ticket baixo</button>
-      <button class="filtro" data-filtro="medio" data-alvo="tabela-principal" role="tab" aria-selected="false">Ticket médio</button>
-      <button class="filtro" data-filtro="alto" data-alvo="tabela-principal" role="tab" aria-selected="false">Ticket alto</button>
+    <div class="filtros-linha">
+      <div class="filtros" role="tablist" aria-label="Filtrar por faixa de ticket">
+        <button class="filtro ativo" data-filtro="todos" data-alvo="tabela-principal" role="tab" aria-selected="true">Todos</button>
+        <button class="filtro" data-filtro="baixo" data-alvo="tabela-principal" role="tab" aria-selected="false">Ticket baixo</button>
+        <button class="filtro" data-filtro="medio" data-alvo="tabela-principal" role="tab" aria-selected="false">Ticket médio</button>
+        <button class="filtro" data-filtro="alto" data-alvo="tabela-principal" role="tab" aria-selected="false">Ticket alto</button>
+      </div>
+      <div class="filtros-select">
+        <label for="filtro-comissao">Comissão mínima</label>
+        <select id="filtro-comissao" data-alvo="tabela-principal">
+          <option value="0">Todas</option>
+          <option value="10">10%+</option>
+          <option value="20">20%+</option>
+          <option value="30">30%+</option>
+          <option value="40">40%+</option>
+        </select>
+        <label for="filtro-avaliacao">Avaliação mínima</label>
+        <select id="filtro-avaliacao" data-alvo="tabela-principal">
+          <option value="0">Todas</option>
+          <option value="4">4.0+&#9733;</option>
+          <option value="4.5">4.5+&#9733;</option>
+          <option value="4.8">4.8+&#9733;</option>
+        </select>
+      </div>
     </div>"""
     return f"""{filtro_html}
     <div class="tabela-scroll">
@@ -346,6 +365,9 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
     border-radius: 3px;
   }}
 
+  .filtros-linha {{
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px;
+  }}
   .filtros {{
     display: inline-flex;
     gap: 4px;
@@ -353,7 +375,6 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
     border: 1px solid var(--border);
     border-radius: 7px;
     padding: 4px;
-    margin-bottom: 18px;
   }}
   .filtro {{
     font-family: "IBM Plex Sans", sans-serif;
@@ -369,6 +390,16 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
   .filtro:hover {{ color: var(--text); }}
   .filtro:focus-visible {{ outline: 2px solid var(--focus); outline-offset: 2px; }}
   .filtro.ativo {{ background: var(--accent); color: #fff; }}
+  .filtros-select {{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }}
+  .filtros-select label {{
+    font-family: "IBM Plex Sans", sans-serif; font-size: 0.82rem; font-weight: 600; color: var(--muted);
+  }}
+  .filtros-select select {{
+    font-family: "IBM Plex Sans", sans-serif; font-size: 0.84rem; color: var(--text);
+    background: var(--card); border: 1px solid var(--border); border-radius: 6px;
+    padding: 6px 10px; cursor: pointer;
+  }}
+  .filtros-select select:focus-visible {{ outline: 2px solid var(--focus); outline-offset: 1px; }}
 
   .tabela-scroll {{
     overflow-x: auto;
@@ -562,20 +593,37 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
   </div>
 
   <script>
+    function aplicarFiltros(alvo) {{
+      var grupoTier = document.querySelectorAll('.filtro[data-alvo="' + alvo + '"]');
+      var botaoAtivo = document.querySelector('.filtro.ativo[data-alvo="' + alvo + '"]');
+      var tier = botaoAtivo ? botaoAtivo.getAttribute('data-filtro') : 'todos';
+      var comissaoMin = parseFloat((document.getElementById('filtro-comissao') || {{}}).value || '0');
+      var avaliacaoMin = parseFloat((document.getElementById('filtro-avaliacao') || {{}}).value || '0');
+
+      document.querySelectorAll('#' + alvo + '-corpo tr').forEach(function (linha) {{
+        var bateTier = tier === 'todos' || linha.getAttribute('data-tier') === tier;
+        var bateComissao = parseFloat(linha.getAttribute('data-comissao') || '0') >= comissaoMin;
+        var bateAvaliacao = parseFloat(linha.getAttribute('data-avaliacao') || '0') >= avaliacaoMin;
+        linha.style.display = (bateTier && bateComissao && bateAvaliacao) ? '' : 'none';
+      }});
+    }}
+
     document.querySelectorAll('.filtro').forEach(function (botao) {{
       botao.addEventListener('click', function () {{
-        var grupo = document.querySelectorAll('.filtro[data-alvo="' + botao.getAttribute('data-alvo') + '"]');
-        grupo.forEach(function (b) {{
+        var alvo = botao.getAttribute('data-alvo');
+        document.querySelectorAll('.filtro[data-alvo="' + alvo + '"]').forEach(function (b) {{
           b.classList.remove('ativo');
           b.setAttribute('aria-selected', 'false');
         }});
         botao.classList.add('ativo');
         botao.setAttribute('aria-selected', 'true');
-        var filtro = botao.getAttribute('data-filtro');
-        document.querySelectorAll('#' + botao.getAttribute('data-alvo') + '-corpo tr').forEach(function (linha) {{
-          linha.style.display = (filtro === 'todos' || linha.getAttribute('data-tier') === filtro) ? '' : 'none';
-        }});
+        aplicarFiltros(alvo);
       }});
+    }});
+
+    ['filtro-comissao', 'filtro-avaliacao'].forEach(function (id) {{
+      var campo = document.getElementById(id);
+      if (campo) campo.addEventListener('change', function () {{ aplicarFiltros(campo.getAttribute('data-alvo')); }});
     }});
 
     function atualizarBarraSelecao() {{
