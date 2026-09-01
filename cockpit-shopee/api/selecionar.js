@@ -43,6 +43,8 @@ module.exports = async (req, res) => {
     comissao: Number(p.comissao) || 0,
     link: String(p.link || "").slice(0, 500),
     categoria: String(p.categoria || "").slice(0, 60),
+    narracao: String(p.narracao || "").slice(0, 4000),
+    legenda: String(p.legenda || "").slice(0, 1000),
     selecionado_em: agora,
   }));
 
@@ -81,6 +83,8 @@ module.exports = async (req, res) => {
         existente.selecionado_em = novo.selecionado_em;
         existente.preco = novo.preco;
         existente.comissao = novo.comissao;
+        if (novo.narracao) existente.narracao = novo.narracao;
+        if (novo.legenda) existente.legenda = novo.legenda;
       } else {
         esteira.push(novo);
       }

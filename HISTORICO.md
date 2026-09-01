@@ -244,3 +244,23 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   narração IA → edição no CapCut → publicar → marcar como publicado),
   deixando explícito quais passos são manuais. Testado com Playwright
   (mudança de etapa envia a chamada certa e atualiza a cor na hora).
+- **Pipeline criar → publicar → avaliar: textos prontos + exclusão na
+  esteira.** Complemento do item acima, a pedido do usuário: (1) fixado
+  o **padrão de legenda** (novo `montarLegenda()` em `painel.py`, ao
+  lado de `montarRoteiro()`) — dor com emoji 😩, solução citando o
+  produto com emoji ✅, call to action com emoji 🛒, hashtags fixas
+  (`#papairesolve #casaeconstrucao #achadosdashopee #dicasdecasa
+  #paisdeplantao`); documentado em `CLAUDE.md` junto do padrão de
+  narração. (2) O botão de salvar no painel agora manda `narracao` e
+  `legenda` prontas junto com cada produto, e `api/selecionar.js`
+  grava esses dois campos em `esteira.json`. (3) `esteira.html` mostra
+  os textos por produto num "Ver textos" com botão de copiar
+  (`navigator.clipboard`), e ganhou um botão **Excluir** por produto —
+  só funciona se o produto ainda não estiver com etapa "Publicado"; a
+  checagem é feita no servidor (`api/excluir_esteira.js`, novo), não só
+  na tela, pra não perder histórico de conteúdo já publicado. (4) O
+  guia do processo ganhou um 6º passo, "Avaliar o resultado", fechando
+  o ciclo com o Dashboard/ROI. Testado com Playwright: copiar pra
+  clipboard funciona, botão excluir vem desabilitado num produto
+  "publicado" e habilitado num "roteiro_pronto", e excluir remove a
+  linha da tabela na hora.

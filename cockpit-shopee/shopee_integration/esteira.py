@@ -117,6 +117,20 @@ def _seletor_etapa_conteudo(produto_id, etapa_atual):
     )
 
 
+def _bloco_texto(rotulo, texto, produto_id, campo):
+    if not texto:
+        return f'<p class="texto-vazio">Sem {rotulo.lower()} salva (produtos selecionados antes dessa função não têm).</p>'
+    texto_html = texto.replace("<", "&lt;").replace(">", "&gt;")
+    texto_attr = texto.replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+    return (
+        f'<div class="bloco-texto">'
+        f'<div class="bloco-texto-cabecalho"><b>{rotulo}</b>'
+        f'<button type="button" class="btn-copiar" data-copiar="{texto_attr}">Copiar</button></div>'
+        f'<pre class="texto-conteudo">{texto_html}</pre>'
+        f"</div>"
+    )
+
+
 def _linha(p):
     status = STATUS_ESTEIRA[p["status"]]
     icone = STATUS_ICONE[status["classe"]]
@@ -124,7 +138,16 @@ def _linha(p):
     link = p.get("link") or "#"
     data_sel = (p.get("selecionado_em") or "")[:10]
     roi_texto = f"{p['roi']:.1f}x" if p["roi"] is not None else "—"
-    seletor = _seletor_etapa_conteudo(p.get("produto_id", ""), p["etapa_conteudo"])
+    produto_id = p.get("produto_id", "")
+    seletor = _seletor_etapa_conteudo(produto_id, p["etapa_conteudo"])
+    ja_publicado = p["etapa_conteudo"] == "publicado"
+    botao_excluir = (
+        f'<button type="button" class="btn-excluir" data-produto-id="{produto_id}"'
+        f'{" disabled" if ja_publicado else ""}'
+        f' title="{"Já publicado — não dá pra excluir" if ja_publicado else "Remove esse produto da esteira"}">Excluir</button>'
+    )
+    bloco_narracao = _bloco_texto("Narração (voz de criança)", p.get("narracao", ""), produto_id, "narracao")
+    bloco_legenda = _bloco_texto("Legenda (post)", p.get("legenda", ""), produto_id, "legenda")
     return f"""
         <tr>
           <td class="col-status">
@@ -137,12 +160,20 @@ def _linha(p):
             <a href="{link}" target="_blank" rel="noopener">{nome}</a>
           </td>
           <td class="col-conteudo">{seletor}</td>
+          <td class="col-textos">
+            <details class="detalhe-textos">
+              <summary>Ver textos</summary>
+              {bloco_narracao}
+              {bloco_legenda}
+            </details>
+          </td>
           <td class="col-data">{data_sel}</td>
           <td class="col-num">R$&nbsp;{p.get('preco', 0):.2f}</td>
           <td class="col-num">{p.get('comissao', 0):.0f}%</td>
           <td class="col-num">{"R$ " + format(p['investido'], ".2f") if p['investido'] else "—"}</td>
           <td class="col-num">{"R$ " + format(p['comissao_recebida'], ".2f") if p['comissao_recebida'] else "—"}</td>
           <td class="col-num destaque">{roi_texto}</td>
+          <td class="col-acoes">{botao_excluir}</td>
         </tr>"""
 
 
@@ -154,8 +185,8 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
         contagem_conteudo[p["etapa_conteudo"]] = contagem_conteudo.get(p["etapa_conteudo"], 0) + 1
 
     linhas = "".join(_linha(p) for p in esteira_calculada) or (
-        '<tr><td colspan="9" class="vazio">Nenhum produto na esteira ainda. '
-        'Marque produtos no painel e clique em "Salvar seleção agora".</td></tr>'
+        '<tr><td colspan="11" class="vazio">Nenhum produto na esteira ainda. '
+        'Marque produtos no painel e clique em "Baixar roteiro e salvar na esteira".</td></tr>'
     )
 
     return f"""<!doctype html>
@@ -247,6 +278,33 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
   }}
   :root[data-theme="dark"] .seletor-etapa.etapa-publicado {{ background: #16332a; }}
 
+  .col-textos {{ min-width: 140px; }}
+  .detalhe-textos summary {{ cursor: pointer; font-size: 0.8rem; font-weight: 600; color: var(--focus); list-style: none; }}
+  .detalhe-textos summary::-webkit-details-marker {{ display: none; }}
+  .detalhe-textos summary::before {{ content: "▸ "; }}
+  .detalhe-textos[open] summary::before {{ content: "▾ "; }}
+  .bloco-texto {{ margin-top: 10px; max-width: 320px; }}
+  .bloco-texto-cabecalho {{ display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 4px; }}
+  .bloco-texto-cabecalho b {{ font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }}
+  .texto-conteudo {{ white-space: pre-wrap; font-family: "IBM Plex Sans", sans-serif; font-size: 0.8rem;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; margin: 0;
+    max-height: 180px; overflow-y: auto; }}
+  .texto-vazio {{ font-size: 0.78rem; color: var(--muted); margin: 10px 0 0; max-width: 260px; }}
+  .btn-copiar {{ font-family: "IBM Plex Sans", sans-serif; font-size: 0.72rem; font-weight: 600;
+    border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; cursor: pointer;
+    background: var(--card); color: var(--focus); flex-shrink: 0; }}
+  .btn-copiar:hover {{ background: var(--accent-soft); }}
+  .col-acoes {{ white-space: nowrap; }}
+  .btn-excluir {{ font-family: "IBM Plex Sans", sans-serif; font-size: 0.78rem; font-weight: 600;
+    border: 1px solid #d03b3b; border-radius: 6px; padding: 5px 12px; cursor: pointer;
+    background: transparent; color: #d03b3b; }}
+  .btn-excluir:hover {{ background: #fbe4e4; }}
+  .btn-excluir:disabled {{ border-color: var(--border); color: var(--muted); cursor: not-allowed; background: transparent; }}
+  @media (prefers-color-scheme: dark) {{
+    :root:not([data-theme="light"]) .btn-excluir:hover {{ background: #3a1a1a; }}
+  }}
+  :root[data-theme="dark"] .btn-excluir:hover {{ background: #3a1a1a; }}
+
   .secao-titulo {{ font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.05rem; margin: 36px 0 12px; }}
   .guia-processo {{ background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; }}
   .guia-processo ol {{ margin: 0; padding-left: 20px; }}
@@ -274,7 +332,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
       <p class="atualizado">Atualizado {date.today().strftime('%d/%m/%Y')}</p>
     </header>
 
-    <p class="descricao-secao">Todo produto que você marca no painel e salva entra aqui. O status é calculado sozinho: vira <b>Impulsionado</b> quando você registra investimento nele em <code>importar.html</code>, e <b>Vendido</b> quando registra a comissão recebida.</p>
+    <p class="descricao-secao">Todo produto que você marca no painel e salva entra aqui, com o texto de narração e de legenda já prontos (clique em "Ver textos" na linha do produto). O status financeiro é calculado sozinho: vira <b>Impulsionado</b> quando você registra investimento nele em <code>importar.html</code>, e <b>Vendido</b> quando registra a comissão recebida. Um produto que ainda não foi publicado pode ser removido da esteira pelo botão "Excluir".</p>
 
     <section class="resumo" aria-label="Resumo da esteira">
       <div class="stat stat-selecionado"><div class="n">{contagem.get('selecionado', 0):02d}</div><div class="l">Selecionado, aguardando</div></div>
@@ -286,8 +344,8 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
       <table>
         <thead>
           <tr>
-            <th>Status</th><th>Produto</th><th>Conteúdo</th><th>Selecionado em</th><th>Preço</th><th>Comissão</th>
-            <th>Investido</th><th>Recebido</th><th>ROI</th>
+            <th>Status</th><th>Produto</th><th>Conteúdo</th><th>Textos</th><th>Selecionado em</th><th>Preço</th><th>Comissão</th>
+            <th>Investido</th><th>Recebido</th><th>ROI</th><th>Ações</th>
           </tr>
         </thead>
         <tbody>{linhas}
@@ -299,12 +357,12 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
     <div class="guia-processo">
       <ol>
         <li>
-          <b>1. Roteiro pronto</b>
-          O roteiro (voz de criança, modelo Papai Resolve) já sai pronto assim que você seleciona o produto no painel — é o texto do arquivo baixado.
+          <b>1. Roteiro e legenda prontos</b>
+          O roteiro (voz de criança, modelo Papai Resolve) e a legenda do post já saem prontos assim que você seleciona o produto no painel — clique em "Ver textos" na linha do produto, na tabela acima, pra copiar.
         </li>
         <li>
           <b>2. Gravar a narração</b>
-          <span class="obs">Manual.</span> Cole o texto numa ferramenta de voz por IA (ex: ElevenLabs, ou a própria narração por IA do CapCut) — voz infantil, tom animado.
+          <span class="obs">Manual.</span> Cole o texto de narração numa ferramenta de voz por IA (ex: ElevenLabs, ou a própria narração por IA do CapCut) — voz infantil, tom animado.
         </li>
         <li>
           <b>3. Editar o vídeo</b>
@@ -312,14 +370,18 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
         </li>
         <li>
           <b>4. Publicar</b>
-          <span class="obs">Manual, por enquanto.</span> Sobe no Instagram/TikTok com a legenda e o link de afiliado na bio. Publicar direto daqui exigiria autorizar o cockpit a postar na sua conta (aprovação da Meta/TikTok) — ainda não configurado.
+          <span class="obs">Manual, por enquanto.</span> Sobe no Instagram/TikTok colando a legenda pronta (com o link de afiliado na bio). Publicar direto daqui exigiria autorizar o cockpit a postar na sua conta (aprovação da Meta/TikTok) — ainda não configurado.
         </li>
         <li>
           <b>5. Marcar como publicado</b>
-          Muda o seletor "Conteúdo" desse produto, na tabela acima, pra <b>Publicado</b> — assim a esteira fica com o retrato real de onde cada produto está.
+          Muda o seletor "Conteúdo" desse produto, na tabela acima, pra <b>Publicado</b> — assim a esteira fica com o retrato real de onde cada produto está, e o botão "Excluir" desse produto é desativado (produto publicado não sai mais da esteira).
+        </li>
+        <li>
+          <b>6. Avaliar o resultado</b>
+          Registre venda e investimento em <code>importar.html</code> — o status financeiro (Impulsionado/Vendido) e o ROI desse produto atualizam sozinhos aqui e no Dashboard, fechando o ciclo criar &rarr; publicar &rarr; avaliar.
         </li>
       </ol>
-      <p class="guia-aviso">O Claude não grava vídeo nem publica nas redes sozinho — essas partes (2, 3 e 4) são manuais. O que o cockpit automatiza é o roteiro, a curadoria dos produtos e o acompanhamento de cada um até a venda.</p>
+      <p class="guia-aviso">O Claude não grava vídeo nem publica nas redes sozinho — essas partes (2, 3 e 4) são manuais. O que o cockpit automatiza é o roteiro, a legenda, a curadoria dos produtos e o acompanhamento de cada um até a venda.</p>
     </div>
 
     <p class="rodape">Cockpit de Afiliação IA-First &middot; @papairesolve_br</p>
@@ -345,6 +407,51 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
             alert('Não consegui falar com o servidor — essa função só funciona no cockpit publicado na Vercel.');
           }})
           .finally(function () {{ sel.disabled = false; }});
+      }});
+    }});
+
+    document.querySelectorAll('.btn-copiar').forEach(function (botao) {{
+      botao.addEventListener('click', function () {{
+        var texto = botao.getAttribute('data-copiar') || '';
+        var textoOriginal = botao.textContent;
+        navigator.clipboard.writeText(texto).then(function () {{
+          botao.textContent = 'Copiado!';
+          setTimeout(function () {{ botao.textContent = textoOriginal; }}, 1500);
+        }}).catch(function () {{
+          botao.textContent = 'Não consegui copiar';
+          setTimeout(function () {{ botao.textContent = textoOriginal; }}, 1500);
+        }});
+      }});
+    }});
+
+    document.querySelectorAll('.btn-excluir').forEach(function (botao) {{
+      botao.addEventListener('click', function () {{
+        var produtoId = botao.getAttribute('data-produto-id');
+        var linha = botao.closest('tr');
+        var nome = linha ? linha.querySelector('.col-nome a').textContent : 'esse produto';
+        if (!confirm('Excluir "' + nome + '" da esteira? Essa ação não pode ser desfeita.')) return;
+        botao.disabled = true;
+        botao.textContent = 'Excluindo...';
+        fetch('/api/excluir_esteira', {{
+          method: 'POST',
+          headers: {{ 'content-type': 'application/json' }},
+          body: JSON.stringify({{ produto_id: produtoId }}),
+        }})
+          .then(function (resposta) {{ return resposta.json().then(function (d) {{ return {{ ok: resposta.ok, d: d }}; }}); }})
+          .then(function (r) {{
+            if (r.ok) {{
+              if (linha) linha.remove();
+            }} else {{
+              alert(r.d.erro || 'Não consegui excluir.');
+              botao.disabled = false;
+              botao.textContent = 'Excluir';
+            }}
+          }})
+          .catch(function () {{
+            alert('Não consegui falar com o servidor — essa função só funciona no cockpit publicado na Vercel.');
+            botao.disabled = false;
+            botao.textContent = 'Excluir';
+          }});
       }});
     }});
   </script>

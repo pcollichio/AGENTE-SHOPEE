@@ -661,6 +661,21 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
       ].join('\\n');
     }}
 
+    function montarLegenda(chk) {{
+      var categoria = chk.getAttribute('data-categoria');
+      var gancho = GANCHOS_ROTEIRO[categoria] || GANCHOS_ROTEIRO['_padrao'];
+      var nome = chk.getAttribute('data-nome');
+      return [
+        '\\u{{1F62B}} ' + gancho['problema'],
+        '',
+        '\\u2705 Resolvi com ' + nome + ' \\u2014 ' + gancho['motivo'] + '!',
+        '',
+        '\\u{{1F6D2}} Link na bio ou comenta "QUERO" que a gente manda o link!',
+        '',
+        '#papairesolve #casaeconstrucao #achadosdashopee #dicasdecasa #paisdeplantao'
+      ].join('\\n');
+    }}
+
     (function () {{
       var form = document.getElementById('form-busca');
       var input = document.getElementById('busca-input');
@@ -810,6 +825,8 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
           comissao: chk.getAttribute('data-comissao'),
           link: chk.getAttribute('data-link'),
           categoria: chk.getAttribute('data-categoria'),
+          narracao: montarRoteiro(chk),
+          legenda: montarLegenda(chk),
         }};
       }});
       return fetch('/api/selecionar', {{

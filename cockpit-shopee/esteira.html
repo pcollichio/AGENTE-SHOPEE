@@ -87,6 +87,33 @@
   }
   :root[data-theme="dark"] .seletor-etapa.etapa-publicado { background: #16332a; }
 
+  .col-textos { min-width: 140px; }
+  .detalhe-textos summary { cursor: pointer; font-size: 0.8rem; font-weight: 600; color: var(--focus); list-style: none; }
+  .detalhe-textos summary::-webkit-details-marker { display: none; }
+  .detalhe-textos summary::before { content: "▸ "; }
+  .detalhe-textos[open] summary::before { content: "▾ "; }
+  .bloco-texto { margin-top: 10px; max-width: 320px; }
+  .bloco-texto-cabecalho { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .bloco-texto-cabecalho b { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+  .texto-conteudo { white-space: pre-wrap; font-family: "IBM Plex Sans", sans-serif; font-size: 0.8rem;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; margin: 0;
+    max-height: 180px; overflow-y: auto; }
+  .texto-vazio { font-size: 0.78rem; color: var(--muted); margin: 10px 0 0; max-width: 260px; }
+  .btn-copiar { font-family: "IBM Plex Sans", sans-serif; font-size: 0.72rem; font-weight: 600;
+    border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; cursor: pointer;
+    background: var(--card); color: var(--focus); flex-shrink: 0; }
+  .btn-copiar:hover { background: var(--accent-soft); }
+  .col-acoes { white-space: nowrap; }
+  .btn-excluir { font-family: "IBM Plex Sans", sans-serif; font-size: 0.78rem; font-weight: 600;
+    border: 1px solid #d03b3b; border-radius: 6px; padding: 5px 12px; cursor: pointer;
+    background: transparent; color: #d03b3b; }
+  .btn-excluir:hover { background: #fbe4e4; }
+  .btn-excluir:disabled { border-color: var(--border); color: var(--muted); cursor: not-allowed; background: transparent; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .btn-excluir:hover { background: #3a1a1a; }
+  }
+  :root[data-theme="dark"] .btn-excluir:hover { background: #3a1a1a; }
+
   .secao-titulo { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.05rem; margin: 36px 0 12px; }
   .guia-processo { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; }
   .guia-processo ol { margin: 0; padding-left: 20px; }
@@ -121,7 +148,7 @@
       <p class="atualizado">Atualizado 01/09/2026</p>
     </header>
 
-    <p class="descricao-secao">Todo produto que você marca no painel e salva entra aqui. O status é calculado sozinho: vira <b>Impulsionado</b> quando você registra investimento nele em <code>importar.html</code>, e <b>Vendido</b> quando registra a comissão recebida.</p>
+    <p class="descricao-secao">Todo produto que você marca no painel e salva entra aqui, com o texto de narração e de legenda já prontos (clique em "Ver textos" na linha do produto). O status financeiro é calculado sozinho: vira <b>Impulsionado</b> quando você registra investimento nele em <code>importar.html</code>, e <b>Vendido</b> quando registra a comissão recebida. Um produto que ainda não foi publicado pode ser removido da esteira pelo botão "Excluir".</p>
 
     <section class="resumo" aria-label="Resumo da esteira">
       <div class="stat stat-selecionado"><div class="n">05</div><div class="l">Selecionado, aguardando</div></div>
@@ -133,8 +160,8 @@
       <table>
         <thead>
           <tr>
-            <th>Status</th><th>Produto</th><th>Conteúdo</th><th>Selecionado em</th><th>Preço</th><th>Comissão</th>
-            <th>Investido</th><th>Recebido</th><th>ROI</th>
+            <th>Status</th><th>Produto</th><th>Conteúdo</th><th>Textos</th><th>Selecionado em</th><th>Preço</th><th>Comissão</th>
+            <th>Investido</th><th>Recebido</th><th>ROI</th><th>Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -149,12 +176,20 @@
             <a href="https://s.shopee.com.br/5VUycPEbdL" target="_blank" rel="noopener">Mangueira Mágica Extensível 30m ou 15m com Gatilho 7 Jatos Engate Rápido Compacta Leve e Resistente</a>
           </td>
           <td class="col-conteudo"><select class="seletor-etapa etapa-roteiro_pronto" data-produto-id="22198893450"><option value="roteiro_pronto" selected>Roteiro pronto</option><option value="em_producao">Em produção</option><option value="publicado">Publicado</option></select></td>
+          <td class="col-textos">
+            <details class="detalhe-textos">
+              <summary>Ver textos</summary>
+              <p class="texto-vazio">Sem narração (voz de criança) salva (produtos selecionados antes dessa função não têm).</p>
+              <p class="texto-vazio">Sem legenda (post) salva (produtos selecionados antes dessa função não têm).</p>
+            </details>
+          </td>
           <td class="col-data">2026-09-01</td>
           <td class="col-num">R$&nbsp;32.90</td>
           <td class="col-num">38%</td>
           <td class="col-num">—</td>
           <td class="col-num">—</td>
           <td class="col-num destaque">—</td>
+          <td class="col-acoes"><button type="button" class="btn-excluir" data-produto-id="22198893450" title="Remove esse produto da esteira">Excluir</button></td>
         </tr>
         <tr>
           <td class="col-status">
@@ -167,12 +202,20 @@
             <a href="https://s.shopee.com.br/1LfPB05StO" target="_blank" rel="noopener">KIT 10 UN Caneta detector de voltagem e corrente elétrica digital LCD CNTT-D10 AC/DC/12V a 250V</a>
           </td>
           <td class="col-conteudo"><select class="seletor-etapa etapa-roteiro_pronto" data-produto-id="18511752683"><option value="roteiro_pronto" selected>Roteiro pronto</option><option value="em_producao">Em produção</option><option value="publicado">Publicado</option></select></td>
+          <td class="col-textos">
+            <details class="detalhe-textos">
+              <summary>Ver textos</summary>
+              <p class="texto-vazio">Sem narração (voz de criança) salva (produtos selecionados antes dessa função não têm).</p>
+              <p class="texto-vazio">Sem legenda (post) salva (produtos selecionados antes dessa função não têm).</p>
+            </details>
+          </td>
           <td class="col-data">2026-08-31</td>
           <td class="col-num">R$&nbsp;95.00</td>
           <td class="col-num">36%</td>
           <td class="col-num">—</td>
           <td class="col-num">—</td>
           <td class="col-num destaque">—</td>
+          <td class="col-acoes"><button type="button" class="btn-excluir" data-produto-id="18511752683" title="Remove esse produto da esteira">Excluir</button></td>
         </tr>
         <tr>
           <td class="col-status">
@@ -185,12 +228,20 @@
             <a href="https://s.shopee.com.br/3VjseSjxWP" target="_blank" rel="noopener">Ducha Piscina Vale Maxi 225mm 10'' Branca, Preta e Cromada - VALEPLAST</a>
           </td>
           <td class="col-conteudo"><select class="seletor-etapa etapa-roteiro_pronto" data-produto-id="58206333390"><option value="roteiro_pronto" selected>Roteiro pronto</option><option value="em_producao">Em produção</option><option value="publicado">Publicado</option></select></td>
+          <td class="col-textos">
+            <details class="detalhe-textos">
+              <summary>Ver textos</summary>
+              <p class="texto-vazio">Sem narração (voz de criança) salva (produtos selecionados antes dessa função não têm).</p>
+              <p class="texto-vazio">Sem legenda (post) salva (produtos selecionados antes dessa função não têm).</p>
+            </details>
+          </td>
           <td class="col-data">2026-08-31</td>
           <td class="col-num">R$&nbsp;31.99</td>
           <td class="col-num">38%</td>
           <td class="col-num">—</td>
           <td class="col-num">—</td>
           <td class="col-num destaque">—</td>
+          <td class="col-acoes"><button type="button" class="btn-excluir" data-produto-id="58206333390" title="Remove esse produto da esteira">Excluir</button></td>
         </tr>
         <tr>
           <td class="col-status">
@@ -203,12 +254,20 @@
             <a href="https://s.shopee.com.br/7fZT4jM2NK" target="_blank" rel="noopener">Mangueira de Jardim Chata Antitorção Não Dobra Super Flexível 10, 15, 20, 25, 30 e 50 Metros Flat</a>
           </td>
           <td class="col-conteudo"><select class="seletor-etapa etapa-roteiro_pronto" data-produto-id="18697644684"><option value="roteiro_pronto" selected>Roteiro pronto</option><option value="em_producao">Em produção</option><option value="publicado">Publicado</option></select></td>
+          <td class="col-textos">
+            <details class="detalhe-textos">
+              <summary>Ver textos</summary>
+              <p class="texto-vazio">Sem narração (voz de criança) salva (produtos selecionados antes dessa função não têm).</p>
+              <p class="texto-vazio">Sem legenda (post) salva (produtos selecionados antes dessa função não têm).</p>
+            </details>
+          </td>
           <td class="col-data">2026-08-31</td>
           <td class="col-num">R$&nbsp;28.15</td>
           <td class="col-num">33%</td>
           <td class="col-num">—</td>
           <td class="col-num">—</td>
           <td class="col-num destaque">—</td>
+          <td class="col-acoes"><button type="button" class="btn-excluir" data-produto-id="18697644684" title="Remove esse produto da esteira">Excluir</button></td>
         </tr>
         <tr>
           <td class="col-status">
@@ -221,12 +280,20 @@
             <a href="https://s.shopee.com.br/AKaEFY0yth" target="_blank" rel="noopener">Mangueira Magica 30 Metros Expansível Com Esguicho 7 Jatos Engate Rápido Jardim - Oferta</a>
           </td>
           <td class="col-conteudo"><select class="seletor-etapa etapa-roteiro_pronto" data-produto-id="23999450102"><option value="roteiro_pronto" selected>Roteiro pronto</option><option value="em_producao">Em produção</option><option value="publicado">Publicado</option></select></td>
+          <td class="col-textos">
+            <details class="detalhe-textos">
+              <summary>Ver textos</summary>
+              <p class="texto-vazio">Sem narração (voz de criança) salva (produtos selecionados antes dessa função não têm).</p>
+              <p class="texto-vazio">Sem legenda (post) salva (produtos selecionados antes dessa função não têm).</p>
+            </details>
+          </td>
           <td class="col-data">2026-08-31</td>
           <td class="col-num">R$&nbsp;21.99</td>
           <td class="col-num">7%</td>
           <td class="col-num">—</td>
           <td class="col-num">—</td>
           <td class="col-num destaque">—</td>
+          <td class="col-acoes"><button type="button" class="btn-excluir" data-produto-id="23999450102" title="Remove esse produto da esteira">Excluir</button></td>
         </tr>
         </tbody>
       </table>
@@ -236,12 +303,12 @@
     <div class="guia-processo">
       <ol>
         <li>
-          <b>1. Roteiro pronto</b>
-          O roteiro (voz de criança, modelo Papai Resolve) já sai pronto assim que você seleciona o produto no painel — é o texto do arquivo baixado.
+          <b>1. Roteiro e legenda prontos</b>
+          O roteiro (voz de criança, modelo Papai Resolve) e a legenda do post já saem prontos assim que você seleciona o produto no painel — clique em "Ver textos" na linha do produto, na tabela acima, pra copiar.
         </li>
         <li>
           <b>2. Gravar a narração</b>
-          <span class="obs">Manual.</span> Cole o texto numa ferramenta de voz por IA (ex: ElevenLabs, ou a própria narração por IA do CapCut) — voz infantil, tom animado.
+          <span class="obs">Manual.</span> Cole o texto de narração numa ferramenta de voz por IA (ex: ElevenLabs, ou a própria narração por IA do CapCut) — voz infantil, tom animado.
         </li>
         <li>
           <b>3. Editar o vídeo</b>
@@ -249,14 +316,18 @@
         </li>
         <li>
           <b>4. Publicar</b>
-          <span class="obs">Manual, por enquanto.</span> Sobe no Instagram/TikTok com a legenda e o link de afiliado na bio. Publicar direto daqui exigiria autorizar o cockpit a postar na sua conta (aprovação da Meta/TikTok) — ainda não configurado.
+          <span class="obs">Manual, por enquanto.</span> Sobe no Instagram/TikTok colando a legenda pronta (com o link de afiliado na bio). Publicar direto daqui exigiria autorizar o cockpit a postar na sua conta (aprovação da Meta/TikTok) — ainda não configurado.
         </li>
         <li>
           <b>5. Marcar como publicado</b>
-          Muda o seletor "Conteúdo" desse produto, na tabela acima, pra <b>Publicado</b> — assim a esteira fica com o retrato real de onde cada produto está.
+          Muda o seletor "Conteúdo" desse produto, na tabela acima, pra <b>Publicado</b> — assim a esteira fica com o retrato real de onde cada produto está, e o botão "Excluir" desse produto é desativado (produto publicado não sai mais da esteira).
+        </li>
+        <li>
+          <b>6. Avaliar o resultado</b>
+          Registre venda e investimento em <code>importar.html</code> — o status financeiro (Impulsionado/Vendido) e o ROI desse produto atualizam sozinhos aqui e no Dashboard, fechando o ciclo criar &rarr; publicar &rarr; avaliar.
         </li>
       </ol>
-      <p class="guia-aviso">O Claude não grava vídeo nem publica nas redes sozinho — essas partes (2, 3 e 4) são manuais. O que o cockpit automatiza é o roteiro, a curadoria dos produtos e o acompanhamento de cada um até a venda.</p>
+      <p class="guia-aviso">O Claude não grava vídeo nem publica nas redes sozinho — essas partes (2, 3 e 4) são manuais. O que o cockpit automatiza é o roteiro, a legenda, a curadoria dos produtos e o acompanhamento de cada um até a venda.</p>
     </div>
 
     <p class="rodape">Cockpit de Afiliação IA-First &middot; @papairesolve_br</p>
@@ -282,6 +353,51 @@
             alert('Não consegui falar com o servidor — essa função só funciona no cockpit publicado na Vercel.');
           })
           .finally(function () { sel.disabled = false; });
+      });
+    });
+
+    document.querySelectorAll('.btn-copiar').forEach(function (botao) {
+      botao.addEventListener('click', function () {
+        var texto = botao.getAttribute('data-copiar') || '';
+        var textoOriginal = botao.textContent;
+        navigator.clipboard.writeText(texto).then(function () {
+          botao.textContent = 'Copiado!';
+          setTimeout(function () { botao.textContent = textoOriginal; }, 1500);
+        }).catch(function () {
+          botao.textContent = 'Não consegui copiar';
+          setTimeout(function () { botao.textContent = textoOriginal; }, 1500);
+        });
+      });
+    });
+
+    document.querySelectorAll('.btn-excluir').forEach(function (botao) {
+      botao.addEventListener('click', function () {
+        var produtoId = botao.getAttribute('data-produto-id');
+        var linha = botao.closest('tr');
+        var nome = linha ? linha.querySelector('.col-nome a').textContent : 'esse produto';
+        if (!confirm('Excluir "' + nome + '" da esteira? Essa ação não pode ser desfeita.')) return;
+        botao.disabled = true;
+        botao.textContent = 'Excluindo...';
+        fetch('/api/excluir_esteira', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ produto_id: produtoId }),
+        })
+          .then(function (resposta) { return resposta.json().then(function (d) { return { ok: resposta.ok, d: d }; }); })
+          .then(function (r) {
+            if (r.ok) {
+              if (linha) linha.remove();
+            } else {
+              alert(r.d.erro || 'Não consegui excluir.');
+              botao.disabled = false;
+              botao.textContent = 'Excluir';
+            }
+          })
+          .catch(function () {
+            alert('Não consegui falar com o servidor — essa função só funciona no cockpit publicado na Vercel.');
+            botao.disabled = false;
+            botao.textContent = 'Excluir';
+          });
       });
     });
   </script>

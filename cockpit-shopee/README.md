@@ -52,9 +52,11 @@ por uma chamada direta.
   busca ao vivo (por nome) pra achar um produto específico que não
   apareceu na leva (usa `api/buscar_produto.py`)
 - **`esteira.html`** — a lista viva de produtos selecionados, com
-  status financeiro automático (selecionado / impulsionado / vendido)
-  e etapa de conteúdo manual (roteiro pronto / em produção / publicado)
-  — inclui um guia do processo de gravação/edição/publicação
+  status financeiro automático (selecionado / impulsionado / vendido),
+  etapa de conteúdo manual (roteiro pronto / em produção / publicado),
+  o texto de narração e de legenda prontos pra copiar por produto, um
+  botão pra excluir produto que ainda não foi publicado, e um guia do
+  processo de gravação/edição/publicação/avaliação
 - **`importar.html`** — formulário simples pra registrar investimento em
   campanha e vendas confirmadas
 - **`painel_roi.html`** — progresso da meta mensal e ROI por produto
@@ -82,8 +84,12 @@ por uma chamada direta.
 - `api/atualizar_esteira.js` — função serverless (Vercel) que salva a
   etapa de conteúdo (roteiro pronto/em produção/publicado) de um
   produto na esteira, usada pelo seletor em `esteira.html`
+- `api/excluir_esteira.js` — função serverless (Vercel) que remove um
+  produto da esteira, usada pelo botão "Excluir" em `esteira.html`;
+  recusa excluir produto com etapa "Publicado" (checagem no servidor)
 - `esteira.json` — todos os produtos já selecionados no painel ao
-  longo do tempo (escrito pelo botão "Salvar seleção agora"; é o que
+  longo do tempo (escrito pelo botão "Baixar roteiro e salvar na
+  esteira", já com o texto de narração e de legenda prontos; é o que
   o Claude e o `esteira.html` leem)
 
 ## Colocar o cockpit no ar (Vercel)

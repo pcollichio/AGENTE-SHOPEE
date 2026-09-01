@@ -67,14 +67,21 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
   (selecionado/impulsionado/vendido, calculado sozinho cruzando com o
   financeiro) e `etapa_conteudo` (roteiro_pronto/em_producao/publicado,
   atualizado manualmente pelo usuário no seletor de `esteira.html`, via
-  `api/atualizar_esteira.js`).
+  `api/atualizar_esteira.js`). Desde 01/09 cada item também guarda
+  `narracao` e `legenda` (o texto pronto pra gravação e pra legenda do
+  post, gerados no momento da seleção — ver "Padrão de narração e
+  legenda dos Reels" abaixo).
 - `cockpit-shopee/esteira.html` — visão da esteira com status financeiro
   calculado automaticamente (selecionado / impulsionado / vendido),
   cruzando `esteira.json` com o financeiro, mais um seletor manual de
-  etapa de conteúdo por produto e um guia embutido do processo
-  roteiro→gravação→edição→publicação (deixa claro que gravar, editar e
-  publicar são passos manuais do usuário — o Claude não grava vídeo nem
-  publica sozinho, não há integração com API do Meta/TikTok configurada).
+  etapa de conteúdo por produto, os textos de narração/legenda prontos
+  pra copiar ("Ver textos"), um botão pra excluir produto ainda não
+  publicado (`api/excluir_esteira.js`, bloqueado no servidor pra produto
+  já publicado) e um guia embutido do processo
+  roteiro→gravação→edição→publicação→avaliação (deixa claro que gravar,
+  editar e publicar são passos manuais do usuário — o Claude não grava
+  vídeo nem publica sozinho, não há integração com API do Meta/TikTok
+  configurada).
 - Pedido do usuário em 01/09: o filtro de qualidade (comissão mínima,
   avaliação mínima) não corta mais produto do nicho antes da leva — a
   leva traz todos os produtos do nicho casa & construção, e o filtro
@@ -85,7 +92,7 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
   `https://pcollichio.github.io/AGENTE-SHOPEE/cockpit-shopee/cockpit.html`
   (e `/painel.html`, `/painel_roi.html`, etc.)
 
-## Padrão de narração dos Reels (fixado em 31/08)
+## Padrão de narração e legenda dos Reels (fixado em 31/08, legenda em 01/09)
 
 Todo roteiro gerado (pelo painel ou a pedido no chat) segue este modelo:
 **narração em voz de criança**, trazendo a dor de um problema de casa,
@@ -94,6 +101,24 @@ de 5 blocos (~22s): Dor → Agrava → Solução (o Papai acha o produto) →
 Prova (visual, sem falar) → Call to action. Implementado em
 `GANCHOS_ROTEIRO` e `montarRoteiro()` em `shopee_integration/painel.py`
 — se o usuário pedir um roteiro pontual no chat, siga esse mesmo modelo.
+
+A **legenda do post** segue um padrão próprio, fixo, gerado junto com o
+roteiro a partir do mesmo `GANCHOS_ROTEIRO` (mesma dor/motivo, tom adulto
+— quem fala é o Papai, não a criança): (1) dor, em uma linha, com emoji
+😩; (2) solução citando o produto pelo nome, com emoji ✅; (3) call to
+action pedindo pra comentar "QUERO" ou ir no link da bio, com emoji 🛒;
+(4) hashtags fixas (`#papairesolve #casaeconstrucao #achadosdashopee
+#dicasdecasa #paisdeplantao`). Implementado em `montarLegenda()`, ao
+lado de `montarRoteiro()`, no mesmo arquivo.
+
+Desde 01/09, tanto a narração quanto a legenda são salvas por produto em
+`esteira.json` (campos `narracao`/`legenda`) no momento da seleção no
+painel, e ficam visíveis (com botão de copiar) em `esteira.html`, em "Ver
+textos" na linha do produto — fecha o ciclo criar → publicar → avaliar
+sem precisar digitar o texto de novo. Um produto que ainda não foi
+publicado (`etapa_conteudo` != `publicado`) pode ser removido da esteira
+por lá; a checagem que impede excluir produto já publicado é feita no
+servidor (`api/excluir_esteira.js`), não só na tela.
 
 ## Segurança
 
