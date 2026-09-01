@@ -70,6 +70,16 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
   `https://pcollichio.github.io/AGENTE-SHOPEE/cockpit-shopee/cockpit.html`
   (e `/painel.html`, `/painel_roi.html`, etc.)
 
+## Padrão de narração dos Reels (fixado em 31/08)
+
+Todo roteiro gerado (pelo painel ou a pedido no chat) segue este modelo:
+**narração em voz de criança**, trazendo a dor de um problema de casa,
+até o Papai resolver com o produto, fechando com call to action. Estrutura
+de 5 blocos (~22s): Dor → Agrava → Solução (o Papai acha o produto) →
+Prova (visual, sem falar) → Call to action. Implementado em
+`GANCHOS_ROTEIRO` e `montarRoteiro()` em `shopee_integration/painel.py`
+— se o usuário pedir um roteiro pontual no chat, siga esse mesmo modelo.
+
 ## Segurança
 
 Nunca commitar `.env` nem qualquer credencial (Shopee, Anthropic) em

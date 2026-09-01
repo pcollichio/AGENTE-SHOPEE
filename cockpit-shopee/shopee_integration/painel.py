@@ -24,57 +24,62 @@ TIER_LABELS = {
 # categoria de busca, um problema comum de casa (o gancho inicial) e o
 # motivo pelo qual o produto resolve. Usado para montar o roteiro
 # automaticamente a partir do produto marcado no painel.
+# Banco de "ganchos" do modelo de narração Papai Resolve — padrão fixado
+# em 2026-08-31: narração em voz de criança, trazendo a dor de um
+# problema de casa, até o Papai resolver com o produto, fechando com
+# call to action. Para cada categoria de busca, o problema (falado pela
+# criança) e o motivo pelo qual o produto resolve.
 GANCHOS_ROTEIRO = {
     "ferramentas": {
-        "problema": "Aquele reparo simples que vira perrengue por falta da ferramenta certa?",
-        "motivo": "resolve porque entrega o que precisa pro serviço, sem chamar ninguém",
+        "problema": "Toda vez que quebra alguma coisa em casa, o Papai passa o dia procurando a ferramenta certa!",
+        "motivo": "resolve na hora porque já tem tudo pronto pro reparo",
     },
     "organizacao": {
-        "problema": "Cansado de procurar as coisas porque nada tem lugar certo?",
-        "motivo": "resolve porque dá um lugar fixo pra cada coisa, sem obra",
+        "problema": "Eu nunca acho meus brinquedos porque nada em casa tem lugar certo!",
+        "motivo": "resolve porque dá um lugar fixo pra cada coisa, sem bagunça",
     },
     "iluminacao": {
-        "problema": "Aquele cantinho de casa que fica sempre escuro?",
-        "motivo": "resolve porque instala em minutos e muda o ambiente na hora",
+        "problema": "Tem um cantinho de casa que fica tão escuro que eu tenho até medo de passar!",
+        "motivo": "resolve rapidinho porque ilumina em minutos",
     },
     "hidraulica": {
-        "problema": "Vazamento ou entupimento que não para de voltar?",
-        "motivo": "resolve porque se ajusta sem precisar chamar encanador",
+        "problema": "A pia não para de vazar e molha até o meu chinelo!",
+        "motivo": "resolve sem precisar chamar ninguém de fora",
     },
     "decoracao": {
-        "problema": "Ambiente parecendo sem graça, meio vazio?",
-        "motivo": "resolve porque transforma o visual sem reforma",
+        "problema": "A sala de casa ficou tão sem graça que nem dá vontade de brincar lá!",
+        "motivo": "resolve porque muda o visual na hora, sem reforma",
     },
     "cozinha": {
-        "problema": "Cozinha bagunçada na hora de cozinhar?",
-        "motivo": "resolve porque organiza e agiliza o dia a dia",
+        "problema": "Toda vez que a mamãe cozinha, a cozinha vira uma bagunça enorme!",
+        "motivo": "resolve porque organiza tudo rapidinho",
     },
     "banheiro": {
-        "problema": "Banheiro pequeno e sem espaço pra nada?",
+        "problema": "O banheiro de casa é tão pequeno que não cabe nada das minhas coisas!",
         "motivo": "resolve porque aproveita cada cantinho",
     },
     "jardim": {
-        "problema": "Plantas morrendo por falta de cuidado?",
-        "motivo": "resolve porque facilita a rotina de cuidar delas",
+        "problema": "As plantinhas do quintal ficam murchando porque ninguém lembra de cuidar!",
+        "motivo": "resolve porque facilita cuidar delas todo dia",
     },
     "eletrica": {
-        "problema": "Tomada que não dá conta de tudo que você precisa ligar?",
+        "problema": "Nunca tem tomada suficiente pra ligar tudo que eu quero em casa!",
         "motivo": "resolve porque multiplica os pontos com segurança",
     },
     "pintura": {
-        "problema": "Parede desbotada mas dá preguiça de chamar pintor?",
-        "motivo": "resolve porque você mesmo aplica numa tarde",
+        "problema": "A parede do meu quarto ficou toda desbotada e ninguém tem coragem de pintar!",
+        "motivo": "resolve porque dá pra pintar numa tarde só",
     },
     "limpeza": {
-        "problema": "Aquela sujeira que não sai de jeito nenhum?",
+        "problema": "Tem uma sujeira em casa que não sai de jeito nenhum, nem esfregando forte!",
         "motivo": "resolve porque foi feito pra esse tipo de sujeira",
     },
     "moveis": {
-        "problema": "Espaço apertado que não cabe móvel grande?",
-        "motivo": "resolve porque é compacto e multifuncional",
+        "problema": "Meu quarto é tão pequeno que não cabe nem um móvel novo!",
+        "motivo": "resolve porque é compacto e serve pra várias coisas",
     },
     "_padrao": {
-        "problema": "Aquele probleminha de casa que ninguém resolve direito?",
+        "problema": "Tem um probleminha em casa que ninguém consegue resolver direito!",
         "motivo": "resolve na prática, sem complicação",
     },
 }
@@ -597,13 +602,13 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
         '**Preço:** R$' + preco + '  ',
         '**Comissão:** ' + chk.getAttribute('data-comissao') + '%',
         '',
-        '**Roteiro (modelo Papai Resolve, ~20s):**',
+        '**Roteiro (modelo Papai Resolve, narração em voz de criança, ~22s):**',
         '',
-        '1. *(0-3s, Problema)* — "' + gancho['problema'] + '"',
-        '2. *(3-6s, Agravar)* — "Já tentei de tudo e nada resolvia direito."',
-        '3. *(6-12s, Solução)* — "Até eu achar ' + nome + ' — ' + gancho['motivo'] + '."',
-        '4. *(12-18s, Prova)* — [mostra o produto resolvendo o problema na prática, sem falar]',
-        '5. *(18-22s, Oferta + CTA)* — "Tá com preço especial agora, R$' + preco + ' — link na bio, comenta \\'QUERO\\' que eu mando."',
+        '1. *(0-4s, Dor)* — voz de criança: "' + gancho['problema'] + '"',
+        '2. *(4-8s, Agrava)* — voz de criança: "Eu implorei pro Papai resolver, mas nada dava certo!"',
+        '3. *(8-15s, Solução)* — voz de criança: "Aí o Papai achou ' + nome + ' — ' + gancho['motivo'] + '!"',
+        '4. *(15-20s, Prova)* — [mostra o produto resolvendo o problema na prática; criança sorrindo satisfeita, sem falar]',
+        '5. *(20-24s, Call to action)* — voz de criança: "Corre que tá com desconto, R$' + preco + ' — link na bio, comenta \\'QUERO\\' que a gente manda!"',
         ''
       ].join('\\n');
     }}

@@ -207,3 +207,14 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   lógica de `esteira.py`, reaproveitada. Testado com dados simulados
   (3 selecionados, 2 impulsionados, 1 vendeu → 50% conversão, valores
   batendo certinho no screenshot).
+- **Novo padrão fixo de narração dos Reels**: usuário pediu — a partir
+  de agora, todo roteiro é narrado em **voz de criança**, trazendo a
+  dor de um problema de casa até o Papai resolver com o produto,
+  fechando com call to action. Reescrito `GANCHOS_ROTEIRO` (as 13
+  categorias, cada "problema" agora em 1ª pessoa/voz de criança) e a
+  estrutura fixa de 5 blocos em `montarRoteiro()`
+  (`shopee_integration/painel.py`): Dor → Agrava → Solução (o Papai
+  acha o produto) → Prova (visual) → Call to action. Testado gerando
+  um roteiro real (Torneira De Banheiro) e conferindo o texto baixado.
+  Registrado como padrão em `CLAUDE.md`, pra valer também quando o
+  usuário pedir um roteiro pontual no chat.
