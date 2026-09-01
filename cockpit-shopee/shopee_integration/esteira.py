@@ -146,7 +146,7 @@ def _linha(p):
         f'{" disabled" if ja_publicado else ""}'
         f' title="{"Já publicado — não dá pra excluir" if ja_publicado else "Remove esse produto da esteira"}">Excluir</button>'
     )
-    bloco_narracao = _bloco_texto("Narração (voz de criança)", p.get("narracao", ""), produto_id, "narracao")
+    bloco_narracao = _bloco_texto("Narração (voz de jovem)", p.get("narracao", ""), produto_id, "narracao")
     bloco_legenda = _bloco_texto("Legenda (post)", p.get("legenda", ""), produto_id, "legenda")
     return f"""
         <tr>
@@ -358,7 +358,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
       <ol>
         <li>
           <b>1. Roteiro e legenda prontos</b>
-          O roteiro (voz de criança, modelo Papai Resolve) e a legenda do post já saem prontos assim que você seleciona o produto no painel — clique em "Ver textos" na linha do produto, na tabela acima, pra copiar.
+          O roteiro (voz de jovem, modelo Papai Resolve) e a legenda do post já saem prontos assim que você seleciona o produto no painel — clique em "Ver textos" na linha do produto, na tabela acima, pra copiar.
         </li>
         <li>
           <b>2. Gravar a narração</b>
@@ -366,7 +366,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
         </li>
         <li>
           <b>3. Editar o vídeo</b>
-          <span class="obs">Manual, no CapCut.</span> Formato 9:16, use a foto/vídeo oficial do produto (do próprio anúncio da Shopee) seguindo as 5 partes do roteiro: Dor &rarr; Agrava &rarr; Solução &rarr; Prova &rarr; Call to action.
+          <span class="obs">Manual, no CapCut.</span> Formato 9:16, use a foto/vídeo oficial do produto (do próprio anúncio da Shopee) seguindo as 5 partes do roteiro: Abertura &rarr; Dor &rarr; Solução &rarr; Prova &rarr; Call to action.
         </li>
         <li>
           <b>4. Publicar</b>

@@ -43,7 +43,7 @@ ETAPAS = [
     },
     {
         "titulo": "Texto e roteiro", "status": "bom", "status_label": "Automático",
-        "desc": "Ao baixar a seleção, cada produto já sai com o roteiro pronto (Problema &rarr; Agrava &rarr; Solução &rarr; Prova &rarr; Oferta), no modelo Papai Resolve.",
+        "desc": "Ao baixar a seleção, cada produto já sai com o roteiro pronto (Abertura &rarr; Dor &rarr; Solução &rarr; Prova &rarr; Call to action), no modelo Papai Resolve.",
         "links": [("painel.html", "Fica dentro do painel de produtos", False)],
     },
     {

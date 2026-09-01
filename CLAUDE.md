@@ -95,21 +95,24 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
 ## Padrão de narração e legenda dos Reels (fixado em 31/08, legenda em 01/09)
 
 Todo roteiro gerado (pelo painel ou a pedido no chat) segue este modelo:
-**narração em voz de criança**, trazendo a dor de um problema de casa,
-até o Papai resolver com o produto, fechando com call to action. Estrutura
-de 5 blocos (~22s): Dor → Agrava → Solução (o Papai acha o produto) →
-Prova (visual, sem falar) → Call to action. Implementado em
-`GANCHOS_ROTEIRO` e `montarRoteiro()` em `shopee_integration/painel.py`
-— se o usuário pedir um roteiro pontual no chat, siga esse mesmo modelo.
+**narração em voz de jovem** (nem criança, nem adolescente), sempre
+abrindo com a frase fixa "Meu papai sempre resolve tudo aqui em casa!",
+depois a dor de um problema de casa, a solução com o produto, fechando
+com call to action. Estrutura de 5 blocos (~24s, ajustada em 01/09):
+Abertura (frase fixa) → Dor → Solução (o Papai acha o produto) → Prova
+(visual, sem falar) → Call to action. Implementado em `GANCHOS_ROTEIRO`
+e `montarRoteiro()` em `shopee_integration/painel.py` — se o usuário
+pedir um roteiro pontual no chat, siga esse mesmo modelo.
 
-A **legenda do post** segue um padrão próprio, fixo, gerado junto com o
-roteiro a partir do mesmo `GANCHOS_ROTEIRO` (mesma dor/motivo, tom adulto
-— quem fala é o Papai, não a criança): (1) dor, em uma linha, com emoji
-😩; (2) solução citando o produto pelo nome, com emoji ✅; (3) call to
-action pedindo pra comentar "QUERO" ou ir no link da bio, com emoji 🛒;
-(4) hashtags fixas (`#papairesolve #casaeconstrucao #achadosdashopee
-#dicasdecasa #paisdeplantao`). Implementado em `montarLegenda()`, ao
-lado de `montarRoteiro()`, no mesmo arquivo.
+A **legenda do post** segue o mesmo padrão de abertura, gerada junto com
+o roteiro a partir do mesmo `GANCHOS_ROTEIRO` (mesma dor/motivo): (1) a
+frase fixa "Meu papai sempre resolve tudo aqui em casa!"; (2) dor, em
+uma linha, com emoji 😩; (3) solução citando o produto pelo nome, com
+emoji ✅; (4) call to action pedindo pra comentar "QUERO" ou ir no link
+da bio, com emoji 🛒; (5) hashtags fixas (`#papairesolve
+#casaeconstrucao #achadosdashopee #dicasdecasa #paisdeplantao`).
+Implementado em `montarLegenda()`, ao lado de `montarRoteiro()`, no
+mesmo arquivo.
 
 Desde 01/09, tanto a narração quanto a legenda são salvas por produto em
 `esteira.json` (campos `narracao`/`legenda`) no momento da seleção no

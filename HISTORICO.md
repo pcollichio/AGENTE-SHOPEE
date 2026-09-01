@@ -264,3 +264,17 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   clipboard funciona, botão excluir vem desabilitado num produto
   "publicado" e habilitado num "roteiro_pronto", e excluir remove a
   linha da tabela na hora.
+- **Voz do roteiro ajustada: de criança pra jovem, com abertura fixa.**
+  Usuário pediu — a narração deixa de ser em voz de criança e passa a
+  ser em **voz de jovem** (nem criança, nem adolescente), sempre abrindo
+  com a frase fixa "Meu papai sempre resolve tudo aqui em casa!", depois
+  a dor do problema, a solução com o produto e o call to action.
+  Reescrito `montarRoteiro()` (5 blocos: Abertura → Dor → Solução →
+  Prova → CTA, removido o antigo bloco "Agrava") e `montarLegenda()`
+  (mesma abertura fixa antes da dor) em `painel.py`; removida diminutivos
+  e dição infantil de `GANCHOS_ROTEIRO` (ex: "brinquedos" → "minhas
+  coisas", "chinelo" → "chão todo", "probleminha" → "problema").
+  Atualizado texto do guia em `esteira.html` e do passo "Texto e
+  roteiro" em `painel_index.py` (Problema→Agrava→Solução→Prova→Oferta
+  virou Abertura→Dor→Solução→Prova→CTA). Registrado o novo padrão em
+  `CLAUDE.md`.
