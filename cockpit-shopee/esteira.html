@@ -75,6 +75,28 @@
   .status-warning svg { color: #a5730a; }
   .status-good svg { color: #0ca30c; }
 
+  .seletor-etapa {
+    font-family: "IBM Plex Sans", sans-serif; font-size: 0.8rem; font-weight: 600;
+    border: 1px solid var(--border); border-radius: 999px; padding: 5px 10px; cursor: pointer;
+    background: var(--bg); color: var(--muted);
+  }
+  .seletor-etapa.etapa-em_producao { background: var(--accent-soft); color: var(--accent-ink); border-color: var(--accent); }
+  .seletor-etapa.etapa-publicado { background: #e3f6e0; color: #0ca30c; border-color: #0ca30c; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .seletor-etapa.etapa-publicado { background: #16332a; }
+  }
+  :root[data-theme="dark"] .seletor-etapa.etapa-publicado { background: #16332a; }
+
+  .secao-titulo { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.05rem; margin: 36px 0 12px; }
+  .guia-processo { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; }
+  .guia-processo ol { margin: 0; padding-left: 20px; }
+  .guia-processo li { font-size: 0.88rem; margin-bottom: 12px; line-height: 1.5; }
+  .guia-processo li:last-child { margin-bottom: 0; }
+  .guia-processo b { display: block; margin-bottom: 2px; }
+  .guia-processo .obs { color: var(--muted); }
+  .guia-aviso { font-size: 0.82rem; color: var(--muted); margin: 12px 0 0; padding-top: 12px;
+    border-top: 1px dashed var(--border); }
+
   .rodape { margin-top: 24px; font-size: 0.78rem; color: var(--muted); font-family: "IBM Plex Mono", monospace; }
 
   @media (max-width: 640px) { .resumo { grid-template-columns: 1fr; } }
@@ -111,7 +133,7 @@
       <table>
         <thead>
           <tr>
-            <th>Status</th><th>Produto</th><th>Selecionado em</th><th>Preço</th><th>Comissão</th>
+            <th>Status</th><th>Produto</th><th>Conteúdo</th><th>Selecionado em</th><th>Preço</th><th>Comissão</th>
             <th>Investido</th><th>Recebido</th><th>ROI</th>
           </tr>
         </thead>
@@ -126,6 +148,7 @@
           <td class="col-nome">
             <a href="https://s.shopee.com.br/5VUycPEbdL" target="_blank" rel="noopener">Mangueira Mágica Extensível 30m ou 15m com Gatilho 7 Jatos Engate Rápido Compacta Leve e Resistente</a>
           </td>
+          <td class="col-conteudo"><select class="seletor-etapa etapa-roteiro_pronto" data-produto-id="22198893450"><option value="roteiro_pronto" selected>Roteiro pronto</option><option value="em_producao">Em produção</option><option value="publicado">Publicado</option></select></td>
           <td class="col-data">2026-09-01</td>
           <td class="col-num">R$&nbsp;32.90</td>
           <td class="col-num">38%</td>
@@ -143,6 +166,7 @@
           <td class="col-nome">
             <a href="https://s.shopee.com.br/1LfPB05StO" target="_blank" rel="noopener">KIT 10 UN Caneta detector de voltagem e corrente elétrica digital LCD CNTT-D10 AC/DC/12V a 250V</a>
           </td>
+          <td class="col-conteudo"><select class="seletor-etapa etapa-roteiro_pronto" data-produto-id="18511752683"><option value="roteiro_pronto" selected>Roteiro pronto</option><option value="em_producao">Em produção</option><option value="publicado">Publicado</option></select></td>
           <td class="col-data">2026-08-31</td>
           <td class="col-num">R$&nbsp;95.00</td>
           <td class="col-num">36%</td>
@@ -160,6 +184,7 @@
           <td class="col-nome">
             <a href="https://s.shopee.com.br/3VjseSjxWP" target="_blank" rel="noopener">Ducha Piscina Vale Maxi 225mm 10'' Branca, Preta e Cromada - VALEPLAST</a>
           </td>
+          <td class="col-conteudo"><select class="seletor-etapa etapa-roteiro_pronto" data-produto-id="58206333390"><option value="roteiro_pronto" selected>Roteiro pronto</option><option value="em_producao">Em produção</option><option value="publicado">Publicado</option></select></td>
           <td class="col-data">2026-08-31</td>
           <td class="col-num">R$&nbsp;31.99</td>
           <td class="col-num">38%</td>
@@ -177,6 +202,7 @@
           <td class="col-nome">
             <a href="https://s.shopee.com.br/7fZT4jM2NK" target="_blank" rel="noopener">Mangueira de Jardim Chata Antitorção Não Dobra Super Flexível 10, 15, 20, 25, 30 e 50 Metros Flat</a>
           </td>
+          <td class="col-conteudo"><select class="seletor-etapa etapa-roteiro_pronto" data-produto-id="18697644684"><option value="roteiro_pronto" selected>Roteiro pronto</option><option value="em_producao">Em produção</option><option value="publicado">Publicado</option></select></td>
           <td class="col-data">2026-08-31</td>
           <td class="col-num">R$&nbsp;28.15</td>
           <td class="col-num">33%</td>
@@ -194,6 +220,7 @@
           <td class="col-nome">
             <a href="https://s.shopee.com.br/AKaEFY0yth" target="_blank" rel="noopener">Mangueira Magica 30 Metros Expansível Com Esguicho 7 Jatos Engate Rápido Jardim - Oferta</a>
           </td>
+          <td class="col-conteudo"><select class="seletor-etapa etapa-roteiro_pronto" data-produto-id="23999450102"><option value="roteiro_pronto" selected>Roteiro pronto</option><option value="em_producao">Em produção</option><option value="publicado">Publicado</option></select></td>
           <td class="col-data">2026-08-31</td>
           <td class="col-num">R$&nbsp;21.99</td>
           <td class="col-num">7%</td>
@@ -205,7 +232,58 @@
       </table>
     </div>
 
+    <div class="secao-titulo">Como sai o Reels — do roteiro ao publicado</div>
+    <div class="guia-processo">
+      <ol>
+        <li>
+          <b>1. Roteiro pronto</b>
+          O roteiro (voz de criança, modelo Papai Resolve) já sai pronto assim que você seleciona o produto no painel — é o texto do arquivo baixado.
+        </li>
+        <li>
+          <b>2. Gravar a narração</b>
+          <span class="obs">Manual.</span> Cole o texto numa ferramenta de voz por IA (ex: ElevenLabs, ou a própria narração por IA do CapCut) — voz infantil, tom animado.
+        </li>
+        <li>
+          <b>3. Editar o vídeo</b>
+          <span class="obs">Manual, no CapCut.</span> Formato 9:16, use a foto/vídeo oficial do produto (do próprio anúncio da Shopee) seguindo as 5 partes do roteiro: Dor &rarr; Agrava &rarr; Solução &rarr; Prova &rarr; Call to action.
+        </li>
+        <li>
+          <b>4. Publicar</b>
+          <span class="obs">Manual, por enquanto.</span> Sobe no Instagram/TikTok com a legenda e o link de afiliado na bio. Publicar direto daqui exigiria autorizar o cockpit a postar na sua conta (aprovação da Meta/TikTok) — ainda não configurado.
+        </li>
+        <li>
+          <b>5. Marcar como publicado</b>
+          Muda o seletor "Conteúdo" desse produto, na tabela acima, pra <b>Publicado</b> — assim a esteira fica com o retrato real de onde cada produto está.
+        </li>
+      </ol>
+      <p class="guia-aviso">O Claude não grava vídeo nem publica nas redes sozinho — essas partes (2, 3 e 4) são manuais. O que o cockpit automatiza é o roteiro, a curadoria dos produtos e o acompanhamento de cada um até a venda.</p>
+    </div>
+
     <p class="rodape">Cockpit de Afiliação IA-First &middot; @papairesolve_br</p>
   </div>
+
+  <script>
+    document.querySelectorAll('.seletor-etapa').forEach(function (sel) {
+      sel.addEventListener('change', function () {
+        var produtoId = sel.getAttribute('data-produto-id');
+        var etapa = sel.value;
+        sel.className = 'seletor-etapa etapa-' + etapa;
+        sel.disabled = true;
+        fetch('/api/atualizar_esteira', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ produto_id: produtoId, etapa_conteudo: etapa }),
+        })
+          .then(function (resposta) { return resposta.json().then(function (d) { return { ok: resposta.ok, d: d }; }); })
+          .then(function (r) {
+            if (!r.ok) alert(r.d.erro || 'Não consegui salvar a etapa.');
+          })
+          .catch(function () {
+            alert('Não consegui falar com o servidor — essa função só funciona no cockpit publicado na Vercel.');
+          })
+          .finally(function () { sel.disabled = false; });
+      });
+    });
+  </script>
 </body>
 </html>

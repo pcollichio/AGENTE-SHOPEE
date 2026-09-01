@@ -218,3 +218,29 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   um roteiro real (Torneira De Banheiro) e conferindo o texto baixado.
   Registrado como padrão em `CLAUDE.md`, pra valer também quando o
   usuário pedir um roteiro pontual no chat.
+
+## 2026-09-01
+
+- **Filtro de qualidade movido pro momento da seleção**: usuário pediu
+  que todos os produtos do nicho casa & construção venham pro painel,
+  sem cortar por comissão/avaliação antes — o filtro deve acontecer na
+  hora de escolher. Removido o filtro de `montar_leva_variada()` e do
+  `min_comissao` passado à API (só resta o filtro de nicho, via
+  `produtos_excluir.txt`). Painel ganha dois seletores (Comissão
+  mínima / Avaliação mínima) que combinam com o filtro de faixa de
+  preço já existente, tudo em tempo real via JS. Testado com
+  Playwright confirmando a combinação dos três filtros.
+- **Pedido: processo de criação e publicação dos Reels.** Resposta
+  honesta dada ao usuário: gerar o vídeo de verdade (voz sintética,
+  edição) e publicar automaticamente no Instagram/TikTok não são coisas
+  que o Claude consegue fazer aqui — faltam ferramenta de vídeo/voz e
+  uma integração com a API da Meta/TikTok (que exige aprovação e conta
+  comercial verificada, fora do escopo atual). O que foi construído em
+  vez disso: a esteira ganhou uma **etapa de conteúdo** paralela ao
+  status financeiro — Roteiro pronto (padrão) → Em produção →
+  Publicado — atualizada manualmente por um seletor em cada linha
+  (`api/atualizar_esteira.js`, novo, salva no GitHub). `esteira.html`
+  também ganhou um guia claro dos 5 passos do processo (roteiro →
+  narração IA → edição no CapCut → publicar → marcar como publicado),
+  deixando explícito quais passos são manuais. Testado com Playwright
+  (mudança de etapa envia a chamada certa e atualiza a cor na hora).

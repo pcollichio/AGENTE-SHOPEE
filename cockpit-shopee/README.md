@@ -52,7 +52,9 @@ por uma chamada direta.
   busca ao vivo (por nome) pra achar um produto específico que não
   apareceu na leva (usa `api/buscar_produto.py`)
 - **`esteira.html`** — a lista viva de produtos selecionados, com
-  status automático (selecionado / impulsionado / vendido)
+  status financeiro automático (selecionado / impulsionado / vendido)
+  e etapa de conteúdo manual (roteiro pronto / em produção / publicado)
+  — inclui um guia do processo de gravação/edição/publicação
 - **`importar.html`** — formulário simples pra registrar investimento em
   campanha e vendas confirmadas
 - **`painel_roi.html`** — progresso da meta mensal e ROI por produto
@@ -77,6 +79,9 @@ por uma chamada direta.
 - `api/importar_arquivo.js` — função serverless (Vercel) que recebe um
   arquivo enviado em `importar.html` (relatório de vendas, Meta Ads
   etc.) e salva em `financeiro/importados/`, direto no GitHub
+- `api/atualizar_esteira.js` — função serverless (Vercel) que salva a
+  etapa de conteúdo (roteiro pronto/em produção/publicado) de um
+  produto na esteira, usada pelo seletor em `esteira.html`
 - `esteira.json` — todos os produtos já selecionados no painel ao
   longo do tempo (escrito pelo botão "Salvar seleção agora"; é o que
   o Claude e o `esteira.html` leem)

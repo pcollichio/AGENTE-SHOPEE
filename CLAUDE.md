@@ -63,9 +63,24 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
 - `cockpit-shopee/esteira.json` — lista viva (acumulada, não
   sobrescrita) de todos os produtos já selecionados no painel; leia
   antes de gerar roteiro ou responder sobre o que já foi selecionado.
-- `cockpit-shopee/esteira.html` — visão da esteira com status calculado
-  automaticamente (selecionado / impulsionado / vendido), cruzando
-  `esteira.json` com o financeiro.
+  Cada item tem dois eixos de status independentes: financeiro
+  (selecionado/impulsionado/vendido, calculado sozinho cruzando com o
+  financeiro) e `etapa_conteudo` (roteiro_pronto/em_producao/publicado,
+  atualizado manualmente pelo usuário no seletor de `esteira.html`, via
+  `api/atualizar_esteira.js`).
+- `cockpit-shopee/esteira.html` — visão da esteira com status financeiro
+  calculado automaticamente (selecionado / impulsionado / vendido),
+  cruzando `esteira.json` com o financeiro, mais um seletor manual de
+  etapa de conteúdo por produto e um guia embutido do processo
+  roteiro→gravação→edição→publicação (deixa claro que gravar, editar e
+  publicar são passos manuais do usuário — o Claude não grava vídeo nem
+  publica sozinho, não há integração com API do Meta/TikTok configurada).
+- Pedido do usuário em 01/09: o filtro de qualidade (comissão mínima,
+  avaliação mínima) não corta mais produto do nicho antes da leva — a
+  leva traz todos os produtos do nicho casa & construção, e o filtro
+  acontece interativamente no painel, no momento da seleção (selects de
+  comissão mínima / avaliação mínima em `painel.html`, combináveis com o
+  filtro de faixa de preço).
 - Links publicados: GitHub Pages em
   `https://pcollichio.github.io/AGENTE-SHOPEE/cockpit-shopee/cockpit.html`
   (e `/painel.html`, `/painel_roi.html`, etc.)
