@@ -87,7 +87,19 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
   leva traz todos os produtos do nicho casa & construção, e o filtro
   acontece interativamente no painel, no momento da seleção (selects de
   comissão mínima / avaliação mínima em `painel.html`, combináveis com o
-  filtro de faixa de preço).
+  filtro de faixa de preço). Pedido em 02/09: revertido o "todos" por
+  volume — a leva agora traz só os **50 melhores** do nicho, por score
+  de curadoria (`LIMITE_LEVA` em `buscar_leva_lancamento.py`); o filtro
+  de qualidade continua interativo, no painel.
+- Pedido do usuário em 02/09: "o fluxo mais fácil vai ser achar o
+  produto no app Shopee e trazer pro agente" — a busca por descrição
+  **ou link colado** do produto (usa `shopee_integration/link_resolver.py`,
+  compartilhado com `buscar_um_produto.py`) subiu pro topo do
+  `painel.html`, acima da leva do dia, em vez de ficar embaixo da
+  tabela. Todo produto marcado — venha da leva, da busca por link ou
+  por descrição, ou de `produtos_manuais.txt` — usa os mesmos
+  `montarRoteiro()`/`montarLegenda()` no momento de salvar, então
+  sempre sai com narração e legenda prontas na esteira, sem exceção.
 - Links publicados: GitHub Pages em
   `https://pcollichio.github.io/AGENTE-SHOPEE/cockpit-shopee/cockpit.html`
   (e `/painel.html`, `/painel_roi.html`, etc.)

@@ -1,19 +1,17 @@
 """
-Busca produtos reais da Shopee no nicho casa e construção e traz TODOS
-eles (sem filtro de comissão, avaliação, vendas ou número máximo) pra
-@papairesolve_br selecionar direto no painel — que tem os filtros
-(faixa de preço, comissão mínima, avaliação mínima) pra aplicar no
-momento da escolha, não antes.
+Busca produtos reais da Shopee no nicho casa e construção e traz os
+melhores 50 (por score de curadoria, sem filtro de comissão, avaliação
+ou vendas) pra @papairesolve_br selecionar direto no painel — que tem
+os filtros (faixa de preço, comissão mínima, avaliação mínima) pra
+aplicar no momento da escolha, não antes.
 
-Pedido do usuário (31/08 e 01/09): primeiro "traga todos e deixe que eu
-faça a seleção", depois "todos que fazem parte do nicho de casa e
-construção... o filtro no momento das escolhas dos produtos" — ou seja,
-o único corte que acontece aqui é o de nicho (produtos_excluir.txt);
-qualidade (comissão, avaliação) vira filtro interativo no painel.
-
-(Não há piso de volume de vendas, comissão, avaliação, nem número
-máximo de produtos na busca — todos testados e descartados/movidos pro
-painel: ver HISTORICO.md de 31/08 e 01/09.)
+Pedido do usuário (31/08, 01/09 e 02/09): primeiro "traga todos e deixe
+que eu faça a seleção", depois "todos que fazem parte do nicho de casa
+e construção... o filtro no momento das escolhas dos produtos", depois
+"vamos trazer apenas 50 produtos do nosso nicho" — ou seja, o único
+corte por volume é o teto de 50 (os melhores por score); qualidade
+(comissão, avaliação) continua sendo filtro interativo no painel, não
+um corte na busca.
 
 Rode com: python buscar_leva_lancamento.py
 
@@ -54,6 +52,10 @@ SUBCATEGORIAS_CASA_CONSTRUCAO = [
 # Faixas de ticket médio (em reais)
 TICKET_BAIXO_MAX = 50.0
 TICKET_MEDIO_MAX = 150.0
+
+# Teto da leva diária — pedido do usuário em 02/09: só os 50 melhores
+# (por score de curadoria) do nicho, não todos os que a busca encontrar.
+LIMITE_LEVA = 50
 
 ARQUIVO_PRODUTOS_MANUAIS = "produtos_manuais.txt"
 ARQUIVO_PRODUTOS_EXCLUIR = "produtos_excluir.txt"
@@ -129,13 +131,13 @@ def buscar_produtos_do_nicho():
 
 
 def montar_leva_variada():
-    """Busca produtos do nicho e devolve TODOS eles (sem filtro de
-    comissão/avaliação — só o filtro de nicho já aplicado em
-    buscar_produtos_do_nicho), classificados por faixa de preço e
-    ordenados por score. Pedido do usuário em 2026-09-01: o filtro de
-    qualidade (comissão, avaliação) deve acontecer no momento da
-    seleção, no painel — não antes, cortando produto do nicho fora da
-    leva."""
+    """Busca produtos do nicho (sem filtro de comissão/avaliação — só o
+    filtro de nicho já aplicado em buscar_produtos_do_nicho), classifica
+    por faixa de preço, ordena por score e devolve só os LIMITE_LEVA
+    melhores. Pedido do usuário em 01/09: o filtro de qualidade
+    (comissão, avaliação) acontece no momento da seleção, no painel —
+    não antes; pedido em 02/09: limitar a leva aos 50 melhores, não
+    trazer o nicho inteiro."""
     produtos = buscar_produtos_do_nicho()
 
     todos = [
@@ -144,7 +146,7 @@ def montar_leva_variada():
     ]
 
     todos.sort(key=lambda p: p["score"], reverse=True)
-    return todos
+    return todos[:LIMITE_LEVA]
 
 
 def carregar_termos_manuais(caminho=ARQUIVO_PRODUTOS_MANUAIS):

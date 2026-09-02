@@ -278,3 +278,31 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   roteiro" em `painel_index.py` (Problema→Agrava→Solução→Prova→Oferta
   virou Abertura→Dor→Solução→Prova→CTA). Registrado o novo padrão em
   `CLAUDE.md`.
+
+## 2026-09-02
+
+- **Leva limitada a 50 produtos + busca por link no topo do painel.**
+  Dois pedidos juntos: (1) a leva diária volta a ter teto — só os 50
+  melhores do nicho por score de curadoria (`LIMITE_LEVA` em
+  `buscar_leva_lancamento.py`), revertendo o "traz todos" de 01/09 só
+  no quesito volume (o filtro de qualidade continua interativo, no
+  painel). (2) A busca de produto específico subiu pro **topo** do
+  `painel.html` (antes ficava embaixo da tabela) e passou a aceitar
+  tanto descrição quanto **link colado do app da Shopee** — o usuário
+  apontou que na prática é assim que vai usar: "achar produto no app
+  Shopee e trazer pro agente". Extraída a lógica de resolver link
+  (segue redirecionamento, extrai nome/itemId da URL) de
+  `buscar_um_produto.py` pra um módulo compartilhado,
+  `shopee_integration/link_resolver.py`, e reaproveitada em
+  `api/buscar_produto.py` (que antes só buscava por palavra-chave) —
+  evita duas implementações da mesma regex divergindo com o tempo.
+  Revisado que todo produto marcado pra esteira — venha da leva, da
+  busca (por nome ou link) ou de `produtos_manuais.txt` — sempre gera
+  narração e legenda ao salvar: `montarRoteiro()`/`montarLegenda()` só
+  dependem dos atributos `data-*` do checkbox, preenchidos igual nos
+  três casos (categoria cai no gancho `_padrao` quando o produto não
+  tem `termo_busca`, ex: vindo de busca ao vivo). Testado com
+  Playwright: busca por link simulando a resposta com `termo_usado`
+  mostra aviso "Busquei por... confira se é o produto certo", e o
+  roteiro baixado sai completo tanto pro produto da leva quanto pro
+  achado por link.

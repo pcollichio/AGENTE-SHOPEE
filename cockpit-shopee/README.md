@@ -28,7 +28,9 @@ cruzando com o financeiro.
   você viu no app da Shopee**. O Claude dispara o workflow
   `.github/workflows/busca-manual.yml` (que roda `buscar_um_produto.py`
   com acesso real à API da Shopee — segue o link, identifica o produto
-  e busca) e te traz os resultados na hora.
+  e busca) e te traz os resultados na hora. Na prática, o mais rápido é
+  colar o link direto na busca do topo do `painel.html` — funciona sem
+  passar pelo chat.
 - **Peça o roteiro de um produto que você selecionou no painel** — o
   Claude lê `esteira.json` (salvo pelo botão do painel) e já monta o
   texto pronto pra gravação.
@@ -46,11 +48,14 @@ por uma chamada direta.
 - **`cockpit.html`** — arquivo único de entrada (abre os outros por dentro)
 - **`index.html`** — visão geral do fluxo completo ("o que fazer hoje")
 - **`chat.html`** — chat de verdade com o coach (usa `api/chat.js`)
-- **`painel.html`** — todos os produtos do dia que passam no filtro de
-  qualidade (gerado automaticamente todo dia às 9h, sem número fixo),
-  com foto, seleção, roteiro pronto pra esteira de conteúdo e uma
-  busca ao vivo (por nome) pra achar um produto específico que não
-  apareceu na leva (usa `api/buscar_produto.py`)
+- **`painel.html`** — os 50 melhores produtos do dia no nicho (gerado
+  automaticamente todo dia às 9h, por score de curadoria, sem filtro de
+  comissão/avaliação — isso é filtro interativo, no painel), com foto,
+  seleção, roteiro e legenda prontos pra esteira. No topo, uma busca ao
+  vivo aceita tanto uma descrição quanto um link colado direto do app
+  da Shopee — pra trazer qualquer produto pro agente sem esperar a leva
+  do dia (usa `api/buscar_produto.py`, mesma lógica de resolver link do
+  `buscar_um_produto.py`)
 - **`esteira.html`** — a lista viva de produtos selecionados, com
   status financeiro automático (selecionado / impulsionado / vendido),
   etapa de conteúdo manual (roteiro pronto / em produção / publicado),
@@ -60,9 +65,12 @@ por uma chamada direta.
 - **`importar.html`** — formulário simples pra registrar investimento em
   campanha e vendas confirmadas
 - **`painel_roi.html`** — progresso da meta mensal e ROI por produto
-- `buscar_leva_lancamento.py` — busca os produtos reais na Shopee (leva do dia)
-- `buscar_um_produto.py` — busca um produto específico sob demanda
-  (usado pelo workflow `busca-manual.yml`, a pedido no chat com o Claude)
+- `buscar_leva_lancamento.py` — busca os produtos reais na Shopee e
+  devolve os 50 melhores do nicho, por score (leva do dia)
+- `buscar_um_produto.py` — busca um produto específico sob demanda, por
+  nome ou link (usado pelo workflow `busca-manual.yml`, a pedido no
+  chat com o Claude) — mesma lógica de link de `api/buscar_produto.py`,
+  compartilhada via `shopee_integration/link_resolver.py`
 - `gerar_roi.py` — calcula o ROI a partir dos arquivos em `financeiro/`
   e também escreve `financeiro/resumo.json` (o chat lê esse arquivo)
 - `gerar_esteira.py` — recalcula o status da esteira (`esteira.html`)
@@ -75,7 +83,8 @@ por uma chamada direta.
   curadoria automática
 - `api/chat.js` — função serverless (Vercel) que fala com a Anthropic
 - `api/buscar_produto.py` — função serverless (Vercel) que busca um
-  produto específico direto na Shopee
+  produto específico direto na Shopee, por descrição ou por link
+  colado do app
 - `api/selecionar.js` — função serverless (Vercel) que acrescenta a
   seleção do painel em `esteira.json`, direto no GitHub
 - `api/importar_arquivo.js` — função serverless (Vercel) que recebe um

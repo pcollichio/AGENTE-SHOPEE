@@ -563,6 +563,18 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
       <p class="atualizado">Atualizado&nbsp;{date.today().strftime('%d/%m/%Y')}<br>{len(produtos)} produtos</p>
     </header>
 
+    <h2 class="titulo-secao">Buscar um produto específico</h2>
+    <p class="descricao-secao">Achou um produto no app da Shopee? Cole o link aqui (ou digite uma descrição) — é o jeito mais rápido de trazer ele pro agente sem esperar a leva do dia.</p>
+    <div class="busca-caixa">
+      <form class="busca-form" id="form-busca">
+        <input type="text" id="busca-input" placeholder="Cole o link da Shopee ou digite, ex: torneira de cozinha" autocomplete="off">
+        <button class="btn-buscar" id="btn-buscar" type="submit">Buscar</button>
+      </form>
+      <div class="busca-resultados" id="busca-resultados"></div>
+      <p class="busca-aviso" id="busca-aviso" hidden></p>
+    </div>
+
+    <h2 class="titulo-secao">Leva do dia &mdash; {len(produtos)} produtos do nicho</h2>
     <section class="resumo" aria-label="Resumo da leva">
       <div class="stat stat-baixo"><div class="n">{contagem.get('baixo', 0):02d}</div><div class="l">Ticket baixo (até R$50)</div></div>
       <div class="stat stat-medio"><div class="n">{contagem.get('medio', 0):02d}</div><div class="l">Ticket médio (R$50&ndash;150)</div></div>
@@ -572,17 +584,6 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
 
     {tabela_principal_html}
     {secao_extras_html}
-
-    <h2 class="titulo-secao">Buscar um produto específico</h2>
-    <p class="descricao-secao">Tem um produto em mente que não apareceu na leva de hoje? Busque direto na Shopee pelo nome.</p>
-    <div class="busca-caixa">
-      <form class="busca-form" id="form-busca">
-        <input type="text" id="busca-input" placeholder="Ex: torneira de cozinha" autocomplete="off">
-        <button class="btn-buscar" id="btn-buscar" type="submit">Buscar</button>
-      </form>
-      <div class="busca-resultados" id="busca-resultados"></div>
-      <p class="busca-aviso" id="busca-aviso" hidden></p>
-    </div>
 
     <p class="rodape">Gerado a partir da Shopee Affiliate API &middot; Cockpit de Afiliação IA-First</p>
   </div>
@@ -804,6 +805,11 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
             if (produtos.length === 0) {{
               mostrarAviso('Nenhum produto encontrado para "' + termo + '".');
               return;
+            }}
+            if (r.dados.correspondencia_exata) {{
+              mostrarAviso('Encontrado direto pelo link \\u2713');
+            }} else if (r.dados.termo_usado) {{
+              mostrarAviso('Busquei por "' + r.dados.termo_usado + '" (extraído do link) \\u2014 confira se é o produto certo antes de marcar.');
             }}
             produtos.forEach(function (p) {{
               resultados.appendChild(montarItem(p));
