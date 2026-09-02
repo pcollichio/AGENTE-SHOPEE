@@ -3,358 +3,52 @@
 | # | Produto | Faixa | Preço | Comissão | Avaliação | Vendidos | Link de afiliado |
 |---|---|---|---|---|---|---|---|
 | 1 | Aditivo Impermeabilizante para Concreto e Argamassa Galão 3,6L - Vedacit | Baixo | R$42.90 | 43% | 5.0⭐ | 29 | [link](https://s.shopee.com.br/2LXzQvWQkY) |
-| 2 | Torneira Banheiro 1/4 Volta Inox 304 Alta Luxo Banheiro | Baixo | R$49.90 | 38% | 4.9⭐ | 10 | [link](https://s.shopee.com.br/8KpCZx9aZn) |
+| 2 | Torneira Banheiro 1/4 Volta Inox 304 Alta Luxo Banheiro | Baixo | R$49.90 | 38% | 4.9⭐ | 10 | [link](https://s.shopee.com.br/4LJ3obtc8g) |
 | 3 | KIT 10 UN Caneta detector de voltagem e corrente elétrica digital LCD CNTT-D10 AC/DC/12V a 250V | Médio | R$95.00 | 36% | 4.5⭐ | 0 | [link](https://s.shopee.com.br/9AOJZU6Pt0) |
 | 4 | 100 Bucha8 8mm Tijolo Bloco Parede Oca C/ Parafuso | Baixo | R$41.60 | 35% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/5LBb0RL0fR) |
 | 5 | Kit Buchas 6 8 e 10mm com Parafusos Philips Bucha com Anel | Médio | R$59.20 | 35% | 4.9⭐ | 0 | [link](https://s.shopee.com.br/60RHnfITJd) |
 | 6 | Kit Prateleiras Batman 32x20cm Suporte Organizador para quarto sala | Médio | R$69.00 | 58% | 4.9⭐ | 2 | [link](https://s.shopee.com.br/2VrPdEa7vT) |
 | 7 | Lancheira Bolsa Térmica Para Marmita | Médio | R$55.90 | 53% | 5.0⭐ | 3 | [link](https://s.shopee.com.br/3g3LREYjRx) |
-| 8 | Acabamento para Registro Pressao e Gaveta 1/2 3/4 1" Quadrado Volante 24mm em Metal C/conversor DOCOL P/DECA | Baixo | R$42.70 | 43% | 4.8⭐ | 0 | [link](https://s.shopee.com.br/AAGqlKXPIK) |
-| 9 | Dispenser Sabonete Líquido 800ml Invoq Cor Branco - Premisse | Baixo | R$40.44 | 38% | 5.0⭐ | 2 | [link](https://s.shopee.com.br/3qMnDgvW9X) |
-| 10 | Meu jardim Secreto - Shu-Nu Yan | Médio | R$67.00 | 48% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/5foQ41Hv8d) |
-| 11 | Conchas do mar naturais COMBO COM 32 PEÇAS sortidas (as mesmas da foto) | Baixo | R$45.30 | 43% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/7psuhcbypU) |
-| 12 | Beleza do Mar em Casa: Pote Decorativo de Conchas Naturais | Baixo | R$45.30 | 43% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/6q0NVmfmrO) |
-| 13 | 600g - Conchas do mar naturais PEQUENAS - substrato para aquários - conchas do mar - Buso da praia - Buzios do mar | Baixo | R$48.90 | 43% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/6L46urhgsL) |
+| 8 | Acabamento para Registro Pressao e Gaveta 1/2 3/4 1" Quadrado Volante 24mm em Metal C/conversor DOCOL P/DECA | Baixo | R$42.70 | 43% | 4.8⭐ | 0 | [link](https://s.shopee.com.br/80CMBunF06) |
+| 9 | Dispenser Sabonete Líquido 800ml Invoq Cor Branco - Premisse | Baixo | R$40.44 | 38% | 5.0⭐ | 2 | [link](https://s.shopee.com.br/5AsAohy1kz) |
+| 10 | Meu jardim Secreto - Shu-Nu Yan | Médio | R$67.00 | 48% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/80CMBurmIB) |
+| 11 | Conchas do mar naturais COMBO COM 32 PEÇAS sortidas (as mesmas da foto) | Baixo | R$45.30 | 43% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/1gIIeHFt93) |
+| 12 | Beleza do Mar em Casa: Pote Decorativo de Conchas Naturais | Baixo | R$45.30 | 43% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/W6LG8KKVw) |
+| 13 | 600g - Conchas do mar naturais PEQUENAS - substrato para aquários - conchas do mar - Buso da praia - Buzios do mar | Baixo | R$48.90 | 43% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/50YkcP3CNt) |
 | 14 | Quadros decorativos Pintura Dormitório Preppy Quarto Adolescentes retrô cores pink (3 peças) | Baixo | R$48.00 | 33% | 4.9⭐ | 15 | [link](https://s.shopee.com.br/6AkhzyzlXz) |
 | 15 | Quadros decorativos Cereja vermelha pinturas da sorte, 8 bolas, moda vintage (3 peças) | Baixo | R$48.00 | 33% | 4.6⭐ | 7 | [link](https://s.shopee.com.br/9fKaAPmRRg) |
-| 16 | Quadros decorativos Preto e branco libera sua mente psicodélica pintura (3 peças) | Baixo | R$48.00 | 33% | 4.7⭐ | 6 | [link](https://s.shopee.com.br/9pe0Milo6j) |
-| 17 | Quadros decorativos Pinturas modernas Rainhas (3 peças) | Baixo | R$48.00 | 33% | 4.9⭐ | 5 | [link](https://s.shopee.com.br/9Khjlnni7e) |
+| 16 | Quadros decorativos Pinturas modernas Rainhas (3 peças) | Baixo | R$48.00 | 33% | 4.9⭐ | 5 | [link](https://s.shopee.com.br/9Khjlnni7e) |
+| 17 | Quadros decorativos Preto e branco libera sua mente psicodélica pintura (3 peças) | Baixo | R$48.00 | 33% | 4.7⭐ | 6 | [link](https://s.shopee.com.br/9pe0Milo6j) |
 | 18 | Quadros decorativos Arte abstrata matisse elegante pintura (3 peças) | Baixo | R$48.00 | 33% | 4.9⭐ | 5 | [link](https://s.shopee.com.br/9V19y6n4mh) |
 | 19 | KIT Cabeceira Estofada Nuvem 60x20cm Para Cama de Casal(7 PEÇAS) | Baixo | R$49.90 | 46% | 5.0⭐ | 1 | [link](https://s.shopee.com.br/9KhhBSmLAh) |
 | 20 | Capa Maquina Lavar Electrolux Consul 10 11 12 Kg C/zíper Protetora Impermeável Lavanderia | Baixo | R$42.30 | 43% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/6L48CI7rUv) |
 | 21 | Capa Maquina Lavar Electrolux Brastemp 13 15 16 Kg Zíper Protetora Impermeável Lavanderia | Baixo | R$42.30 | 43% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/60RHng98At) |
 | 22 | Banco de Pinus 100cm Desmontável – Banco de Madeira Rústico Decorativo Multiuso para Sala, Varanda e Flores | Médio | R$97.86 | 43% | 5.0⭐ | 7 | [link](https://s.shopee.com.br/5VV1ClB2Bq) |
-| 23 | Conchas Do Mar Artesanato Mix Diversas 500g Aquário Vela Artesanato | Baixo | R$45.60 | 43% | 4.4⭐ | 0 | [link](https://s.shopee.com.br/6AkgiYiKDK) |
+| 23 | Conchas Do Mar Artesanato Mix Diversas 500g Aquário Vela Artesanato | Baixo | R$45.60 | 43% | 4.4⭐ | 0 | [link](https://s.shopee.com.br/4qFKQ63pis) |
 | 24 | Protetor De Sofá Capa P/ Poltrona Do Papai | Baixo | R$41.40 | 43% | 4.2⭐ | 2 | [link](https://s.shopee.com.br/6fgyau6aox) |
-| 25 | Torneira De Banheiro Para Cozinha Parede 1/4 Volta Valeplast | Baixo | R$25.90 | 43% | 4.8⭐ | 172 | [link](https://s.shopee.com.br/2BEZEcX45V) |
+| 25 | Torneira De Banheiro Para Cozinha Parede 1/4 Volta Valeplast | Baixo | R$25.90 | 43% | 4.8⭐ | 172 | [link](https://s.shopee.com.br/AUth9wW8cQ) |
 | 26 | Mangueira Mágica Extensível 30m ou 15m com Gatilho 7 Jatos Engate Rápido Compacta Leve e Resistente | Baixo | R$32.90 | 38% | 4.7⭐ | 148 | [link](https://s.shopee.com.br/80CMBLArFh) |
-| 27 | Quadro Decorativo Placas Ariana Grande Quadro Discografia Album em MDF 30x20cm Full HD | Baixo | R$15.99 | 59% | 4.9⭐ | 69 | [link](https://s.shopee.com.br/5VV1Ckg6CR) |
-| 28 | Quadro Decorativo Placas Tyler, the Creator Quadro Discografia Album em MDF 30x20cm Full HD | Baixo | R$15.99 | 59% | 4.9⭐ | 52 | [link](https://s.shopee.com.br/6L48CHcvVc) |
-| 29 | Chuveiro Ducha Chuveirão Branco Cromada Preto Externo Interno Quintal Banho Banheiro | Baixo | R$18.50 | 38% | 4.7⭐ | 84 | [link](https://s.shopee.com.br/3LQWclxQAO) |
-| 30 | Quadro Natureza Quadro Com Moldura E Vidro Quadro Decorativo Sala Quarto Casal Quadro Folhagem Trio | Alto | R$223.78 | 44% | 4.9⭐ | 64 | [link](https://s.shopee.com.br/112bqUJR1Q) |
-| 31 | Quadro Decorativo Com Moldura Filete Sala Arte Pintura Abstrata Floral Costela De Adão Tons Terrosos | Médio | R$116.92 | 38% | 4.9⭐ | 104 | [link](https://s.shopee.com.br/3LQWcmAYIA) |
-| 32 | Quadros Decorativos Moldura Filete Sala Quarto Escritório Duo Abstrato Pintura Linhas Em Marrom Bege | Alto | R$155.92 | 38% | 4.8⭐ | 96 | [link](https://s.shopee.com.br/3Vjwp59uxD) |
-| 33 | Quadros Decorativos Com Moldura Filete Sala Quarto Casal Duo Floral Pintura Abstrata Folhas Em Bege | Alto | R$157.92 | 36% | 4.9⭐ | 91 | [link](https://s.shopee.com.br/6fgyatxrWs) |
-| 34 | Lixadeira Manual De Pvc Com Lixa 8x22cm Max | Baixo | R$39.95 | 83% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/8AVknVHX0y) |
-| 35 | Sifão Sanfonado Preto Ajustável Extensivo Flexível Pia Banheiro Cozinha Black - Astra | Baixo | R$17.01 | 83% | 5.0⭐ | 1 | [link](https://s.shopee.com.br/AKaFNU9HcN) |
-| 36 | Kit Manual Do Proprietário Gol G6 2013 2014 2015 | Médio | R$80.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4AzdcIPS1Z) |
-| 37 | Cabo Positivo Bateria Peugeot 208 2015 -17 | Médio | R$89.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4fvuDDNY0i) |
-| 38 | Chicote Cabo Positivo Da Bateria Fiat Palio Fire 1.0 2010 | Médio | R$69.60 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4qFKPWMufl) |
-| 39 | Tecnologias e Ferramentas de Gestão | Médio | R$77.00 | 56% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/50YkbpMHKo) |
-| 40 | 4 Fs Do Varejo : A Ferramenta Que Faltava Na Gerência Das Lojas | Baixo | R$49.90 | 56% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5AsAo8Ldzr) |
-| 41 | Veda + Tec 4 em 1 Bi Componente Para Laje; Parede; caixa d'agua; piscina 20kg | Alto | R$178.60 | 55% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/1A4edfJTs) |
-| 42 | Educando com as ferramentas da simplicidade | Baixo | R$40.30 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/BTUqweg8v) |
-| 43 | Mão na massa - minha caixa de ferramentas | Médio | R$59.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/qjBeAc8n7) |
-| 44 | APRENDA A APRENDER - COL. FERRAMENTAS DO DESEMPENHO | Médio | R$51.01 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1BM22mas7D) |
-| 45 | Seis Ferramentas Para o Desenvolvimento de Um Texto | Médio | R$86.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1LfSF5aEmG) |
-| 46 | Veda Trinca; fissuras; rachaduras; calhas galvanizadas; microfissuras; Branco | Baixo | R$20.09 | 53% | 4.8⭐ | 19 | [link](https://s.shopee.com.br/1VysROZbRJ) |
-| 47 | Conjunto de chave de fenda para óculos de 10 peças sortimento de ferramentas ópticas Nova | Médio | R$64.88 | 45% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1qbiq0YKlP) |
-| 48 | Sifão Universal Sanfonado Flexível Tubo Pia Cozinha Banheiro Lavatório Tanques Branco 71cm Valeplast | Baixo | R$14.99 | 43% | 4.9⭐ | 10 | [link](https://s.shopee.com.br/2VrPdEVnPb) |
-| 49 | Mangueira Mágica Extensível 30m ou15m com Gatilho 7 Jatos Engate Rápido Compacta Leve e Resistente | Baixo | R$32.90 | 38% | 4.8⭐ | 39 | [link](https://s.shopee.com.br/8V8cmG8xEo) |
-| 50 | Bucha 8mm Para Tijolo Bloco Parede Oca Com Parafuso 100 Pçs | Baixo | R$38.01 | 35% | 4.9⭐ | 9 | [link](https://s.shopee.com.br/904tNB73Dz) |
-| 51 | Bucha  para Tijolo Oco Baiano 120 Peças Buchas 6-8 Bloco Vazado Parafuso Combo Bucha Bloco Furado | Baixo | R$21.50 | 35% | 4.9⭐ | 11 | [link](https://s.shopee.com.br/9V19y659D6) |
-| 52 | Kit 100 Parafuso Phillips C/bucha 8mm | Baixo | R$29.52 | 35% | 4.8⭐ | 4 | [link](https://s.shopee.com.br/9Khjln5mY5) |
-| 53 | Kit Parafuso Para Madeira Philips Kit Marceneiro com 200 para MDF Parafuso Chipboard 14 25 30 40mm | Baixo | R$28.72 | 35% | 4.9⭐ | 2 | [link](https://s.shopee.com.br/9pe0Mi3sXC) |
-| 54 | Kit Parafuso Phillips Com Bucha 6 6mm 50 100 200 Unidades | Baixo | R$20.72 | 35% | 4.8⭐ | 2 | [link](https://s.shopee.com.br/9fKaAP4VsB) |
-| 55 | Bucha 6mm Para Tijolo Bloco Parede Oca Com Parafuso 100 Pçs | Baixo | R$29.93 | 35% | 4.7⭐ | 1 | [link](https://s.shopee.com.br/9zxQZ13FCH) |
-| 56 | Prego de aço com cabeça 10 x 10 VONDER | Baixo | R$23.12 | 35% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/AUth9w1LBO) |
-| 57 | Parafuso Gancho Metal Com Bucha 6mm para Parede Pendurar Vaso Varal | Baixo | R$15.92 | 35% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/AKaGxd1yWN) |
-| 58 | Parafuso para Bucha 5mm 6mm 8mm 10mm Phillips Kit Parafusos para Buchas 5 - 6 - 8 - 10 | Baixo | R$42.32 | 35% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5foRP3JjzX) |
-| 59 | Kit Parafusos para Madeira MDF Móveis Marcenaria Parafuso Philips Chipboard 14 - 20 - 25 - 30 - 40mm | Baixo | R$30.32 | 35% | 4.9⭐ | 0 | [link](https://s.shopee.com.br/6AkhzyHpye) |
-| 60 | Kit Parafuso com Bucha 6mm 8mm Sem Anel Aba 200 pçs Parafusos Philips Buchas 6 8 | Baixo | R$31.88 | 35% | 4.7⭐ | 0 | [link](https://s.shopee.com.br/6VNYOaGZIk) |
-| 61 | Kit Prateleiras Metallica Rock Metal Music 32x20cm Suporte Organizador para quarto sala | Baixo | R$40.00 | 58% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1A4edje00) |
-| 62 | Kit Prateleiras Mario Bros Games 32x20cm Suporte Organizador para quarto sala | Baixo | R$40.00 | 58% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/BTUqwj0f3) |
-| 63 | Kit Prateleiras Ozzy Osbourne Rock Metal Music 32x20cm Suporte Organizador para quarto sala | Baixo | R$40.00 | 58% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/Lmv3FiNK6) |
-| 64 | Organizações inovadoras do setor financeiro | Médio | R$73.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/40gDPzUPsu) |
-| 65 | CONSCIENCIA E DESENVOLVIMENTO SUSTENTAVEL NAS ORGANIZACOES | Médio | R$73.01 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4AzdcITmXx) |
-| 66 | Natureza Ensina, A: Como Usar a Inteligência dos Animais Para Organizar o Seu Mundo | Baixo | R$48.60 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2gAppXZUam) |
-| 67 | Tratado e organizações internacionais de natureza econômica | Médio | R$89.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3qMnDgV3E7) |
-| 68 | COMO ORGANIZAR SUAS VIAGENS AEREAS | Baixo | R$44.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6fgyatKGTh) |
-| 69 | Organizações Em Aprendizagem | Médio | R$62.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7VG5aQH5mu) |
-| 70 | Porta Filtro Café 102 e 103 Suporte Moderno para Coador de Papel Organizador Decorativo Para Cozinha | Baixo | R$25.87 | 53% | 5.0⭐ | 2 | [link](https://s.shopee.com.br/7KwfO7Hj7t) |
-| 71 | Estojo Case Óculos Bobino Glasses Case Preto com Gancho Organizador Bolsa | Baixo | R$24.90 | 53% | 4.5⭐ | 1 | [link](https://s.shopee.com.br/7psvz2Fp70) |
-| 72 | Estojo Case Óculos Bobino Glasses Case Turquesa com Gancho Organizador Bolsa | Baixo | R$24.90 | 53% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/5foRP3O4Vf) |
-| 73 | Organizador Chaves Bobino Key Clip Acessório Prático para Bolsa Mochila | Baixo | R$18.49 | 53% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/6AkhzyMAUm) |
-| 74 | Organizador de fones de ouvido e fios pequeno branco | Baixo | R$15.49 | 53% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/9KhjlnA74T) |
-| 75 | Tampa Furo Farol Milha Original Argo 2020 2021 2022 Mopar 8d | Médio | R$71.20 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5q7rbMWEgT) |
-| 76 | Soquete Circuito Lanterna Tras. Direita Vectra Exp 2006-11  | Médio | R$80.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5VV1CkXVMR) |
-| 77 | Sensor De Estabilidade Park Cruze 2017 2018 2019 2020 390406 | Médio | R$70.40 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6L48CHUKfc) |
-| 78 | Interruptor Pedal Freio Duster 2012 a 2015 1.6 16V  | Baixo | R$41.40 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6fgyatT3zm) |
-| 79 | Circuito Lanterna Esquerda Duster 2012 A 2015  26217003  | Médio | R$61.20 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7psvz2Ocd3) |
-| 80 | Farol Milha C3 2004-12 Lado Esquerdo | Médio | R$89.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8KpCZxMicC) |
-| 81 | Moldura Farol De Milha Esquerdo Cromada Palio Siena 2008-12  | Baixo | R$44.50 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8V8cmGM5HF) |
-| 82 | Break Light Luz Freio Chery Celer 2012 -14 Hatch j15-3773070 | Médio | R$89.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8plTAsKobP) |
-| 83 | Botão Regulagem Farol Chery Qq 1.0 2016 2017  2018 | Baixo | R$44.50 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9fKaAPHdua) |
-| 84 | Farol Milha Auxiliar Lado Direito Cobalt 2012 a 16  | Médio | R$89.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9pe0MiH0Zd) |
-| 85 | Grade Farol Milha Esquerdo Saveiro G8 1.6 8v 2017 a 22  | Médio | R$89.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9KhjlnIuaY) |
-| 86 | Moldura Farol De Milha Ld Saveiro Gol Voyage G7 15-21 Orig C | Médio | R$89.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/AUth9wETDp) |
-| 87 | Comando Botão Estacionamento Peugeot 208 2017 18 | Médio | R$62.30 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/Lmv3FrAqu) |
-| 88 | Break Light Luz Freio Argo 2018 19 | Médio | R$62.30 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/W6LFYqXVx) |
-| 89 | Lanterna Luz De Teto Traseira Peugeot 408 2012 a 2015  | Médio | R$77.35 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1A4edsRWs) |
-| 90 | Botão Alerta Cruze 2012 2013 2014 | Médio | R$89.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1BM22mo0A9) |
-| 91 | Botão Interruptor de Pisca Alerta Volvo 460 1996 | Médio | R$71.20 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/gPlRrpuB4) |
-| 92 | Soquete Circuito Lanterna Tras. Esquerda Agile Ltz 2010 11  | Médio | R$80.10 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/qjBeApGq7) |
-| 93 | Botão Alerta do Painel Nissan Versa 2018 | Baixo | R$44.50 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1qbiq0lSoL) |
-| 94 | Soquete Circuito Lanterna Tras. Esquerda Vectra Exp 2006-11  | Médio | R$80.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1LfSF5nMpG) |
-| 95 | Botão Emergencia Alerta Painel Duster 2016 Cod. 252907372r  | Médio | R$71.20 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1VysROmjUJ) |
-| 96 | Botão Interruptor Hyundai Tucson 07 Á 014 Trip  | Baixo | R$44.50 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2LXzQvjYnU) |
-| 97 | Luz Lanterna da Placa Gol G5 2009 10 | Baixo | R$44.50 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2VrPdEivSX) |
-| 98 | Painel Velocimetro Combustivel Citroen C3 2010  P9652008280 | Médio | R$89.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/20v92JkpTS) |
-| 99 | Suporte coxim hidraulico New Fiesta 2014-17 Nac. 1.6  | Baixo | R$49.28 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7psudzsD7E) |
-| 100 | Porta Chave de Parede sem Furo Decorativo Moderno Mdf preto Inspirador | Baixo | R$17.04 | 78% | 4.7⭐ | 5 | [link](https://s.shopee.com.br/3B74qJaZAY) |
-| 101 | Placa Campainha Para Ser Atendido – Acrílico Espelhado com Escrita Preta | Baixo | R$15.50 | 74% | 4.9⭐ | 5 | [link](https://s.shopee.com.br/1VyqrFguYK) |
-| 102 | 2 Nomes  Doces gourmet no acrílico espelhado prata 100mm | Baixo | R$22.00 | 73% | 4.7⭐ | 0 | [link](https://s.shopee.com.br/1BM22mwaz7) |
-| 103 | CAIXA PIX LUA DE MEL FLORIDA EM MDF ENVIO EM 24H | Baixo | R$22.92 | 67% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/4fvuDDjGsw) |
-| 104 | PLACA ABERTO E FECHADO EM ACRILICO ESPELHADO COM VENTOSA | Baixo | R$29.90 | 62% | 4.8⭐ | 3 | [link](https://s.shopee.com.br/2gAppXqswc) |
-| 105 | Quadro Decorativo Placas BK Quadro Discografia Album em MDF 30x20cm Full HD | Baixo | R$18.99 | 60% | 4.8⭐ | 37 | [link](https://s.shopee.com.br/3qMnDgmRZt) |
-| 106 | Quadro Decorativo Placas Olivia Rodrigo Quadro Discografia Album em MDF 30x20cm Full HD | Baixo | R$15.99 | 60% | 4.7⭐ | 10 | [link](https://s.shopee.com.br/3LQWcloLao) |
-| 107 | Quadros Decorativo Placas Jujutsu Kaisen, Anime, Satoru Gojo, Sukuna, Personagem MDF 30x20cm Full HD | Baixo | R$15.99 | 60% | 4.7⭐ | 4 | [link](https://s.shopee.com.br/3Vjwp4niFr) |
-| 108 | Quadro Decorativo Placas The Neighbourhood Quadro Discografia Album em MDF 30x20cm Full HD | Baixo | R$18.99 | 60% | 4.9⭐ | 6 | [link](https://s.shopee.com.br/70JozVaO9Y) |
-| 109 | Quadro Decorativo Placas deftones Quadro Discografia Album em MDF 30x20cm Full HD | Baixo | R$18.99 | 60% | 4.9⭐ | 6 | [link](https://s.shopee.com.br/7AdFBoZkob) |
-| 110 | Quadro Decorativo Placas A$AP Rocky Quadro Discografia Album em MDF 30x20cm Full HD | Baixo | R$18.99 | 60% | 4.9⭐ | 4 | [link](https://s.shopee.com.br/6q0OnCb1UZ) |
-| 111 | Quadro Decorativo Placas Playboi Carti Quadro Discografia Album em MDF 30x20cm Full HD | Baixo | R$18.99 | 60% | 4.8⭐ | 2 | [link](https://s.shopee.com.br/7fZVmjXqnk) |
-| 112 | Quadro Decorativo Placas TV Girl Quadro Discografia Album em MDF 30x20cm Full HD | Baixo | R$18.99 | 60% | 4.9⭐ | 1 | [link](https://s.shopee.com.br/7psvz2XDSn) |
-| 113 | Quadro Placa Decorativa Quarto Gamer Headset Frase Jogo Jogador Controle Console Vídeo Game Full HD | Baixo | R$15.99 | 60% | 4.8⭐ | 0 | [link](https://s.shopee.com.br/7KwfO7Z7Ti) |
-| 114 | Quadro Decorativo Placas King Woman Quadro Discografia Album em MDF 30x20cm Full HD | Baixo | R$15.99 | 60% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/7VG5aQYU8l) |
-| 115 | Quadro Decorativo Placas Taylor Swift Quadro Discografia Album em MDF 30x20cm Full HD | Baixo | R$15.99 | 60% | 4.8⭐ | 26 | [link](https://s.shopee.com.br/5foRP3fSrQ) |
-| 116 | Quadro Placas Decorativas Justin Bieber  Discografia Album em MDF 30x20cm Full HD | Baixo | R$15.90 | 60% | 4.9⭐ | 33 | [link](https://s.shopee.com.br/5q7rbMepWT) |
-| 117 | Quadro Decorativo Placas Travis Scott Quadro Discografia Album em MDF 30x20cm Full HD | Baixo | R$15.99 | 60% | 4.8⭐ | 27 | [link](https://s.shopee.com.br/5LBb0RgjXO) |
-| 118 | 🐱🐶 Kit Cortadores Biscoito Animais Boobie - Impressão 3D PLA - 5 Modelos - 6cm/8cm - Tamanho Personalizável 🍪✨ | Baixo | R$18.96 | 53% | 5.0⭐ | 2 | [link](https://s.shopee.com.br/3LQV2ca07v) |
-| 119 | 🌸💖Guerreiras Cortador para Cookies e Pasta Americana K POP MENINAS ANIME - Kit 3 pçs Com Puxador | Baixo | R$30.00 | 53% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/2BEZEcxSkr) |
-| 120 | 🐱🐶 Kit Cortadores Biscoito Animais Boobie - Impressão 3D PLA - 5 Modelos - 4cm/10cm - Tamanho Personalizável 🍪✨ | Baixo | R$23.00 | 53% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/1VysRP006n) |
-| 121 | 🐱🐶 Kit Cortadores Biscoito Corpo Animais Boobie - Impressão 3D PLA - 4 Modelos - 6cm/8cm - 🍪✨ | Baixo | R$18.96 | 53% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/1BM22n1Gmp) |
-| 122 | touca TNT 100 unidades | Baixo | R$15.00 | 56% | 5.0⭐ | 5 | [link](https://s.shopee.com.br/6L43Q8xsbO) |
-| 123 | Doutor Proktor - a banheira do tempo | Baixo | R$49.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2LXzQw1EBb) |
-| 124 | 1 ALMANAQUE DE BANHEIRO | Médio | R$56.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8V8cmGdkfq) |
-| 125 | Kit c/3 Bucha Vegetal Natural para Banho Esfoliante - Cores Sortidas | Baixo | R$25.90 | 46% | 4.9⭐ | 4 | [link](https://s.shopee.com.br/9V19y6Zwe8) |
-| 126 | Porta Papel Higiênico Suporte Preto de Papel Para Banheiro  | Baixo | R$10.91 | 46% | 5.0⭐ | 1 | [link](https://s.shopee.com.br/9KhjlnaZz7) |
-| 127 | Ralo redondo 10 x 10 inox | Baixo | R$29.50 | 43% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/9fKaAPZJJD) |
-| 128 | Placas Quadros Decorativas Banheiro Divertidas Frases Engraçadas | Baixo | R$22.90 | 43% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/5LBb0Rpo6T) |
-| 129 | Placa de aviso para Banheiro | Baixo | R$29.99 | 40% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/6q0OnCk63s) |
-| 130 | Ducha Piscina Vale Maxi 225mm 10'' Branca, Preta e Cromada - VALEPLAST | Baixo | R$31.99 | 38% | 4.9⭐ | 10 | [link](https://s.shopee.com.br/3Vjwp4wmpR) |
-| 131 | Ducha Fria Vale Maxi 170mm 7" Branca, Preta e Cromada | Baixo | R$29.99 | 38% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/3g3N1Nw9UU) |
-| 132 | Dispenser Sabonete Líquido Compacto 600ml Invoq Cor Branco - Premisse | Baixo | R$45.90 | 38% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/40gDPzusoa) |
-| 133 | Dispenser Sabonete Líquido 800ml Invoq Cor Preto - Premisse | Baixo | R$42.53 | 38% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4AzdcIuFTd) |
-| 134 | Adesivos Personalizados Bolofofos - Circo rosa - Jardim - Magali - Moana - Indicados para Copo Long Drink | Baixo | R$19.90 | 68% | 4.9⭐ | 2 | [link](https://s.shopee.com.br/AKaCh55wjt) |
-| 135 | Rótulos adesivos para tubetes de 13 cm Personalizados Jardim Encantado | Baixo | R$19.90 | 59% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/AAGmUm6a4s) |
-| 136 | Jardim: pares! | Baixo | R$44.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5VUwwCOLY2) |
-| 137 | Tira-Dúvidas do Jardim - Volume 2 | Médio | R$99.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6VNTcS1e2l) |
-| 138 | Os jardins do silêncio | Baixo | R$29.97 | 53% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/3g3LgLPXC0) |
-| 139 | Jardins Suspensos: o Diário de Inverno | Médio | R$56.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3qMlseOtr3) |
-| 140 | Mulheres São Como Flores: Vencendo no Jardim da Vida | Médio | R$59.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/50YjGnKSUO) |
-| 141 | Pedras do mar naturais - Tamanhos e formatos variados - coral - 500g | Médio | R$55.90 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5LBZj1lUuF) |
-| 142 | Conchas do mar Naturais - tipo Azeitona - Conchas marinhas - 100 unidades | Médio | R$55.90 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6VNX3YEkRq) |
-| 143 | Concha de sarnambi - Naturais - 500g - Conchas do mar | Médio | R$59.90 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/AUtfsWRpQG) |
-| 144 | Búzios - Caramujos - Conchas do Mar - Concha Natural - 15 UNIDADES | Médio | R$56.30 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6q0NSADTlw) |
-| 145 | Conchas do mar - Conchas Naturais Do Mar  - 30 Unidades variadas | Baixo | R$42.30 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7fZUVJccAT) |
-| 146 | 120 unid - Mini conchas do mar naturais, caracóis do mar - caracóis da praia - Neritina virgínea - Buso da lama | Médio | R$67.90 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7VG4J0dFVS) |
-| 147 | 4 peças - Coral esponja - Pedra do mar natural - coral | Médio | R$65.30 | 43% | 3.7⭐ | 0 | [link](https://s.shopee.com.br/70Jni5f9WP) |
-| 148 | Conchas do mar - conchas marinhas - Tipo Peguari - Naturais - 10 unidades | Médio | R$52.90 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/AAGpTuT66E) |
-| 149 | 50 unidades - Conchas do mar - cores naturais - Leukoma pectorina | Médio | R$55.90 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/60RGWFixYJ) |
-| 150 | Conchas do mar naturais COMBO COM 32 PEÇAS sortidas (as mesmas da foto) - conchas do marinhas, conchas da praia, decoraç | Baixo | R$45.30 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5foQ7dkEEH) |
-| 151 | Botao Vidro Eletrico Dian. Esq. Palio Fire 2011 12 | Médio | R$77.35 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7psue0ED21) |
-| 152 | Chicote Polo Negativo Baterria Fluence 2011 12 13 14 15 2.0  | Baixo | R$45.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8AVmNenXrs) |
-| 153 | Chicote Lanterna Traseira Canto Cruze Ltz Sedan 2019 20 0014 | Médio | R$67.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8V8cmGmHBy) |
-| 154 | Comando Retrovisor Elétrico Duster 2012 a 2015  | Médio | R$56.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6q0OnCscZk) |
-| 155 | Maquina Vidro Traseira Esquerda Eletrica Grand Siena 2012  | Médio | R$91.80 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6VNYOattFu) |
-| 156 | Cilindro Miolo Chave Porta Diant. Esquerda Logan 2020 21 San | Médio | R$51.30 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4fvuDE0rye) |
-| 157 | Cabo Negativo Bateria Logan 2020 21 1.0 3Cil Cod. 240809874r | Médio | R$56.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4qFKPX0Edh) |
-| 158 | Fechadura Porta Traseira Esquerda Palio Sapão Fire 2011 2012 | Médio | R$90.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2qUG1r7qhN) |
-| 159 | Botão Duplo Vidro Eletrico Diant. Esquerdo Logan 2020 21 San | Médio | R$90.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3LQWcm5wgW) |
-| 160 | Quadro decorativo Mente corpo alma impressão positiva aura energia cartaz na moda gradiente espiritual pintura (3 peças) | Baixo | R$36.00 | 55% | 4.8⭐ | 26 | [link](https://s.shopee.com.br/4AzZLkc5F4) |
-| 161 | Aprenda E Faca Pintura | Baixo | R$49.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4fvpwfaBEF) |
-| 162 | 10 kit pintura desenho colorir | Baixo | R$25.99 | 53% | 4.5⭐ | 0 | [link](https://s.shopee.com.br/1A4eeNF3C) |
-| 163 | Suporte 3 Relógios Manometros 52mm Universal Pintura Eletrostatica texturizada | Baixo | R$29.37 | 42% | 4.9⭐ | 6 | [link](https://s.shopee.com.br/40gDQ080w6) |
-| 164 | Quadro Abstrato Para Sala Trio De Quadros Decorativos Com Moldura Quadro Moderno Arte Estilo Gesso | Alto | R$229.52 | 42% | 4.6⭐ | 14 | [link](https://s.shopee.com.br/4AzdcJ7Nb9) |
-| 165 | Quadro Folhagem Com Moldura Quadro Natureza Para Sala Quarto Escritório Quadro Paisagem Floral Duo | Alto | R$159.92 | 41% | 4.9⭐ | 31 | [link](https://s.shopee.com.br/50Ykbq4CuK) |
-| 166 | Quadro Vintage Com Moldura E Vidro Quadro Decorativo Sala Grande Quadro Natureza Folhas De Outono | Médio | R$118.42 | 40% | 4.9⭐ | 19 | [link](https://s.shopee.com.br/4fvuDE5TaI) |
-| 167 | Quadro De Leao Para Sala Kit 2 Quadros Decorativos Com Moldura Quadro Para Quarto Casal De Leões | Alto | R$159.92 | 40% | 4.9⭐ | 3 | [link](https://s.shopee.com.br/4qFKPX4qFL) |
-| 168 | Quadro Decorativo Grande Com Moldura E Vidro Sala Quarto Casal Escritório Jesus Cristo E Ovelhas | Médio | R$119.92 | 39% | 5.0⭐ | 21 | [link](https://s.shopee.com.br/30ngEABoy0) |
-| 169 | Quadro Folhagem Com Moldura Quadro de Sala Decorativo Quadro Pra Quarto De Casal Natureza Outono | Médio | R$119.92 | 38% | 4.9⭐ | 19 | [link](https://s.shopee.com.br/2gAppYD5dy) |
-| 170 | Quadro Folhagem Com Moldura Trio De Quadros Decorativos Para Sala Quadro Mosaico Para Cozinha Kit | Alto | R$229.52 | 38% | 4.8⭐ | 3 | [link](https://s.shopee.com.br/2qUG1rCSJ1) |
-| 171 | Quadros Decorativos Sala Quarto Escritório Com Moldura Kit Abstrato Pintura Tons Terra Verde Nude | Alto | R$159.92 | 38% | 4.8⭐ | 4 | [link](https://s.shopee.com.br/3g3N1O9HcC) |
-| 172 | Quadro Folhagem Quadro Com Moldura E Vidro Quadro Decorativo Sala Quarto Pintura Outono Abstrato | Médio | R$119.92 | 38% | 5.0⭐ | 1 | [link](https://s.shopee.com.br/3qMnDh8eHF) |
-| 173 | Quadro De Jesus Para Sala Quadro Versículo Bíblico Quadro Com Moldura E Vidro O Senhor É Meu Pastor | Médio | R$118.42 | 37% | 4.9⭐ | 13 | [link](https://s.shopee.com.br/70JozVwaqu) |
-| 174 | Quadros Decorativos Com Moldura Filete Sala Quarto Casal Duo Pintura Abstrata Flores Em Aquarela | Alto | R$155.92 | 37% | 4.9⭐ | 40 | [link](https://s.shopee.com.br/7AdFBovxVx) |
-| 175 | Quadros Decorativos Com Moldura Filete Sala Quarto Casal Duo Arte Pintura Floral Os Galhos De Outono | Alto | R$155.92 | 36% | 4.8⭐ | 23 | [link](https://s.shopee.com.br/6q0OnCxEBv) |
-| 176 | Quadros Decorativos Com Moldura Filete Sala Quarto Trio Arte Natureza Pintura Entardecer no Litoral | Alto | R$229.52 | 36% | 4.9⭐ | 9 | [link](https://s.shopee.com.br/7fZVmju3V6) |
-| 177 | Suporte Manometro Duplo 52mm Pintura Eletrostatica de Alta Resistencia | Baixo | R$24.35 | 35% | 4.8⭐ | 5 | [link](https://s.shopee.com.br/7psvz2tQA9) |
-| 178 | Bolsa De Óculos De Sol De Couro Squeeze Retro Pintura A Óleo Padrão PU Com Fechamento Automático Organizador De Capa Pro | Baixo | R$10.98 | 35% | 5.0⭐ | 17 | [link](https://s.shopee.com.br/7KwfO7vKB4) |
-| 179 | Quadro Abstrato Quadro Decorativo Sala Grande Quadro Com Moldura E Vidro Pintura Corporal Ouro Trio | Alto | R$229.52 | 35% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/7VG5aQugq7) |
-| 180 | Catharine Hill Paint Stick (Base em Bastão Cremosa de Alta Resistência) | Médio | R$85.00 | 35% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5foRP41fYm) |
-| 181 | MANTA IMPERMEABILIZANTE EMBORRACHADA 3,6KG ALTA RESISTÊNCIA ÁGUA PISCINA E RESERVATÓRIO TANQUE | Médio | R$131.00 | 34% | 4.9⭐ | 8 | [link](https://s.shopee.com.br/5q7rbN12Dp) |
-| 182 | Quadro Decorativo GRANDE Com Moldura Filete Vidro Sala Escritório Abstrato Pintura Desenho Feminino | Médio | R$119.92 | 34% | 4.9⭐ | 49 | [link](https://s.shopee.com.br/5LBb0S2wEk) |
-| 183 | Quadros Decorativos Com Moldura Filete Quarto Duo Pintura Abstrata Expressionista Pinceladas Azul | Alto | R$155.92 | 34% | 4.9⭐ | 24 | [link](https://s.shopee.com.br/5VV1Cl2Itn) |
-| 184 | Quadro De Flores Abstrato Para Sala Quadro Minimalista Com Moldura Quadro Natureza Estilo Aquarela | Médio | R$119.92 | 34% | 5.0⭐ | 6 | [link](https://s.shopee.com.br/6L48CHz8Cy) |
-| 185 | Quadro Decorativo Com Moldura Filete Sala Quarto Pintura Abstrata Camadas De Tinta Laranja Com Cinza | Médio | R$119.92 | 34% | 4.8⭐ | 5 | [link](https://s.shopee.com.br/6VNYOayUs1) |
-| 186 | Quadro decorativo Mente corpo alma positiva aura energia na moda gradiente espiritual pintura da arte da parede | Baixo | R$30.00 | 33% | 4.7⭐ | 11 | [link](https://s.shopee.com.br/60RHng0Osw) |
-| 187 | Liquido Limpeza Ultra-som De Bicos Injetores Kxtron Stark 1l | Médio | R$53.90 | 71% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/40gDQ0CLR5) |
-| 188 | Difusor De Ar Condicionado Esquerdo Chery Celer 2012 a 2014  | Médio | R$71.20 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5AsAo97u4K) |
-| 189 | Difusor Saida Ar Lateral Dir.  Nissan Kicks 2022 23 24  | Médio | R$71.20 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/30ngEAG9Sz) |
-| 190 | Difusor Saida Ar Lateral Direito Kicks 2022 23 24   | Médio | R$68.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2qUG1rGmny) |
-| 191 | Difusor Saída De Ar Lateral Direito Fiat Argo 2018-20 | Médio | R$71.20 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3qMnDhCymC) |
-| 192 | Difusor Ar Lateral Direito Fiat Stilo 2007 08 | Médio | R$71.20 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3g3N1ODc7B) |
-| 193 | Difusor Ar Lateral Esquerdo Idea 2006- 2010 | Médio | R$53.40 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3Vjwp5EFSA) |
-| 194 | Difusor Ar Condicionado Chery Qq 2011 A 2015  | Médio | R$53.40 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1gIIdiLEAr) |
-| 195 | Difusor Saída De Ar Bege Lateral Direito Gm Spin | Médio | R$61.60 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1VysRPLrVq) |
-| 196 | Difusor Saida de Ar Lateral Direito Hb20 2020 2021 | Médio | R$99.18 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/qjBeBOOru) |
-| 197 | Difusor Saida De Ar Lateral Esquerdo Ecosport 2013 2014 2015 | Médio | R$79.17 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/gPlRsP2Ct) |
-| 198 | Redutor pH de Piscina Ph Reduz 1Litro Tratamento Eficaz Econômico Vetex | Baixo | R$25.90 | 48% | 5.0⭐ | 1 | [link](https://s.shopee.com.br/9zxQZ1pVGp) |
-| 199 | Clarificante Floculante Para Piscina Água Cristalina Limpeza Floc Tex 1 Litro Vetex | Baixo | R$17.90 | 48% | 4.6⭐ | 1 | [link](https://s.shopee.com.br/8V8cmGvDJY) |
-| 200 | Elevador De PH Para Piscina 2 Kg Controlador Limpeza Vetex | Baixo | R$27.90 | 48% | 5.0⭐ | 1 | [link](https://s.shopee.com.br/8KpCZxvqeX) |
-| 201 | Prot Water Off 200ml Protelim Cristalizador Vidros Parabrisa | Baixo | R$46.75 | 47% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/80CMBLx7KV) |
-| 202 | DOCTOR SHINE REVITALIZADOR PLASTICOS 500 ML CADILLAC | Médio | R$52.78 | 47% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8fS2yZuZyh) |
-| 203 | Gerenciamento De Dispositivos Móveis E Serviços De Telecom | Médio | R$59.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5q7nKoaHC1) |
-| 204 | Mediações, Tecnologia e Espaço Público: Panorama Crítico da Arte em Midias Móveis | Médio | R$55.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5LBWjtcBCw) |
-| 205 | KIT Cabeceira Estofada Nuvem 60x20cm Para Cama Queen Size(8 PEÇAS) | Baixo | R$49.90 | 46% | 3.8⭐ | 7 | [link](https://s.shopee.com.br/9V17Nllhpi) |
-| 206 | Cadeira de Escritorio Presidente Reclinavel Home Office Até 150kg Giratória Apoio Braço Encosto Cabeça Suporte Coluna | Alto | R$399.92 | 44% | 4.6⭐ | 7 | [link](https://s.shopee.com.br/7AdFBp4go0) |
-| 207 | Madeira Pinus Natural 15mm Tábua Emparelhada Para Artesanato Prateleira Nicho DIY | Baixo | R$28.70 | 43% | 4.9⭐ | 2 | [link](https://s.shopee.com.br/70JozW5K8z) |
-| 208 | Capa Maquina De Lavar Eletrolux Brastemp 12kg 13kg 15kg 16kg Protetora Impermeável Lavanderia | Baixo | R$38.70 | 43% | 4.9⭐ | 2 | [link](https://s.shopee.com.br/6q0OnD5xTy) |
-| 209 | Capa Maquina De Lavar Brastemp Consul 10kg 11kg 12kg Protetora Impermeável Lavanderia | Baixo | R$38.70 | 43% | 4.9⭐ | 2 | [link](https://s.shopee.com.br/6VNYOb7E9w) |
-| 210 | Capa Máquina Lavar Eletrolux Brastemp 6 Kg 7kg 8kg 9kg 10kg Protetora Impermeável Lavanderia | Baixo | R$38.70 | 43% | 4.9⭐ | 1 | [link](https://s.shopee.com.br/6Akhzz8Upu) |
-| 211 | Capa Máquina Lavar Electrolux Brastemp 6kg 7kg 8kg 9kg Zíper Protetora Impermeável Lavanderia | Baixo | R$42.30 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5q7rbN9lVs) |
-| 212 | Sapateira Dobrável de Pinus 2 Andares Multiuso Organizador de Calçados e Floreira Reforçada Firme Elegante Antiga | Médio | R$68.90 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/40gDQ0GkEg) |
-| 213 | Kit com 4 capas para cadeira em malha lisa hidrorepelente – diversas cores disponíveis | Alto | R$154.99 | 39% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/3B76QTJuvd) |
-| 214 | Cama Montessoriana Madeira Maciça Reforçada + Colchão Casal | Alto | R$1947.53 | 39% | 5.0⭐ | 1 | [link](https://s.shopee.com.br/2gAppYLowY) |
-| 215 | JOGO DE CAMA GORGURINHO DO 1 AO 5 | Médio | R$106.20 | 39% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/2qUG1rLBbb) |
-| 216 | Organizador de fones de ouvido e fios pequeno vermelho | Baixo | R$15.49 | 53% | 4.3⭐ | 0 | [link](https://s.shopee.com.br/6L48CHLX9r) |
-| 217 | Quadro Decorativo Placas Zayn Malik Quadro Discografia Album em MDF 30x20cm Full HD | Baixo | R$16.99 | 60% | 4.3⭐ | 6 | [link](https://s.shopee.com.br/6fgyatbepW) |
-| 218 | Cabo Terra Bateria Negativo Csensor Ford Ka 2018 | Médio | R$133.50 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/40gDPzQ5MW) |
-| 219 | Módulo Som  Rádio Original Linha Renault | Médio | R$102.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4VcU0uOBLf) |
-| 220 | Negociemos: Ferramentas Eficazes Para Soluções Reais | Baixo | R$32.50 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/Lmv3Fe2ny) |
-| 221 | Ferramentas Para o Líder de Jovens: Discipulado Eficaz (Volume 2) | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/W6LFYdPT1) |
-| 222 | Ferramentas Para o Líder de Jovens: Grupos Pequenos (Volume 3) | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/gPlRrcm84) |
-| 223 | Ferramentas visuais | Médio | R$109.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/112bqTbVSA) |
-| 224 | Engate Rapido Para Gas 1/4 Completo Forti Ar | Baixo | R$29.90 | 38% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8AVmNeADui) |
-| 225 | Torneira De Banheiro Para Lavatório Mesa 1/4 Volta Bancada Valeplast | Baixo | R$26.99 | 38% | 3.0⭐ | 4 | [link](https://s.shopee.com.br/8plTAs7gYu) |
-| 226 | Dinossauro Stegosaurus Esqueleto Parafusos Metal 29 Cm Cor Chumbo | Médio | R$114.00 | 37% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8fS2yZ8Jtt) |
-| 227 | Positivismo e Construtivismo: Nas Teorias do Conhecimento, da Sociedade e das Organizações | Baixo | R$36.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/W6LFYhjz9) |
-| 228 | Vida Corporativa - O Verdadeiro Semblante das Organizacões | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/qjBeAgTJF) |
-| 229 | Do Chão de Fábrica À Presidência: Textos de Apoio Para Pessoas e Organizações | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3B76QSXaZv) |
-| 230 | Organizações do conhecimento | Alto | R$216.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3LQWclWxEy) |
-| 231 | Estojo Case Óculos Bobino Glasses Case Vermelho com Gancho Organizador Bolsa | Baixo | R$24.90 | 53% | 3.0⭐ | 0 | [link](https://s.shopee.com.br/5LBb0RPLBZ) |
-| 232 | Estojo Case Óculos Bobino Glasses Case Branco com Gancho Organizador Bolsa | Baixo | R$24.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5q7rbMNRAg) |
-| 233 | Organizador Chaves Bobino Key Clip Acessório Prático para Bolsa Mochila | Baixo | R$18.49 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/60RHnfMnpl) |
-| 234 | Clip para Chaves Bobino Original - Gancho Organizador para Bolsa e Mochila | Baixo | R$18.49 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6VNYOaKtos) |
-| 235 | Prateleira Bobino Screen Shelf Vermelha para Monitor TV Suporte Organizador Ajustável Smart TV | Baixo | R$29.99 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9V19y69TjU) |
-| 236 | Espirais do conhecimento - Ativando indivíduos, grupos e organizações - Paulo Yazigi Sabbag | Baixo | R$15.90 | 48% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9fKaAP8qOZ) |
-| 237 | Farol Milha Lado Direito Ecosport 2013 14 2015 | Médio | R$106.80 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8fS1jDeVNf) |
-| 238 | Farol Milha Lado Direito Gm Prisma 2014 Spin  | Alto | R$164.65 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5foRP3Ws1Q) |
-| 239 | Luz de Freio Break Light Sandero 2017 18 | Médio | R$133.50 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5LBb0RY8hO) |
-| 240 | Farol Auxiliar Milha Creta 2016 17  Original  Lado Esquerdo | Alto | R$222.50 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6VNYOaThKf) |
-| 241 | Moldura Direita Do Farol Milha Gol Voyage G7 2017 2018 | Alto | R$178.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/60RHnfVbLa) |
-| 242 | Lanterna Esquerda Tampa Traseira Ix35 2011- 2015 | Alto | R$222.50 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6AkhzyUy0d) |
-| 243 | Tampa Lanterna Tras Esquerda Grand Siena 1.6 2012 a 2016  | Baixo | R$28.90 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7AdFBoR9yr) |
-| 244 | Lanterna Direita Tampa Traseira Renault Fluence 2011 - 2016 | Alto | R$169.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6q0OnCSQep) |
-| 245 | Break Light Luz de Freio Logan 1.0 3cc 2020 21  | Alto | R$153.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7fZVmjPFy0) |
-| 246 | Farol Auxiliar De Neblina Lado Esquerdo Hyundai Hb20  | Médio | R$121.11 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7VG5aQPtJ1) |
-| 247 | Farol Auxiliar Milha Hyundai I30 i30 Cw Lado Esquerdo  | Alto | R$199.76 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/80CMBLNzIA) |
-| 248 | Farol Milha Lado Esq.  Tracker 2013- 2016 | Alto | R$222.50 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8AVmNeNLxD) |
-| 249 | Friso Grade Dianteira Honda Civic 2014 Cod. 71122-tr0-a0 9d9 | Médio | R$101.46 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9AOJZUJXvR) |
-| 250 | Travessa Inferior Frontal Chery Celer 2013-15 Tiggo 2 a13-28 | Alto | R$252.76 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8fS2yZLRwM) |
-| 251 | Farol Milha Ld Palio,siena,grand Siena 2013 A 2018 Original  | Médio | R$134.49 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9V19y6IHFb) |
-| 252 | Chave Seta Farol Chery Celer 2012 a 2014 Cód. a13-3774110 40 | Alto | R$160.20 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/AKaGxdF6Ym) |
-| 253 | Painel Instrumento Renault Sandero Logan 2007 2008 Á 2013 Co | Alto | R$222.50 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9zxQZ1GNEk) |
-| 254 | Painel Instrumentos Velocimetro Ford Ka 2018 19 H3b510849ad | Alto | R$178.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/AAGqlKFjtn) |
-| 255 | Lanterna Traseira Direita Fiat Palio Sapão 2007 A 2012 | Alto | R$251.87 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/BTUqwroBv) |
-| 256 | Luz Freio Break Light da Tampa Traseira Renault Kwid | Médio | R$106.80 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/112bqTodV6) |
-| 257 | Lanterna Canto Traseira Direita Saveiro G8 2017 a 22 Origina | Alto | R$356.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1gIIdhm69I) |
-| 258 | Lanterna Luz de Placa Com Soquete Onix Prisma 2013 a 2019 | Baixo | R$35.60 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2BEZEckC8V) |
-| 259 | Lanterna Tampa Traseira Lado Direito Corolla 2012 A 2014 Art | Alto | R$252.76 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/30ngE9h1Rg) |
-| 260 | Suporte Bomba Hidráulica Fiat Punto 1.4 | Alto | R$264.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4qFJ4U3dCx) |
-| 261 | Cano Mangueira Hidráulica Palio Sapão Fire 2009-2016 1.0  | Médio | R$143.65 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/70JneSvNo1) |
-| 262 | Mini Apliques Stitch 3,5cm | Baixo | R$19.90 | 58% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/60RHnfeCBa) |
-| 263 | Que as Mulheres Conversam no Banheiro, O | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8AVmNef1Lk) |
-| 264 | Cadáver na Banheira, Um | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/80CMBLfegj) |
-| 265 | Kits para Banheiro Premium Minimalista- Lixeira, Dispenser, Porta-escova, Copo, + Escova/Saboneteira | Médio | R$121.98 | 49% | 0.0⭐ | 1 | [link](https://s.shopee.com.br/8fS2yZd7Kv) |
-| 266 | Kit Acessório Banheiro Preto 5 Peças + Registro Pressão 1416 3/4 C-40 Preto | Médio | R$143.78 | 40% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6VNYOalMjm) |
-| 267 | Appel Home Toalha Lady para Rosto – Fio Penteado, Alta Qualidade e Conforto | Baixo | R$37.99 | 39% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7KwfO7iC33) |
-| 268 | Um jardim para Teresa | Baixo | R$34.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5VUzriIYTY) |
-| 269 | Nos Jardins da Casa Branca | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3VjvU2QAX1) |
-| 270 | MUTACOES - JARDIM DA VIDA | Baixo | R$39.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5As9T6Jp9R) |
-| 271 | Ruinas Da Memoria - Uma Arqueologia Da Narrativa - O Jardim Sem Limite | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4LJ2TZMzqC) |
-| 272 | Orando em Família - Cuidamos do jardim de Deus? Fé e ecologia | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4qFJ4UL5pP) |
-| 273 | Jardim do Éden | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4VcSfsMMVF) |
-| 274 | JARDIM PERDIDO, O | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/40gC4xOGWA) |
-| 275 | Como Revitalizar o Jardim De Sua Vida | Baixo | R$20.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4AzcHGNdBD) |
-| 276 | Natureza Viva: Lindo Jardim | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5q7nKoN4s4) |
-| 277 | Um passeio no jardim da vingança | Baixo | R$34.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/60RD1X3Y3c) |
-| 278 | Biblioteca de Literatura(30):Jardim de adeus ao câncer,O | Baixo | R$19.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2qUEgoShsp) |
-| 279 | Jardim Encantado – Patrícia Vasconcellos | Baixo | R$13.00 | 48% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6AkgewG17k) |
-| 280 | O jardim de iácabus | Baixo | R$20.00 | 48% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/60RGSdGeSj) |
-| 281 | 4 concha do mar caramujo conchas aquário natural moana pregoai peguari | Baixo | R$25.30 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2qUEkQv0yV) |
-| 282 | Pacotão de 1,2 kilos  - Conchas do mar naturais PEQUENAS - substrato para aquários - conchas do mar - Buso da praia - Bu | Médio | R$100.20 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6VNX7Ah3XM) |
-| 283 | Máquina Vidro Diant Esquerda Elétrica Peugeot 208 14, 15, 16 | Médio | R$115.60 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2BEXeTvlZq) |
-| 284 | Maquina Vidro Elétrica Diant. Esquerda Onix Prisma 2013-19  | Médio | R$134.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9fKaAPhpp5) |
-| 285 | Maquina Vidro Diant. Direita Eletrica Kwid 2018, 19, 20   | Alto | R$168.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/AAGqlKfvoC) |
-| 286 | Chicote Eletrico Caixa Fusivel Positivo Cruze Ltz 1.4 Turbo  | Alto | R$282.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8KpCZxmuWx) |
-| 287 | Caixa Fusivel Chevrolet Cruze 1.4 Ltz 2017-21 42579370  | Alto | R$577.15 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8fS2yZldr3) |
-| 288 | Cabo Polo Negativo Bateria Cruze Ltz 1.4 Turbo 2019 20 39032 | Alto | R$226.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9AOJZUjjqA) |
-| 289 | Máquina Vidro Tras. Direita Elétrica Cruze Ltz 2020-2023  | Médio | R$134.64 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/904tNBkNB9) |
-| 290 | Bomba Elétrica Lavador do Para-brisa  New Fiesta 2014-17 Nac | Médio | R$100.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6fgyattFuj) |
-| 291 | Retrovisor Direito Eletrico Ext. Citroen C3 2009-2012  | Alto | R$271.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7AdFBorLtq) |
-| 292 | Botão Vidro Elétrico Traseiro Citroen C3 2009-12  | Baixo | R$28.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/70JozVrzEp) |
-| 293 | Fechadura Eletrica Porta Diant. Direita Corolla Xei 2009 a 2 | Alto | R$239.70 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7KwfO7qiYv) |
-| 294 | Fechadura Eletrica Porta Diant. Esquerda Corolla Xei 2009 a  | Alto | R$281.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7psvz2ooY2) |
-| 295 | Fechadura Eletrica Porta Tras. Direita Corolla Xei 2009 a 20 | Alto | R$192.95 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7fZVmjpRt1) |
-| 296 | Maquina Vidro Eletrica Diant. Esquerda Discovery 3 2005-2009 | Alto | R$337.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5LBb0RyKcb) |
-| 297 | Maquina Vidro Eletrica Diant. Direita Discovery 3 2005-2009  | Alto | R$337.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5q7rbMwQbi) |
-| 298 | Maquina Vidro Eletrica Tras. Esquerda Discovery 3 2005-2009  | Alto | R$224.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5foRP3x3wh) |
-| 299 | Maquina Vidro Direita Eletrica Montana 2008 09 2010 Corsa  | Médio | R$121.50 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6Akhzyv9vo) |
-| 300 | Maquina Vidro Diant. Esquerda Eletrica Montana 2008 09 2010  | Médio | R$121.50 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/60RHnfvnGn) |
-| 301 | Fechadura Porta Diant. Direita  Fluence 2011 12 13 14 15   | Alto | R$203.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6L48CHuWat) |
-| 302 | Quadro Maquina Vidro Tras. Esquerda Focus 2009-2013 | Alto | R$226.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4AzdcJ2lzV) |
-| 303 | Maquina Vidro Eletrica Tras. Esquerda Tiida 2011 12 | Médio | R$122.40 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/50YkbpzbIk) |
-| 304 | Maquina Vidro Eletrica Tras. Direita Tiida 2011 12  | Médio | R$122.40 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5AsAo8yxxn) |
-| 305 | Cabo Polo Positivo De Bateria Palio Sapão Fire 2011 2012 1.0 | Baixo | R$30.60 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2gAppY8U2K) |
-| 306 | Fechadura Porta Dianteira Direita Ford Focus 2014-17  | Alto | R$395.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/30ngEA7DMQ) |
-| 307 | Fechadura Porta Traseira Esquerda Ford Focus 2014-17  | Médio | R$135.15 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3B76QT6a1T) |
-| 308 | Maquina Vidro Dianteira Direita Elétrica Cruze 1.4 Ltz 2019  | Alto | R$204.30 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3Vjwp55JLZ) |
-| 309 | Maquina Vidro Traseira Esquerda Eletrica Cruze 1.4 Ltz 2019  | Médio | R$122.40 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3g3N1O4g0c) |
-| 310 | Maquina Vidro Traseira Direita Elétrica Cruze 1.4 Ltz 2019 2 | Médio | R$122.40 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3qMnDh42ff) |
-| 311 | Fechadura Traseira Direita Polo Msi 2018 2019   | Alto | R$226.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1LfSF6DYkC) |
-| 312 | Fechadura Trava Elétrica Tampa Traseira Cruze Ltz 2019 20 Co | Alto | R$203.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1VysRPCvPF) |
-| 313 | Novidades Para o Lar - Pintura Porcelanizada | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/40g99Rcia3) |
-| 314 | O significado da pintura abstrata | Alto | R$159.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5LBZfPS7tK) |
-| 315 | Brincando Com Arte - Pintura | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5VUzriRUYN) |
-| 316 | LUZES SOBRE PINTURA | Baixo | R$37.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/Lmqmhqg1R) |
-| 317 | Pintura e Imagem: Representações do Mundo Antigo | Baixo | R$28.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4qFG8yZXtG) |
-| 318 | Guia Curso Básico de Pintura em Tela Rostos 01 | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/W6LFZLL2H) |
-| 319 | camiseta gola redonda feminina verão branca estampa pintura abstrata casual 100% algodão | Baixo | R$29.95 | 48% | 3.0⭐ | 0 | [link](https://s.shopee.com.br/BTUqxMbiF) |
-| 320 | Tela Para Pintura 24x30cm Algodão com Chassi de Madeira Ideal para Tinta Óleo Acrílica e Guache Profissional Artistas | Baixo | R$17.90 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1BM22nIngT) |
-| 321 | Tela Para Pintura 20x20cm Algodão com Chassi de Madeira Ideal para Tinta Óleo Acrílica e Guache Profissional Artistas | Baixo | R$15.99 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/gPlRsKhhO) |
-| 322 | Difusor Saida Ar Central Uno Vivace Fiorino | Baixo | R$34.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/50Ykbq8XPJ) |
-| 323 | Moldura Com Difusor Ar Esquerdo Honda Fit 2017 2018 2019 | Médio | R$132.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4qFKPX9AkI) |
-| 324 | Moldura Acabamento Do Painel Com Difusor Direito Honda Fit | Alto | R$220.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4fvuDE9o5H) |
-| 325 | Difusor Central Painel Saida Ar Kicks 2022 23 24   | Alto | R$180.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3B76QTFW80) |
-| 326 | Difusor Lateral Saida Ar Direito Clio 2013-15 | Baixo | R$35.60 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2gAppYHQ8x) |
-| 327 | Moldura C Difusor Ar Central Painel Saveiro G7 G8  | Alto | R$264.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3LQWcmEsn9) |
-| 328 | Difusor De Ar Lateral Gol Saveiro G8 Lado Direito  | Médio | R$134.49 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1qbiq1Kaps) |
-| 329 | Difusor Central Lado Esquerdo Cruze 2012-2016 | Médio | R$132.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1LfSF6MUqp) |
-| 330 | Moldura Difusor Lado Esquerdo Sandero Stepway 2010-14 33288a | Baixo | R$35.20 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2VrPdFI3U4) |
-| 331 | Difusor Saida De Ar Lateral Esquerdo Saveiro 1.6 8v G7 G8  | Médio | R$132.98 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2LXzQwIgp3) |
-| 332 | Difusor Saida Ar Lateral Esquerdo Cruze 2017 - 2023 39098649 | Alto | R$176.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2BEZEdJKA2) |
-| 333 | Difusor Saida Ar Lateral Direito Cruze 2017 - 2023 39098651  | Médio | R$134.49 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/20v92KJxV1) |
-| 334 | Moldura Difusor Saida Ar Central C Alerta Hb20 2020 2021 22 | Alto | R$340.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/W6LFZPfXk) |
-| 335 | Moldura Difusor Central Alerta Gol Saveiro Voyage G7 G8 | Alto | R$454.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/Lmv3GQIsj) |
-| 336 | Difusor Saida de Ar Lateral Lado Direito Citroen C4 Lounge | Alto | R$170.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/BTUqxQwDi) |
-| 337 | Difusor Saida Ar Lateral Esquerdo Mitsubishi Asx 2012 13 | Alto | R$170.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1A4eeRZYh) |
-| 338 | Difusor Saída De Ar Lateral Esquerdo Cruze 2017 2018 19 | Alto | R$284.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1BM22nN8Bw) |
-| 339 | Difusor De Ar Central Direito Gm Cruze 1.4T 2017-19 | Alto | R$227.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/112bqUNlWv) |
-| 340 | Acabamento Lateral Porta Lata Difusor Ar  Esquerdo Honda Fit | Médio | R$148.77 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9pe0Miq8bg) |
-| 341 | Guardiões da Limpeza da Terra | Baixo | R$29.97 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9Khjlns2cd) |
-| 342 | Kit Liquido Limpeza Deterg + Teste Bico Injetor Kxtron 4 Uni | Alto | R$228.00 | 48% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/AAGqlKorvq) |
-| 343 | Elevador De Alcalinidade Para Piscina 2 Kg Alcalino Controlador Limpeza Vetex | Baixo | R$34.90 | 48% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8AVmNewTzW) |
-| 344 | Glass Compound Glaco Big Soft99 Descontaminante de Vidro Tira Gordura Cristalizador Vidros Repelente a Agua | Alto | R$175.80 | 47% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9AOJZUsfxk) |
-| 345 | D ret 500ml Dub Boyz Limpador Pneu Borracha Tira Barro Pretinho Antigo Borrifador Escova Cerdas Duras | Baixo | R$39.22 | 47% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8plTAstwdi) |
-| 346 | Protect In 500ml Protelim Condicionador Plastico Interno Painel Console Toque Seco | Baixo | R$39.72 | 47% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/70JozW0vMP) |
-| 347 | Limpa Telas Start 120ml Multiuso com Pano Microfibras | Baixo | R$25.50 | 46% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6q0OnD1YhO) |
-| 348 | Kit Liquido Teste E Limpeza De Bico Injetor - Kxtron Nextron | Alto | R$199.90 | 45% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/6fgyau2C2N) |
-| 349 | Madeira Pinus Natural 15mm Tábua Emparelhada Para Artesanato Prateleira Nicho DIY | Baixo | R$28.79 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/50YkbqCwCm) |
-| 350 | Tábua Pinus 15mm Madeira Natural Artesanato Nicho DIY | Baixo | R$28.70 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5AsAo9CIrp) |
-| 351 | Tábua Pinus Natural 15mm – Ideal para DIY, Artesanato e Nichos Decorativos | Baixo | R$32.90 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4fvuDEECsk) |
-| 352 | Tábua Pinus 15mm Madeira Natural DIY, Artesanato e Nicho – Vários Tamanhos Disponíveis | Baixo | R$28.70 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4LJ3ocFTYi) |
-| 353 | Kit Banco e Sapateira Dobrável de Pinus Banco + Sapateira 2 Andares Multiuso Decorativa para Sala, Varanda e Flores | Alto | R$179.90 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4AzdcJG6tj) |
-| 354 | Kit Porta-Copos Folha com Suporte Elegante, Organizado e Perfeito para Decorar seus Móveis, GANHE CHAVEIRO PERSONALIZADO | Baixo | R$39.00 | 43% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3qMnDhHNZh) |
-| 355 | Conjunto 4 Mesas de Madeira p/ Sala, Varanda e Lazer | Alto | R$704.99 | 39% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/3Vjwp5IeFf) |
-| 356 | 6 Capas Hidrorepelentes Para Cadeira em Malha Lisa Colorida – Kit Prático e Resistente | Alto | R$257.14 | 39% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/30ngEAKYGa) |
+| 27 | Chuveiro Ducha Chuveirão Branco Cromada Preto Externo Interno Quintal Banho Banheiro | Baixo | R$18.50 | 38% | 4.7⭐ | 84 | [link](https://s.shopee.com.br/40gDQZ2T7i) |
+| 28 | Quadro Natureza Quadro Com Moldura E Vidro Quadro Decorativo Sala Quarto Casal Quadro Folhagem Trio | Alto | R$223.78 | 44% | 4.9⭐ | 64 | [link](https://s.shopee.com.br/112bqUJR1Q) |
+| 29 | Quadro Decorativo Com Moldura Filete Sala Arte Pintura Abstrata Floral Costela De Adão Tons Terrosos | Médio | R$116.92 | 38% | 4.9⭐ | 104 | [link](https://s.shopee.com.br/3LQWcmAYIA) |
+| 30 | Quadros Decorativos Moldura Filete Sala Quarto Escritório Duo Abstrato Pintura Linhas Em Marrom Bege | Alto | R$155.92 | 38% | 4.8⭐ | 96 | [link](https://s.shopee.com.br/3Vjwp59uxD) |
+| 31 | Quadros Decorativos Com Moldura Filete Sala Quarto Casal Duo Floral Pintura Abstrata Folhas Em Bege | Alto | R$157.92 | 36% | 4.9⭐ | 91 | [link](https://s.shopee.com.br/6fgyatxrWs) |
+| 32 | Lixadeira Manual De Pvc Com Lixa 8x22cm Max | Baixo | R$39.95 | 83% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/8AVknVHX0y) |
+| 33 | Sifão Sanfonado Preto Ajustável Extensivo Flexível Pia Banheiro Cozinha Black - Astra | Baixo | R$17.01 | 83% | 5.0⭐ | 1 | [link](https://s.shopee.com.br/AKaFNU9HcN) |
+| 34 | Cabo Positivo Bateria Peugeot 208 2015 -17 | Médio | R$89.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4fvuDDNY0i) |
+| 35 | Kit Manual Do Proprietário Gol G6 2013 2014 2015 | Médio | R$80.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4AzdcIPS1Z) |
+| 36 | Chicote Cabo Positivo Da Bateria Fiat Palio Fire 1.0 2010 | Médio | R$69.60 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/4qFKPWMufl) |
+| 37 | 4 Fs Do Varejo : A Ferramenta Que Faltava Na Gerência Das Lojas | Baixo | R$49.90 | 56% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5AsAo8Ldzr) |
+| 38 | Tecnologias e Ferramentas de Gestão | Médio | R$77.00 | 56% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/50YkbpMHKo) |
+| 39 | Veda + Tec 4 em 1 Bi Componente Para Laje; Parede; caixa d'agua; piscina 20kg | Alto | R$178.60 | 55% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/1A4edfJTs) |
+| 40 | Mão na massa - minha caixa de ferramentas | Médio | R$59.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/qjBeAc8n7) |
+| 41 | Educando com as ferramentas da simplicidade | Baixo | R$40.30 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/BTUqweg8v) |
+| 42 | APRENDA A APRENDER - COL. FERRAMENTAS DO DESEMPENHO | Médio | R$51.01 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1BM22mas7D) |
+| 43 | Seis Ferramentas Para o Desenvolvimento de Um Texto | Médio | R$86.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1LfSF5aEmG) |
+| 44 | Veda Trinca; fissuras; rachaduras; calhas galvanizadas; microfissuras; Branco | Baixo | R$20.09 | 53% | 4.8⭐ | 19 | [link](https://s.shopee.com.br/1VysROZbRJ) |
+| 45 | Conjunto de chave de fenda para óculos de 10 peças sortimento de ferramentas ópticas Nova | Médio | R$64.88 | 45% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/1qbiq0YKlP) |
+| 46 | Sifão Universal Sanfonado Flexível Tubo Pia Cozinha Banheiro Lavatório Tanques Branco 71cm Valeplast | Baixo | R$14.99 | 43% | 4.9⭐ | 10 | [link](https://s.shopee.com.br/AKaGxdWlxP) |
+| 47 | Mangueira Mágica Extensível 30m ou15m com Gatilho 7 Jatos Engate Rápido Compacta Leve e Resistente | Baixo | R$32.90 | 38% | 4.8⭐ | 39 | [link](https://s.shopee.com.br/8V8cmG8xEo) |
+| 48 | Bucha 8mm Para Tijolo Bloco Parede Oca Com Parafuso 100 Pçs | Baixo | R$38.01 | 35% | 4.9⭐ | 9 | [link](https://s.shopee.com.br/904tNB73Dz) |
+| 49 | Bucha  para Tijolo Oco Baiano 120 Peças Buchas 6-8 Bloco Vazado Parafuso Combo Bucha Bloco Furado | Baixo | R$21.50 | 35% | 4.9⭐ | 11 | [link](https://s.shopee.com.br/9V19y659D6) |
+| 50 | Kit 100 Parafuso Phillips C/bucha 8mm | Baixo | R$29.52 | 35% | 4.8⭐ | 4 | [link](https://s.shopee.com.br/9Khjln5mY5) |
