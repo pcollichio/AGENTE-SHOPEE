@@ -335,3 +335,30 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   novo). Produto sem link salvo mostra "Sem link salvo" no lugar do
   botão. Testado com Playwright: copiar link bate certinho com o valor
   salvo, e o aviso aparece quando o campo está vazio.
+- **Bug reportado: "a esteira não está atualizando".** Causa raiz: a
+  `esteira.html` era um retrato HTML totalmente estático, regravado
+  *só* quando o workflow `leva-diaria.yml` roda (uma vez por dia, 9h)
+  — então um produto selecionado no painel, uma etapa mudada ou uma
+  venda registrada às 23h, por exemplo, só apareciam na página no dia
+  seguinte, mesmo `esteira.json` já tendo sido atualizado na hora (via
+  `api/selecionar.js`/`atualizar_esteira.js`/`excluir_esteira.js`).
+  Corrigido com uma função serverless nova, `api/esteira.py` (GET),
+  que reaproveita `calcular_status()` de `shopee_integration/esteira.py`
+  sem duplicar lógica e devolve o estado atual como JSON — os arquivos
+  (`esteira.json`, `financeiro/*.csv`) fazem parte do deploy da Vercel,
+  então já vêm atualizados a cada redeploy (que acontece sozinho a
+  cada commit, incluindo os que as próprias funções serverless fazem).
+  `esteira.html` agora busca esse endpoint ao abrir e re-renderiza a
+  tabela e os cards de resumo em JS (`renderizarEsteira()`,
+  `montarLinhaEsteira()` — porta fiel de `_linha()`/`_bloco_texto()`
+  pro lado do cliente, sem duplicar a lógica de *cálculo*, só a de
+  *desenho*), religando os mesmos listeners de seletor/copiar/excluir
+  nas linhas novas (`ativarAcoesLinha()`, chamada tanto no load quanto
+  depois do re-render). Se a busca falhar (ex: aberto como página
+  estática do GitHub Pages, sem `/api/*`), a página mantém o último
+  snapshot gerado pelo workflow e troca o texto de "Atualizado" por um
+  aviso, em vez de quebrar. Testado com Playwright: simulando uma
+  resposta de `/api/esteira` diferente da gravada no HTML, a página
+  troca os produtos exibidos, atualiza os cards e mantém os botões
+  funcionando nas linhas recém-renderizadas; simulando a ausência do
+  endpoint, mantém o snapshot estático e mostra o aviso.

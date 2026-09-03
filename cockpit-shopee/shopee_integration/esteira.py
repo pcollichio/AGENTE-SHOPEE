@@ -196,8 +196,12 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
 
     linhas = "".join(_linha(p) for p in esteira_calculada) or (
         '<tr><td colspan="11" class="vazio">Nenhum produto na esteira ainda. '
-        'Marque produtos no painel e clique em "Baixar roteiro e salvar na esteira".</td></tr>'
+        'Marque produtos no painel e clique em "Salvar seleção na esteira".</td></tr>'
     )
+
+    status_json = json.dumps(STATUS_ESTEIRA, ensure_ascii=False)
+    icone_json = json.dumps(STATUS_ICONE, ensure_ascii=False)
+    etapas_json = json.dumps(ETAPAS_CONTEUDO, ensure_ascii=False)
 
     return f"""<!doctype html>
 <html lang="pt-br">
@@ -340,7 +344,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
         <p class="eyebrow">Cockpit de Afiliação &middot; @papairesolve_br</p>
         <h1>Esteira</h1>
       </div>
-      <p class="atualizado">Atualizado {date.today().strftime('%d/%m/%Y')}</p>
+      <p class="atualizado" id="atualizado-em">Atualizado {date.today().strftime('%d/%m/%Y')} &mdash; verificando dados mais recentes&hellip;</p>
     </header>
 
     <p class="descricao-secao">Todo produto que você marca no painel e salva entra aqui, com o texto de narração e de legenda já prontos (clique em "Ver textos" na linha do produto). O status financeiro é calculado sozinho: vira <b>Impulsionado</b> quando você registra investimento nele em <code>importar.html</code>, e <b>Vendido</b> quando registra a comissão recebida. Um produto que ainda não foi publicado pode ser removido da esteira pelo botão "Excluir".</p>
@@ -359,7 +363,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
             <th>Investido</th><th>Recebido</th><th>ROI</th><th>Ações</th>
           </tr>
         </thead>
-        <tbody>{linhas}
+        <tbody id="corpo-esteira">{linhas}
         </tbody>
       </table>
     </div>
@@ -399,72 +403,175 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
   </div>
 
   <script>
-    document.querySelectorAll('.seletor-etapa').forEach(function (sel) {{
-      sel.addEventListener('change', function () {{
-        var produtoId = sel.getAttribute('data-produto-id');
-        var etapa = sel.value;
-        sel.className = 'seletor-etapa etapa-' + etapa;
-        sel.disabled = true;
-        fetch('/api/atualizar_esteira', {{
-          method: 'POST',
-          headers: {{ 'content-type': 'application/json' }},
-          body: JSON.stringify({{ produto_id: produtoId, etapa_conteudo: etapa }}),
-        }})
-          .then(function (resposta) {{ return resposta.json().then(function (d) {{ return {{ ok: resposta.ok, d: d }}; }}); }})
-          .then(function (r) {{
-            if (!r.ok) alert(r.d.erro || 'Não consegui salvar a etapa.');
-          }})
-          .catch(function () {{
-            alert('Não consegui falar com o servidor — essa função só funciona no cockpit publicado na Vercel.');
-          }})
-          .finally(function () {{ sel.disabled = false; }});
-      }});
-    }});
+    var STATUS_ESTEIRA_JS = {status_json};
+    var STATUS_ICONE_JS = {icone_json};
+    var ETAPAS_CONTEUDO_JS = {etapas_json};
 
-    document.querySelectorAll('.btn-copiar').forEach(function (botao) {{
-      botao.addEventListener('click', function () {{
-        var texto = botao.getAttribute('data-copiar') || '';
-        var textoOriginal = botao.textContent;
-        navigator.clipboard.writeText(texto).then(function () {{
-          botao.textContent = 'Copiado!';
-          setTimeout(function () {{ botao.textContent = textoOriginal; }}, 1500);
-        }}).catch(function () {{
-          botao.textContent = 'Não consegui copiar';
-          setTimeout(function () {{ botao.textContent = textoOriginal; }}, 1500);
+    function escaparHtml(t) {{
+      return String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }}
+    function escaparAtributo(t) {{
+      return String(t || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }}
+
+    function montarBlocoTexto(rotulo, texto) {{
+      if (!texto) {{
+        return '<p class="texto-vazio">Sem ' + rotulo.toLowerCase() + ' salva (produtos selecionados antes dessa função não têm).</p>';
+      }}
+      return '<div class="bloco-texto"><div class="bloco-texto-cabecalho"><b>' + rotulo + '</b>' +
+        '<button type="button" class="btn-copiar" data-copiar="' + escaparAtributo(texto) + '">Copiar</button></div>' +
+        '<pre class="texto-conteudo">' + escaparHtml(texto) + '</pre></div>';
+    }}
+
+    function montarLinhaEsteira(p) {{
+      var status = STATUS_ESTEIRA_JS[p.status] || STATUS_ESTEIRA_JS.selecionado;
+      var icone = STATUS_ICONE_JS[status.classe] || '';
+      var nome = escaparHtml(p.nome || '(sem nome)');
+      var link = p.link || '';
+      var dataSel = (p.selecionado_em || '').slice(0, 10);
+      var roiTexto = (p.roi !== null && p.roi !== undefined) ? Number(p.roi).toFixed(1) + 'x' : '\\u2014';
+      var produtoId = p.produto_id || '';
+      var etapaAtual = p.etapa_conteudo || 'roteiro_pronto';
+      var jaPublicado = etapaAtual === 'publicado';
+
+      var opcoesEtapa = ETAPAS_CONTEUDO_JS.map(function (par) {{
+        return '<option value="' + par[0] + '"' + (par[0] === etapaAtual ? ' selected' : '') + '>' + par[1] + '</option>';
+      }}).join('');
+      var seletorEtapa = '<select class="seletor-etapa etapa-' + etapaAtual + '" data-produto-id="' + produtoId + '">' + opcoesEtapa + '</select>';
+
+      var linkHtml = link
+        ? '<div class="link-linha"><button type="button" class="btn-copiar" data-copiar="' + escaparAtributo(link) + '">Copiar link</button></div>'
+        : '<div class="link-linha"><span class="texto-vazio">Sem link salvo</span></div>';
+
+      var botaoExcluir = '<button type="button" class="btn-excluir" data-produto-id="' + produtoId + '"' +
+        (jaPublicado ? ' disabled' : '') +
+        ' title="' + (jaPublicado ? 'J\\u00e1 publicado \\u2014 n\\u00e3o d\\u00e1 pra excluir' : 'Remove esse produto da esteira') + '">Excluir</button>';
+
+      return '<tr>' +
+        '<td class="col-status"><span class="status status-' + status.classe + '">' +
+          '<svg width="14" height="14" viewBox="0 0 20 20" fill="none">' + icone + '</svg>' + status.rotulo + '</span></td>' +
+        '<td class="col-nome"><a href="' + (link || '#') + '" target="_blank" rel="noopener">' + nome + '</a>' + linkHtml + '</td>' +
+        '<td class="col-conteudo">' + seletorEtapa + '</td>' +
+        '<td class="col-textos"><details class="detalhe-textos"><summary>Ver textos</summary>' +
+          montarBlocoTexto('Narração (voz de jovem)', p.narracao) +
+          montarBlocoTexto('Legenda (post)', p.legenda) +
+          '</details></td>' +
+        '<td class="col-data">' + dataSel + '</td>' +
+        '<td class="col-num">R$&nbsp;' + Number(p.preco || 0).toFixed(2) + '</td>' +
+        '<td class="col-num">' + Number(p.comissao || 0).toFixed(0) + '%</td>' +
+        '<td class="col-num">' + (p.investido ? 'R$ ' + Number(p.investido).toFixed(2) : '\\u2014') + '</td>' +
+        '<td class="col-num">' + (p.comissao_recebida ? 'R$ ' + Number(p.comissao_recebida).toFixed(2) : '\\u2014') + '</td>' +
+        '<td class="col-num destaque">' + roiTexto + '</td>' +
+        '<td class="col-acoes">' + botaoExcluir + '</td>' +
+      '</tr>';
+    }}
+
+    function ativarAcoesLinha(raiz) {{
+      raiz.querySelectorAll('.seletor-etapa').forEach(function (sel) {{
+        sel.addEventListener('change', function () {{
+          var produtoId = sel.getAttribute('data-produto-id');
+          var etapa = sel.value;
+          sel.className = 'seletor-etapa etapa-' + etapa;
+          sel.disabled = true;
+          fetch('/api/atualizar_esteira', {{
+            method: 'POST',
+            headers: {{ 'content-type': 'application/json' }},
+            body: JSON.stringify({{ produto_id: produtoId, etapa_conteudo: etapa }}),
+          }})
+            .then(function (resposta) {{ return resposta.json().then(function (d) {{ return {{ ok: resposta.ok, d: d }}; }}); }})
+            .then(function (r) {{
+              if (!r.ok) alert(r.d.erro || 'Não consegui salvar a etapa.');
+            }})
+            .catch(function () {{
+              alert('Não consegui falar com o servidor — essa função só funciona no cockpit publicado na Vercel.');
+            }})
+            .finally(function () {{ sel.disabled = false; }});
         }});
       }});
-    }});
 
-    document.querySelectorAll('.btn-excluir').forEach(function (botao) {{
-      botao.addEventListener('click', function () {{
-        var produtoId = botao.getAttribute('data-produto-id');
-        var linha = botao.closest('tr');
-        var nome = linha ? linha.querySelector('.col-nome a').textContent : 'esse produto';
-        if (!confirm('Excluir "' + nome + '" da esteira? Essa ação não pode ser desfeita.')) return;
-        botao.disabled = true;
-        botao.textContent = 'Excluindo...';
-        fetch('/api/excluir_esteira', {{
-          method: 'POST',
-          headers: {{ 'content-type': 'application/json' }},
-          body: JSON.stringify({{ produto_id: produtoId }}),
-        }})
-          .then(function (resposta) {{ return resposta.json().then(function (d) {{ return {{ ok: resposta.ok, d: d }}; }}); }})
-          .then(function (r) {{
-            if (r.ok) {{
-              if (linha) linha.remove();
-            }} else {{
-              alert(r.d.erro || 'Não consegui excluir.');
+      raiz.querySelectorAll('.btn-copiar').forEach(function (botao) {{
+        botao.addEventListener('click', function () {{
+          var texto = botao.getAttribute('data-copiar') || '';
+          var textoOriginal = botao.textContent;
+          navigator.clipboard.writeText(texto).then(function () {{
+            botao.textContent = 'Copiado!';
+            setTimeout(function () {{ botao.textContent = textoOriginal; }}, 1500);
+          }}).catch(function () {{
+            botao.textContent = 'Não consegui copiar';
+            setTimeout(function () {{ botao.textContent = textoOriginal; }}, 1500);
+          }});
+        }});
+      }});
+
+      raiz.querySelectorAll('.btn-excluir').forEach(function (botao) {{
+        botao.addEventListener('click', function () {{
+          var produtoId = botao.getAttribute('data-produto-id');
+          var linha = botao.closest('tr');
+          var nome = linha ? linha.querySelector('.col-nome a').textContent : 'esse produto';
+          if (!confirm('Excluir "' + nome + '" da esteira? Essa ação não pode ser desfeita.')) return;
+          botao.disabled = true;
+          botao.textContent = 'Excluindo...';
+          fetch('/api/excluir_esteira', {{
+            method: 'POST',
+            headers: {{ 'content-type': 'application/json' }},
+            body: JSON.stringify({{ produto_id: produtoId }}),
+          }})
+            .then(function (resposta) {{ return resposta.json().then(function (d) {{ return {{ ok: resposta.ok, d: d }}; }}); }})
+            .then(function (r) {{
+              if (r.ok) {{
+                if (linha) linha.remove();
+              }} else {{
+                alert(r.d.erro || 'Não consegui excluir.');
+                botao.disabled = false;
+                botao.textContent = 'Excluir';
+              }}
+            }})
+            .catch(function () {{
+              alert('Não consegui falar com o servidor — essa função só funciona no cockpit publicado na Vercel.');
               botao.disabled = false;
               botao.textContent = 'Excluir';
-            }}
-          }})
-          .catch(function () {{
-            alert('Não consegui falar com o servidor — essa função só funciona no cockpit publicado na Vercel.');
-            botao.disabled = false;
-            botao.textContent = 'Excluir';
-          }});
+            }});
+        }});
       }});
-    }});
+    }}
+
+    ativarAcoesLinha(document);
+
+    function renderizarEsteira(itens) {{
+      var corpo = document.getElementById('corpo-esteira');
+      if (!corpo) return;
+      corpo.innerHTML = itens.length
+        ? itens.map(montarLinhaEsteira).join('')
+        : '<tr><td colspan="11" class="vazio">Nenhum produto na esteira ainda. Marque produtos no painel e clique em "Salvar seleção na esteira".</td></tr>';
+
+      var contagem = {{ selecionado: 0, impulsionado: 0, vendido: 0 }};
+      itens.forEach(function (p) {{ contagem[p.status] = (contagem[p.status] || 0) + 1; }});
+      var elSel = document.querySelector('.stat-selecionado .n');
+      var elImp = document.querySelector('.stat-impulsionado .n');
+      var elVen = document.querySelector('.stat-vendido .n');
+      if (elSel) elSel.textContent = String(contagem.selecionado).padStart(2, '0');
+      if (elImp) elImp.textContent = String(contagem.impulsionado).padStart(2, '0');
+      if (elVen) elVen.textContent = String(contagem.vendido).padStart(2, '0');
+
+      ativarAcoesLinha(corpo);
+    }}
+
+    var elAtualizado = document.getElementById('atualizado-em');
+    fetch('/api/esteira')
+      .then(function (resposta) {{ return resposta.json().then(function (d) {{ return {{ ok: resposta.ok, d: d }}; }}); }})
+      .then(function (r) {{
+        if (!r.ok) throw new Error(r.d && r.d.erro || 'erro');
+        renderizarEsteira(r.d.itens || []);
+        if (elAtualizado) elAtualizado.textContent = 'Atualizado agora';
+      }})
+      .catch(function () {{
+        if (elAtualizado) {{
+          elAtualizado.textContent = elAtualizado.textContent.replace(
+            /verificando dados mais recentes\\u2026/,
+            'mostrando o último snapshot salvo — recarregue mais tarde pra ver seleções recentes'
+          );
+        }}
+      }});
   </script>
 </body>
 </html>

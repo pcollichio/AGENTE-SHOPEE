@@ -59,13 +59,16 @@ por uma chamada direta.
   `buscar_um_produto.py`). O botão "Salvar seleção na esteira" só
   salva (sem baixar arquivo) — o roteiro e a legenda saem prontos e
   ficam visíveis na esteira.
-- **`esteira.html`** — a lista viva de produtos selecionados, com
-  status financeiro automático (selecionado / impulsionado / vendido),
-  etapa de conteúdo manual (roteiro pronto / em produção / publicado),
-  o link de afiliado com botão de copiar direto na linha do produto, o
-  texto de narração e de legenda prontos pra copiar por produto, um
-  botão pra excluir produto que ainda não foi publicado, e um guia do
-  processo de gravação/edição/publicação/avaliação
+- **`esteira.html`** — a lista viva de produtos selecionados. Busca o
+  estado mais recente ao abrir (`api/esteira.py`), então mostra a
+  seleção mais nova sem esperar a leva do dia seguinte; se a busca
+  falhar (ex: página estática, sem Vercel), mostra o último snapshot
+  salvo e avisa. Tem status financeiro automático (selecionado /
+  impulsionado / vendido), etapa de conteúdo manual (roteiro pronto /
+  em produção / publicado), o link de afiliado com botão de copiar
+  direto na linha do produto, o texto de narração e de legenda prontos
+  pra copiar por produto, um botão pra excluir produto que ainda não
+  foi publicado, e um guia do processo de gravação/edição/publicação/avaliação
 - **`importar.html`** — formulário simples pra registrar investimento em
   campanha e vendas confirmadas
 - **`painel_roi.html`** — progresso da meta mensal e ROI por produto
@@ -100,6 +103,10 @@ por uma chamada direta.
 - `api/excluir_esteira.js` — função serverless (Vercel) que remove um
   produto da esteira, usada pelo botão "Excluir" em `esteira.html`;
   recusa excluir produto com etapa "Publicado" (checagem no servidor)
+- `api/esteira.py` — função serverless (Vercel) que devolve o estado
+  atual da esteira como JSON; `esteira.html` busca aqui ao abrir, pra
+  sempre mostrar o produto mais recente sem depender do próximo
+  horário da leva diária
 - `esteira.json` — todos os produtos já selecionados no painel ao
   longo do tempo (escrito pelo botão "Salvar seleção na esteira", já
   com o texto de narração e de legenda prontos; é o que o Claude e o

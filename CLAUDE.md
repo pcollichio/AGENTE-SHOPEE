@@ -71,10 +71,17 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
   `narracao` e `legenda` (o texto pronto pra gravação e pra legenda do
   post, gerados no momento da seleção — ver "Padrão de narração e
   legenda dos Reels" abaixo).
-- `cockpit-shopee/esteira.html` — visão da esteira com status financeiro
+- `cockpit-shopee/esteira.html` — visão da esteira. Desde 03/09, busca o
+  estado mais recente ao abrir (`GET /api/esteira.py`, que reaproveita
+  `calcular_status()`) e re-renderiza a tabela em JS — antes a página
+  só era atualizada pelo workflow diário, então um produto selecionado
+  no painel só aparecia aqui no dia seguinte ("a esteira não está
+  atualizando", reportado pelo usuário). Se a busca falhar (ex: página
+  estática do GitHub Pages, sem Vercel), mantém o último snapshot
+  gerado e avisa no lugar de "Atualizado". Mostra status financeiro
   calculado automaticamente (selecionado / impulsionado / vendido),
-  cruzando `esteira.json` com o financeiro, mais um seletor manual de
-  etapa de conteúdo por produto, o link de afiliado com botão de copiar
+  cruzando `esteira.json` com o financeiro, um seletor manual de etapa
+  de conteúdo por produto, o link de afiliado com botão de copiar
   (direto na linha do produto, ao lado do nome), os textos de
   narração/legenda prontos pra copiar ("Ver textos"), um botão pra
   excluir produto ainda não publicado (`api/excluir_esteira.js`,
