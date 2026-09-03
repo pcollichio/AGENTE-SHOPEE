@@ -99,7 +99,7 @@ def _linha_produto(produto, posicao, id_prefixo):
     else:
         foto_html = '<div class="foto-produto foto-vazia" aria-hidden="true"></div>'
     return f"""
-        <tr data-tier="{p['tier']}" data-comissao="{p['commission_rate']*100:.0f}" data-avaliacao="{p['rating']:.1f}">
+        <tr data-tier="{p['tier']}" data-comissao="{p['commission_rate']*100:.0f}" data-avaliacao="{p['rating']:.1f}" data-vendidos="{p['total_sold']}">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="{row_id}"
               data-produto-id="{p['product_id']}"
@@ -154,6 +154,15 @@ def _tabela(produtos, id_prefixo, com_filtro=True):
           <option value="4">4.0+&#9733;</option>
           <option value="4.5">4.5+&#9733;</option>
           <option value="4.8">4.8+&#9733;</option>
+        </select>
+        <label for="filtro-vendidos">Vendidos mínimo</label>
+        <select id="filtro-vendidos" data-alvo="tabela-principal">
+          <option value="0">Todos</option>
+          <option value="50">50+</option>
+          <option value="100">100+</option>
+          <option value="300">300+</option>
+          <option value="500">500+</option>
+          <option value="1000">1000+</option>
         </select>
       </div>
     </div>"""
@@ -591,7 +600,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
   <div class="barra-selecao">
     <div class="barra-selecao-conteudo">
       <span class="barra-contagem"><b id="contagem-selecionados">0</b> selecionado(s)</span>
-      <button class="btn-baixar" id="btn-baixar-selecao" disabled>Baixar roteiro e salvar na esteira</button>
+      <button class="btn-baixar" id="btn-baixar-selecao" disabled>Salvar seleção na esteira</button>
     </div>
   </div>
 
@@ -602,12 +611,14 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
       var tier = botaoAtivo ? botaoAtivo.getAttribute('data-filtro') : 'todos';
       var comissaoMin = parseFloat((document.getElementById('filtro-comissao') || {{}}).value || '0');
       var avaliacaoMin = parseFloat((document.getElementById('filtro-avaliacao') || {{}}).value || '0');
+      var vendidosMin = parseFloat((document.getElementById('filtro-vendidos') || {{}}).value || '0');
 
       document.querySelectorAll('#' + alvo + '-corpo tr').forEach(function (linha) {{
         var bateTier = tier === 'todos' || linha.getAttribute('data-tier') === tier;
         var bateComissao = parseFloat(linha.getAttribute('data-comissao') || '0') >= comissaoMin;
         var bateAvaliacao = parseFloat(linha.getAttribute('data-avaliacao') || '0') >= avaliacaoMin;
-        linha.style.display = (bateTier && bateComissao && bateAvaliacao) ? '' : 'none';
+        var bateVendidos = parseFloat(linha.getAttribute('data-vendidos') || '0') >= vendidosMin;
+        linha.style.display = (bateTier && bateComissao && bateAvaliacao && bateVendidos) ? '' : 'none';
       }});
     }}
 
@@ -624,7 +635,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
       }});
     }});
 
-    ['filtro-comissao', 'filtro-avaliacao'].forEach(function (id) {{
+    ['filtro-comissao', 'filtro-avaliacao', 'filtro-vendidos'].forEach(function (id) {{
       var campo = document.getElementById(id);
       if (campo) campo.addEventListener('change', function () {{ aplicarFiltros(campo.getAttribute('data-alvo')); }});
     }});
@@ -848,46 +859,10 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
       }});
     }}
 
-    function baixarRoteiro(marcados) {{
-      var hoje = new Date().toISOString().slice(0, 10);
-      var linhas = [
-        '# Esteira de produção — ' + hoje,
-        '',
-        '## Resumo',
-        '',
-        '| Produto | Preço | Comissão | Link de afiliado |',
-        '|---|---|---|---|'
-      ];
-      marcados.forEach(function (chk) {{
-        linhas.push(
-          '| ' + chk.getAttribute('data-nome') +
-          ' | R$' + chk.getAttribute('data-preco') +
-          ' | ' + chk.getAttribute('data-comissao') + '%' +
-          ' | ' + chk.getAttribute('data-link') + ' |'
-        );
-      }});
-      linhas.push('', '---', '', '# Roteiros', '');
-      marcados.forEach(function (chk) {{
-        linhas.push(montarRoteiro(chk));
-      }});
-      var conteudo = linhas.join('\\n');
-      var blob = new Blob([conteudo], {{ type: 'text/markdown;charset=utf-8' }});
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement('a');
-      a.href = url;
-      a.download = 'esteira-' + hoje + '.md';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }}
-
     document.getElementById('btn-baixar-selecao').addEventListener('click', function () {{
       var botao = this;
       var marcados = document.querySelectorAll('.chk-produto:checked');
       var textoOriginal = botao.textContent;
-
-      baixarRoteiro(marcados);
 
       botao.disabled = true;
       botao.textContent = 'Salvando na esteira...';
@@ -897,12 +872,12 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
             botao.textContent = 'Salvo na esteira! \\u2713';
           }} else {{
             botao.textContent = textoOriginal;
-            alert((r.dados.erro || 'Não consegui salvar na esteira.') + ' O roteiro baixou normalmente, mas registre a seleção depois.');
+            alert(r.dados.erro || 'Não consegui salvar na esteira.');
           }}
         }})
         .catch(function () {{
           botao.textContent = textoOriginal;
-          alert('O roteiro baixou, mas não consegui salvar na esteira (essa parte só funciona no cockpit publicado na Vercel — veja o README).');
+          alert('Não consegui salvar na esteira (essa parte só funciona no cockpit publicado na Vercel — veja o README).');
         }})
         .finally(function () {{
           setTimeout(function () {{

@@ -306,3 +306,22 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   mostra aviso "Busquei por... confira se é o produto certo", e o
   roteiro baixado sai completo tanto pro produto da leva quanto pro
   achado por link.
+## 2026-09-03
+
+- **Bug reportado: produto não entrava na esteira + filtro por
+  vendidos.** Usuário relatou problema ao incluir produtos na esteira e
+  apontou a causa provável: o botão baixava um arquivo `.md` (via
+  `Blob`/`URL.createObjectURL`) *junto* com o salvamento — comum de
+  falhar silenciosamente em navegador mobile (diálogo de download pode
+  suspender o JS antes do `fetch` de salvar terminar). Removida a
+  função `baixarRoteiro()` inteira e a chamada de download no clique do
+  botão em `painel.py` — agora "Salvar seleção na esteira" só faz o
+  `POST` em `/api/selecionar`; roteiro e legenda continuam saindo
+  prontos, só que só ficam visíveis em `esteira.html` ("Ver textos"),
+  nunca mais como arquivo baixado. Também adicionado o filtro
+  **Vendidos mínimo** (terceiro select, ao lado de comissão e
+  avaliação, mesma lógica combinável) — `data-vendidos` no `<tr>` de
+  `_linha_produto`, opções 50+/100+/300+/500+/1000+. Testado com
+  Playwright: filtro por vendidos≥100 esconde o produto com poucas
+  vendas corretamente, e o clique em salvar não dispara mais nenhum
+  evento de download.

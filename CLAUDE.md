@@ -90,7 +90,10 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
   filtro de faixa de preço). Pedido em 02/09: revertido o "todos" por
   volume — a leva agora traz só os **50 melhores** do nicho, por score
   de curadoria (`LIMITE_LEVA` em `buscar_leva_lancamento.py`); o filtro
-  de qualidade continua interativo, no painel.
+  de qualidade continua interativo, no painel. Pedido em 03/09: o
+  filtro ganhou um terceiro select, **vendidos mínimo**
+  (`data-vendidos` no `<tr>`, select `#filtro-vendidos`), combinável
+  com comissão/avaliação/faixa de preço.
 - Pedido do usuário em 02/09: "o fluxo mais fácil vai ser achar o
   produto no app Shopee e trazer pro agente" — a busca por descrição
   **ou link colado** do produto (usa `shopee_integration/link_resolver.py`,
@@ -100,6 +103,13 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
   por descrição, ou de `produtos_manuais.txt` — usa os mesmos
   `montarRoteiro()`/`montarLegenda()` no momento de salvar, então
   sempre sai com narração e legenda prontas na esteira, sem exceção.
+- Pedido do usuário em 03/09: o botão do painel não baixa mais um
+  arquivo `.md` — o usuário reportou problema em incluir produto na
+  esteira e apontou o download como causa provável (falha comum em
+  navegador mobile). O botão "Salvar seleção na esteira" agora só
+  salva (POST em `api/selecionar`, sem `Blob`/download); o roteiro e a
+  legenda continuam saindo prontos, só que visíveis exclusivamente em
+  `esteira.html` ("Ver textos"), nunca mais como arquivo baixado.
 - Links publicados: GitHub Pages em
   `https://pcollichio.github.io/AGENTE-SHOPEE/cockpit-shopee/cockpit.html`
   (e `/painel.html`, `/painel_roi.html`, etc.)

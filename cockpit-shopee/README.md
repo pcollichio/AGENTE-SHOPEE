@@ -12,7 +12,7 @@ Produtos, Esteira, Importar, ROI) e um painel de chat fixo à direita
 precisar trocar de aba pra perguntar algo.
 
 Desde 31/08, todo produto que você seleciona no painel e salva (botão
-"Salvar seleção agora") entra numa lista viva, a **esteira**
+"Salvar seleção na esteira") entra numa lista viva, a **esteira**
 (`esteira.html`) — é assim que o Claude sabe o que você já escolheu ao
 longo do tempo, sem precisar digitar de novo no chat. O status de cada
 produto (selecionado / impulsionado / vendido) é calculado sozinho,
@@ -49,13 +49,16 @@ por uma chamada direta.
 - **`index.html`** — visão geral do fluxo completo ("o que fazer hoje")
 - **`chat.html`** — chat de verdade com o coach (usa `api/chat.js`)
 - **`painel.html`** — os 50 melhores produtos do dia no nicho (gerado
-  automaticamente todo dia às 9h, por score de curadoria, sem filtro de
-  comissão/avaliação — isso é filtro interativo, no painel), com foto,
-  seleção, roteiro e legenda prontos pra esteira. No topo, uma busca ao
-  vivo aceita tanto uma descrição quanto um link colado direto do app
-  da Shopee — pra trazer qualquer produto pro agente sem esperar a leva
-  do dia (usa `api/buscar_produto.py`, mesma lógica de resolver link do
-  `buscar_um_produto.py`)
+  automaticamente todo dia às 9h, por score de curadoria), com foto,
+  seleção e filtros combináveis (faixa de preço, comissão mínima,
+  avaliação mínima, vendidos mínimo — tudo interativo, no painel, na
+  hora de escolher). No topo, uma busca ao vivo aceita tanto uma
+  descrição quanto um link colado direto do app da Shopee — pra trazer
+  qualquer produto pro agente sem esperar a leva do dia (usa
+  `api/buscar_produto.py`, mesma lógica de resolver link do
+  `buscar_um_produto.py`). O botão "Salvar seleção na esteira" só
+  salva (sem baixar arquivo) — o roteiro e a legenda saem prontos e
+  ficam visíveis na esteira.
 - **`esteira.html`** — a lista viva de produtos selecionados, com
   status financeiro automático (selecionado / impulsionado / vendido),
   etapa de conteúdo manual (roteiro pronto / em produção / publicado),
@@ -97,13 +100,13 @@ por uma chamada direta.
   produto da esteira, usada pelo botão "Excluir" em `esteira.html`;
   recusa excluir produto com etapa "Publicado" (checagem no servidor)
 - `esteira.json` — todos os produtos já selecionados no painel ao
-  longo do tempo (escrito pelo botão "Baixar roteiro e salvar na
-  esteira", já com o texto de narração e de legenda prontos; é o que
-  o Claude e o `esteira.html` leem)
+  longo do tempo (escrito pelo botão "Salvar seleção na esteira", já
+  com o texto de narração e de legenda prontos; é o que o Claude e o
+  `esteira.html` leem)
 
 ## Colocar o cockpit no ar (Vercel)
 
-O chat, a busca de produto específico e o botão "Salvar seleção agora"
+O chat, a busca de produto específico e o botão "Salvar seleção na esteira"
 só funcionam depois de publicar o cockpit num servidor — não funcionam
 abrindo os arquivos direto do computador. O jeito mais simples é a
 Vercel (gratuita pra esse uso):
@@ -123,7 +126,7 @@ Vercel (gratuita pra esse uso):
    - `USE_MOCK_DATA` com o valor `false`.
    - `GITHUB_TOKEN` — um token de acesso pessoal do GitHub, só pra
      este repositório, com permissão de escrever conteúdo. Veja como
-     criar logo abaixo. Usado pelo botão "Salvar seleção agora".
+     criar logo abaixo. Usado pelo botão "Salvar seleção na esteira".
 
    **Nunca** coloque nenhum desses valores em nenhum arquivo do
    repositório — só aqui, nas variáveis de ambiente da Vercel.
