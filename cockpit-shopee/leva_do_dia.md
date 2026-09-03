@@ -3,7 +3,7 @@
 | # | Produto | Faixa | Preço | Comissão | Avaliação | Vendidos | Link de afiliado |
 |---|---|---|---|---|---|---|---|
 | 1 | Aditivo Impermeabilizante para Concreto e Argamassa Galão 3,6L - Vedacit | Baixo | R$42.90 | 43% | 5.0⭐ | 29 | [link](https://s.shopee.com.br/60RJO63gXd) |
-| 2 | Torneira Banheiro 1/4 Volta Inox 304 Alta Luxo Banheiro | Baixo | R$49.90 | 38% | 4.9⭐ | 10 | [link](https://s.shopee.com.br/6q0QNd0Vqq) |
+| 2 | Torneira Banheiro 1/4 Volta Inox 304 Alta Luxo Banheiro | Baixo | R$49.90 | 38% | 4.9⭐ | 10 | [link](https://s.shopee.com.br/AAGsLl9p04) |
 | 3 | Tampa Lacre Furada Branca ou Preta 100 Unidades para Vidro de 30ml Rosca R18 | Baixo | R$41.90 | 31% | 5.0⭐ | 1 | [link](https://s.shopee.com.br/2gArPyGNJB) |
 | 4 | Kit Prateleiras Batman 32x20cm Suporte Organizador para quarto sala | Médio | R$69.00 | 58% | 4.9⭐ | 2 | [link](https://s.shopee.com.br/904uxbwnkI) |
 | 5 | Lancheira Bolsa Térmica Para Marmita | Médio | R$55.90 | 53% | 5.0⭐ | 3 | [link](https://s.shopee.com.br/112dQueJny) |
@@ -24,14 +24,14 @@
 | 20 | Lixa 100 150 240 400 600 800 1200 2000 2500 3000 kit 1 2 ou 3 folhas cada Grão Polimento Plásticos | Baixo | R$47.38 | 28% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/3LQYDCDpxN) |
 | 21 | Conchas Do Mar Artesanato Mix Diversas 500g Aquário Vela Artesanato | Baixo | R$45.60 | 43% | 4.4⭐ | 0 | [link](https://s.shopee.com.br/1Vyu1plHcz) |
 | 22 | Protetor De Sofá Capa P/ Poltrona Do Papai | Baixo | R$41.40 | 43% | 4.2⭐ | 2 | [link](https://s.shopee.com.br/qjDEc5UMG) |
-| 23 | Torneira De Banheiro Para Cozinha Parede 1/4 Volta Valeplast | Baixo | R$25.90 | 43% | 4.8⭐ | 171 | [link](https://s.shopee.com.br/6AkjaP33Ce) |
+| 23 | Torneira De Banheiro Para Cozinha Parede 1/4 Volta Valeplast | Baixo | R$25.90 | 43% | 4.8⭐ | 171 | [link](https://s.shopee.com.br/50YmCGTUTa) |
 | 24 | Chuveiro Ducha Chuveirão Branco Cromada Preto Externo Interno Quintal Banho Banheiro | Baixo | R$18.50 | 38% | 4.7⭐ | 83 | [link](https://s.shopee.com.br/8plUlJEthg) |
 | 25 | Quadro Natureza Quadro Com Moldura E Vidro Quadro Decorativo Sala Quarto Casal Quadro Folhagem Trio | Alto | R$223.78 | 44% | 4.9⭐ | 66 | [link](https://s.shopee.com.br/20vAcks6u5) |
 | 26 | Quadro Decorativo Com Moldura Filete Sala Arte Pintura Abstrata Floral Costela De Adão Tons Terrosos | Médio | R$116.92 | 38% | 4.9⭐ | 102 | [link](https://s.shopee.com.br/AKaIY4MNzz) |
 | 27 | Quadros Decorativos Moldura Filete Sala Quarto Escritório Duo Abstrato Pintura Linhas Em Marrom Bege | Alto | R$155.92 | 38% | 4.8⭐ | 99 | [link](https://s.shopee.com.br/5VV2nBemo4) |
 | 28 | Quadros Decorativos Com Moldura Filete Sala Quarto Casal Duo Floral Pintura Abstrata Folhas Em Bege | Alto | R$159.92 | 36% | 4.9⭐ | 91 | [link](https://s.shopee.com.br/5foSzUe9T9) |
-| 29 | Lixadeira Manual De Pvc Com Lixa 8x22cm Max | Baixo | R$39.95 | 83% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/20vAckIueS) |
-| 30 | Sifão Sanfonado Preto Ajustável Extensivo Flexível Pia Banheiro Cozinha Black - Astra | Baixo | R$17.01 | 83% | 5.0⭐ | 1 | [link](https://s.shopee.com.br/2BEap3IHJV) |
+| 29 | Lixadeira Manual De Pvc Com Lixa 8x22cm Max | Baixo | R$39.95 | 83% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/5LBcasJQHw) |
+| 30 | Sifão Sanfonado Preto Ajustável Extensivo Flexível Pia Banheiro Cozinha Black - Astra | Baixo | R$17.01 | 83% | 5.0⭐ | 1 | [link](https://s.shopee.com.br/7psxZT9uDP) |
 | 31 | Cabo Positivo Bateria Peugeot 208 2015 -17 | Médio | R$89.00 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/80CNllw4Th) |
 | 32 | Kit Manual Do Proprietário Gol G6 2013 2014 2015 | Médio | R$80.99 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8V8eMguASo) |
 | 33 | Chicote Cabo Positivo Da Bateria Fiat Palio Fire 1.0 2010 | Médio | R$69.60 | 63% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/8plUlIstmu) |
@@ -39,12 +39,12 @@
 | 35 | Tecnologias e Ferramentas de Gestão | Médio | R$77.00 | 56% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9AOL9urd70) |
 | 36 | Veda + Tec 4 em 1 Bi Componente Para Laje; Parede; caixa d'agua; piscina 20kg | Alto | R$186.60 | 55% | 5.0⭐ | 0 | [link](https://s.shopee.com.br/904uxbsGRz) |
 | 37 | Educando com as ferramentas da simplicidade | Baixo | R$40.30 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/9V1BYWqMR6) |
-| 38 | Mão na massa - minha caixa de ferramentas | Médio | R$59.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/AAGsLknp5I) |
-| 39 | APRENDA A APRENDER - COL. FERRAMENTAS DO DESEMPENHO | Médio | R$51.01 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/AUtikMmYPO) |
-| 40 | Seis Ferramentas Para o Desenvolvimento de Um Texto | Médio | R$86.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/AKaIY3nBkN) |
+| 38 | APRENDA A APRENDER - COL. FERRAMENTAS DO DESEMPENHO | Médio | R$51.01 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/AUtikMmYPO) |
+| 39 | Seis Ferramentas Para o Desenvolvimento de Um Texto | Médio | R$86.00 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/AKaIY3nBkN) |
+| 40 | Mão na massa - minha caixa de ferramentas | Médio | R$59.90 | 53% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/AAGsLknp5I) |
 | 41 | Veda Trinca; fissuras; rachaduras; calhas galvanizadas; microfissuras; Branco | Baixo | R$20.99 | 53% | 4.8⭐ | 19 | [link](https://s.shopee.com.br/5VV2nB5aYS) |
 | 42 | Conjunto de chave de fenda para óculos de 10 peças sortimento de ferramentas ópticas Nova | Médio | R$64.88 | 45% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/5q7tBn4JsY) |
-| 43 | Sifão Universal Sanfonado Flexível Tubo Pia Cozinha Banheiro Lavatório Tanques Branco 71cm Valeplast | Baixo | R$14.99 | 43% | 4.9⭐ | 10 | [link](https://s.shopee.com.br/6VNZz11mWk) |
+| 43 | Sifão Universal Sanfonado Flexível Tubo Pia Cozinha Banheiro Lavatório Tanques Branco 71cm Valeplast | Baixo | R$14.99 | 43% | 4.9⭐ | 10 | [link](https://s.shopee.com.br/5AsCOZSr8d) |
 | 44 | Kit Ferramenta Jogo De Soquete Aço Crv 1/4 Catraca Chave Allen Com Maleta Completo Barato | Baixo | R$38.99 | 31% | 4.8⭐ | 12 | [link](https://s.shopee.com.br/7VG7AqxyV2) |
 | 45 | Adaptador Serra Copo Makita 14 A 29mm 1 unidade D17170 | Baixo | R$42.66 | 31% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/7psxZSwhp8) |
 | 46 | Suporte Serra Copo 14 A 29mm  Makita D17170 Com Broca | Baixo | R$42.66 | 31% | 0.0⭐ | 0 | [link](https://s.shopee.com.br/2qUHcHFjyC) |
