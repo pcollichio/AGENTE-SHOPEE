@@ -135,7 +135,16 @@ def _linha(p):
     status = STATUS_ESTEIRA[p["status"]]
     icone = STATUS_ICONE[status["classe"]]
     nome = (p.get("nome") or "(sem nome)").replace("<", "&lt;").replace(">", "&gt;")
-    link = p.get("link") or "#"
+    link = p.get("link") or ""
+    link_attr = link.replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+    if link:
+        link_html = (
+            f'<div class="link-linha">'
+            f'<button type="button" class="btn-copiar" data-copiar="{link_attr}">Copiar link</button>'
+            f'</div>'
+        )
+    else:
+        link_html = '<div class="link-linha"><span class="texto-vazio">Sem link salvo</span></div>'
     data_sel = (p.get("selecionado_em") or "")[:10]
     roi_texto = f"{p['roi']:.1f}x" if p["roi"] is not None else "—"
     produto_id = p.get("produto_id", "")
@@ -157,7 +166,8 @@ def _linha(p):
             </span>
           </td>
           <td class="col-nome">
-            <a href="{link}" target="_blank" rel="noopener">{nome}</a>
+            <a href="{link or '#'}" target="_blank" rel="noopener">{nome}</a>
+            {link_html}
           </td>
           <td class="col-conteudo">{seletor}</td>
           <td class="col-textos">
@@ -253,6 +263,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
   tbody tr:hover {{ background: var(--accent-soft); }}
   .col-nome a {{ color: var(--text); text-decoration: none; font-weight: 600; }}
   .col-nome a:hover {{ text-decoration: underline; }}
+  .link-linha {{ margin-top: 6px; }}
   .col-data {{ font-family: "IBM Plex Mono", monospace; color: var(--muted); white-space: nowrap; }}
   .col-num {{ text-align: right; white-space: nowrap; font-family: "IBM Plex Mono", monospace;
     font-variant-numeric: tabular-nums; }}

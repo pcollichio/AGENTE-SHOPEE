@@ -74,14 +74,15 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
 - `cockpit-shopee/esteira.html` — visão da esteira com status financeiro
   calculado automaticamente (selecionado / impulsionado / vendido),
   cruzando `esteira.json` com o financeiro, mais um seletor manual de
-  etapa de conteúdo por produto, os textos de narração/legenda prontos
-  pra copiar ("Ver textos"), um botão pra excluir produto ainda não
-  publicado (`api/excluir_esteira.js`, bloqueado no servidor pra produto
-  já publicado) e um guia embutido do processo
-  roteiro→gravação→edição→publicação→avaliação (deixa claro que gravar,
-  editar e publicar são passos manuais do usuário — o Claude não grava
-  vídeo nem publica sozinho, não há integração com API do Meta/TikTok
-  configurada).
+  etapa de conteúdo por produto, o link de afiliado com botão de copiar
+  (direto na linha do produto, ao lado do nome), os textos de
+  narração/legenda prontos pra copiar ("Ver textos"), um botão pra
+  excluir produto ainda não publicado (`api/excluir_esteira.js`,
+  bloqueado no servidor pra produto já publicado) e um guia embutido do
+  processo roteiro→gravação→edição→publicação→avaliação (deixa claro
+  que gravar, editar e publicar são passos manuais do usuário — o
+  Claude não grava vídeo nem publica sozinho, não há integração com
+  API do Meta/TikTok configurada).
 - Pedido do usuário em 01/09: o filtro de qualidade (comissão mínima,
   avaliação mínima) não corta mais produto do nicho antes da leva — a
   leva traz todos os produtos do nicho casa & construção, e o filtro

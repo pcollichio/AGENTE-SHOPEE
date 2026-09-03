@@ -62,7 +62,8 @@ por uma chamada direta.
 - **`esteira.html`** — a lista viva de produtos selecionados, com
   status financeiro automático (selecionado / impulsionado / vendido),
   etapa de conteúdo manual (roteiro pronto / em produção / publicado),
-  o texto de narração e de legenda prontos pra copiar por produto, um
+  o link de afiliado com botão de copiar direto na linha do produto, o
+  texto de narração e de legenda prontos pra copiar por produto, um
   botão pra excluir produto que ainda não foi publicado, e um guia do
   processo de gravação/edição/publicação/avaliação
 - **`importar.html`** — formulário simples pra registrar investimento em

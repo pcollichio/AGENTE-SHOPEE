@@ -325,3 +325,13 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   Playwright: filtro por vendidos≥100 esconde o produto com poucas
   vendas corretamente, e o clique em salvar não dispara mais nenhum
   evento de download.
+- **Link de afiliado visível e copiável na esteira.** Usuário pediu pra
+  trazer o link de afiliado do produto na linha da esteira. O link já
+  era salvo (`esteira.json`, campo `link`, usado no `href` do nome do
+  produto), mas não tinha texto visível nem jeito de copiar. Adicionado
+  um botão "Copiar link" logo abaixo do nome, em cada linha
+  (`shopee_integration/esteira.py`, reaproveitando o mesmo mecanismo de
+  copiar já usado em narração/legenda — `navigator.clipboard`, sem JS
+  novo). Produto sem link salvo mostra "Sem link salvo" no lugar do
+  botão. Testado com Playwright: copiar link bate certinho com o valor
+  salvo, e o aviso aparece quando o campo está vazio.
