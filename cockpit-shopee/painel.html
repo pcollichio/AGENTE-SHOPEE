@@ -8,67 +8,29 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #eef1f0;
-    --grid-line: rgba(20, 60, 90, 0.07);
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    /* Identidade visual fixa laranja & branco (igual Shopee) — pedido
+       do usuário em 10/09, não muda com o tema do sistema. */
+    --bg: #ee4d2d;
+    --on-bg: #ffffff;
+    --on-bg-muted: #ffd9cc;
+    --grid-line: rgba(255, 255, 255, 0.12);
     --card: #ffffff;
-    --text: #14202b;
-    --muted: #5b6b74;
-    --border: #d7dfe0;
-    --accent: #d9670c;
-    --accent-ink: #a84e08;
-    --accent-soft: #fbe7d4;
+    --text: #2a1a12;
+    --muted: #8a6a5c;
+    --border: #f3d0c2;
+    --accent: #ee4d2d;
+    --accent-ink: #c73e1f;
+    --accent-soft: #fde8e0;
     --baixo: #1f8a5f;
     --baixo-soft: #dcf1e7;
     --medio: #1d64b0;
     --medio-soft: #dde9f7;
     --alto: #a13c2f;
     --alto-soft: #f6e2df;
-    --focus: #1d64b0;
-    --barra-bg: #14202b;
-    --barra-texto: #eef1f0;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #0f1417;
-      --grid-line: rgba(255, 255, 255, 0.05);
-      --card: #171e22;
-      --text: #e7edf0;
-      --muted: #93a2a9;
-      --border: #2a3338;
-      --accent: #ff9439;
-      --accent-ink: #ffb066;
-      --accent-soft: #3a2a17;
-      --baixo: #3fbf8a;
-      --baixo-soft: #16332a;
-      --medio: #6badf0;
-      --medio-soft: #182a3d;
-      --alto: #e0776a;
-      --alto-soft: #3a201c;
-      --focus: #6badf0;
-      --barra-bg: #232c32;
-      --barra-texto: #e7edf0;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #0f1417;
-    --grid-line: rgba(255, 255, 255, 0.05);
-    --card: #171e22;
-    --text: #e7edf0;
-    --muted: #93a2a9;
-    --border: #2a3338;
-    --accent: #ff9439;
-    --accent-ink: #ffb066;
-    --accent-soft: #3a2a17;
-    --baixo: #3fbf8a;
-    --baixo-soft: #16332a;
-    --medio: #6badf0;
-    --medio-soft: #182a3d;
-    --alto: #e0776a;
-    --alto-soft: #3a201c;
-    --focus: #6badf0;
-    --barra-bg: #232c32;
-    --barra-texto: #e7edf0;
+    --focus: #a8341a;
+    --barra-bg: #2a1a12;
+    --barra-texto: #ffffff;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -89,7 +51,7 @@
     gap: 16px;
     flex-wrap: wrap;
     margin-bottom: 28px;
-    border-bottom: 2px solid var(--border);
+    border-bottom: 2px solid rgba(255,255,255,0.3);
     padding-bottom: 20px;
   }
   .eyebrow {
@@ -97,7 +59,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--accent-ink);
+    color: var(--on-bg);
     margin: 0 0 8px;
     font-weight: 600;
   }
@@ -108,11 +70,12 @@
     margin: 0;
     letter-spacing: -0.01em;
     text-wrap: balance;
+    color: var(--on-bg);
   }
   .atualizado {
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.8rem;
-    color: var(--muted);
+    color: var(--on-bg-muted);
     text-align: right;
   }
 
@@ -150,10 +113,11 @@
     font-size: 1.1rem;
     font-weight: 700;
     margin: 36px 0 4px;
+    color: var(--on-bg);
   }
   .descricao-secao {
     font-size: 0.85rem;
-    color: var(--muted);
+    color: var(--on-bg-muted);
     margin: 0 0 14px;
   }
   .descricao-secao code {
@@ -191,7 +155,7 @@
   .filtro.ativo { background: var(--accent); color: #fff; }
   .filtros-select { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .filtros-select label {
-    font-family: "IBM Plex Sans", sans-serif; font-size: 0.82rem; font-weight: 600; color: var(--muted);
+    font-family: "IBM Plex Sans", sans-serif; font-size: 0.82rem; font-weight: 600; color: var(--on-bg-muted);
   }
   .filtros-select select {
     font-family: "IBM Plex Sans", sans-serif; font-size: 0.84rem; color: var(--text);
@@ -224,9 +188,9 @@
   .col-foto { width: 56px; padding: 8px 10px; }
   .foto-produto {
     width: 48px; height: 48px; border-radius: 6px; object-fit: cover;
-    border: 1px solid var(--border); display: block; background: var(--bg);
+    border: 1px solid var(--border); display: block; background: var(--accent-soft);
   }
-  .foto-vazia { background: var(--bg); }
+  .foto-vazia { background: var(--accent-soft); }
   .col-pos {
     font-family: "IBM Plex Mono", monospace;
     color: var(--muted);
@@ -269,7 +233,7 @@
   .rodape {
     margin-top: 20px;
     font-size: 0.78rem;
-    color: var(--muted);
+    color: var(--on-bg-muted);
     font-family: "IBM Plex Mono", monospace;
   }
 
@@ -319,7 +283,7 @@
   .busca-form input {
     flex: 1; min-width: 200px; font-family: "IBM Plex Sans", sans-serif; font-size: 0.9rem;
     padding: 10px 14px; border-radius: 7px; border: 1px solid var(--border);
-    background: var(--bg); color: var(--text);
+    background: #ffffff; color: var(--text);
   }
   .busca-form input:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
   .btn-buscar {
@@ -351,7 +315,7 @@
     border-radius: 8px; padding: 4px; margin-bottom: 24px; flex-wrap: wrap; }
   .menu-item { font-family: "IBM Plex Sans", sans-serif; font-size: 0.84rem; font-weight: 600;
     color: var(--muted); text-decoration: none; padding: 8px 14px; border-radius: 6px; }
-  .menu-item:hover { color: var(--text); background: var(--bg); }
+  .menu-item:hover { color: var(--text); background: var(--accent-soft); }
   .menu-item.ativo { background: var(--accent); color: #fff; }
 
 </style>
@@ -361,7 +325,7 @@
     <nav class="menu-cockpit" id="menu-cockpit"><a class="menu-item" href="index.html">Início</a><a class="menu-item" href="chat.html">Chat</a><a class="menu-item ativo" href="painel.html">Produtos</a><a class="menu-item" href="esteira.html">Esteira</a><a class="menu-item" href="importar.html">Importar</a><a class="menu-item" href="painel_roi.html">Dashboard</a><a class="menu-item" href="https://claude.ai/code/artifact/a5421828-0ecd-4bd1-8c5f-d3a2799c26bf" target="_blank" rel="noopener">Identidade&nbsp;&#8599;</a></nav><script>if (window.self !== window.top) { document.getElementById('menu-cockpit').style.display = 'none'; }</script>
     <header class="cabecalho">
       <div>
-        <p class="eyebrow">Cockpit de Afiliação &middot; @papairesolve_br</p>
+        <p class="eyebrow">Agente Shopee &middot; @papairesolve_br</p>
         <h1>Painel Shopee — Mais Vendidos</h1>
       </div>
       <p class="atualizado">Atualizado&nbsp;10/09/2026<br>50 produtos</p>
@@ -380,8 +344,8 @@
 
     <h2 class="titulo-secao">Leva do dia &mdash; 50 produtos mais vendidos</h2>
     <section class="resumo" aria-label="Resumo da leva">
-      <div class="stat stat-baixo"><div class="n">24</div><div class="l">Ticket baixo (até R$50)</div></div>
-      <div class="stat stat-medio"><div class="n">26</div><div class="l">Ticket médio (R$50&ndash;150)</div></div>
+      <div class="stat stat-baixo"><div class="n">23</div><div class="l">Ticket baixo (até R$50)</div></div>
+      <div class="stat stat-medio"><div class="n">27</div><div class="l">Ticket médio (R$50&ndash;150)</div></div>
       <div class="stat stat-alto"><div class="n">00</div><div class="l">Ticket alto (acima de R$150)</div></div>
       <div class="stat stat-comissao"><div class="n">18%</div><div class="l">Comissão média da leva</div></div>
     </section>
@@ -508,12 +472,12 @@
               data-produto-id="58261007213"
               data-nome="Baby Doll Canelado Com Renda Luxo Pijama Short Dool Sensual Fresquinho Rendado Confortável" data-preco="40.90"
               data-comissao="28"
-              data-link="https://s.shopee.com.br/W6YLKHlFU"
+              data-link="https://s.shopee.com.br/9zxdhobqLr"
               data-categoria="">
           </td>
           <td class="col-pos">04</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/W6YLKHlFU" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820li-monzys2u3ocld7" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/9zxdhobqLr" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820li-monzys2u3ocld7" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-58261007213" class="nome">Baby Doll Canelado Com Renda Luxo Pijama Short Dool Sensual Fresquinho Rendado Confortável</label>
@@ -524,9 +488,9 @@
           <td class="col-num destaque">28%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">1,618</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/W6YLKHlFU" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/9zxdhobqLr" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="28" data-avaliacao="4.8" data-vendidos="223">
+        <tr data-tier="medio" data-comissao="28" data-avaliacao="4.9" data-vendidos="223">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-20299494383"
               data-produto-id="20299494383"
@@ -546,7 +510,7 @@
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
           <td class="col-num">R$&nbsp;79.99</td>
           <td class="col-num destaque">28%</td>
-          <td class="col-num">4.8&#9733;</td>
+          <td class="col-num">4.9&#9733;</td>
           <td class="col-num">223</td>
           <td class="col-link"><a href="https://s.shopee.com.br/4Azqi43no6" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
@@ -652,12 +616,12 @@
               data-produto-id="23394689700"
               data-nome="Espelho de vidro Oval 80x50 cm Borda Polida Lapidada com Led Banheiro Escritorio sala" data-preco="53.89"
               data-comissao="23"
-              data-link="https://s.shopee.com.br/qjOjwGUZW"
+              data-link="https://s.shopee.com.br/AKaU6QaZft"
               data-categoria="">
           </td>
           <td class="col-pos">10</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/qjOjwGUZW" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81ztc-mjbea0fkfwue8e" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/AKaU6QaZft" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81ztc-mjbea0fkfwue8e" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-23394689700" class="nome">Espelho de vidro Oval 80x50 cm Borda Polida Lapidada com Led Banheiro Escritorio sala</label>
@@ -668,7 +632,7 @@
           <td class="col-num destaque">23%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">1,900</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/qjOjwGUZW" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/AKaU6QaZft" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="medio" data-comissao="23" data-avaliacao="5.0" data-vendidos="1490">
           <td class="col-check">
@@ -676,12 +640,12 @@
               data-produto-id="22394942664"
               data-nome="Manta Cobertor Microfibra Casal Queen Super Quentinha Toque Macio Cereja Habitat" data-preco="54.89"
               data-comissao="23"
-              data-link="https://s.shopee.com.br/2Vrcj0A9Bw"
+              data-link="https://s.shopee.com.br/9KhwuaeNhn"
               data-categoria="">
           </td>
           <td class="col-pos">11</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/2Vrcj0A9Bw" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134201-820m1-mqxmwfekketj5a" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/9KhwuaeNhn" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134201-820m1-mqxmwfekketj5a" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-22394942664" class="nome">Manta Cobertor Microfibra Casal Queen Super Quentinha Toque Macio Cereja Habitat</label>
@@ -692,7 +656,7 @@
           <td class="col-num destaque">23%</td>
           <td class="col-num">5.0&#9733;</td>
           <td class="col-num">1,490</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/2Vrcj0A9Bw" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/9KhwuaeNhn" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="medio" data-comissao="23" data-avaliacao="4.6" data-vendidos="1404">
           <td class="col-check">
@@ -868,12 +832,12 @@
               data-produto-id="22999032474"
               data-nome="Garrafa Térmica Prisma 950 ml Para Chás/Café  Design Moderno Cabo Madeira" data-preco="59.90"
               data-comissao="19"
-              data-link="https://s.shopee.com.br/1LffKrEaYp"
+              data-link="https://s.shopee.com.br/8AVzWRip4g"
               data-categoria="">
           </td>
           <td class="col-pos">19</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/1LffKrEaYp" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-823pk-mpb78cwau6tefe" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/8AVzWRip4g" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-823pk-mpb78cwau6tefe" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-22999032474" class="nome">Garrafa Térmica Prisma 950 ml Para Chás/Café  Design Moderno Cabo Madeira</label>
@@ -884,7 +848,7 @@
           <td class="col-num destaque">19%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">1,683</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/1LffKrEaYp" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/8AVzWRip4g" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="medio" data-comissao="18" data-avaliacao="4.9" data-vendidos="2116">
           <td class="col-check">
@@ -892,12 +856,12 @@
               data-produto-id="43273031895"
               data-nome="Jogo com 6 Potes Hermético 1,1 Litro Armazenar Alimento Organizar" data-preco="76.71"
               data-comissao="18"
-              data-link="https://s.shopee.com.br/8KpPfinwMH"
+              data-link="https://s.shopee.com.br/20vMB76Iaa"
               data-categoria="">
           </td>
           <td class="col-pos">20</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/8KpPfinwMH" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mfijgskrvkef8e" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/20vMB76Iaa" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mfijgskrvkef8e" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-43273031895" class="nome">Jogo com 6 Potes Hermético 1,1 Litro Armazenar Alimento Organizar</label>
@@ -908,7 +872,7 @@
           <td class="col-num destaque">18%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">2,116</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/8KpPfinwMH" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/20vMB76Iaa" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo" data-comissao="17" data-avaliacao="4.9" data-vendidos="2976">
           <td class="col-check">
@@ -1204,12 +1168,12 @@
               data-produto-id="22198124723"
               data-nome="Tapioqueira Peneira Polvilhador Armazena Tapioca Beiju Farinha Cozinha Utensilio Cores Aleatorias" data-preco="20.00"
               data-comissao="24"
-              data-link="https://s.shopee.com.br/1AHkPJfGR"
+              data-link="https://s.shopee.com.br/9V1N6tdkMo"
               data-categoria="">
           </td>
           <td class="col-pos">33</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/1AHkPJfGR" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820la-mlhvrnja7jet76" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/9V1N6tdkMo" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820la-mlhvrnja7jet76" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-22198124723" class="nome">Tapioqueira Peneira Polvilhador Armazena Tapioca Beiju Farinha Cozinha Utensilio Cores Aleatorias</label>
@@ -1220,7 +1184,7 @@
           <td class="col-num destaque">24%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">6,469</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/1AHkPJfGR" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/9V1N6tdkMo" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="medio" data-comissao="8" data-avaliacao="4.8" data-vendidos="9465">
           <td class="col-check">
@@ -1228,12 +1192,12 @@
               data-produto-id="23892669902"
               data-nome="3L Picador De Alimentos Moedor De Carne Mixer Elétrica Processador Cozinha Casa Alho - 110v-220v" data-preco="69.00"
               data-comissao="8"
-              data-link="https://s.shopee.com.br/AUtuFhfgxk"
+              data-link="https://s.shopee.com.br/2Vrcm24OZj"
               data-categoria="">
           </td>
           <td class="col-pos">34</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/AUtuFhfgxk" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820m8-mmcgl3nag8au55" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/2Vrcm24OZj" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820m8-mmcgl3nag8au55" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-23892669902" class="nome">3L Picador De Alimentos Moedor De Carne Mixer Elétrica Processador Cozinha Casa Alho - 110v-220v</label>
@@ -1244,7 +1208,7 @@
           <td class="col-num destaque">8%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">9,465</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/AUtuFhfgxk" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/2Vrcm24OZj" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo" data-comissao="28" data-avaliacao="4.8" data-vendidos="1259">
           <td class="col-check">
@@ -1270,18 +1234,42 @@
           <td class="col-num">1,259</td>
           <td class="col-link"><a href="https://s.shopee.com.br/60RUq7rdc0" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
+        <tr data-tier="medio" data-comissao="20" data-avaliacao="5.0" data-vendidos="6817">
+          <td class="col-check">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-25155478447"
+              data-produto-id="25155478447"
+              data-nome="MEDICUBE zero pore pad 2.0,zero pore pad mild 3types(original pad/refill)" data-preco="144.98"
+              data-comissao="20"
+              data-link="https://s.shopee.com.br/AUtuIjZwKu"
+              data-categoria="">
+          </td>
+          <td class="col-pos">36</td>
+          <td class="col-foto">
+            <a href="https://s.shopee.com.br/AUtuIjZwKu" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134207-7rdxs-mcudbphhjtqme1" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+          </td>
+          <td class="col-nome">
+            <label for="tabela-principal-25155478447" class="nome">MEDICUBE zero pore pad 2.0,zero pore pad mild 3types(original pad/refill)</label>
+            <div class="loja">koksara.kbeauty</div>
+          </td>
+          <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-num">R$&nbsp;144.98</td>
+          <td class="col-num destaque">20%</td>
+          <td class="col-num">5.0&#9733;</td>
+          <td class="col-num">6,817</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/AUtuIjZwKu" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+        </tr>
         <tr data-tier="baixo" data-comissao="13" data-avaliacao="4.6" data-vendidos="12958">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-58203349505"
               data-produto-id="58203349505"
               data-nome="Porta Frios Duplo Preto para Presunto e Queijo Com Fundo Removível Para Conservar e Organizar a Geladeira Hermetico" data-preco="17.89"
               data-comissao="13"
-              data-link="https://s.shopee.com.br/9056SwlP0L"
+              data-link="https://s.shopee.com.br/1LffNt8pwO"
               data-categoria="">
           </td>
-          <td class="col-pos">36</td>
+          <td class="col-pos">37</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/9056SwlP0L" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820l9-ml6ctmoc7ojo37" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/1LffNt8pwO" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820l9-ml6ctmoc7ojo37" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-58203349505" class="nome">Porta Frios Duplo Preto para Presunto e Queijo Com Fundo Removível Para Conservar e Organizar a Geladeira Hermetico</label>
@@ -1292,7 +1280,7 @@
           <td class="col-num destaque">13%</td>
           <td class="col-num">4.6&#9733;</td>
           <td class="col-num">12,958</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/9056SwlP0L" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/1LffNt8pwO" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo" data-comissao="23" data-avaliacao="4.9" data-vendidos="2338">
           <td class="col-check">
@@ -1300,12 +1288,12 @@
               data-produto-id="22097923147"
               data-nome="Creme Anti-Estrias - Diga Adeus às Estrias! Previne Novas Estrias & Reforça a Elasticidade Da Pele" data-preco="38.90"
               data-comissao="23"
-              data-link="https://s.shopee.com.br/8AVzTPoZhG"
+              data-link="https://s.shopee.com.br/2BEmNQ5fFd"
               data-categoria="">
           </td>
-          <td class="col-pos">37</td>
+          <td class="col-pos">38</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/8AVzTPoZhG" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820me-mmrrtbtgn37lec" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/2BEmNQ5fFd" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820me-mmrrtbtgn37lec" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-22097923147" class="nome">Creme Anti-Estrias - Diga Adeus às Estrias! Previne Novas Estrias & Reforça a Elasticidade Da Pele</label>
@@ -1316,7 +1304,7 @@
           <td class="col-num destaque">23%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">2,338</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/8AVzTPoZhG" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/2BEmNQ5fFd" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo" data-comissao="19" data-avaliacao="4.8" data-vendidos="5599">
           <td class="col-check">
@@ -1327,7 +1315,7 @@
               data-link="https://s.shopee.com.br/1BMF8YFDtY"
               data-categoria="">
           </td>
-          <td class="col-pos">38</td>
+          <td class="col-pos">39</td>
           <td class="col-foto">
             <a href="https://s.shopee.com.br/1BMF8YFDtY" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-7rfi6-m96pnweedbdz0a" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
@@ -1351,7 +1339,7 @@
               data-link="https://s.shopee.com.br/5q84dosGx5"
               data-categoria="">
           </td>
-          <td class="col-pos">39</td>
+          <td class="col-pos">40</td>
           <td class="col-foto">
             <a href="https://s.shopee.com.br/5q84dosGx5" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lz-moftar7ni39id6" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
@@ -1372,12 +1360,12 @@
               data-produto-id="22394343234"
               data-nome="Kit 4 Rolos de Sacos de Lixo 10L – 160 Unidades | Neutraliza Odores | Ideal para Pia e Banheiro" data-preco="28.69"
               data-comissao="18"
-              data-link="https://s.shopee.com.br/9AOWfFklfM"
+              data-link="https://s.shopee.com.br/80CZK8jSPf"
               data-categoria="">
           </td>
-          <td class="col-pos">40</td>
+          <td class="col-pos">41</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/9AOWfFklfM" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mh5k70jhwveo39" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/80CZK8jSPf" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mh5k70jhwveo39" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-22394343234" class="nome">Kit 4 Rolos de Sacos de Lixo 10L – 160 Unidades | Neutraliza Odores | Ideal para Pia e Banheiro</label>
@@ -1388,31 +1376,7 @@
           <td class="col-num destaque">18%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">6,457</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/9AOWfFklfM" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
-        </tr>
-        <tr data-tier="baixo" data-comissao="12" data-avaliacao="4.2" data-vendidos="1577">
-          <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-23393532698"
-              data-produto-id="23393532698"
-              data-nome="Robô Varredora/Aspirador De Pó Automática 3 Em 1 Limpeza Doméstica Robótico Inteligente E Silencioso" data-preco="42.89"
-              data-comissao="12"
-              data-link="https://s.shopee.com.br/7pt91UozPH"
-              data-categoria="">
-          </td>
-          <td class="col-pos">41</td>
-          <td class="col-foto">
-            <a href="https://s.shopee.com.br/7pt91UozPH" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-7r98o-m2nvio61etqd41" alt="" loading="lazy" onerror="this.style.display='none'"></a>
-          </td>
-          <td class="col-nome">
-            <label for="tabela-principal-23393532698" class="nome">Robô Varredora/Aspirador De Pó Automática 3 Em 1 Limpeza Doméstica Robótico Inteligente E Silencioso</label>
-            <div class="loja">Banana.Store_</div>
-          </td>
-          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;42.89</td>
-          <td class="col-num destaque">12%</td>
-          <td class="col-num">4.2&#9733;</td>
-          <td class="col-num">1,577</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/7pt91UozPH" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/80CZK8jSPf" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo" data-comissao="21" data-avaliacao="4.9" data-vendidos="2617">
           <td class="col-check">
@@ -1420,12 +1384,12 @@
               data-produto-id="45610825194"
               data-nome="Kit 10 Marmitas Potes 750ml Travas Laterais hermeticas - Livres de BPA Alimentos organiza congelador - KAZIVA" data-preco="39.90"
               data-comissao="21"
-              data-link="https://s.shopee.com.br/gPyXdH7uV"
+              data-link="https://s.shopee.com.br/AAH3u7bD0s"
               data-categoria="">
           </td>
           <td class="col-pos">42</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/gPyXdH7uV" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-822wz-mofgh74zvzex31" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/AAH3u7bD0s" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-822wz-mofgh74zvzex31" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-45610825194" class="nome">Kit 10 Marmitas Potes 750ml Travas Laterais hermeticas - Livres de BPA Alimentos organiza congelador - KAZIVA</label>
@@ -1436,7 +1400,7 @@
           <td class="col-num destaque">21%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">2,617</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/gPyXdH7uV" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/AAH3u7bD0s" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="medio" data-comissao="21" data-avaliacao="4.7" data-vendidos="2329">
           <td class="col-check">
@@ -1516,12 +1480,12 @@
               data-produto-id="23199020709"
               data-nome="Cozedor de Ovos Elétrico Portátil Cozinha à Vapor 110V/220V Cores disponíveis （Branco Azul Rosa Amarelo）" data-preco="29.98"
               data-comissao="11"
-              data-link="https://s.shopee.com.br/1Vz5XADxDq"
+              data-link="https://s.shopee.com.br/8KpPikiBjh"
               data-categoria="">
           </td>
           <td class="col-pos">46</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/1Vz5XADxDq" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mfytb2po8gzk07" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/8KpPikiBjh" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mfytb2po8gzk07" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-23199020709" class="nome">Cozedor de Ovos Elétrico Portátil Cozinha à Vapor 110V/220V Cores disponíveis （Branco Azul Rosa Amarelo）</label>
@@ -1532,7 +1496,7 @@
           <td class="col-num destaque">11%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">11,176</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/1Vz5XADxDq" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/8KpPikiBjh" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo" data-comissao="13" data-avaliacao="4.8" data-vendidos="8314">
           <td class="col-check">
@@ -1564,12 +1528,12 @@
               data-produto-id="58250403906"
               data-nome="Mangueira De Jardim Reforçada Trançada Completa 10/15/20/25/30/35/50 Metros" data-preco="16.90"
               data-comissao="18"
-              data-link="https://s.shopee.com.br/2LYCWhAmWv"
+              data-link="https://s.shopee.com.br/9AOWiHf12m"
               data-categoria="">
           </td>
           <td class="col-pos">48</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/2LYCWhAmWv" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mgqwmtfzjs3p61" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/9AOWiHf12m" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mgqwmtfzjs3p61" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-58250403906" class="nome">Mangueira De Jardim Reforçada Trançada Completa 10/15/20/25/30/35/50 Metros</label>
@@ -1580,7 +1544,7 @@
           <td class="col-num destaque">18%</td>
           <td class="col-num">4.7&#9733;</td>
           <td class="col-num">3,122</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/2LYCWhAmWv" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/9AOWiHf12m" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         <tr data-tier="baixo" data-comissao="14" data-avaliacao="4.9" data-vendidos="6686">
           <td class="col-check">
@@ -1612,12 +1576,12 @@
               data-produto-id="58205832467"
               data-nome="Escova de Silicone 2 em 1 para Vaso Sanitário - Base de Banheiro Privada, Alta Eficiênci" data-preco="14.99"
               data-comissao="13"
-              data-link="https://s.shopee.com.br/AAH3r5gxdi"
+              data-link="https://s.shopee.com.br/BThzkDHJJ"
               data-categoria="">
           </td>
           <td class="col-pos">50</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/AAH3r5gxdi" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-8260s-ml5a6t2qwff3f8" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/BThzkDHJJ" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-8260s-ml5a6t2qwff3f8" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-58205832467" class="nome">Escova de Silicone 2 em 1 para Vaso Sanitário - Base de Banheiro Privada, Alta Eficiênci</label>
@@ -1628,14 +1592,14 @@
           <td class="col-num destaque">13%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">6,962</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/AAH3r5gxdi" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/BThzkDHJJ" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         </tbody>
       </table>
     </div>
     
 
-    <p class="rodape">Gerado a partir da Shopee Affiliate API &middot; Cockpit de Afiliação IA-First</p>
+    <p class="rodape">Gerado a partir da Shopee Affiliate API &middot; Agente Shopee</p>
   </div>
 
   <div class="barra-selecao">
