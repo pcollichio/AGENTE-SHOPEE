@@ -13,19 +13,22 @@ from shopee_integration import painel_roi, roi
 def main():
     investimentos = roi.carregar_investimentos()
     vendas = roi.carregar_vendas()
+    vendas_pendentes = roi.carregar_vendas_pendentes()
 
-    caminho = painel_roi.salvar_painel(investimentos, vendas, "painel_roi.html")
+    caminho = painel_roi.salvar_painel(investimentos, vendas, "painel_roi.html", vendas_pendentes=vendas_pendentes)
     print(f"Painel de ROI salvo em: {caminho}")
 
     caminho_json = roi.exportar_resumo_json()
     print(f"Resumo em JSON salvo em: {caminho_json}")
 
-    resumo = roi.calcular_resumo(investimentos, vendas)
+    resumo = roi.calcular_resumo(investimentos, vendas, vendas_pendentes)
     roi_texto = f"{resumo['roi_medio']:.1f}x" if resumo["roi_medio"] is not None else "sem dados ainda"
     print(f"Investido: R${resumo['total_investido']:.2f} | "
           f"Comissão: R${resumo['total_comissao']:.2f} | ROI médio: {roi_texto}")
     print(f"Meta do mês: R${resumo['comissao_mes_atual']:.2f} de R${resumo['meta_mensal']:.0f} "
           f"({resumo['progresso_meta']*100:.0f}%)")
+    if resumo["comissao_pendente"] > 0:
+        print(f"Pendente na Shopee (não contado acima): R${resumo['comissao_pendente']:.2f}")
 
 
 if __name__ == "__main__":

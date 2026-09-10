@@ -55,10 +55,14 @@ sugerir arquitetura pra isso.
   (chat, busca, seleção) dependem do deploy estar ativo.
 - `importar.html` tem um campo de **upload de arquivo** (relatório de
   vendas Shopee, extrato/print do Meta Ads) — envia pro GitHub em
-  `financeiro/importados/` via `api/importar_arquivo.js`, sem tentar
-  parsear automaticamente (formato varia demais). Quando o usuário
-  avisar que subiu um arquivo, leia-o de lá e converta pros CSVs de
-  `financeiro/` (investimentos.csv / vendas.csv) você mesmo.
+  `financeiro/importados/` via `api/importar_arquivo.js`. Desde 10/09,
+  os dois formatos reais já são conhecidos e têm parser:
+  `importar_extratos.py caminho/do/arquivo` (`.csv` = comissões da
+  Shopee, `.xlsx` = Gerenciador de Anúncios da Meta) — rode com esse
+  arquivo quando o usuário avisar que subiu um. Se vier um formato
+  diferente desses dois (ou o layout mudar), leia manualmente e
+  converta pros CSVs de `financeiro/` você mesmo, do jeito que sempre
+  fez.
 
 ## Onde as coisas estão
 
@@ -66,9 +70,14 @@ sugerir arquitetura pra isso.
   workflow.
 - `cockpit-shopee/leva_do_dia.md` — leva de produtos do dia (atualizada
   às 9h por `leva-diaria.yml`).
-- `cockpit-shopee/financeiro/` — investimento e vendas (import manual,
-  não automatizado — ver decisão em `HISTORICO.md`).
-- `cockpit-shopee/financeiro/resumo.json` — resumo do ROI em JSON.
+- `cockpit-shopee/financeiro/` — investimento e vendas. `investimentos.csv`
+  e `vendas.csv` são manuais; desde 10/09, `vendas_shopee.csv` (venda
+  confirmada) e `vendas_pendentes.csv` (não confirmada, só informativa,
+  fora do ROI/meta) vêm de `importar_extratos.py`, a partir do
+  relatório de comissões exportado do painel de afiliado da Shopee —
+  ver `financeiro/README.md`.
+- `cockpit-shopee/financeiro/resumo.json` — resumo do ROI em JSON
+  (inclui `comissao_pendente`, desde 10/09).
 - `cockpit-shopee/esteira.json` — lista viva (acumulada, não
   sobrescrita) de todos os produtos já selecionados no painel; leia
   antes de gerar roteiro ou responder sobre o que já foi selecionado.

@@ -457,3 +457,36 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   @papairesolve_br — não a narrativa do roteiro; só o personagem saiu
   da narração). Testado com Playwright: roteiro/legenda salvos na
   esteira sem nenhuma menção a "papai" fora da hashtag de marca.
+- **Importação real do financeiro: relatório de comissões da Shopee +
+  Gerenciador de Anúncios da Meta.** Usuário mandou os dois relatórios
+  reais (período 01–10/09) "pra eu entender o que será enviado".
+  Analisei os dois formatos: o CSV de comissões da Shopee (um registro
+  por pedido, com status Pendente/Concluído/Cancelado, comissão líquida
+  do afiliado, e um campo `Sub_id1` que o usuário já usa como etiqueta
+  de rastreio por post, ex: "RIPADO0509") e o xlsx do Gerenciador de
+  Anúncios da Meta (gasto por campanha/conjunto de anúncios, num
+  período). Perguntei duas coisas: (1) se "Pendente" deve contar no
+  financeiro — resposta: mostrar no Dashboard, mas **não contar** até
+  virar "Concluído" (pode cancelar); (2) se importava esse lote agora
+  ou só aprendia o formato — sem preferência, decidi importar (dados
+  reais, úteis).
+  Implementado: **novo `importar_extratos.py`** (detecta `.csv` vs
+  `.xlsx` pela extensão, idempotente — usa ID do pedido / campanha+data
+  como chave, não duplica rodando de novo). Achado no caminho: o
+  exportador de CSV da Shopee tem um bug de formatação — toda linha com
+  campo contendo vírgula (ex: "Notas do item") vem com a linha INTEIRA
+  entre aspas e as aspas internas dobradas, em vez de só aquele campo
+  ser citado; `_corrigir_linha_shopee()` desfaz isso antes de
+  interpretar como CSV normal (validado contra o arquivo real). Status
+  "Concluído" vira venda em `financeiro/vendas_shopee.csv` (conta no
+  ROI/meta); "Pendente" vai pro **novo** `financeiro/vendas_pendentes.csv`
+  (só informativo); "Cancelado" é ignorado. Para o xlsx da Meta,
+  importa por conjunto de anúncios (não pela linha agregada "All", que
+  duplicaria o gasto). Adicionado `openpyxl` em `requirements.txt`.
+  `roi.py` ganhou `carregar_vendas_pendentes()` e o campo
+  `comissao_pendente` em `calcular_resumo()`/`resumo.json`;
+  `painel_roi.py` mostra "+ R$X pendente na Shopee" abaixo da barra da
+  meta, sem entrar na conta. Rodado contra os dois arquivos reais: 1
+  venda concluída (R$1,80), 7 pendentes (R$26,41), 4 campanhas de
+  anúncio (R$121,99) — confirmado no Dashboard gerado, idempotência
+  testada (rodar de novo: 0 novos em ambos).

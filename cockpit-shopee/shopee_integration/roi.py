@@ -15,6 +15,7 @@ ROI_META = 3.0
 CAMINHO_INVESTIMENTOS = "financeiro/investimentos.csv"
 CAMINHO_VENDAS = "financeiro/vendas.csv"
 CAMINHO_VENDAS_SHOPEE = "financeiro/vendas_shopee.csv"
+CAMINHO_VENDAS_PENDENTES = "financeiro/vendas_pendentes.csv"
 CAMINHO_RESUMO_JSON = "financeiro/resumo.json"
 
 
@@ -48,10 +49,13 @@ def carregar_investimentos(caminho=CAMINHO_INVESTIMENTOS):
 
 
 def carregar_vendas(caminho=CAMINHO_VENDAS, caminho_shopee=CAMINHO_VENDAS_SHOPEE):
-    """Junta as vendas digitadas manualmente (vendas.csv) com as
-    sincronizadas automaticamente da Shopee (vendas_shopee.csv, gerado
-    por sincronizar_vendas.py) — são arquivos separados de propósito, pra
-    a sincronização automática nunca sobrescrever o que você digitou."""
+    """Junta as vendas digitadas manualmente (vendas.csv) com as vindas da
+    Shopee (vendas_shopee.csv — desde 10/09, escrito por
+    `importar_extratos.py` a partir do relatório de comissões exportado
+    do painel de afiliado, só linhas com status "Concluído"; o
+    `sincronizar_vendas.py` experimental também escreveria aqui, se
+    algum dia for validado) — são arquivos separados de propósito, pra
+    a importação/sincronização nunca sobrescrever o que você digitou."""
     linhas_manuais = _ler_csv(caminho)
     linhas_shopee = _ler_csv(caminho_shopee)
 
@@ -70,12 +74,31 @@ def carregar_vendas(caminho=CAMINHO_VENDAS, caminho_shopee=CAMINHO_VENDAS_SHOPEE
             "data": l.get("data", "").strip(),
             "produto": l.get("produto", "").strip(),
             "valor": _float_seguro(l.get("comissao_recebida")),
-            "observacao": f"Sincronizado da Shopee (conversão {l.get('conversion_id', '')})",
+            "observacao": f"Shopee, pedido {l.get('conversion_id', '')}",
         }
         for l in linhas_shopee
         if l.get("data")
     ]
     return vendas
+
+
+def carregar_vendas_pendentes(caminho=CAMINHO_VENDAS_PENDENTES):
+    """Vendas com status "Pendente" no relatório de comissões da Shopee —
+    ainda podem ser canceladas, então NÃO contam no ROI nem na meta
+    mensal (`calcular_resumo`/`calcular_roi_por_produto` não leem este
+    arquivo). Servem só pra mostrar no Dashboard quanto tem "em
+    trânsito", separado do que já é garantido."""
+    linhas = _ler_csv(caminho)
+    return [
+        {
+            "data": l.get("data", "").strip(),
+            "produto": l.get("produto", "").strip(),
+            "valor": _float_seguro(l.get("comissao_prevista")),
+            "observacao": f"Shopee, pedido {l.get('conversion_id', '')} (pendente)",
+        }
+        for l in linhas
+        if l.get("data")
+    ]
 
 
 def status_roi(roi):
@@ -147,8 +170,9 @@ def calcular_serie_acumulada(vendas, ano=None, mes=None):
     return serie
 
 
-def calcular_resumo(investimentos, vendas):
+def calcular_resumo(investimentos, vendas, vendas_pendentes=None):
     hoje = date.today()
+    vendas_pendentes = vendas_pendentes or []
 
     total_investido = sum(i["valor"] for i in investimentos)
     total_comissao = sum(v["valor"] for v in vendas)
@@ -161,6 +185,10 @@ def calcular_resumo(investimentos, vendas):
     )
     progresso_meta = min(comissao_mes_atual / META_MENSAL, 1.0) if META_MENSAL else 0
 
+    # Comissão "Pendente" no relatório da Shopee — não é garantida (pode
+    # cancelar), então fica só informativa, fora do ROI e da meta mensal.
+    comissao_pendente = sum(v["valor"] for v in vendas_pendentes)
+
     return {
         "total_investido": total_investido,
         "total_comissao": total_comissao,
@@ -168,6 +196,7 @@ def calcular_resumo(investimentos, vendas):
         "comissao_mes_atual": comissao_mes_atual,
         "progresso_meta": progresso_meta,
         "meta_mensal": META_MENSAL,
+        "comissao_pendente": comissao_pendente,
     }
 
 
@@ -177,7 +206,8 @@ def exportar_resumo_json(caminho=CAMINHO_RESUMO_JSON):
     entender o HTML dos painéis."""
     investimentos = carregar_investimentos()
     vendas = carregar_vendas()
-    resumo = calcular_resumo(investimentos, vendas)
+    vendas_pendentes = carregar_vendas_pendentes()
+    resumo = calcular_resumo(investimentos, vendas, vendas_pendentes)
     por_produto = calcular_roi_por_produto(investimentos, vendas)
     serie = calcular_serie_acumulada(vendas)
 

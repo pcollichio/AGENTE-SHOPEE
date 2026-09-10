@@ -34,24 +34,45 @@ data,produto,comissao_recebida,observacao
 
 Mesmas regras de formato do arquivo acima.
 
-## `vendas_shopee.csv` — puxado automaticamente (não editar à mão)
+## `vendas_shopee.csv` e `vendas_pendentes.csv` — importados de relatório (não editar à mão)
 
-Rodando `python sincronizar_vendas.py` (no seu computador ou no Colab,
-igual fazemos com a busca de produtos), o sistema busca direto na Shopee
-as vendas confirmadas dos últimos 30 dias e sobrescreve esse arquivo
-sozinho. Ele é **separado** do `vendas.csv` de propósito — assim a
-sincronização automática nunca apaga o que você digitou manualmente. O
-painel de ROI soma os dois.
+Desde 10/09, rodando `python importar_extratos.py caminho/do/relatorio.csv`
+com o **relatório de comissões de afiliado** exportado do painel da
+Shopee (Portal de Afiliados → Relatórios → Comissão), o sistema separa
+os pedidos por status:
 
-Essa parte é nova e ainda não foi validada contra uma resposta real da
-Shopee (não achamos a documentação técnica oficial). Se der erro ao
-rodar, me manda a mensagem completa que eu ajusto.
+- **Concluído** → vira venda de verdade em `vendas_shopee.csv` (conta
+  no ROI e na meta mensal).
+- **Pendente** → vai pra `vendas_pendentes.csv` (só aparece como "R$X
+  pendente" no Dashboard — ainda pode ser cancelado, então não conta
+  no ROI nem na meta até aparecer como Concluído num relatório futuro).
+- **Cancelado** → ignorado.
+
+Rodar de novo com um relatório mais recente (que repete pedidos
+antigos) não duplica nada — o script usa o ID do pedido como chave.
+Esses dois arquivos são **separados** do `vendas.csv` de propósito —
+assim a importação nunca apaga o que você digitou manualmente. O
+painel de ROI soma `vendas.csv` + `vendas_shopee.csv` (não soma
+`vendas_pendentes.csv`, que é só informativo).
+
+(`sincronizar_vendas.py`, uma tentativa anterior de puxar vendas direto
+da API em vez de relatório exportado, continua no repositório mas
+nunca foi validada contra uma resposta real — o caminho do relatório
+exportado funcionou de primeira e é o que está em uso.)
+
+## Gasto com anúncios — importado do gerenciador da Meta
+
+Rodando `python importar_extratos.py caminho/do/relatorio.xlsx` com o
+relatório exportado do Gerenciador de Anúncios (Meta Ads Manager,
+formato .xlsx), o sistema acrescenta uma linha em `investimentos.csv`
+por conjunto de anúncios (cada um corresponde, normalmente, a um post
+impulsionado). Também idempotente — rodar de novo não duplica.
 
 ## O que acontece com esses dados
 
-O painel de ROI (`painel_roi.html`) lê os dois arquivos automaticamente
-(rodando `python gerar_roi.py`, ou pela automação diária do GitHub
-Actions) e calcula:
+O painel de ROI (`painel_roi.html`) lê todos esses arquivos
+automaticamente (rodando `python gerar_roi.py`, ou pela automação
+diária do GitHub Actions) e calcula:
 
 - Quanto você já investiu x quanto já recebeu de comissão
 - O ROI de cada produto/campanha (meta: 3x — cada R$1 investido deve

@@ -84,8 +84,13 @@ por uma chamada direta.
   e também escreve `financeiro/resumo.json` (o chat lê esse arquivo)
 - `gerar_esteira.py` — recalcula o status da esteira (`esteira.html`)
   cruzando `esteira.json` com o financeiro
+- `importar_extratos.py` — importa o relatório de comissões da Shopee
+  (.csv) e o relatório do Gerenciador de Anúncios da Meta (.xlsx) pros
+  CSVs de `financeiro/`, sem precisar digitar nada à mão (idempotente —
+  rodar de novo não duplica)
 - `sincronizar_vendas.py` — tenta puxar vendas reais direto da Shopee
-  (experimental, ainda sendo validado contra a API)
+  (experimental, ainda sendo validado contra a API — `importar_extratos.py`
+  é o caminho que já funciona, via relatório exportado)
 - `financeiro/` — onde ficam os dados de investimento e vendas
   (`README.md` ali explica o formato)
 - `produtos_manuais.txt` / `produtos_excluir.txt` — ajustes finos da

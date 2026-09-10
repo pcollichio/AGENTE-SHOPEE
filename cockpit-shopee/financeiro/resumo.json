@@ -1,13 +1,48 @@
 {
-  "atualizado_em": "2026-09-10T20:31:43",
+  "atualizado_em": "2026-09-10T20:46:50",
   "resumo": {
-    "total_investido": 0,
-    "total_comissao": 0,
-    "roi_medio": null,
-    "comissao_mes_atual": 0,
-    "progresso_meta": 0.0,
-    "meta_mensal": 10000.0
+    "total_investido": 121.99,
+    "total_comissao": 1.8006,
+    "roi_medio": 0.01476022624805312,
+    "comissao_mes_atual": 1.8006,
+    "progresso_meta": 0.00018006,
+    "meta_mensal": 10000.0,
+    "comissao_pendente": 26.407649999999997
   },
-  "roi_por_produto": [],
-  "serie_acumulada_mes": []
+  "roi_por_produto": [
+    {
+      "produto": "Instagram post: #papairesolve - Instale a sua !...",
+      "investido": 37.94,
+      "comissao": 0.0,
+      "roi": 0.0,
+      "status": "critical"
+    },
+    {
+      "produto": "Post do Instagram: “Adeus mangueira velha que...",
+      "investido": 41.14,
+      "comissao": 0.0,
+      "roi": 0.0,
+      "status": "critical"
+    },
+    {
+      "produto": "Post do Instagram: ￼Fácil de instalar!...",
+      "investido": 42.91,
+      "comissao": 0.0,
+      "roi": 0.0,
+      "status": "critical"
+    },
+    {
+      "produto": "Escova Elétrica de Limpeza 5 em 1 Sem Fio Recarregável Multiuso para Cozinha Banheiro Azulejo",
+      "investido": 0.0,
+      "comissao": 1.8006,
+      "roi": null,
+      "status": "warning"
+    }
+  ],
+  "serie_acumulada_mes": [
+    {
+      "data": "2026-09-10",
+      "acumulado": 1.8
+    }
+  ]
 }

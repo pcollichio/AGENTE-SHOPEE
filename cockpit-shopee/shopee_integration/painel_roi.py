@@ -132,8 +132,9 @@ def _grafico_svg(serie):
     </script>"""
 
 
-def gerar_html(investimentos, vendas, titulo="Dashboard — Papai Resolve"):
-    resumo = roi_calc.calcular_resumo(investimentos, vendas)
+def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard — Papai Resolve"):
+    vendas_pendentes = vendas_pendentes or []
+    resumo = roi_calc.calcular_resumo(investimentos, vendas, vendas_pendentes)
     por_produto = roi_calc.calcular_roi_por_produto(investimentos, vendas)
     serie = roi_calc.calcular_serie_acumulada(vendas)
 
@@ -159,6 +160,13 @@ def gerar_html(investimentos, vendas, titulo="Dashboard — Papai Resolve"):
 
     comissao_media_venda = (resumo["total_comissao"] / len(vendas)) if vendas else None
     comissao_media_texto = f"R$ {comissao_media_venda:.2f}" if comissao_media_venda is not None else "—"
+
+    pendente_html = ""
+    if resumo["comissao_pendente"] > 0:
+        pendente_html = (
+            f'<p class="pendente-nota">+ R$ {resumo["comissao_pendente"]:.2f} pendente '
+            f'na Shopee (pedido ainda não concluído — não entra na meta nem no ROI até confirmar)</p>'
+        )
 
     return f"""<!doctype html>
 <html lang="pt-br">
@@ -218,6 +226,7 @@ def gerar_html(investimentos, vendas, titulo="Dashboard — Papai Resolve"):
   .meta-valor {{ font-family: "IBM Plex Mono", monospace; font-size: 1rem; font-weight: 600; }}
   .barra-bg {{ background: var(--border); border-radius: 999px; height: 12px; overflow: hidden; }}
   .barra-fill {{ background: var(--accent); height: 100%; border-radius: 999px; }}
+  .pendente-nota {{ margin: 10px 0 0; font-size: 0.8rem; color: var(--muted); }}
 
   .secao-titulo {{ font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.05rem; margin: 32px 0 12px; }}
 
@@ -273,6 +282,7 @@ def gerar_html(investimentos, vendas, titulo="Dashboard — Papai Resolve"):
         <span class="meta-valor">R$ {resumo['comissao_mes_atual']:.2f} ({progresso_pct:.0f}%)</span>
       </div>
       <div class="barra-bg"><div class="barra-fill" style="width:{progresso_pct:.1f}%"></div></div>
+      {pendente_html}
     </div>
 
     <section class="resumo">
@@ -301,15 +311,15 @@ def gerar_html(investimentos, vendas, titulo="Dashboard — Papai Resolve"):
       </table>
     </div>
 
-    <p class="rodape">Dados de financeiro/investimentos.csv e financeiro/vendas.csv, preenchidos manualmente.</p>
+    <p class="rodape">Dados de financeiro/investimentos.csv e financeiro/vendas.csv (manuais) + financeiro/vendas_shopee.csv (importado de relatório da Shopee via importar_extratos.py).</p>
   </div>
 </body>
 </html>
 """
 
 
-def salvar_painel(investimentos, vendas, caminho, titulo="Dashboard — Papai Resolve"):
-    html = gerar_html(investimentos, vendas, titulo=titulo)
+def salvar_painel(investimentos, vendas, caminho, vendas_pendentes=None, titulo="Dashboard — Papai Resolve"):
+    html = gerar_html(investimentos, vendas, vendas_pendentes=vendas_pendentes, titulo=titulo)
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(html)
     return caminho
