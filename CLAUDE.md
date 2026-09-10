@@ -130,43 +130,58 @@ sugerir arquitetura pra isso.
 - **Pedido do usuário em 10/09: removida a restrição de nicho.** A leva
   não busca mais por palavra-chave de casa & construção — pede direto
   à API os produtos **mais vendidos da Shopee em geral**
-  (`client.buscar_produtos(sort_type="sales")`, sem `keyword`; parâmetro
-  `sortType` novo, ainda não validado contra resposta real — ver NOTA
-  em `shopee_integration/client.py`). Removidas
+  (`client.buscar_produtos(sort_type="sales")`, sem `keyword`).
+  `sortType` validado contra resposta real (não deu erro); `limit`
+  acima de 50 deu erro 11001 da Shopee (corrigido com paginação — ver
+  `client.LIMITE_MAXIMO_POR_PAGINA` e `PAGINAS_BUSCA_API`); `page`
+  (paginação) ainda não validado. Removidas
   `SUBCATEGORIAS_CASA_CONSTRUCAO` e `buscar_produtos_do_nicho()` de
   `buscar_leva_lancamento.py`, substituídas por `buscar_mais_vendidos()`.
   `produtos_excluir.txt` continua funcionando, só que agora como
   bloqueio manual de categorias indesejadas (não mais "manter o
-  nicho puro"). Efeito colateral: como os produtos não vêm mais
-  marcados com uma categoria de nicho (`termo_busca`), o roteiro/legenda
-  de todo produto cai no gancho genérico (`GANCHOS_ROTEIRO['_padrao']`)
-  em vez de um gancho específico por categoria — ainda não resolvido,
-  não pedido pelo usuário.
+  nicho puro"). Testado contra a API real: 50 produtos de categorias
+  variadas (moda, beleza, cozinha, decoração) confirmados no painel.
+  Efeito colateral resolvido no mesmo dia: ver "Padrão de narração e
+  legenda dos Reels" abaixo — `GANCHOS_ROTEIRO` (por categoria de
+  nicho) foi removido e substituído por um roteiro genérico, que serve
+  pra qualquer produto.
 - Links publicados: GitHub Pages em
   `https://pcollichio.github.io/AGENTE-SHOPEE/cockpit-shopee/cockpit.html`
   (e `/painel.html`, `/painel_roi.html`, etc.)
 
-## Padrão de narração e legenda dos Reels (fixado em 31/08, legenda em 01/09)
+## Padrão de narração e legenda dos Reels (fixado em 31/08, generalizado e sem persona em 10/09)
 
-Todo roteiro gerado (pelo painel ou a pedido no chat) segue este modelo:
-**narração em voz de jovem** (nem criança, nem adolescente), sempre
-abrindo com a frase fixa "Meu papai sempre resolve tudo aqui em casa!",
-depois a dor de um problema de casa, a solução com o produto, fechando
-com call to action. Estrutura de 5 blocos (~24s, ajustada em 01/09):
-Abertura (frase fixa) → Dor → Solução (o Papai acha o produto) → Prova
-(visual, sem falar) → Call to action. Implementado em `GANCHOS_ROTEIRO`
-e `montarRoteiro()` em `shopee_integration/painel.py` — se o usuário
-pedir um roteiro pontual no chat, siga esse mesmo modelo.
+**Histórico da mudança de 10/09** (dois passos, mesmo dia): primeiro,
+com a leva deixando de ser restrita ao nicho casa & construção, removi
+o banco `GANCHOS_ROTEIRO` (ganchos de dor por categoria de casa —
+hidráulica, cozinha, organização) e troquei a abertura fixa de "Meu
+papai sempre resolve tudo aqui em casa!" pra "Meu papai sempre resolve
+tudo!" (mesma persona, sem a especificidade de casa). Na sequência, o
+usuário pediu pra **esquecer de vez a narrativa "papai resolve"** e
+narrar só dor, solução e CTA — removida a abertura/persona por
+completo.
 
-A **legenda do post** segue o mesmo padrão de abertura, gerada junto com
-o roteiro a partir do mesmo `GANCHOS_ROTEIRO` (mesma dor/motivo): (1) a
-frase fixa "Meu papai sempre resolve tudo aqui em casa!"; (2) dor, em
-uma linha, com emoji 😩; (3) solução citando o produto pelo nome, com
-emoji ✅; (4) call to action pedindo pra comentar "QUERO" ou ir no link
-da bio, com emoji 🛒; (5) hashtags fixas (`#papairesolve
-#casaeconstrucao #achadosdashopee #dicasdecasa #paisdeplantao`).
-Implementado em `montarLegenda()`, ao lado de `montarRoteiro()`, no
-mesmo arquivo.
+**Formato atual**: sem personagem, direto ao ponto (~20s, 4 blocos):
+Dor → Solução (cita o produto) → Prova (visual, sem falar) → Call to
+action. Frases fixas, genéricas o bastante pra qualquer produto (roupa,
+beleza, eletrônico, casa etc.), sem citar problema específico de
+categoria: "Eu tinha um probleminha desse tipo e nada resolvia
+direito!" → "Aí eu achei [produto] — resolveu na hora!" → [prova
+visual] → "Corre que tá com desconto, R$[preço] — link na bio, comenta
+'QUERO' que a gente manda!". Implementado em `montarRoteiro()` em
+`shopee_integration/painel.py` — se o usuário pedir um roteiro pontual
+no chat, siga esse mesmo modelo (sem reintroduzir "papai" como
+personagem da narração).
+
+A **legenda do post** segue a mesma estrutura, sem a abertura: (1) dor,
+em uma linha, com emoji 😩; (2) solução citando o produto pelo nome, com
+emoji ✅; (3) call to action pedindo pra comentar "QUERO" ou ir no link
+da bio, com emoji 🛒; (4) hashtags fixas — `#papairesolve
+#achadosdashopee #shopeebrasil #promoshopee #achadinhos`. A hashtag
+`#papairesolve` continua porque é a marca da conta (@papairesolve_br),
+não a narrativa do roteiro — só o personagem "papai" saiu da narração
+em si. Implementado em `montarLegenda()`, ao lado de `montarRoteiro()`,
+no mesmo arquivo.
 
 Desde 01/09, tanto a narração quanto a legenda são salvas por produto em
 `esteira.json` (campos `narracao`/`legenda`) no momento da seleção no

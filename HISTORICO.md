@@ -421,4 +421,39 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   mock), e `buscar_mais_vendidos()` agora pagina (`PAGINAS_BUSCA_API =
   2`) em vez de pedir tudo numa chamada só, parando cedo se uma página
   vier vazia ou incompleta. Disparado `leva-diaria.yml` de novo depois
-  da correção pra confirmar.
+  da correção pra confirmar — funcionou: 50 produtos reais, de
+  categorias variadas (moda, cozinha, beleza, decoração), confirmados
+  no `painel.html`.
+- **Roteiro/legenda generalizado, sem banco de ganchos por categoria.**
+  Levantei que a narrativa "Papai Resolve" (abertura fixa "Meu papai
+  sempre resolve tudo aqui em casa!") não fazia mais sentido pra
+  produtos fora de casa (moda, beleza) agora que a leva não é mais só
+  do nicho — perguntei o que fazer (manter só pra produtos de casa,
+  generalizar o roteiro, ou deixar pra depois). Usuário escolheu
+  **generalizar**. Removido `GANCHOS_ROTEIRO` (o banco de dor/motivo
+  por categoria de casa — hidráulica, cozinha, organização etc.) de
+  `shopee_integration/painel.py`; `montarRoteiro()`/`montarLegenda()`
+  agora usam frases fixas, genéricas o bastante pra qualquer produto:
+  abertura "Meu papai sempre resolve tudo!" (tirado "aqui em casa"),
+  dor "Eu vivia com esse perrengue e nada resolvia direito!", solução
+  "Mas aí ele achou [produto] — resolveu na hora!". Hashtags da
+  legenda também generalizadas: tiradas `#casaeconstrucao`,
+  `#dicasdecasa` e `#paisdeplantao` (específicas do nicho antigo),
+  adicionadas `#shopeebrasil`, `#promoshopee`, `#achadinhos` (mantido
+  `#papairesolve` e `#achadosdashopee`). Removido também o import
+  `json` de `painel.py` (só existia pra serializar `GANCHOS_ROTEIRO`
+  pro JS, ficou sem uso). Testado com Playwright: roteiro/legenda
+  gerados pra um produto de moda (baby doll) saem coerentes, sem
+  nenhuma referência a "casa" fora da abertura de marca.
+- **Persona "papai" removida da narração (mesma conversa, direto).**
+  Usuário: "esqueça a narrativa papai resolve, vamos tratar de narrar
+  o resto, dor, solução e cta". Tirada a abertura fixa "Meu papai
+  sempre resolve tudo!" e a referência a "ele" (o papai) na solução —
+  `montarRoteiro()` fica com 4 blocos, sem personagem: Dor ("Eu tinha
+  um probleminha desse tipo e nada resolvia direito!") → Solução ("Aí
+  eu achei [produto] — resolveu na hora!") → Prova (visual, sem falar)
+  → Call to action, ~20s. `montarLegenda()` idem, sem a linha de
+  abertura. A hashtag `#papairesolve` foi mantida (é a marca da conta,
+  @papairesolve_br — não a narrativa do roteiro; só o personagem saiu
+  da narração). Testado com Playwright: roteiro/legenda salvos na
+  esteira sem nenhuma menção a "papai" fora da hashtag de marca.

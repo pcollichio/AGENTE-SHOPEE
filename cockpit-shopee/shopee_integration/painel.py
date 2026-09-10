@@ -3,13 +3,12 @@ Gera o painel visual (HTML autônomo, sem dependências externas) com a leva
 de produtos do dia, para ser aberto direto no navegador ou publicado via
 GitHub Pages.
 
-O painel permite marcar produtos (da leva automática ou dos adicionados
-manualmente via produtos_manuais.txt) e baixar a lista marcada como um
-arquivo Markdown — essa lista é o que segue para a esteira de produção de
-conteúdo (criativos e texto).
+O painel permite marcar produtos (da leva automática, da busca ao vivo
+por descrição/link, ou dos adicionados manualmente via
+produtos_manuais.txt) e salvar a seleção direto na esteira de produção
+de conteúdo (criativos e texto), já com roteiro e legenda prontos.
 """
 
-import json
 from datetime import date
 
 from . import nav
@@ -20,71 +19,20 @@ TIER_LABELS = {
     "alto": "Alto",
 }
 
-# Banco de "ganchos" do modelo de narração Papai Resolve: para cada
-# categoria de busca, um problema comum de casa (o gancho inicial) e o
-# motivo pelo qual o produto resolve. Usado para montar o roteiro
-# automaticamente a partir do produto marcado no painel.
-# Banco de "ganchos" do modelo de narração Papai Resolve — padrão
-# fixado em 2026-08-31, voz ajustada em 2026-09-01: narração em voz de
-# jovem (nem criança, nem adolescente), sempre abrindo com "Meu papai
-# sempre resolve tudo aqui em casa!", depois a dor de um problema de
-# casa, a solução com o produto, fechando com call to action. Para
-# cada categoria de busca, o problema (a dor, falada em 1ª pessoa) e o
-# motivo pelo qual o produto resolve.
-GANCHOS_ROTEIRO = {
-    "ferramentas": {
-        "problema": "Toda vez que quebra alguma coisa em casa, o Papai passa o dia procurando a ferramenta certa!",
-        "motivo": "resolve na hora porque já tem tudo pronto pro reparo",
-    },
-    "organizacao": {
-        "problema": "Nunca acho minhas coisas porque nada em casa tem lugar certo!",
-        "motivo": "resolve porque dá um lugar fixo pra cada coisa, sem bagunça",
-    },
-    "iluminacao": {
-        "problema": "Tem um cantinho de casa que fica tão escuro que ninguém gosta de passar por lá!",
-        "motivo": "resolve rapidinho porque ilumina em minutos",
-    },
-    "hidraulica": {
-        "problema": "A pia não para de vazar e molha o chão todo!",
-        "motivo": "resolve sem precisar chamar ninguém de fora",
-    },
-    "decoracao": {
-        "problema": "A sala de casa ficou tão sem graça que nem dá vontade de ficar lá!",
-        "motivo": "resolve porque muda o visual na hora, sem reforma",
-    },
-    "cozinha": {
-        "problema": "Toda vez que a mamãe cozinha, a cozinha vira uma bagunça enorme!",
-        "motivo": "resolve porque organiza tudo rapidinho",
-    },
-    "banheiro": {
-        "problema": "O banheiro de casa é tão pequeno que não cabe nada das minhas coisas!",
-        "motivo": "resolve porque aproveita cada cantinho",
-    },
-    "jardim": {
-        "problema": "As plantas do quintal ficam murchando porque ninguém lembra de cuidar!",
-        "motivo": "resolve porque facilita cuidar delas todo dia",
-    },
-    "eletrica": {
-        "problema": "Nunca tem tomada suficiente pra ligar tudo que eu quero em casa!",
-        "motivo": "resolve porque multiplica os pontos com segurança",
-    },
-    "pintura": {
-        "problema": "A parede do meu quarto ficou toda desbotada e ninguém tem coragem de pintar!",
-        "motivo": "resolve porque dá pra pintar numa tarde só",
-    },
-    "limpeza": {
-        "problema": "Tem uma sujeira em casa que não sai de jeito nenhum, nem esfregando forte!",
-        "motivo": "resolve porque foi feito pra esse tipo de sujeira",
-    },
-    "moveis": {
-        "problema": "Meu quarto é tão pequeno que não cabe nem um móvel novo!",
-        "motivo": "resolve porque é compacto e serve pra várias coisas",
-    },
-    "_padrao": {
-        "problema": "Tem um problema em casa que ninguém consegue resolver direito!",
-        "motivo": "resolve na prática, sem complicação",
-    },
-}
+# Modelo de narração/legenda — padrão fixado em 2026-08-31, voz
+# ajustada em 2026-09-01, generalizado em 10/09 (a leva deixou de ser
+# restrita ao nicho casa & construção — traz os mais vendidos da Shopee
+# em qualquer categoria, então o roteiro não pode mais depender de um
+# banco de "ganchos" por categoria de casa, tipo hidráulica/cozinha/etc,
+# que só fazia sentido pro nicho antigo). Depois, no mesmo dia, tirada
+# também a persona "Papai Resolve" da narração em si (o usuário pediu
+# pra esquecer essa narrativa) — agora é direto: Dor → Solução → Prova
+# (visual) → Call to action, sem personagem nem abertura fixa, frases
+# genéricas o bastante pra qualquer produto (roupa, beleza, eletrônico,
+# casa etc.), sem citar um problema específico de categoria. A hashtag
+# `#papairesolve` continua nas legendas — é a marca da conta
+# (@papairesolve_br), não a narrativa do roteiro. Implementado em
+# montarRoteiro()/montarLegenda() abaixo.
 
 
 def _linha_produto(produto, posicao, id_prefixo):
@@ -200,7 +148,6 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
     )
 
     tabela_principal_html = _tabela(produtos, "tabela-principal", com_filtro=True)
-    ganchos_json = json.dumps(GANCHOS_ROTEIRO, ensure_ascii=False)
 
     secao_extras_html = ""
     if extras:
@@ -649,11 +596,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
       chk.addEventListener('change', atualizarBarraSelecao);
     }});
 
-    var GANCHOS_ROTEIRO = {ganchos_json};
-
     function montarRoteiro(chk) {{
-      var categoria = chk.getAttribute('data-categoria');
-      var gancho = GANCHOS_ROTEIRO[categoria] || GANCHOS_ROTEIRO['_padrao'];
       var nome = chk.getAttribute('data-nome');
       var preco = chk.getAttribute('data-preco');
       var link = chk.getAttribute('data-link');
@@ -664,31 +607,26 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
         '**Preço:** R$' + preco + '  ',
         '**Comissão:** ' + chk.getAttribute('data-comissao') + '%',
         '',
-        '**Roteiro (modelo Papai Resolve, narração em voz de jovem, ~24s):**',
+        '**Roteiro (~20s, direto ao ponto):**',
         '',
-        '1. *(0-3s, Abertura)* — voz de jovem: "Meu papai sempre resolve tudo aqui em casa!"',
-        '2. *(3-9s, Dor)* — voz de jovem: "' + gancho['problema'] + '"',
-        '3. *(9-16s, Solução)* — voz de jovem: "Mas aí ele achou ' + nome + ' — ' + gancho['motivo'] + '!"',
-        '4. *(16-20s, Prova)* — [mostra o produto resolvendo o problema na prática, sem falar]',
-        '5. *(20-24s, Call to action)* — voz de jovem: "Corre que tá com desconto, R$' + preco + ' — link na bio, comenta \\'QUERO\\' que a gente manda!"',
+        '1. *(0-5s, Dor)* — "Eu tinha um probleminha desse tipo e nada resolvia direito!"',
+        '2. *(5-13s, Solução)* — "Aí eu achei ' + nome + ' — resolveu na hora!"',
+        '3. *(13-17s, Prova)* — [mostra o produto resolvendo o problema na prática, sem falar]',
+        '4. *(17-20s, Call to action)* — "Corre que tá com desconto, R$' + preco + ' — link na bio, comenta \\'QUERO\\' que a gente manda!"',
         ''
       ].join('\\n');
     }}
 
     function montarLegenda(chk) {{
-      var categoria = chk.getAttribute('data-categoria');
-      var gancho = GANCHOS_ROTEIRO[categoria] || GANCHOS_ROTEIRO['_padrao'];
       var nome = chk.getAttribute('data-nome');
       return [
-        'Meu papai sempre resolve tudo aqui em casa!',
+        '\\u{{1F62B}} Tinha um probleminha desse tipo e nada resolvia direito!',
         '',
-        '\\u{{1F62B}} ' + gancho['problema'],
-        '',
-        '\\u2705 Resolvi com ' + nome + ' \\u2014 ' + gancho['motivo'] + '!',
+        '\\u2705 Resolvi com ' + nome + ' \\u2014 resolveu na hora!',
         '',
         '\\u{{1F6D2}} Link na bio ou comenta "QUERO" que a gente manda o link!',
         '',
-        '#papairesolve #casaeconstrucao #achadosdashopee #dicasdecasa #paisdeplantao'
+        '#papairesolve #achadosdashopee #shopeebrasil #promoshopee #achadinhos'
       ].join('\\n');
     }}
 
