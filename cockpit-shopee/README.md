@@ -48,8 +48,9 @@ por uma chamada direta.
 - **`cockpit.html`** — arquivo único de entrada (abre os outros por dentro)
 - **`index.html`** — visão geral do fluxo completo ("o que fazer hoje")
 - **`chat.html`** — chat de verdade com o coach (usa `api/chat.js`)
-- **`painel.html`** — os 50 melhores produtos do dia no nicho (gerado
-  automaticamente todo dia às 9h, por score de curadoria), com foto,
+- **`painel.html`** — os 50 melhores produtos mais vendidos da Shopee
+  do dia (gerado automaticamente todo dia às 9h, por score de
+  curadoria — sem restrição de nicho desde 10/09), com foto,
   seleção e filtros combináveis (faixa de preço, comissão mínima,
   avaliação mínima, vendidos mínimo — tudo interativo, no painel, na
   hora de escolher). No topo, uma busca ao vivo aceita tanto uma
@@ -72,8 +73,9 @@ por uma chamada direta.
 - **`importar.html`** — formulário simples pra registrar investimento em
   campanha e vendas confirmadas
 - **`painel_roi.html`** — progresso da meta mensal e ROI por produto
-- `buscar_leva_lancamento.py` — busca os produtos reais na Shopee e
-  devolve os 50 melhores do nicho, por score (leva do dia)
+- `buscar_leva_lancamento.py` — busca os produtos mais vendidos da
+  Shopee via API (sem restrição de nicho) e devolve os 50 melhores,
+  por score (leva do dia)
 - `buscar_um_produto.py` — busca um produto específico sob demanda, por
   nome ou link (usado pelo workflow `busca-manual.yml`, a pedido no
   chat com o Claude) — mesma lógica de link de `api/buscar_produto.py`,

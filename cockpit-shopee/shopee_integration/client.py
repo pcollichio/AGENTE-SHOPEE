@@ -8,12 +8,14 @@ mas já no formato esperado da resposta real.
 Quando USE_MOCK_DATA=false, as funções chamam a API real via GraphQL.
 
 NOTA sobre os nomes de campos usados nas queries abaixo (productName,
-priceMin, commissionRate, ratingStar, sales, offerLink): eles seguem a
-documentação pública da Shopee Affiliate Open API, mas ainda não foram
-validados contra uma resposta real. Se a Shopee devolver um erro de "campo
-desconhecido" (visível na mensagem de erro impressa), ajuste o nome do
-campo aqui conforme indicado — isso é esperado e normal na primeira
-tentativa com a API real.
+priceMin, commissionRate, ratingStar, sales, offerLink): já validados
+contra respostas reais (a leva diária roda com eles desde 08/2026).
+
+NOTA (10/09): o parâmetro `sortType` de `buscar_produtos()` (usado pra
+pedir "mais vendidos" sem depender de keyword) segue a documentação
+pública da Shopee Affiliate Open API, mas ainda NÃO foi validado contra
+uma resposta real. Se a Shopee devolver um erro de "campo desconhecido"
+pra `sortType`, ajuste o nome/valores aqui conforme a mensagem indicar.
 """
 
 import requests
@@ -47,7 +49,7 @@ def _mapear_produto(node):
     return {
         "product_id": str(node.get("itemId")),
         "name": node.get("productName"),
-        "category": "casa_construcao",
+        "category": None,
         "subcategory": None,
         "price": price,
         "original_price": price,
@@ -67,18 +69,33 @@ def _mapear_produto(node):
     }
 
 
-def buscar_produtos(subcategoria=None, min_comissao=None, keyword=None, limite=20):
+# Valores de sortType da Shopee Affiliate API (productOfferV2) — ver NOTA
+# no topo do arquivo sobre validação contra resposta real.
+_SORT_TYPES = {
+    "sales": 2,          # mais vendidos
+    "price_desc": 3,     # maior preço primeiro
+    "price_asc": 4,      # menor preço primeiro
+    "commission": 5,      # maior comissão primeiro
+}
+
+
+def buscar_produtos(subcategoria=None, min_comissao=None, keyword=None, limite=20, sort_type=None):
     """
-    Busca produtos da Shopee dentro do nicho casa e construção.
+    Busca produtos da Shopee.
 
     Args:
-        subcategoria: filtra por subcategoria (ex: "iluminacao", "cozinha",
-            "organizacao", "ferramentas", "hidraulica"). None = todas.
-            No modo real, é usado como termo de busca (keyword) se
-            `keyword` não for informado.
+        subcategoria: (compatibilidade) usado como termo de busca (keyword)
+            se `keyword` não for informado. None = sem restrição.
         min_comissao: filtra produtos com comissão mínima (ex: 0.10 = 10%)
-        keyword: termo de busca livre (só usado no modo real)
+        keyword: termo de busca livre (só usado no modo real). Deixe None
+            pra não restringir por palavra-chave — combinado com
+            `sort_type="sales"`, traz os produtos mais vendidos da Shopee
+            em geral, sem depender de nicho/categoria.
         limite: quantos produtos pedir à API (só usado no modo real)
+        sort_type: como ordenar o resultado no modo real — "sales" (mais
+            vendidos), "commission" (maior comissão), "price_asc" /
+            "price_desc", ou None (relevância, padrão da Shopee quando há
+            keyword).
 
     Returns:
         Lista de produtos no formato padronizado.
@@ -89,11 +106,15 @@ def buscar_produtos(subcategoria=None, min_comissao=None, keyword=None, limite=2
             produtos = [p for p in produtos if p["subcategory"] == subcategoria]
         if min_comissao is not None:
             produtos = [p for p in produtos if p["commission_rate"] >= min_comissao]
+        if sort_type == "sales":
+            produtos = sorted(produtos, key=lambda p: p["total_sold"], reverse=True)
+        elif sort_type == "commission":
+            produtos = sorted(produtos, key=lambda p: p["commission_rate"], reverse=True)
         return produtos
 
     query = """
-    query BuscarProdutos($keyword: String, $limit: Int) {
-      productOfferV2(keyword: $keyword, limit: $limit) {
+    query BuscarProdutos($keyword: String, $limit: Int, $sortType: Int) {
+      productOfferV2(keyword: $keyword, limit: $limit, sortType: $sortType) {
         nodes {
           itemId
           productName
@@ -110,7 +131,11 @@ def buscar_produtos(subcategoria=None, min_comissao=None, keyword=None, limite=2
       }
     }
     """
-    variables = {"keyword": keyword or subcategoria or "", "limit": limite}
+    variables = {
+        "keyword": keyword or subcategoria or None,
+        "limit": limite,
+        "sortType": _SORT_TYPES.get(sort_type),
+    }
     data = _executar_graphql(query, variables)
     nodes = (data.get("productOfferV2") or {}).get("nodes") or []
     produtos = [_mapear_produto(n) for n in nodes]

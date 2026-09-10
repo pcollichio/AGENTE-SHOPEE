@@ -33,7 +33,7 @@ def _cartao_recomendacao(r, indice):
 ETAPAS = [
     {
         "titulo": "Buscar produtos na Shopee", "status": "bom", "status_label": "Automático",
-        "desc": "Todo dia às 9h, busca produtos reais do nicho, filtra fora o que não é casa &amp; construção e traz os 50 melhores por score — o filtro de comissão/avaliação é interativo, no painel, na hora de escolher.",
+        "desc": "Todo dia às 9h, busca os produtos mais vendidos da Shopee via API e traz os 50 melhores por score — o filtro de comissão/avaliação/vendidos é interativo, no painel, na hora de escolher.",
         "links": [("painel.html", "Ver painel de produtos", False), ("historico/", "Ver histórico", False)],
     },
     {

@@ -181,7 +181,7 @@ def _tabela(produtos, id_prefixo, com_filtro=True):
     </div>"""
 
 
-def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construção"):
+def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
     """Recebe a leva de produtos (cada um já com a chave 'tier':
     'baixo'/'medio'/'alto') e, opcionalmente, uma lista `extras` de produtos
     buscados manualmente (via produtos_manuais.txt). Devolve uma página
@@ -583,7 +583,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
       <p class="busca-aviso" id="busca-aviso" hidden></p>
     </div>
 
-    <h2 class="titulo-secao">Leva do dia &mdash; {len(produtos)} produtos do nicho</h2>
+    <h2 class="titulo-secao">Leva do dia &mdash; {len(produtos)} produtos mais vendidos</h2>
     <section class="resumo" aria-label="Resumo da leva">
       <div class="stat stat-baixo"><div class="n">{contagem.get('baixo', 0):02d}</div><div class="l">Ticket baixo (até R$50)</div></div>
       <div class="stat stat-medio"><div class="n">{contagem.get('medio', 0):02d}</div><div class="l">Ticket médio (R$50&ndash;150)</div></div>
@@ -892,7 +892,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Casa & Construç
 """
 
 
-def salvar_painel(produtos, caminho, extras=None, titulo="Painel Shopee — Casa & Construção"):
+def salvar_painel(produtos, caminho, extras=None, titulo="Painel Shopee — Mais Vendidos"):
     html = gerar_html(produtos, extras=extras, titulo=titulo)
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(html)

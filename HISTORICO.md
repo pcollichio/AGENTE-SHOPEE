@@ -362,3 +362,51 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   troca os produtos exibidos, atualiza os cards e mantém os botões
   funcionando nas linhas recém-renderizadas; simulando a ausência do
   endpoint, mantém o snapshot estático e mostra o aviso.
+
+## 2026-09-10
+
+- **Conversa sobre "envelopar" o cockpit pra vender pra outros
+  afiliados.** Usuário sinalizou intenção de empacotar o produto pra
+  venda. Perguntei o modelo (clonar por cliente vs. SaaS multi-tenant
+  de verdade); ele não respondeu com preferência — dei recomendação
+  (clonar por cliente: repositório + deploy + credenciais próprias por
+  afiliado, aproveitando que a arquitetura atual já funciona nesse
+  formato) e listei o que precisaria virar configuração por cliente
+  (marca/nicho, credenciais, `OWNER`/`REPO`/`BRANCH` hardcoded nas
+  funções serverless, onboarding). **Nada disso foi implementado
+  ainda** — só combinado que faríamos melhorias antes de decidir o
+  modelo de venda.
+- **Removida a restrição de nicho da leva — agora traz os mais
+  vendidos da Shopee via API.** Primeira melhoria pedida: "não quero
+  mais que filtre somente produtos de casa e construção... quero que
+  traga os produtos mais vendidos da Shopee através da API". Mudanças:
+  (1) `shopee_integration/client.py`: `buscar_produtos()` ganhou o
+  parâmetro `sort_type` (mapeado pro `sortType` da Shopee — "sales" =
+  2, mais vendidos; também "commission", "price_asc", "price_desc");
+  `keyword` agora vai como `null` (não mais `""`) quando não
+  informado, pra pedir a lista geral sem restringir por termo. Campo
+  `category` do produto mapeado deixou de vir hardcoded como
+  `"casa_construcao"` (agora `None` — não tinha uso real no resto do
+  código). NOTA registrada no arquivo: `sortType` ainda não validado
+  contra resposta real da Shopee (só o resto dos campos já foi). (2)
+  `buscar_leva_lancamento.py`: removida `SUBCATEGORIAS_CASA_CONSTRUCAO`
+  (as 12 palavras-chave de nicho) e `buscar_produtos_do_nicho()`
+  (loop de busca por palavra-chave); substituídas por
+  `buscar_mais_vendidos()` — uma chamada só à API pedindo os mais
+  vendidos (`sort_type="sales"`, sem keyword), ainda passando pelo
+  denylist de `produtos_excluir.txt` (recontextualizado: de "manter o
+  nicho puro" pra "bloqueio manual de categoria indesejada",
+  comentário do arquivo atualizado). (3) Textos que afirmavam filtro
+  de nicho corrigidos pra não ficarem enganosos: título "Painel Shopee
+  — Casa & Construção" → "Painel Shopee — Mais Vendidos", "Leva do dia
+  — N produtos do nicho" → "— N produtos mais vendidos", descrição do
+  passo 1 em `index.html` (`painel_index.py`). Efeito colateral
+  conhecido, não resolvido: sem categoria de nicho por produto
+  (`termo_busca`), todo roteiro/legenda cai no gancho genérico
+  (`GANCHOS_ROTEIRO['_padrao']`) em vez de um específico por
+  categoria. Testado em modo mock: `sort_type="sales"` ordena
+  corretamente por `total_sold` desc, e o pipeline completo (busca →
+  score → tier → painel.html) roda sem erro com a nova fonte. Não deu
+  pra testar contra a API real da Shopee (rede da sessão bloqueada) —
+  falta rodar `leva-diaria.yml` de verdade e conferir se `sortType` é
+  aceito, ou se precisa ajustar o nome/valor do campo.

@@ -1,7 +1,7 @@
-# Palavras que, se aparecerem no nome de um produto, tiram ele da leva
-# automática — a busca por palavra-chave da Shopee é ampla e às vezes traz
-# produtos fora do nicho casa e construção (brinquedos, itens de festa,
-# pet, roupas, peças de carro etc.)
+# Bloqueio manual: palavras que, se aparecerem no nome de um produto,
+# tiram ele da leva automática, mesmo estando entre os mais vendidos da
+# Shopee — desde 10/09 a leva não restringe mais por nicho, então essa
+# lista é o jeito de manter fora categorias que você não quer promover.
 #
 # Uma palavra por linha. Não precisa se preocupar com acento (maiúscula/
 # minúscula e com/sem acento dão no mesmo). Linhas com # são ignoradas.

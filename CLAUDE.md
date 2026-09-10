@@ -6,10 +6,19 @@ sobre o projeto — evita reexplicar do zero a cada conversa nova.
 
 ## O que é
 
-Cockpit de afiliação pra @papairesolve_br (Shopee, nicho casa &
-construção). Meta: R$10.000/mês de comissão, ROI mínimo 3x. O usuário
-(dono do projeto) não é técnico, usa celular/navegador, prefere resolver
-tudo puxando o Claude em vez de mexer em código ou infraestrutura.
+Cockpit de afiliação pra @papairesolve_br (Shopee). Meta: R$10.000/mês
+de comissão, ROI mínimo 3x. O usuário (dono do projeto) não é técnico,
+usa celular/navegador, prefere resolver tudo puxando o Claude em vez de
+mexer em código ou infraestrutura.
+
+Desde 10/09 a leva **não é mais restrita ao nicho casa & construção**
+— traz os produtos mais vendidos da Shopee em geral, direto da API
+(ver "Pedido do usuário em 10/09" abaixo). O usuário sinalizou em 10/09
+que a intenção é eventualmente "envelopar" o cockpit pra vender pra
+outros afiliados (fora do nicho casa & construção) — isso ainda não
+foi implementado (autenticação, multi-tenant, config por cliente), só
+combinado; ver a conversa daquele dia em `HISTORICO.md` antes de
+sugerir arquitetura pra isso.
 
 ## Como trabalhamos (modelo operacional — confirmado pelo usuário em 30/08)
 
@@ -118,6 +127,21 @@ tudo puxando o Claude em vez de mexer em código ou infraestrutura.
   salva (POST em `api/selecionar`, sem `Blob`/download); o roteiro e a
   legenda continuam saindo prontos, só que visíveis exclusivamente em
   `esteira.html` ("Ver textos"), nunca mais como arquivo baixado.
+- **Pedido do usuário em 10/09: removida a restrição de nicho.** A leva
+  não busca mais por palavra-chave de casa & construção — pede direto
+  à API os produtos **mais vendidos da Shopee em geral**
+  (`client.buscar_produtos(sort_type="sales")`, sem `keyword`; parâmetro
+  `sortType` novo, ainda não validado contra resposta real — ver NOTA
+  em `shopee_integration/client.py`). Removidas
+  `SUBCATEGORIAS_CASA_CONSTRUCAO` e `buscar_produtos_do_nicho()` de
+  `buscar_leva_lancamento.py`, substituídas por `buscar_mais_vendidos()`.
+  `produtos_excluir.txt` continua funcionando, só que agora como
+  bloqueio manual de categorias indesejadas (não mais "manter o
+  nicho puro"). Efeito colateral: como os produtos não vêm mais
+  marcados com uma categoria de nicho (`termo_busca`), o roteiro/legenda
+  de todo produto cai no gancho genérico (`GANCHOS_ROTEIRO['_padrao']`)
+  em vez de um gancho específico por categoria — ainda não resolvido,
+  não pedido pelo usuário.
 - Links publicados: GitHub Pages em
   `https://pcollichio.github.io/AGENTE-SHOPEE/cockpit-shopee/cockpit.html`
   (e `/painel.html`, `/painel_roi.html`, etc.)

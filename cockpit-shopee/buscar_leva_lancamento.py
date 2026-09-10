@@ -1,17 +1,17 @@
 """
-Busca produtos reais da Shopee no nicho casa e construção e traz os
-melhores 50 (por score de curadoria, sem filtro de comissão, avaliação
-ou vendas) pra @papairesolve_br selecionar direto no painel — que tem
-os filtros (faixa de preço, comissão mínima, avaliação mínima) pra
-aplicar no momento da escolha, não antes.
+Busca os produtos mais vendidos da Shopee via API (sortType "mais
+vendidos", sem restringir por nicho/categoria) e traz os melhores 50
+(por score de curadoria) pra selecionar direto no painel — que tem os
+filtros (faixa de preço, comissão mínima, avaliação mínima, vendidos
+mínimo) pra aplicar no momento da escolha, não antes.
 
-Pedido do usuário (31/08, 01/09 e 02/09): primeiro "traga todos e deixe
-que eu faça a seleção", depois "todos que fazem parte do nicho de casa
-e construção... o filtro no momento das escolhas dos produtos", depois
-"vamos trazer apenas 50 produtos do nosso nicho" — ou seja, o único
-corte por volume é o teto de 50 (os melhores por score); qualidade
-(comissão, avaliação) continua sendo filtro interativo no painel, não
-um corte na busca.
+Histórico da fonte de produtos: 31/08 "traga todos e deixe que eu faça
+a seleção" (ainda restrito ao nicho casa & construção, por
+palavra-chave) → 01/09 filtro de qualidade virou interativo no painel →
+02/09 teto de 50 → 10/09 "não quero mais que filtre só casa e
+construção, quero os mais vendidos da Shopee via API" — removida a
+busca por palavra-chave de nicho, agora é uma chamada só à API pedindo
+os mais vendidos em geral (ver HISTORICO.md).
 
 Rode com: python buscar_leva_lancamento.py
 
@@ -20,10 +20,9 @@ configuradas no .env (USE_MOCK_DATA=false). Não funciona em sandboxes sem
 acesso externo — rode no seu computador ou no Google Colab, como fizemos
 no teste de conexão.
 
-NOTA: a Shopee Affiliate API não expõe o status de frete grátis nem uma
-categoria oficial "casa e construção" (ainda não temos a lista de
-categorias da Shopee) — por isso a busca é feita por palavra-chave,
-cobrindo os principais subnichos da casa.
+NOTA: o parâmetro sortType usado aqui pra pedir "mais vendidos" ainda
+não foi validado contra uma resposta real da Shopee — se ela recusar o
+campo, ajuste em shopee_integration/client.py (ver nota lá no topo).
 """
 
 import sys
@@ -32,30 +31,16 @@ from datetime import date
 
 from shopee_integration import client, config, curadoria, painel
 
-# Palavras-chave para cobrir bem o nicho "casa e construção" (sem depender
-# de um código de categoria oficial da Shopee, que ainda não temos)
-SUBCATEGORIAS_CASA_CONSTRUCAO = [
-    "ferramentas",
-    "organizacao",
-    "iluminacao",
-    "hidraulica",
-    "decoracao",
-    "cozinha",
-    "banheiro",
-    "jardim",
-    "eletrica",
-    "pintura",
-    "limpeza",
-    "moveis",
-]
-
 # Faixas de ticket médio (em reais)
 TICKET_BAIXO_MAX = 50.0
 TICKET_MEDIO_MAX = 150.0
 
-# Teto da leva diária — pedido do usuário em 02/09: só os 50 melhores
-# (por score de curadoria) do nicho, não todos os que a busca encontrar.
+# Teto da leva diária — só os melhores, não tudo que a busca encontrar.
 LIMITE_LEVA = 50
+
+# Quantos produtos pedir à API de uma vez, antes do denylist e do teto
+# acima (dá margem pra sobrar LIMITE_LEVA depois de tirar os excluídos).
+LIMITE_BUSCA_API = 100
 
 ARQUIVO_PRODUTOS_MANUAIS = "produtos_manuais.txt"
 ARQUIVO_PRODUTOS_EXCLUIR = "produtos_excluir.txt"
@@ -77,10 +62,10 @@ def _normalizar(texto):
 
 
 def carregar_termos_excluidos(caminho=ARQUIVO_PRODUTOS_EXCLUIR):
-    """Lê produtos_excluir.txt: palavras que, se aparecerem no nome do
-    produto, tiram ele da leva automática (a busca por palavra-chave da
-    Shopee é ampla e às vezes traz produtos fora do nicho, ex: brinquedos,
-    itens pet, peças de carro)."""
+    """Lê produtos_excluir.txt: uma lista de bloqueio manual — palavras
+    que, se aparecerem no nome do produto, tiram ele da leva automática,
+    mesmo estando entre os mais vendidos (ex: categorias que você não
+    quer promover)."""
     try:
         with open(caminho, encoding="utf-8") as f:
             linhas = f.readlines()
@@ -95,35 +80,29 @@ def carregar_termos_excluidos(caminho=ARQUIVO_PRODUTOS_EXCLUIR):
     return termos
 
 
-def _produto_fora_do_nicho(nome, termos_excluidos):
+def _produto_excluido(nome, termos_excluidos):
     nome_normalizado = _normalizar(nome)
     return any(termo in nome_normalizado for termo in termos_excluidos)
 
 
-def buscar_produtos_do_nicho():
-    """Busca produtos em todas as palavras-chave do nicho, remove duplicados
-    e descarta os que batem com produtos_excluir.txt (fora do nicho)."""
+def buscar_mais_vendidos():
+    """Busca os produtos mais vendidos da Shopee via API (sortType
+    "sales"), sem restringir por nicho/categoria, e descarta os que
+    batem com produtos_excluir.txt (bloqueio manual)."""
     termos_excluidos = carregar_termos_excluidos()
 
-    todos_produtos = []
-    for termo in SUBCATEGORIAS_CASA_CONSTRUCAO:
-        try:
-            # Sem filtro de comissão aqui — trazemos todo mundo do nicho,
-            # o filtro de qualidade é interativo, no painel. Limite alto
-            # (50) só pra dar mais opções de produto por palavra-chave.
-            produtos = client.buscar_produtos(keyword=termo, limite=50)
-            for p in produtos:
-                p["termo_busca"] = termo
-            todos_produtos.extend(produtos)
-        except Exception as e:
-            print(f"Aviso: busca por '{termo}' falhou: {e}")
+    try:
+        produtos = client.buscar_produtos(limite=LIMITE_BUSCA_API, sort_type="sales")
+    except Exception as e:
+        print(f"Aviso: busca dos mais vendidos falhou: {e}")
+        produtos = []
 
     vistos = set()
     produtos_unicos = []
-    for p in todos_produtos:
+    for p in produtos:
         if p["product_id"] in vistos:
             continue
-        if _produto_fora_do_nicho(p["name"], termos_excluidos):
+        if _produto_excluido(p["name"], termos_excluidos):
             continue
         vistos.add(p["product_id"])
         produtos_unicos.append(p)
@@ -131,14 +110,11 @@ def buscar_produtos_do_nicho():
 
 
 def montar_leva_variada():
-    """Busca produtos do nicho (sem filtro de comissão/avaliação — só o
-    filtro de nicho já aplicado em buscar_produtos_do_nicho), classifica
-    por faixa de preço, ordena por score e devolve só os LIMITE_LEVA
-    melhores. Pedido do usuário em 01/09: o filtro de qualidade
-    (comissão, avaliação) acontece no momento da seleção, no painel —
-    não antes; pedido em 02/09: limitar a leva aos 50 melhores, não
-    trazer o nicho inteiro."""
-    produtos = buscar_produtos_do_nicho()
+    """Busca os produtos mais vendidos da Shopee (sem filtro de
+    comissão/avaliação — isso é interativo, no painel), classifica por
+    faixa de preço, ordena por score e devolve só os LIMITE_LEVA
+    melhores."""
+    produtos = buscar_mais_vendidos()
 
     todos = [
         {**p, "tier": _classificar_tier(p["price"]), "score": curadoria.calcular_score(p)}
