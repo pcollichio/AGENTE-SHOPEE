@@ -38,9 +38,10 @@ TICKET_MEDIO_MAX = 150.0
 # Teto da leva diária — só os melhores, não tudo que a busca encontrar.
 LIMITE_LEVA = 50
 
-# Quantos produtos pedir à API de uma vez, antes do denylist e do teto
-# acima (dá margem pra sobrar LIMITE_LEVA depois de tirar os excluídos).
-LIMITE_BUSCA_API = 100
+# A Shopee recusa mais de 50 itens por página (erro 11001, validado
+# contra resposta real em 10/09) — então pedimos várias páginas de 50
+# em vez de um limite maior numa chamada só.
+PAGINAS_BUSCA_API = 2
 
 ARQUIVO_PRODUTOS_MANUAIS = "produtos_manuais.txt"
 ARQUIVO_PRODUTOS_EXCLUIR = "produtos_excluir.txt"
@@ -87,15 +88,25 @@ def _produto_excluido(nome, termos_excluidos):
 
 def buscar_mais_vendidos():
     """Busca os produtos mais vendidos da Shopee via API (sortType
-    "sales"), sem restringir por nicho/categoria, e descarta os que
+    "sales"), sem restringir por nicho/categoria, paginando (a Shopee
+    limita a 50 por página) até PAGINAS_BUSCA_API, e descarta os que
     batem com produtos_excluir.txt (bloqueio manual)."""
     termos_excluidos = carregar_termos_excluidos()
 
-    try:
-        produtos = client.buscar_produtos(limite=LIMITE_BUSCA_API, sort_type="sales")
-    except Exception as e:
-        print(f"Aviso: busca dos mais vendidos falhou: {e}")
-        produtos = []
+    produtos = []
+    for pagina in range(1, PAGINAS_BUSCA_API + 1):
+        try:
+            produtos_pagina = client.buscar_produtos(
+                limite=client.LIMITE_MAXIMO_POR_PAGINA, sort_type="sales", pagina=pagina
+            )
+        except Exception as e:
+            print(f"Aviso: busca dos mais vendidos (página {pagina}) falhou: {e}")
+            break
+        if not produtos_pagina:
+            break
+        produtos.extend(produtos_pagina)
+        if len(produtos_pagina) < client.LIMITE_MAXIMO_POR_PAGINA:
+            break  # última página (veio menos que o máximo)
 
     vistos = set()
     produtos_unicos = []

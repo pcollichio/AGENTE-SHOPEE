@@ -11,11 +11,13 @@ NOTA sobre os nomes de campos usados nas queries abaixo (productName,
 priceMin, commissionRate, ratingStar, sales, offerLink): já validados
 contra respostas reais (a leva diária roda com eles desde 08/2026).
 
-NOTA (10/09): o parâmetro `sortType` de `buscar_produtos()` (usado pra
-pedir "mais vendidos" sem depender de keyword) segue a documentação
-pública da Shopee Affiliate Open API, mas ainda NÃO foi validado contra
-uma resposta real. Se a Shopee devolver um erro de "campo desconhecido"
-pra `sortType`, ajuste o nome/valores aqui conforme a mensagem indicar.
+NOTA (10/09): `sortType` foi testado contra uma resposta real da Shopee
+— não deu erro de "campo desconhecido" (só o teste com `limit=100` deu
+erro, por passar do máximo de 50 por página — corrigido, ver
+`LIMITE_MAXIMO_POR_PAGINA`). O parâmetro `page` (paginação, usado pra
+buscar além da 1ª página) ainda NÃO foi validado contra uma resposta
+real — se a Shopee devolver erro de "campo desconhecido" pra `page`,
+ajuste o nome aqui conforme a mensagem indicar.
 """
 
 import requests
@@ -79,7 +81,13 @@ _SORT_TYPES = {
 }
 
 
-def buscar_produtos(subcategoria=None, min_comissao=None, keyword=None, limite=20, sort_type=None):
+# Teto de itens por página imposto pela própria Shopee — validado contra
+# resposta real em 10/09 (limit=100 deu erro 11001 "Exceeded the maximum
+# number of page limit, the maximum limit is 50"; sortType passou sem erro).
+LIMITE_MAXIMO_POR_PAGINA = 50
+
+
+def buscar_produtos(subcategoria=None, min_comissao=None, keyword=None, limite=20, sort_type=None, pagina=None):
     """
     Busca produtos da Shopee.
 
@@ -91,11 +99,15 @@ def buscar_produtos(subcategoria=None, min_comissao=None, keyword=None, limite=2
             pra não restringir por palavra-chave — combinado com
             `sort_type="sales"`, traz os produtos mais vendidos da Shopee
             em geral, sem depender de nicho/categoria.
-        limite: quantos produtos pedir à API (só usado no modo real)
+        limite: quantos produtos pedir à API (só usado no modo real).
+            Máximo de LIMITE_MAXIMO_POR_PAGINA (50) — a Shopee recusa
+            valores maiores; pra mais resultados, use `pagina`.
         sort_type: como ordenar o resultado no modo real — "sales" (mais
             vendidos), "commission" (maior comissão), "price_asc" /
             "price_desc", ou None (relevância, padrão da Shopee quando há
             keyword).
+        pagina: número da página (1-indexado, só usado no modo real) —
+            pra buscar além dos primeiros `limite` resultados.
 
     Returns:
         Lista de produtos no formato padronizado.
@@ -110,11 +122,15 @@ def buscar_produtos(subcategoria=None, min_comissao=None, keyword=None, limite=2
             produtos = sorted(produtos, key=lambda p: p["total_sold"], reverse=True)
         elif sort_type == "commission":
             produtos = sorted(produtos, key=lambda p: p["commission_rate"], reverse=True)
+        # Páginas além da 1ª não têm mais o que devolver — o catálogo
+        # simulado é pequeno (não paginado de verdade).
+        if pagina and pagina > 1:
+            return []
         return produtos
 
     query = """
-    query BuscarProdutos($keyword: String, $limit: Int, $sortType: Int) {
-      productOfferV2(keyword: $keyword, limit: $limit, sortType: $sortType) {
+    query BuscarProdutos($keyword: String, $limit: Int, $sortType: Int, $page: Int) {
+      productOfferV2(keyword: $keyword, limit: $limit, sortType: $sortType, page: $page) {
         nodes {
           itemId
           productName
@@ -135,6 +151,7 @@ def buscar_produtos(subcategoria=None, min_comissao=None, keyword=None, limite=2
         "keyword": keyword or subcategoria or None,
         "limit": limite,
         "sortType": _SORT_TYPES.get(sort_type),
+        "page": pagina,
     }
     data = _executar_graphql(query, variables)
     nodes = (data.get("productOfferV2") or {}).get("nodes") or []

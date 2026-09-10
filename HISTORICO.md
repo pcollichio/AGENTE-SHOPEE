@@ -410,3 +410,15 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   pra testar contra a API real da Shopee (rede da sessão bloqueada) —
   falta rodar `leva-diaria.yml` de verdade e conferir se `sortType` é
   aceito, ou se precisa ajustar o nome/valor do campo.
+- **Correção: `limit` acima de 50 é rejeitado pela Shopee.** Ao rodar
+  `leva-diaria.yml` de verdade pra validar a mudança acima, a Shopee
+  devolveu erro real: `sortType` passou sem problema (bom sinal — está
+  validado), mas `limit=100` deu erro 11001 "Exceeded the maximum
+  number of page limit, the maximum limit is 50". Corrigido: novo
+  `client.LIMITE_MAXIMO_POR_PAGINA = 50`, `buscar_produtos()` ganhou o
+  parâmetro `pagina` (variável GraphQL `page`, ainda não validada
+  contra resposta real — só testado que não quebrou nada em modo
+  mock), e `buscar_mais_vendidos()` agora pagina (`PAGINAS_BUSCA_API =
+  2`) em vez de pedir tudo numa chamada só, parando cedo se uma página
+  vier vazia ou incompleta. Disparado `leva-diaria.yml` de novo depois
+  da correção pra confirmar.
