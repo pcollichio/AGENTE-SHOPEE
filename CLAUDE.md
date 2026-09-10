@@ -20,6 +20,17 @@ foi implementado (autenticação, multi-tenant, config por cliente), só
 combinado; ver a conversa daquele dia em `HISTORICO.md` antes de
 sugerir arquitetura pra isso.
 
+**Desde 10/09 o produto se chama "Agente Shopee"** (não mais
+"Cockpit") em todo texto visível — título de aba, marca na sidebar,
+eyebrow e rodapé de cada página. "Papai Resolve" continua sendo a voz
+da conta (`@papairesolve_br`), não foi afetado. **Identidade visual
+fixa: fundo laranja (`#ee4d2d`, cor da Shopee) e branco** — cards,
+tabelas e inputs brancos com texto escuro; textos que ficam direto
+sobre o fundo laranja (títulos, eyebrow, rodapé) em branco/laranja
+claro. Essa paleta é fixa, não muda com tema claro/escuro do sistema —
+ver detalhes e o histórico completo do retema em `HISTORICO.md`
+(10/09).
+
 ## Como trabalhamos (modelo operacional — confirmado pelo usuário em 30/08)
 
 - **Conversa, decisão e "o que fazer agora"**: aqui, com o Claude, numa

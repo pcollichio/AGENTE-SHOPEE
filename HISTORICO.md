@@ -490,3 +490,44 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   venda concluída (R$1,80), 7 pendentes (R$26,41), 4 campanhas de
   anúncio (R$121,99) — confirmado no Dashboard gerado, idempotência
   testada (rodar de novo: 0 novos em ambos).
+- **Renomeado "Cockpit" pra "Agente Shopee" e identidade visual
+  laranja/branca em todo o produto.** Pedido do usuário: "No lugar no
+  subitem cockpit quero que deixe somente Agente Shopee. aqui sera o
+  trabalho de guiar o afiliado pelo chat. quero tambem que a
+  identidade visual seja toda laranja e branca igual da shopee, laranja
+  de fundo e branco nos campos e textos." Trocado todo texto visível
+  "Cockpit"/"Cockpit de Afiliação"/"Cockpit Papai Resolve" por "Agente
+  Shopee" (título da aba, marca na sidebar de `cockpit.html`, eyebrow e
+  rodapé de cada página) — mantido "Papai Resolve" como voz/handle da
+  conta (`@papairesolve_br`, eyebrow do chat), que não foi o alvo do
+  pedido. Retema completo pra paleta fixa da Shopee: `--bg` (fundo da
+  página) virou laranja `#ee4d2d`; textos/títulos que ficam direto
+  sobre o fundo laranja (eyebrow, h1, rodapé, labels de filtro fora dos
+  cards) ganharam `--on-bg`/`--on-bg-muted` (branco/laranja clarinho);
+  cards, tabelas e inputs continuam brancos (`--card`/`#ffffff`) com
+  texto escuro (`--text`) — só o que está sobre o laranja mudou de cor,
+  o conteúdo dentro dos cards brancos ficou igual (senão ficaria
+  ilegível). Decisão não pedida explicitamente, mas necessária: a
+  paleta agora é fixa (não muda mais com tema claro/escuro do sistema
+  — colapsados os três blocos `:root`/`@media (prefers-color-scheme:
+  dark)`/`:root[data-theme="dark"]` de cada arquivo em um só,
+  incondicional), do mesmo jeito que o app da Shopee sempre mostra a
+  marca laranja dela independente do tema do aparelho. Aplicado em
+  `cockpit.html` e nos 6 geradores de página
+  (`shopee_integration/{esteira,painel,painel_index,chat_page,
+  painel_roi}.py`, `nav.py`) e no único arquivo estático fora desse
+  padrão (`importar.html`). No processo, achado e corrigido um padrão
+  de bug recorrente: várias regras usavam `background: var(--bg)` só
+  pra ficar um pouco diferente do branco puro do card por trás (input
+  de busca, bolha do coach no chat, placeholder de foto, linha de
+  texto gerada em `importar.html`, tooltip do gráfico de ROI, hover do
+  menu, botão de fechar chat no mobile) — funcionava com o `--bg` cinza
+  claro antigo, quebrou (virava laranja vivo) com o `--bg` novo; cada
+  caso foi revisado e trocado por branco explícito ou um tom neutro
+  (`var(--accent-soft)`/`#f7f3f1`), conforme o contexto. Regenerado
+  localmente `index.html`, `chat.html`, `esteira.html` e
+  `painel_roi.html` a partir dos geradores atualizados; `painel.html`
+  depende da API real da Shopee (roda só via `leva-diaria.yml`).
+  Verificado com Playwright: `cockpit.html` (sidebar), `painel_roi.html`
+  (Dashboard), `esteira.html` e `importar.html` — fundo laranja, cards
+  brancos, texto legível em ambos os contextos.

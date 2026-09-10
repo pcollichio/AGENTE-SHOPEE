@@ -20,7 +20,7 @@ MENU_CSS = """
     border-radius: 8px; padding: 4px; margin-bottom: 24px; flex-wrap: wrap; }
   .menu-item { font-family: "IBM Plex Sans", sans-serif; font-size: 0.84rem; font-weight: 600;
     color: var(--muted); text-decoration: none; padding: 8px 14px; border-radius: 6px; }
-  .menu-item:hover { color: var(--text); background: var(--bg); }
+  .menu-item:hover { color: var(--text); background: var(--accent-soft); }
   .menu-item.ativo { background: var(--accent); color: #fff; }
 """
 

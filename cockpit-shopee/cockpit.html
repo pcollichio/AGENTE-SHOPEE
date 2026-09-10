@@ -3,30 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cockpit Papai Resolve</title>
+<title>Agente Shopee</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #eef1f0; --card: #ffffff; --text: #14202b; --muted: #5b6b74;
-    --border: #d7dfe0; --accent: #d9670c; --accent-ink: #a84e08; --accent-soft: #fbe7d4;
-    --focus: #1d64b0; --bolha-usuario: #d9670c; --bolha-coach: #eef1f0;
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    /* Identidade visual fixa laranja & branco (igual Shopee) — não muda
+       com o tema do sistema, pedido do usuário em 10/09. */
+    --bg: #ee4d2d; --on-bg: #ffffff; --on-bg-muted: #ffd9cc;
+    --card: #ffffff; --text: #2a1a12; --muted: #8a6a5c;
+    --border: #f3d0c2; --accent: #ee4d2d; --accent-ink: #c73e1f; --accent-soft: #fde8e0;
+    --focus: #a8341a; --bolha-usuario: #ee4d2d; --bolha-coach: #fff3ef;
     --erro: #d03b3b; --erro-soft: #f8e2e2;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #0f1417; --card: #171e22; --text: #e7edf0; --muted: #93a2a9;
-      --border: #2a3338; --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
-      --focus: #6badf0; --bolha-usuario: #ff9439; --bolha-coach: #0f1417;
-      --erro: #e0776a; --erro-soft: #3a201c;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #0f1417; --card: #171e22; --text: #e7edf0; --muted: #93a2a9;
-    --border: #2a3338; --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
-    --focus: #6badf0; --bolha-usuario: #ff9439; --bolha-coach: #0f1417;
-    --erro: #e0776a; --erro-soft: #3a201c;
   }
   * { box-sizing: border-box; }
   html, body { height: 100%; margin: 0; }
@@ -39,21 +28,21 @@
 
   /* --- Sidebar --- */
   .sidebar {
-    width: 208px; flex-shrink: 0; background: var(--card); border-right: 1px solid var(--border);
+    width: 208px; flex-shrink: 0; background: var(--bg); border-right: 1px solid rgba(0,0,0,0.1);
     display: flex; flex-direction: column; padding: 18px 12px;
   }
   .marca { display: flex; align-items: center; gap: 9px; font-family: "Archivo", sans-serif;
-    font-weight: 800; font-size: 1rem; padding: 0 8px; margin-bottom: 22px; }
+    font-weight: 800; font-size: 1rem; padding: 0 8px; margin-bottom: 22px; color: var(--on-bg); }
   .sidebar-links { display: flex; flex-direction: column; gap: 2px; flex: 1; }
   .link {
     font-family: "IBM Plex Sans", sans-serif; font-size: 0.88rem; font-weight: 600;
-    color: var(--muted); text-decoration: none; padding: 10px 12px; border-radius: 7px;
+    color: var(--on-bg-muted); text-decoration: none; padding: 10px 12px; border-radius: 7px;
     border: none; background: transparent; cursor: pointer; text-align: left; display: block;
   }
-  .link:hover { color: var(--text); background: var(--bg); }
-  .link.ativo { background: var(--accent-soft); color: var(--accent-ink); }
-  .link.externo { font-size: 0.8rem; color: var(--muted); margin-top: 8px; }
-  .link:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+  .link:hover { color: var(--on-bg); background: rgba(255,255,255,0.14); }
+  .link.ativo { background: #ffffff; color: var(--accent-ink); }
+  .link.externo { font-size: 0.8rem; color: var(--on-bg-muted); margin-top: 8px; }
+  .link:focus-visible { outline: 2px solid #ffffff; outline-offset: 1px; }
 
   /* --- Área de conteúdo --- */
   .area-conteudo { flex: 1; min-width: 0; display: flex; flex-direction: column; }
@@ -93,7 +82,7 @@
 
   .chat-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--border); flex-shrink: 0; }
   .chat-form input { flex: 1; font-family: "IBM Plex Sans", sans-serif; font-size: 0.86rem; padding: 9px 12px;
-    border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); min-width: 0; }
+    border-radius: 8px; border: 1px solid var(--border); background: #ffffff; color: var(--text); min-width: 0; }
   .chat-form input:focus { outline: 2px solid var(--focus); outline-offset: 1px; }
   .chat-form button { font-family: "IBM Plex Sans", sans-serif; font-size: 0.85rem; font-weight: 700;
     color: #fff; background: var(--accent); border: none; border-radius: 8px; padding: 0 14px; cursor: pointer; flex-shrink: 0; }
@@ -122,7 +111,7 @@
     .painel-chat.aberto { transform: translateX(0); }
     .btn-fechar-chat {
       display: flex; align-items: center; justify-content: center; width: 30px; height: 30px;
-      border-radius: 7px; border: none; background: var(--bg); color: var(--text); cursor: pointer;
+      border-radius: 7px; border: none; background: var(--accent-soft); color: var(--accent-ink); cursor: pointer;
       font-size: 1rem;
     }
 
@@ -141,10 +130,10 @@
     <nav class="sidebar" id="sidebar">
       <div class="marca">
         <svg width="22" height="22" viewBox="0 0 120 120" fill="none">
-          <circle cx="60" cy="60" r="52" stroke="#a84e08" stroke-width="6"/>
-          <path d="M38 62 L54 78 L86 40" stroke="#d9670c" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="60" cy="60" r="52" stroke="#ffffff" stroke-width="6"/>
+          <path d="M38 62 L54 78 L86 40" stroke="#ffffff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        Cockpit
+        Agente Shopee
       </div>
       <div class="sidebar-links">
         <button class="link ativo" data-arquivo="index.html">Início</button>

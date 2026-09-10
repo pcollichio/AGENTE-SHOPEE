@@ -213,25 +213,14 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  :root {{
-    --bg: #eef1f0; --grid-line: rgba(20, 60, 90, 0.07); --card: #ffffff;
-    --text: #14202b; --muted: #5b6b74; --border: #d7dfe0;
-    --accent: #d9670c; --accent-ink: #a84e08; --accent-soft: #fbe7d4;
-    --focus: #1d64b0;
-  }}
-  @media (prefers-color-scheme: dark) {{
-    :root:not([data-theme="light"]) {{
-      --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
-      --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
-      --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
-      --focus: #6badf0;
-    }}
-  }}
-  :root[data-theme="dark"] {{
-    --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
-    --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
-    --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
-    --focus: #6badf0;
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {{
+    /* Identidade visual fixa laranja & branco (igual Shopee) — pedido
+       do usuário em 10/09, não muda com o tema do sistema. */
+    --bg: #ee4d2d; --on-bg: #ffffff; --on-bg-muted: #ffd9cc;
+    --grid-line: rgba(255,255,255,0.12); --card: #ffffff;
+    --text: #2a1a12; --muted: #8a6a5c; --border: #f3d0c2;
+    --accent: #ee4d2d; --accent-ink: #c73e1f; --accent-soft: #fde8e0;
+    --focus: #a8341a;
   }}
   * {{ box-sizing: border-box; }}
   body {{
@@ -241,11 +230,12 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
   }}
   .wrap {{ max-width: 1080px; margin: 0 auto; }}
   .cabecalho {{ display: flex; justify-content: space-between; align-items: flex-end; gap: 16px;
-    flex-wrap: wrap; margin-bottom: 28px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }}
+    flex-wrap: wrap; margin-bottom: 28px; border-bottom: 2px solid rgba(255,255,255,0.3); padding-bottom: 20px; }}
   .eyebrow {{ font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--accent-ink); margin: 0 0 8px; font-weight: 600; }}
-  h1 {{ font-family: "Archivo", sans-serif; font-weight: 800; font-size: clamp(1.4rem, 2.2vw, 1.9rem); margin: 0; }}
-  .atualizado {{ font-family: "IBM Plex Mono", monospace; font-size: 0.8rem; color: var(--muted); }}
+    text-transform: uppercase; color: var(--on-bg); margin: 0 0 8px; font-weight: 600; }}
+  h1 {{ font-family: "Archivo", sans-serif; font-weight: 800; font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+    margin: 0; color: var(--on-bg); }}
+  .atualizado {{ font-family: "IBM Plex Mono", monospace; font-size: 0.8rem; color: var(--on-bg-muted); }}
 
   .resumo {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px; }}
   .stat {{ background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }}
@@ -256,7 +246,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
   .stat-impulsionado .n {{ color: #a5730a; }}
   .stat-vendido .n {{ color: #0ca30c; }}
 
-  .descricao-secao {{ font-size: 0.85rem; color: var(--muted); margin: 0 0 18px; max-width: 68ch; }}
+  .descricao-secao {{ font-size: 0.85rem; color: var(--on-bg-muted); margin: 0 0 18px; max-width: 68ch; }}
 
   .tabela-scroll {{ overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--card); }}
   table {{ width: 100%; border-collapse: collapse; min-width: 820px; }}
@@ -284,14 +274,10 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
   .seletor-etapa {{
     font-family: "IBM Plex Sans", sans-serif; font-size: 0.8rem; font-weight: 600;
     border: 1px solid var(--border); border-radius: 999px; padding: 5px 10px; cursor: pointer;
-    background: var(--bg); color: var(--muted);
+    background: #f7f3f1; color: var(--muted);
   }}
   .seletor-etapa.etapa-em_producao {{ background: var(--accent-soft); color: var(--accent-ink); border-color: var(--accent); }}
   .seletor-etapa.etapa-publicado {{ background: #e3f6e0; color: #0ca30c; border-color: #0ca30c; }}
-  @media (prefers-color-scheme: dark) {{
-    :root:not([data-theme="light"]) .seletor-etapa.etapa-publicado {{ background: #16332a; }}
-  }}
-  :root[data-theme="dark"] .seletor-etapa.etapa-publicado {{ background: #16332a; }}
 
   .col-textos {{ min-width: 140px; }}
   .detalhe-textos summary {{ cursor: pointer; font-size: 0.8rem; font-weight: 600; color: var(--focus); list-style: none; }}
@@ -302,7 +288,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
   .bloco-texto-cabecalho {{ display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 4px; }}
   .bloco-texto-cabecalho b {{ font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }}
   .texto-conteudo {{ white-space: pre-wrap; font-family: "IBM Plex Sans", sans-serif; font-size: 0.8rem;
-    background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; margin: 0;
+    background: #f7f3f1; border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; margin: 0;
     max-height: 180px; overflow-y: auto; }}
   .texto-vazio {{ font-size: 0.78rem; color: var(--muted); margin: 10px 0 0; max-width: 260px; }}
   .btn-copiar {{ font-family: "IBM Plex Sans", sans-serif; font-size: 0.72rem; font-weight: 600;
@@ -315,12 +301,8 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
     background: transparent; color: #d03b3b; }}
   .btn-excluir:hover {{ background: #fbe4e4; }}
   .btn-excluir:disabled {{ border-color: var(--border); color: var(--muted); cursor: not-allowed; background: transparent; }}
-  @media (prefers-color-scheme: dark) {{
-    :root:not([data-theme="light"]) .btn-excluir:hover {{ background: #3a1a1a; }}
-  }}
-  :root[data-theme="dark"] .btn-excluir:hover {{ background: #3a1a1a; }}
 
-  .secao-titulo {{ font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.05rem; margin: 36px 0 12px; }}
+  .secao-titulo {{ font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.05rem; margin: 36px 0 12px; color: var(--on-bg); }}
   .guia-processo {{ background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; }}
   .guia-processo ol {{ margin: 0; padding-left: 20px; }}
   .guia-processo li {{ font-size: 0.88rem; margin-bottom: 12px; line-height: 1.5; }}
@@ -330,7 +312,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
   .guia-aviso {{ font-size: 0.82rem; color: var(--muted); margin: 12px 0 0; padding-top: 12px;
     border-top: 1px dashed var(--border); }}
 
-  .rodape {{ margin-top: 24px; font-size: 0.78rem; color: var(--muted); font-family: "IBM Plex Mono", monospace; }}
+  .rodape {{ margin-top: 24px; font-size: 0.78rem; color: var(--on-bg-muted); font-family: "IBM Plex Mono", monospace; }}
 
   @media (max-width: 640px) {{ .resumo {{ grid-template-columns: 1fr; }} }}
 {nav.MENU_CSS}
@@ -341,7 +323,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
     {nav.gerar_menu_html("esteira.html")}
     <header class="cabecalho">
       <div>
-        <p class="eyebrow">Cockpit de Afiliação &middot; @papairesolve_br</p>
+        <p class="eyebrow">Agente Shopee &middot; @papairesolve_br</p>
         <h1>Esteira</h1>
       </div>
       <p class="atualizado" id="atualizado-em">Atualizado {date.today().strftime('%d/%m/%Y')} &mdash; verificando dados mais recentes&hellip;</p>
@@ -399,7 +381,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
       <p class="guia-aviso">O Claude não grava vídeo nem publica nas redes sozinho — essas partes (2, 3 e 4) são manuais. O que o cockpit automatiza é o roteiro, a legenda, a curadoria dos produtos e o acompanhamento de cada um até a venda.</p>
     </div>
 
-    <p class="rodape">Cockpit de Afiliação IA-First &middot; @papairesolve_br</p>
+    <p class="rodape">Agente Shopee &middot; @papairesolve_br</p>
   </div>
 
   <script>

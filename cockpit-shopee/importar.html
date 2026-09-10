@@ -3,30 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Importar dados — Cockpit Papai Resolve</title>
+<title>Importar dados — Agente Shopee</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #eef1f0; --grid-line: rgba(20, 60, 90, 0.07); --card: #ffffff;
-    --text: #14202b; --muted: #5b6b74; --border: #d7dfe0;
-    --accent: #d9670c; --accent-ink: #a84e08; --accent-soft: #fbe7d4;
-    --focus: #1d64b0; --sucesso: #0ca30c;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
-      --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
-      --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
-      --focus: #6badf0; --sucesso: #3fbf8a;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
-    --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
-    --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
-    --focus: #6badf0; --sucesso: #3fbf8a;
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    /* Identidade visual fixa laranja & branco (igual Shopee) — pedido
+       do usuário em 10/09, não muda com o tema do sistema. */
+    --bg: #ee4d2d; --on-bg: #ffffff; --on-bg-muted: #ffd9cc;
+    --grid-line: rgba(255,255,255,0.12); --card: #ffffff;
+    --text: #2a1a12; --muted: #8a6a5c; --border: #f3d0c2;
+    --accent: #ee4d2d; --accent-ink: #c73e1f; --accent-soft: #fde8e0;
+    --focus: #a8341a; --sucesso: #0ca30c;
   }
   * { box-sizing: border-box; }
   body {
@@ -37,9 +26,9 @@
   .wrap { max-width: 720px; margin: 0 auto; }
   .cabecalho { border-bottom: 2px solid var(--border); padding-bottom: 20px; margin-bottom: 28px; }
   .eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--accent-ink); margin: 0 0 8px; font-weight: 600; }
-  h1 { font-family: "Archivo", sans-serif; font-weight: 800; font-size: 1.7rem; margin: 0 0 8px; }
-  .subtitulo { color: var(--muted); font-size: 0.92rem; margin: 0; max-width: 60ch; }
+    text-transform: uppercase; color: var(--on-bg); margin: 0 0 8px; font-weight: 600; }
+  h1 { font-family: "Archivo", sans-serif; font-weight: 800; font-size: 1.7rem; margin: 0 0 8px; color: var(--on-bg); }
+  .subtitulo { color: var(--on-bg-muted); font-size: 0.92rem; margin: 0; max-width: 60ch; }
 
   .cartao { background: var(--card); border: 1px solid var(--border); border-radius: 10px;
     padding: 24px 28px; margin-bottom: 24px; }
@@ -53,7 +42,7 @@
   .campo input {
     width: 100%; font-family: "IBM Plex Sans", sans-serif; font-size: 0.92rem;
     padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px;
-    background: var(--bg); color: var(--text);
+    background: #ffffff; color: var(--text);
   }
   .campo input:focus { outline: 2px solid var(--focus); outline-offset: 1px; }
   .linha-dupla { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -66,7 +55,7 @@
   .resultado { margin-top: 18px; display: none; }
   .resultado.visivel { display: block; }
   .resultado-linha {
-    font-family: "IBM Plex Mono", monospace; font-size: 0.85rem; background: var(--bg);
+    font-family: "IBM Plex Mono", monospace; font-size: 0.85rem; background: #f7f3f1;
     border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px;
     word-break: break-all; margin-bottom: 10px;
   }
@@ -76,16 +65,16 @@
   .btn-copiar:hover { background: var(--accent-soft); }
   .btn-copiar.copiado { color: var(--sucesso); border-color: var(--sucesso); }
 
-  .instrucao { font-size: 0.82rem; color: var(--muted); margin-top: 12px; line-height: 1.5; }
-  .instrucao a { color: var(--accent-ink); }
+  .instrucao { font-size: 0.82rem; color: var(--on-bg-muted); margin-top: 12px; line-height: 1.5; }
+  .instrucao a { color: var(--on-bg); }
 
-  .rodape { margin-top: 20px; font-size: 0.78rem; color: var(--muted); font-family: "IBM Plex Mono", monospace; }
+  .rodape { margin-top: 20px; font-size: 0.78rem; color: var(--on-bg-muted); font-family: "IBM Plex Mono", monospace; }
 
   .menu-cockpit { display: flex; gap: 4px; background: var(--card); border: 1px solid var(--border);
     border-radius: 8px; padding: 4px; margin-bottom: 24px; flex-wrap: wrap; }
   .menu-item { font-family: "IBM Plex Sans", sans-serif; font-size: 0.84rem; font-weight: 600;
     color: var(--muted); text-decoration: none; padding: 8px 14px; border-radius: 6px; }
-  .menu-item:hover { color: var(--text); background: var(--bg); }
+  .menu-item:hover { color: var(--text); background: var(--accent-soft); }
   .menu-item.ativo { background: var(--accent); color: #fff; }
 </style>
 </head>
@@ -102,7 +91,7 @@
     </nav>
     <script>if (window.self !== window.top) { document.getElementById('menu-cockpit').style.display = 'none'; }</script>
     <header class="cabecalho">
-      <p class="eyebrow">Cockpit de Afiliação &middot; @papairesolve_br</p>
+      <p class="eyebrow">Agente Shopee &middot; @papairesolve_br</p>
       <h1>Importar dados</h1>
       <p class="subtitulo">Preenche o formulário, copia a linha gerada e cola no arquivo certo do GitHub. Sem precisar me chamar toda vez.</p>
     </header>

@@ -167,67 +167,29 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  :root {{
-    --bg: #eef1f0;
-    --grid-line: rgba(20, 60, 90, 0.07);
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {{
+    /* Identidade visual fixa laranja & branco (igual Shopee) — pedido
+       do usuário em 10/09, não muda com o tema do sistema. */
+    --bg: #ee4d2d;
+    --on-bg: #ffffff;
+    --on-bg-muted: #ffd9cc;
+    --grid-line: rgba(255, 255, 255, 0.12);
     --card: #ffffff;
-    --text: #14202b;
-    --muted: #5b6b74;
-    --border: #d7dfe0;
-    --accent: #d9670c;
-    --accent-ink: #a84e08;
-    --accent-soft: #fbe7d4;
+    --text: #2a1a12;
+    --muted: #8a6a5c;
+    --border: #f3d0c2;
+    --accent: #ee4d2d;
+    --accent-ink: #c73e1f;
+    --accent-soft: #fde8e0;
     --baixo: #1f8a5f;
     --baixo-soft: #dcf1e7;
     --medio: #1d64b0;
     --medio-soft: #dde9f7;
     --alto: #a13c2f;
     --alto-soft: #f6e2df;
-    --focus: #1d64b0;
-    --barra-bg: #14202b;
-    --barra-texto: #eef1f0;
-  }}
-  @media (prefers-color-scheme: dark) {{
-    :root:not([data-theme="light"]) {{
-      --bg: #0f1417;
-      --grid-line: rgba(255, 255, 255, 0.05);
-      --card: #171e22;
-      --text: #e7edf0;
-      --muted: #93a2a9;
-      --border: #2a3338;
-      --accent: #ff9439;
-      --accent-ink: #ffb066;
-      --accent-soft: #3a2a17;
-      --baixo: #3fbf8a;
-      --baixo-soft: #16332a;
-      --medio: #6badf0;
-      --medio-soft: #182a3d;
-      --alto: #e0776a;
-      --alto-soft: #3a201c;
-      --focus: #6badf0;
-      --barra-bg: #232c32;
-      --barra-texto: #e7edf0;
-    }}
-  }}
-  :root[data-theme="dark"] {{
-    --bg: #0f1417;
-    --grid-line: rgba(255, 255, 255, 0.05);
-    --card: #171e22;
-    --text: #e7edf0;
-    --muted: #93a2a9;
-    --border: #2a3338;
-    --accent: #ff9439;
-    --accent-ink: #ffb066;
-    --accent-soft: #3a2a17;
-    --baixo: #3fbf8a;
-    --baixo-soft: #16332a;
-    --medio: #6badf0;
-    --medio-soft: #182a3d;
-    --alto: #e0776a;
-    --alto-soft: #3a201c;
-    --focus: #6badf0;
-    --barra-bg: #232c32;
-    --barra-texto: #e7edf0;
+    --focus: #a8341a;
+    --barra-bg: #2a1a12;
+    --barra-texto: #ffffff;
   }}
   * {{ box-sizing: border-box; }}
   html {{ -webkit-text-size-adjust: 100%; }}
@@ -248,7 +210,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
     gap: 16px;
     flex-wrap: wrap;
     margin-bottom: 28px;
-    border-bottom: 2px solid var(--border);
+    border-bottom: 2px solid rgba(255,255,255,0.3);
     padding-bottom: 20px;
   }}
   .eyebrow {{
@@ -256,7 +218,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
     font-size: 0.72rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--accent-ink);
+    color: var(--on-bg);
     margin: 0 0 8px;
     font-weight: 600;
   }}
@@ -267,11 +229,12 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
     margin: 0;
     letter-spacing: -0.01em;
     text-wrap: balance;
+    color: var(--on-bg);
   }}
   .atualizado {{
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.8rem;
-    color: var(--muted);
+    color: var(--on-bg-muted);
     text-align: right;
   }}
 
@@ -309,10 +272,11 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
     font-size: 1.1rem;
     font-weight: 700;
     margin: 36px 0 4px;
+    color: var(--on-bg);
   }}
   .descricao-secao {{
     font-size: 0.85rem;
-    color: var(--muted);
+    color: var(--on-bg-muted);
     margin: 0 0 14px;
   }}
   .descricao-secao code {{
@@ -350,7 +314,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
   .filtro.ativo {{ background: var(--accent); color: #fff; }}
   .filtros-select {{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }}
   .filtros-select label {{
-    font-family: "IBM Plex Sans", sans-serif; font-size: 0.82rem; font-weight: 600; color: var(--muted);
+    font-family: "IBM Plex Sans", sans-serif; font-size: 0.82rem; font-weight: 600; color: var(--on-bg-muted);
   }}
   .filtros-select select {{
     font-family: "IBM Plex Sans", sans-serif; font-size: 0.84rem; color: var(--text);
@@ -383,9 +347,9 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
   .col-foto {{ width: 56px; padding: 8px 10px; }}
   .foto-produto {{
     width: 48px; height: 48px; border-radius: 6px; object-fit: cover;
-    border: 1px solid var(--border); display: block; background: var(--bg);
+    border: 1px solid var(--border); display: block; background: var(--accent-soft);
   }}
-  .foto-vazia {{ background: var(--bg); }}
+  .foto-vazia {{ background: var(--accent-soft); }}
   .col-pos {{
     font-family: "IBM Plex Mono", monospace;
     color: var(--muted);
@@ -428,7 +392,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
   .rodape {{
     margin-top: 20px;
     font-size: 0.78rem;
-    color: var(--muted);
+    color: var(--on-bg-muted);
     font-family: "IBM Plex Mono", monospace;
   }}
 
@@ -478,7 +442,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
   .busca-form input {{
     flex: 1; min-width: 200px; font-family: "IBM Plex Sans", sans-serif; font-size: 0.9rem;
     padding: 10px 14px; border-radius: 7px; border: 1px solid var(--border);
-    background: var(--bg); color: var(--text);
+    background: #ffffff; color: var(--text);
   }}
   .busca-form input:focus-visible {{ outline: 2px solid var(--focus); outline-offset: 1px; }}
   .btn-buscar {{
@@ -513,7 +477,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
     {nav.gerar_menu_html("painel.html")}
     <header class="cabecalho">
       <div>
-        <p class="eyebrow">Cockpit de Afiliação &middot; @papairesolve_br</p>
+        <p class="eyebrow">Agente Shopee &middot; @papairesolve_br</p>
         <h1>{titulo}</h1>
       </div>
       <p class="atualizado">Atualizado&nbsp;{date.today().strftime('%d/%m/%Y')}<br>{len(produtos)} produtos</p>
@@ -541,7 +505,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
     {tabela_principal_html}
     {secao_extras_html}
 
-    <p class="rodape">Gerado a partir da Shopee Affiliate API &middot; Cockpit de Afiliação IA-First</p>
+    <p class="rodape">Gerado a partir da Shopee Affiliate API &middot; Agente Shopee</p>
   </div>
 
   <div class="barra-selecao">

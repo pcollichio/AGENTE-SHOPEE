@@ -105,42 +105,23 @@ def gerar_html():
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cockpit Papai Resolve</title>
+<title>Agente Shopee</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  :root {{
-    --bg: #eef1f0; --grid-line: rgba(20, 60, 90, 0.07); --card: #ffffff;
-    --text: #14202b; --muted: #5b6b74; --border: #d7dfe0;
-    --accent: #d9670c; --accent-ink: #a84e08; --accent-soft: #fbe7d4;
-    --focus: #1d64b0;
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {{
+    /* Identidade visual fixa laranja & branco (igual Shopee) — pedido
+       do usuário em 10/09, não muda com o tema do sistema. */
+    --bg: #ee4d2d; --on-bg: #ffffff; --on-bg-muted: #ffd9cc;
+    --grid-line: rgba(255,255,255,0.12); --card: #ffffff;
+    --text: #2a1a12; --muted: #8a6a5c; --border: #f3d0c2;
+    --accent: #ee4d2d; --accent-ink: #c73e1f; --accent-soft: #fde8e0;
+    --focus: #a8341a;
     --bom: #0ca30c; --bom-soft: #e3f6e0;
     --manual: #a5730a; --manual-soft: #fdf1d9;
-    --proximo: #5b6b74; --proximo-soft: #e4e8e7;
+    --proximo: #8a6a5c; --proximo-soft: #f3d0c250;
     --alta: #d03b3b; --alta-soft: #f8e2e2;
-  }}
-  @media (prefers-color-scheme: dark) {{
-    :root:not([data-theme="light"]) {{
-      --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
-      --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
-      --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
-      --focus: #6badf0;
-      --bom: #3fbf8a; --bom-soft: #16332a;
-      --manual: #e0b64b; --manual-soft: #3a2f13;
-      --proximo: #93a2a9; --proximo-soft: #232c30;
-      --alta: #e0776a; --alta-soft: #3a201c;
-    }}
-  }}
-  :root[data-theme="dark"] {{
-    --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
-    --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
-    --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
-    --focus: #6badf0;
-    --bom: #3fbf8a; --bom-soft: #16332a;
-    --manual: #e0b64b; --manual-soft: #3a2f13;
-    --proximo: #93a2a9; --proximo-soft: #232c30;
-    --alta: #e0776a; --alta-soft: #3a201c;
   }}
   * {{ box-sizing: border-box; }}
   body {{
@@ -150,15 +131,15 @@ def gerar_html():
   }}
   .wrap {{ max-width: 900px; margin: 0 auto; }}
 {nav.MENU_CSS}
-  .cabecalho {{ display: flex; align-items: center; gap: 16px; border-bottom: 2px solid var(--border);
+  .cabecalho {{ display: flex; align-items: center; gap: 16px; border-bottom: 2px solid rgba(255,255,255,0.3);
     padding-bottom: 24px; margin-bottom: 28px; }}
   svg.logo {{ flex-shrink: 0; }}
   .cabecalho-texto .eyebrow {{ font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--accent-ink); margin: 0 0 6px; font-weight: 600; }}
-  h1 {{ font-family: "Archivo", sans-serif; font-weight: 800; font-size: 1.7rem; margin: 0; }}
+    text-transform: uppercase; color: var(--on-bg); margin: 0 0 6px; font-weight: 600; }}
+  h1 {{ font-family: "Archivo", sans-serif; font-weight: 800; font-size: 1.7rem; margin: 0; color: var(--on-bg); }}
 
-  .secao-titulo {{ font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.1rem; margin: 0 0 4px; }}
-  .secao-sub {{ color: var(--muted); font-size: 0.85rem; margin: 0 0 16px; }}
+  .secao-titulo {{ font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.1rem; margin: 0 0 4px; color: var(--on-bg); }}
+  .secao-sub {{ color: var(--on-bg-muted); font-size: 0.85rem; margin: 0 0 16px; }}
   .secao-topo-flex {{ display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }}
   .progresso-dia {{ font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; font-weight: 600;
     color: var(--accent-ink); background: var(--accent-soft); padding: 6px 12px; border-radius: 999px;
@@ -183,7 +164,7 @@ def gerar_html():
   .recomendacao-link {{ font-size: 0.82rem; font-weight: 600; color: var(--accent-ink); text-decoration: none; }}
   .recomendacao-link:hover {{ text-decoration: underline; }}
 
-  .legenda {{ display: flex; gap: 18px; flex-wrap: wrap; margin: 12px 0 16px; font-size: 0.8rem; color: var(--muted); }}
+  .legenda {{ display: flex; gap: 18px; flex-wrap: wrap; margin: 12px 0 16px; font-size: 0.8rem; color: var(--on-bg-muted); }}
   .legenda span {{ display: inline-flex; align-items: center; gap: 6px; }}
   .ponto {{ width: 9px; height: 9px; border-radius: 50%; display: inline-block; }}
   .ponto-bom {{ background: var(--bom); }}
@@ -194,10 +175,11 @@ def gerar_html():
   .fluxo-details summary {{
     cursor: pointer; list-style: none; font-family: "Archivo", sans-serif; font-weight: 700;
     font-size: 1.05rem; padding: 4px 0; display: flex; align-items: center; gap: 8px;
+    color: var(--on-bg);
   }}
   .fluxo-details summary::-webkit-details-marker {{ display: none; }}
   .fluxo-details summary::before {{
-    content: '\\25B8'; font-size: 0.8em; color: var(--muted); transition: transform 0.15s;
+    content: '\\25B8'; font-size: 0.8em; color: var(--on-bg-muted); transition: transform 0.15s;
     display: inline-block;
   }}
   .fluxo-details[open] summary::before {{ transform: rotate(90deg); }}
@@ -207,9 +189,9 @@ def gerar_html():
     display: flex; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--border);
     border-radius: 8px; padding: 10px 14px;
   }}
-  .etapa-marca {{ flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--bg);
+  .etapa-marca {{ flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--accent-soft);
     border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center;
-    font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; font-weight: 600; color: var(--muted); }}
+    font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; font-weight: 600; color: var(--accent-ink); }}
   .etapa-titulo {{ font-weight: 600; font-size: 0.9rem; flex: 1; min-width: 140px; }}
   .status {{ font-family: "IBM Plex Mono", monospace; font-size: 0.65rem; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }}
@@ -222,8 +204,8 @@ def gerar_html():
   .etapa-links a:hover {{ text-decoration: underline; }}
   .etapa-links a.externo::after {{ content: ' \\2197'; }}
 
-  .rodape {{ margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border);
-    font-size: 0.78rem; color: var(--muted); font-family: "IBM Plex Mono", monospace; }}
+  .rodape {{ margin-top: 32px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.3);
+    font-size: 0.78rem; color: var(--on-bg-muted); font-family: "IBM Plex Mono", monospace; }}
 </style>
 </head>
 <body>
@@ -232,13 +214,13 @@ def gerar_html():
 
     <header class="cabecalho">
       <svg class="logo" width="44" height="44" viewBox="0 0 120 120" fill="none">
-        <circle cx="60" cy="60" r="52" stroke="#a84e08" stroke-width="5"/>
-        <circle cx="60" cy="60" r="42" stroke="#5b6b74" stroke-width="1.5" stroke-dasharray="2 6"/>
-        <path d="M38 62 L54 78 L86 40" stroke="#d9670c" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="60" cy="60" r="52" stroke="#ffffff" stroke-width="5"/>
+        <circle cx="60" cy="60" r="42" stroke="#ffd9cc" stroke-width="1.5" stroke-dasharray="2 6"/>
+        <path d="M38 62 L54 78 L86 40" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <div class="cabecalho-texto">
         <p class="eyebrow">Papai Resolve &middot; Casa &amp; Construção</p>
-        <h1>Cockpit de Afiliação</h1>
+        <h1>Agente Shopee</h1>
       </div>
     </header>
 
@@ -263,7 +245,7 @@ def gerar_html():
       </div>
     </details>
 
-    <p class="rodape">Cockpit de Afiliação IA-First &middot; @papairesolve_br &middot; Fase 1</p>
+    <p class="rodape">Agente Shopee &middot; @papairesolve_br &middot; Fase 1</p>
   </div>
 
   <script>

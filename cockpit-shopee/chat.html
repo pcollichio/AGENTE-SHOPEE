@@ -3,33 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chat do coach &middot; Cockpit Papai Resolve</title>
+<title>Chat do coach &middot; Agente Shopee</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #eef1f0; --grid-line: rgba(20, 60, 90, 0.07); --card: #ffffff;
-    --text: #14202b; --muted: #5b6b74; --border: #d7dfe0;
-    --accent: #d9670c; --accent-ink: #a84e08; --accent-soft: #fbe7d4;
-    --focus: #1d64b0; --bolha-usuario: #d9670c; --bolha-coach: #ffffff;
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    /* Identidade visual fixa laranja & branco (igual Shopee) — pedido
+       do usuário em 10/09, não muda com o tema do sistema. */
+    --bg: #ee4d2d; --on-bg: #ffffff; --on-bg-muted: #ffd9cc;
+    --grid-line: rgba(255,255,255,0.12); --card: #ffffff;
+    --text: #2a1a12; --muted: #8a6a5c; --border: #f3d0c2;
+    --accent: #ee4d2d; --accent-ink: #c73e1f; --accent-soft: #fde8e0;
+    --focus: #a8341a; --bolha-usuario: #ee4d2d; --bolha-coach: #fde8e0;
     --erro: #d03b3b; --erro-soft: #f8e2e2;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
-      --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
-      --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
-      --focus: #6badf0; --bolha-usuario: #ff9439; --bolha-coach: #171e22;
-      --erro: #e0776a; --erro-soft: #3a201c;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
-    --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
-    --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #3a2a17;
-    --focus: #6badf0; --bolha-usuario: #ff9439; --bolha-coach: #171e22;
-    --erro: #e0776a; --erro-soft: #3a201c;
   }
   * { box-sizing: border-box; }
   html, body { height: 100%; }
@@ -46,14 +33,14 @@
     border-radius: 8px; padding: 4px; margin-bottom: 24px; flex-wrap: wrap; }
   .menu-item { font-family: "IBM Plex Sans", sans-serif; font-size: 0.84rem; font-weight: 600;
     color: var(--muted); text-decoration: none; padding: 8px 14px; border-radius: 6px; }
-  .menu-item:hover { color: var(--text); background: var(--bg); }
+  .menu-item:hover { color: var(--text); background: var(--accent-soft); }
   .menu-item.ativo { background: var(--accent); color: #fff; }
 
   .cabecalho { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
   svg.logo { flex-shrink: 0; }
   .cabecalho-texto .eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--accent-ink); margin: 0 0 4px; font-weight: 600; }
-  h1 { font-family: "Archivo", sans-serif; font-weight: 800; font-size: 1.4rem; margin: 0; }
+    text-transform: uppercase; color: var(--on-bg); margin: 0 0 4px; font-weight: 600; }
+  h1 { font-family: "Archivo", sans-serif; font-weight: 800; font-size: 1.4rem; margin: 0; color: var(--on-bg); }
 
   .caixa-chat { flex: 1; min-height: 0; display: flex; flex-direction: column; background: var(--card);
     border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
@@ -63,7 +50,7 @@
   .msg-usuario { justify-content: flex-end; }
   .bolha { max-width: 82%; padding: 10px 14px; border-radius: 12px; font-size: 0.92rem; line-height: 1.5;
     white-space: pre-wrap; }
-  .msg-coach .bolha { background: var(--bg); border: 1px solid var(--border); border-bottom-left-radius: 3px; }
+  .msg-coach .bolha { background: var(--bolha-coach); border: 1px solid var(--border); border-bottom-left-radius: 3px; }
   .msg-usuario .bolha { background: var(--bolha-usuario); color: #fff; border-bottom-right-radius: 3px; }
   .msg-erro .bolha { background: var(--erro-soft); color: var(--erro); border: 1px solid var(--erro); }
   .msg-carregando .bolha { color: var(--muted); font-style: italic; }
@@ -76,13 +63,13 @@
 
   .form-msg { display: flex; gap: 10px; padding: 14px; border-top: 1px solid var(--border); }
   .form-msg input { flex: 1; font-family: "IBM Plex Sans", sans-serif; font-size: 0.92rem; padding: 11px 14px;
-    border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+    border-radius: 8px; border: 1px solid var(--border); background: #ffffff; color: var(--text); }
   .form-msg input:focus { outline: 2px solid var(--focus); outline-offset: 1px; }
   .form-msg button { font-family: "IBM Plex Sans", sans-serif; font-size: 0.9rem; font-weight: 700;
     color: #fff; background: var(--accent); border: none; border-radius: 8px; padding: 0 20px; cursor: pointer; }
   .form-msg button:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  .aviso-config { font-size: 0.8rem; color: var(--muted); margin-top: 10px; font-family: "IBM Plex Mono", monospace; }
+  .aviso-config { font-size: 0.8rem; color: var(--on-bg-muted); margin-top: 10px; font-family: "IBM Plex Mono", monospace; }
 </style>
 </head>
 <body>
@@ -91,8 +78,8 @@
 
     <header class="cabecalho">
       <svg class="logo" width="36" height="36" viewBox="0 0 120 120" fill="none">
-        <circle cx="60" cy="60" r="52" stroke="#a84e08" stroke-width="5"/>
-        <path d="M38 62 L54 78 L86 40" stroke="#d9670c" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="60" cy="60" r="52" stroke="#ffffff" stroke-width="5"/>
+        <path d="M38 62 L54 78 L86 40" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <div class="cabecalho-texto">
         <p class="eyebrow">Papai Resolve &middot; Coach</p>

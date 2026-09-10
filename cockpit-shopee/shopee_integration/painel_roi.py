@@ -178,25 +178,14 @@ def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard ‚
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  :root {{
-    --bg: #eef1f0; --grid-line: rgba(20, 60, 90, 0.07); --card: #ffffff;
-    --text: #14202b; --muted: #5b6b74; --border: #d7dfe0;
-    --accent: #d9670c; --accent-ink: #a84e08; --accent-soft: #fbe7d422;
-    --grade: rgba(20, 60, 90, 0.1); --focus: #1d64b0;
-  }}
-  @media (prefers-color-scheme: dark) {{
-    :root:not([data-theme="light"]) {{
-      --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
-      --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
-      --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #ff943922;
-      --grade: rgba(255,255,255,0.08); --focus: #6badf0;
-    }}
-  }}
-  :root[data-theme="dark"] {{
-    --bg: #0f1417; --grid-line: rgba(255,255,255,0.05); --card: #171e22;
-    --text: #e7edf0; --muted: #93a2a9; --border: #2a3338;
-    --accent: #ff9439; --accent-ink: #ffb066; --accent-soft: #ff943922;
-    --grade: rgba(255,255,255,0.08); --focus: #6badf0;
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {{
+    /* Identidade visual fixa laranja & branco (igual Shopee) ‚Äî pedido
+       do usu√°rio em 10/09, n√£o muda com o tema do sistema. */
+    --bg: #ee4d2d; --on-bg: #ffffff; --on-bg-muted: #ffd9cc;
+    --grid-line: rgba(255,255,255,0.12); --card: #ffffff;
+    --text: #2a1a12; --muted: #8a6a5c; --border: #f3d0c2;
+    --accent: #ee4d2d; --accent-ink: #c73e1f; --accent-soft: #fde8e0;
+    --grade: rgba(20, 60, 90, 0.1); --focus: #a8341a;
   }}
   * {{ box-sizing: border-box; }}
   body {{
@@ -206,11 +195,11 @@ def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard ‚
   }}
   .wrap {{ max-width: 1000px; margin: 0 auto; }}
   .cabecalho {{ display: flex; justify-content: space-between; align-items: flex-end; gap: 16px;
-    flex-wrap: wrap; margin-bottom: 28px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }}
+    flex-wrap: wrap; margin-bottom: 28px; border-bottom: 2px solid rgba(255,255,255,0.3); padding-bottom: 20px; }}
   .eyebrow {{ font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--accent-ink); margin: 0 0 8px; font-weight: 600; }}
-  h1 {{ font-family: "Archivo", sans-serif; font-weight: 800; font-size: clamp(1.4rem, 2.2vw, 1.9rem); margin: 0; }}
-  .atualizado {{ font-family: "IBM Plex Mono", monospace; font-size: 0.8rem; color: var(--muted); }}
+    text-transform: uppercase; color: var(--on-bg); margin: 0 0 8px; font-weight: 600; }}
+  h1 {{ font-family: "Archivo", sans-serif; font-weight: 800; font-size: clamp(1.4rem, 2.2vw, 1.9rem); margin: 0; color: var(--on-bg); }}
+  .atualizado {{ font-family: "IBM Plex Mono", monospace; font-size: 0.8rem; color: var(--on-bg-muted); }}
 
   .resumo {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }}
   .stat {{ background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; }}
@@ -228,7 +217,7 @@ def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard ‚
   .barra-fill {{ background: var(--accent); height: 100%; border-radius: 999px; }}
   .pendente-nota {{ margin: 10px 0 0; font-size: 0.8rem; color: var(--muted); }}
 
-  .secao-titulo {{ font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.05rem; margin: 32px 0 12px; }}
+  .secao-titulo {{ font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.05rem; margin: 32px 0 12px; color: var(--on-bg); }}
 
   .grafico-wrap {{ position: relative; background: var(--card); border: 1px solid var(--border);
     border-radius: 10px; padding: 16px; }}
@@ -239,7 +228,7 @@ def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard ‚
   .grafico-vazio code {{ font-family: "IBM Plex Mono", monospace; background: var(--accent-soft);
     padding: 1px 5px; border-radius: 3px; }}
   .tooltip-roi {{ position: absolute; top: 12px; transform: translateX(-50%); background: var(--text);
-    color: var(--bg); font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; padding: 6px 10px;
+    color: var(--on-bg); font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; padding: 6px 10px;
     border-radius: 6px; pointer-events: none; white-space: nowrap; }}
 
   .tabela-scroll {{ overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--card); }}
@@ -259,7 +248,7 @@ def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard ‚
   .status-warning svg {{ color: #a5730a; }}
   .status-critical svg {{ color: #d03b3b; }}
 
-  .rodape {{ margin-top: 24px; font-size: 0.78rem; color: var(--muted); font-family: "IBM Plex Mono", monospace; }}
+  .rodape {{ margin-top: 24px; font-size: 0.78rem; color: var(--on-bg-muted); font-family: "IBM Plex Mono", monospace; }}
 
   @media (max-width: 640px) {{ .resumo {{ grid-template-columns: repeat(2, 1fr); }} }}
 {nav.MENU_CSS}
@@ -270,7 +259,7 @@ def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard ‚
     {nav.gerar_menu_html("painel_roi.html")}
     <header class="cabecalho">
       <div>
-        <p class="eyebrow">Cockpit de Afilia√ß√£o &middot; @papairesolve_br</p>
+        <p class="eyebrow">Agente Shopee &middot; @papairesolve_br</p>
         <h1>Dashboard</h1>
       </div>
       <p class="atualizado">Atualizado {date.today().strftime('%d/%m/%Y')}</p>
