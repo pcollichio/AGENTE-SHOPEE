@@ -149,10 +149,11 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
   sempre sai com narração e legenda prontas na esteira, sem exceção.
   Pedido em 11/09: quando o produto vem de um **link colado**, o link
   de afiliado agora é gerado direto da URL colada
-  (`client.gerar_link_rastreavel()`, mutation `generateShortLink`),
-  em vez de depender de achar o mesmo item de novo numa busca por
-  palavra-chave — ver HISTORICO.md pro motivo e o status de validação
-  contra a API real.
+  (`client.gerar_link_rastreavel()`, mutation `generateShortLink`,
+  validada contra a API real em 11/09), em vez de depender de achar o
+  mesmo item de novo numa busca por palavra-chave — funciona até
+  quando a URL não tem nome de produto nenhum (link de loja, sem
+  slug); ver HISTORICO.md pro caso real que motivou o ajuste.
 - Pedido do usuário em 03/09: o botão do painel não baixa mais um
   arquivo `.md` — o usuário reportou problema em incluir produto na
   esteira e apontou o download como causa provável (falha comum em
