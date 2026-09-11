@@ -44,18 +44,26 @@ def main():
             return
         print(f"Link resolvido: {url_final}")
         termo, item_id_alvo = link_resolver.extrair_info_link(url_final)
-        if not termo:
-            print(f"\n{link_resolver.MENSAGEM_LINK_SEM_NOME}")
-            return
-        print(f'Buscando por: "{termo}"' + (f" (item {item_id_alvo})" if item_id_alvo else ""))
-        print()
         # Gera o link rastreável direto da URL colada (mutation
         # generateShortLink — ver NOTA em client.py), sem depender de achar
-        # esse mesmo item de novo na busca por palavra-chave abaixo.
+        # esse mesmo item de novo na busca por palavra-chave abaixo. Não
+        # depende de ter conseguido extrair um termo — link de loja
+        # (.../<loja>/<shopId>/<itemId>) não tem nome de produto na URL, mas
+        # ainda dá pra gerar o link rastreável direto (caso real encontrado
+        # em 11/09, ver HISTORICO.md).
         try:
             link_rastreavel_direto = client.gerar_link_rastreavel(url_final)
         except Exception as e:
             print(f"Aviso: não consegui gerar o link rastreável direto ({e}) — seguindo com a busca por palavra-chave.\n")
+        if not termo:
+            if link_rastreavel_direto:
+                print("\nEsse link não tem o nome do produto na URL, mas o link rastreável ficou pronto:")
+                print(f"   {link_rastreavel_direto}")
+            else:
+                print(f"\n{link_resolver.MENSAGEM_LINK_SEM_NOME}")
+            return
+        print(f'Buscando por: "{termo}"' + (f" (item {item_id_alvo})" if item_id_alvo else ""))
+        print()
     else:
         termo = entrada
 

@@ -68,19 +68,28 @@ class handler(BaseHTTPRequestHandler):
                 self._responder(502, {"erro": f"Não consegui abrir esse link: {e}"})
                 return
             termo, item_id_alvo = link_resolver.extrair_info_link(url_final)
-            if not termo:
-                self._responder(400, {"erro": link_resolver.MENSAGEM_LINK_SEM_NOME})
-                return
             # Gera o link rastreável direto da URL colada (mutation
             # generateShortLink — ver NOTA em client.py), em vez de depender
             # só de achar esse mesmo item de novo na busca por palavra-chave
-            # abaixo. Best-effort: se falhar (mutation ainda não validada
-            # contra a API real, ou erro de rede), segue com o link que a
-            # busca por palavra-chave trouxer, como já funcionava antes.
+            # abaixo. Não depende de ter conseguido extrair um termo — link
+            # de loja (.../<loja>/<shopId>/<itemId>) não tem nome de produto
+            # na URL, mas ainda dá pra gerar o link rastreável direto (caso
+            # real encontrado em 11/09, ver HISTORICO.md). Best-effort: se
+            # falhar (erro de rede, ou mutation rejeitada), segue com o
+            # fallback de busca por palavra-chave abaixo, como já funcionava.
             try:
                 link_rastreavel_direto = client.gerar_link_rastreavel(url_final)
             except Exception as e:
                 print(f"Aviso: gerar_link_rastreavel falhou: {e}", file=sys.stderr)
+            if not termo:
+                if link_rastreavel_direto:
+                    self._responder(200, {
+                        "produtos": [],
+                        "link_rastreavel_sem_correspondencia": link_rastreavel_direto,
+                    })
+                else:
+                    self._responder(400, {"erro": link_resolver.MENSAGEM_LINK_SEM_NOME})
+                return
 
         try:
             produtos = client.buscar_produtos(keyword=termo, limite=8)

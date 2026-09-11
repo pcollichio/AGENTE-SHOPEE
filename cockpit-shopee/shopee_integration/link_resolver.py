@@ -24,22 +24,25 @@ def resolver_link(url):
 
 def extrair_info_link(url):
     """Tenta extrair um termo de busca (a partir do slug da URL) e o
-    itemId do produto, quando presente — em dois formatos possíveis:
+    itemId do produto, quando presente — em formatos possíveis:
     .../nome-do-produto-i.<shopId>.<itemId> (link de página de produto,
-    o formato normal quando você copia o link direto do app) ou
-    .../product/<shopId>/<itemId> (formato sem nome, comum em links de
-    afiliado/rastreamento — nesse caso não tem nome pra extrair)."""
+    o formato normal quando você copia o link direto do app, com nome
+    pra extrair) ou .../<algo>/<shopId>/<itemId> (sem nome do produto —
+    tanto o formato .../product/<shopId>/<itemId> quanto
+    .../<nome-da-loja>/<shopId>/<itemId>, este último confirmado em
+    11/09 resolvendo um link de afiliado real; nesses casos não tem
+    nome pra extrair, só o itemId)."""
     item_id = None
+    caminho = url.split("?")[0].rstrip("/")
 
-    m = re.search(r"-i\.(\d+)\.(\d+)", url)
+    m = re.search(r"-i\.(\d+)\.(\d+)", caminho)
     if m:
         item_id = m.group(2)
     else:
-        m = re.search(r"/product/(\d+)/(\d+)", url)
+        m = re.search(r"/(\d+)/(\d+)$", caminho)
         if m:
             item_id = m.group(2)
 
-    caminho = url.split("?")[0].rstrip("/")
     slug = caminho.rsplit("/", 1)[-1]
     slug = re.sub(r"-i\.\d+\.\d+$", "", slug)
     termo = re.sub(r"[-_]+", " ", slug).strip()

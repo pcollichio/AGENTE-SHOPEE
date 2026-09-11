@@ -603,4 +603,21 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   automaticamente na esteira). NOTA: mutation/campos
   (`generateShortLink`, `originUrl`, `subIds`, `shortLink`) ainda não
   confirmados contra uma resposta real no momento da implementação —
-  ver client.py para o resultado da validação via `busca-manual.yml`.
+  testado em seguida via `busca-manual.yml` com um link de afiliado
+  real (`https://s.shopee.com.br/2qUUBWudkN`, um dos links já presentes
+  na leva do dia). Esse primeiro teste nem chegou a exercitar a
+  mutation: o link resolveu pra
+  `shopee.com.br/opaanlp/401374403/20497653715` — um TERCEIRO formato
+  de URL da Shopee (`.../<nome-da-loja>/<shopId>/<itemId>`, sem nome de
+  produto nenhum na URL) que `link_resolver.extrair_info_link()` não
+  reconhecia (só sabia `-i.<shopId>.<itemId>` e
+  `/product/<shopId>/<itemId>`) — o item_id não saía, e o código
+  antigo desistia com "link sem nome" antes até de tentar gerar o link
+  rastreável. Corrigido: o regex de item_id generalizou pra "últimos
+  dois segmentos numéricos do caminho", cobrindo os três formatos com
+  uma regra só; e a chamada de `gerar_link_rastreavel()` foi movida pra
+  ANTES da checagem de "tem nome pra buscar por palavra-chave" — assim,
+  mesmo quando a URL não tem nome de produto nenhum (esse caso real),
+  ainda dá pra tentar gerar o link rastreável, só sem os detalhes
+  (nome/preço/foto). Resultado da validação da mutation em si, com
+  esse ajuste: ver a entrada seguinte.
