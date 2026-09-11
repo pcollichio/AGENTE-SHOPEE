@@ -29,7 +29,7 @@ jobs:
       - name: Instalar dependências
         run: pip install -r requirements.txt
 
-      - name: Testar conversionReport direto (sem salvar CSV)
+      - name: Testar conversionReport com queries progressivas (bisseção de campo)
         env:
           SHOPEE_APP_ID: ${{ secrets.SHOPEE_APP_ID }}
           SHOPEE_APP_SECRET: ${{ secrets.SHOPEE_APP_SECRET }}
@@ -37,24 +37,40 @@ jobs:
         run: |
           python3 -c "
           import json
-          import sys
           from datetime import datetime, timedelta, timezone
           from shopee_integration import client
 
           dias = int('${{ inputs.dias }}' or '30')
           fim = datetime.now(timezone.utc)
           inicio = fim - timedelta(days=dias)
+          inicio_ts, fim_ts = str(int(inicio.timestamp())), str(int(fim.timestamp()))
+          print(f'Periodo: {inicio.date()} ate {fim.date()} ({dias} dias)')
 
-          print(f'Buscando conversoes de {inicio.date()} ate {fim.date()} ({dias} dias)...')
-          try:
-              pagina = client.buscar_conversoes(int(inicio.timestamp()), int(fim.timestamp()), limit=20)
-          except Exception as e:
-              print(f'ERRO: {e}', file=sys.stderr)
-              sys.exit(1)
+          variantes = {
+            'V1 so conversionId': 'conversionId',
+            'V2 + purchaseTime conversionStatus totalCommission': 'conversionId purchaseTime conversionStatus totalCommission',
+            'V3 + orders{orderId}': 'conversionId purchaseTime conversionStatus totalCommission orders { orderId }',
+            'V4 + orders{orderId orderStatus}': 'conversionId purchaseTime conversionStatus totalCommission orders { orderId orderStatus }',
+            'V5 + items{itemId}': 'conversionId purchaseTime conversionStatus totalCommission orders { orderId orderStatus items { itemId } } ',
+            'V6 + items{itemName}': 'conversionId purchaseTime conversionStatus totalCommission orders { orderId orderStatus items { itemId itemName } }',
+            'V7 completa (itemTotalCommission)': 'conversionId purchaseTime conversionStatus totalCommission orders { orderId orderStatus items { itemId itemName itemTotalCommission } }',
+          }
 
-          nodes = pagina.get('nodes') or []
-          print(f'{len(nodes)} conversao(oes) encontrada(s) nesta pagina.')
-          print('pageInfo:', json.dumps(pagina.get('pageInfo'), ensure_ascii=False))
-          for n in nodes[:5]:
-              print(json.dumps(n, ensure_ascii=False, indent=2))
+          for nome, campos in variantes.items():
+              query = f'''
+              query BuscarConversoes(\$inicio: Int64, \$fim: Int64, \$limit: Int) {{
+                conversionReport(purchaseTimeStart: \$inicio, purchaseTimeEnd: \$fim, limit: \$limit) {{
+                  nodes {{ {campos} }}
+                  pageInfo {{ hasNextPage scrollId }}
+                }}
+              }}
+              '''
+              try:
+                  dados = client._executar_graphql(query, {'inicio': inicio_ts, 'fim': fim_ts, 'limit': 20})
+                  nodes = (dados.get('conversionReport') or {}).get('nodes') or []
+                  print(f'{nome}: OK, {len(nodes)} node(s)')
+                  if nodes:
+                      print('  exemplo:', json.dumps(nodes[0], ensure_ascii=False))
+              except Exception as e:
+                  print(f'{nome}: ERRO -> {e}')
           "
