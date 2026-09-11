@@ -619,5 +619,9 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   ANTES da checagem de "tem nome pra buscar por palavra-chave" — assim,
   mesmo quando a URL não tem nome de produto nenhum (esse caso real),
   ainda dá pra tentar gerar o link rastreável, só sem os detalhes
-  (nome/preço/foto). Resultado da validação da mutation em si, com
-  esse ajuste: ver a entrada seguinte.
+  (nome/preço/foto). **Resultado, testado de novo com o mesmo link
+  real: a mutation funcionou** — devolveu
+  `https://s.shopee.com.br/2qUUD7h30A?lp=aff`, um link novo e válido
+  (o `?lp=aff` marca como link de afiliado). `generateShortLink`,
+  `originUrl` e `shortLink` confirmados contra a API real; `subIds`
+  ainda não testado com valores de verdade (só lista vazia).

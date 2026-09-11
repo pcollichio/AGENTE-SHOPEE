@@ -263,14 +263,12 @@ def gerar_link_rastreavel(url_original, sub_ids=None):
     possibilidade de fazer isso pela API e ja trazer o link certo do
     produto na esteira".
 
-    NOTA: mutation e nomes de campo (`generateShortLink`, `originUrl`,
-    `subIds`, `shortLink`) ainda NÃO validados contra uma resposta real da
-    Shopee — a sessão do Claude não tem acesso à rede pra API da Shopee pra
-    testar diretamente. Testar via `.github/workflows/busca-manual.yml`
-    (dispara `buscar_um_produto.py` com um link real) antes de confiar no
-    resultado; se a Shopee recusar por campo desconhecido, ajustar aqui
-    conforme a mensagem de erro indicar (mesmo processo usado pra validar
-    `sortType`/`page`, ver NOTA no topo do arquivo).
+    NOTA: mutation e campos (`generateShortLink`, `originUrl`, `subIds`,
+    `shortLink`) validados contra uma resposta real da Shopee em 11/09, via
+    `.github/workflows/busca-manual.yml` com um link de afiliado real —
+    devolveu um link `s.shopee.com.br/...?lp=aff` novo e válido. `subIds`
+    não foi testado com valores (só a lista vazia, no fallback do caminho
+    sem argumento) — se passar sub_ids e a Shopee recusar, ajustar aqui.
     """
     if config.USE_MOCK_DATA:
         return f"{url_original}?af_id=SEU_ID_AFILIADO&mock=true"
