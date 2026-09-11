@@ -781,3 +781,41 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   respondeu, com `SHOPEE_APP_ID`/`SECRET` configurados e
   `USE_MOCK_DATA=false`), é a Shopee reclamando de um termo de busca
   genérico demais; não investigado a fundo, não fazia parte do pedido.
+- **Resolvida a sincronização automática de vendas via API — o motivo
+  do erro genérico de 30/08 era um bug simples, achado e corrigido.**
+  Usuário pediu pra reavaliar "a possibilidade de trazermos as vendas
+  através da API". Em 30/08 essa tentativa (`conversionReport`) tinha
+  sido abandonada depois de 3 rodadas de erro real, terminando num
+  "graphql: got null for non-null" genérico sem indicar o campo. Pra
+  investigar de novo, criado `.github/workflows/testar-conversoes.yml`
+  (a sessão do Claude não acessa a API da Shopee — o teste roda num
+  runner do GitHub Actions, com os `Secrets` reais) e feita uma
+  bisseção: 7 variantes da query, da mais simples (só `conversionId`)
+  até a completa, todas com sucesso e trazendo dados reais — inclusive
+  `orders`/`items`/`itemTotalCommission`. A query inteira **só**
+  falhava quando incluía o argumento `scrollId` (cursor de paginação)
+  com valor `null` explícito — que é exatamente o que
+  `client.buscar_conversoes()` sempre mandava na primeira página (sem
+  cursor ainda). **Causa raiz**: a Shopee rejeita `scrollId: null`
+  explícito; o argumento só pode aparecer na query quando há um cursor
+  de verdade (páginas seguintes) — na primeira página, tem que ser
+  omitido da query inteiramente, não mandado como `null`. Corrigido em
+  `client.buscar_conversoes()` (monta a query com ou sem `scrollId`
+  dependendo se `scroll_id` foi passado). **Testado de ponta a ponta**:
+  rodado `sincronizar_vendas.py` de verdade (60 dias) contra a API real
+  — achou 9 conversões, 1 confirmada (`COMPLETED`), e essa 1 bateu
+  **exatamente** com a venda já importada manualmente antes
+  (`financeiro/vendas_shopee.csv`: R$1,8006 de comissão, "Escova
+  Elétrica de Limpeza 5 em 1...", mesmo `conversion_id`). Ou seja: a
+  sincronização automática **funciona de verdade agora** — mas ainda
+  **não está ligada ao fluxo real** (o fluxo hoje continua sendo
+  `importar_extratos.py`, manual, a partir do relatório exportado da
+  Shopee). Antes de trocar, precisa decidir com o usuário: (1) se
+  substitui o import manual pelo automático ou se os dois convivem
+  (risco de duplicar a mesma venda em dois arquivos se rodarem os
+  dois); (2) rodar via GitHub Actions agendado (tipo `leva-diaria.yml`)
+  precisaria de um passo que faça commit do CSV atualizado, ainda não
+  implementado; (3) status "Pendente" da Shopee (que hoje só entra via
+  `vendas_pendentes.csv`, informativo) teria que ganhar o mesmo
+  tratamento aqui se quiser manter esse recurso. Nada disso decidido
+  ainda — só a viabilidade técnica confirmada.

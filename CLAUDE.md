@@ -123,7 +123,20 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
   confirmada) e `vendas_pendentes.csv` (não confirmada, só informativa,
   fora do ROI/meta) vêm de `importar_extratos.py`, a partir do
   relatório de comissões exportado do painel de afiliado da Shopee —
-  ver `financeiro/README.md`.
+  ver `financeiro/README.md`. **Pedido do usuário em 11/09: reavaliada
+  a sincronização automática via API** (`sincronizar_vendas.py` +
+  `client.buscar_conversoes()`, abandonada em 30/08 por um erro
+  genérico) — achado e corrigido o bug real: a Shopee rejeita
+  `scrollId: null` explícito, só aceita o argumento omitido (1ª página)
+  ou com um cursor de verdade (páginas seguintes). Testado de ponta a
+  ponta contra a API real via `.github/workflows/testar-conversoes.yml`:
+  bate exatamente com a venda já importada manualmente. **Funciona
+  agora, mas ainda não está ligada ao fluxo real** — `importar_extratos.py`
+  manual continua sendo o caminho oficial até decidir com o usuário se
+  troca, se os dois convivem (risco de duplicar), e como isso rodaria
+  automaticamente (precisaria de um passo de commit num workflow
+  agendado); ver `HISTORICO.md` (11/09) pros detalhes e os pontos em
+  aberto antes de mudar o fluxo.
 - `cockpit-shopee/financeiro/resumo.json` — resumo do ROI em JSON
   (inclui `comissao_pendente`, desde 10/09).
 - `cockpit-shopee/esteira.json` — lista viva (acumulada, não
