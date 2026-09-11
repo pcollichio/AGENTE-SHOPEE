@@ -448,7 +448,7 @@
         </li>
         <li>
           <b>4. Publicar</b>
-          <span class="obs">Manual, por enquanto.</span> Sobe no Instagram/TikTok colando a legenda pronta (com o link de afiliado na bio). Publicar direto daqui exigiria autorizar o cockpit a postar na sua conta (aprovação da Meta/TikTok) — ainda não configurado.
+          <span class="obs">Manual, por enquanto.</span> Sobe no Instagram/TikTok colando a legenda pronta (com o link de afiliado na bio). Publicar direto daqui exigiria autorizar o agente a postar na sua conta (aprovação da Meta/TikTok) — ainda não configurado.
         </li>
         <li>
           <b>5. Marcar como publicado</b>
@@ -459,7 +459,7 @@
           Registre venda e investimento em <code>importar.html</code> — o status financeiro (Impulsionado/Vendido) e o ROI desse produto atualizam sozinhos aqui e no Dashboard, fechando o ciclo criar &rarr; publicar &rarr; avaliar.
         </li>
       </ol>
-      <p class="guia-aviso">O Claude não grava vídeo nem publica nas redes sozinho — essas partes (2, 3 e 4) são manuais. O que o cockpit automatiza é o roteiro, a legenda, a curadoria dos produtos e o acompanhamento de cada um até a venda.</p>
+      <p class="guia-aviso">O Claude não grava vídeo nem publica nas redes sozinho — essas partes (2, 3 e 4) são manuais. O que o Agente Shopee automatiza é o roteiro, a legenda, a curadoria dos produtos e o acompanhamento de cada um até a venda.</p>
     </div>
 
     <p class="rodape">Agente Shopee</p>
@@ -546,7 +546,7 @@
               if (!r.ok) alert(r.d.erro || 'Não consegui salvar a etapa.');
             })
             .catch(function () {
-              alert('Não consegui falar com o servidor — essa função só funciona no cockpit publicado na Vercel.');
+              alert('Não consegui falar com o servidor — essa função só funciona depois de publicado na Vercel.');
             })
             .finally(function () { sel.disabled = false; });
         });
@@ -590,7 +590,7 @@
               }
             })
             .catch(function () {
-              alert('Não consegui falar com o servidor — essa função só funciona no cockpit publicado na Vercel.');
+              alert('Não consegui falar com o servidor — essa função só funciona depois de publicado na Vercel.');
               botao.disabled = false;
               botao.textContent = 'Excluir';
             });

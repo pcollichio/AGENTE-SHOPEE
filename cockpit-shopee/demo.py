@@ -9,7 +9,7 @@ from shopee_integration import curadoria, client
 
 def main():
     print("=" * 60)
-    print("COCKPIT SHOPEE — CURADORIA DIÁRIA DE PRODUTOS (dados simulados)")
+    print("AGENTE SHOPEE — CURADORIA DIÁRIA DE PRODUTOS (dados simulados)")
     print("=" * 60)
 
     produtos_do_dia = curadoria.sugerir_produtos_do_dia(quantidade=5)

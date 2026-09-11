@@ -68,8 +68,8 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
 - Chat (`chat.html` + `api/chat.js`) e busca ao vivo no site
   (`api/buscar_produto.py`) também rodam na Vercel — todos os três
   (chat, busca, seleção) dependem do deploy estar ativo.
-- **Desde 11/09, o coach do chat monta um plano de ação personalizado
-  pro afiliado**, via tool use da API da Anthropic — pergunta (uma de
+- **Desde 11/09, o chat monta um plano de ação personalizado pro
+  afiliado**, via tool use da API da Anthropic — pergunta (uma de
   cada vez, se ainda não souber) audiência atual, orçamento pra
   tráfego pago, disposição pra aparecer em vídeo/live, e foco de
   nicho, e salva tudo + o `plano_acao` em `perfil_afiliado.json`
@@ -83,7 +83,18 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
   `PLAYBOOK_ESTRATEGIA` em `api/chat.js` e o histórico da pesquisa em
   `HISTORICO.md`). De quebra, corrigido um bug real: `api/chat.js`
   buscava contexto (leva/resumo) na branch `main`, que não existe
-  neste repo — o coach nunca via dado real antes disso.
+  neste repo — o chat nunca via dado real antes disso.
+- **Pedido do usuário em 11/09: "não quero dizer que sou coach, e
+  também esquece negócio de cockpit, vamos ser simples e produtivos".**
+  Tirado "coach" como auto-identificação (título/eyebrow/h1 do chat,
+  saudação, mensagens de erro, prompt de sistema — agora é só "Agente
+  Shopee") e "cockpit" como auto-referência em texto visível (avisos de
+  erro, guia da esteira, rótulo do `index.html`) — trocado por "Agente
+  Shopee"/"o agente" ou reescrito de forma mais direta. Não mexido em
+  identificadores internos (branch, diretório `cockpit-shopee/`,
+  arquivo `cockpit.html`, classes CSS, módulo `coach.py`) — são
+  estrutura, não texto que o produto mostra; ver `HISTORICO.md` (11/09)
+  pra lista completa do que mudou e do que ficou de propósito.
 - `importar.html` tem um campo de **upload de arquivo** (relatório de
   vendas Shopee, extrato/print do Meta Ads) — envia pro GitHub em
   `financeiro/importados/` via `api/importar_arquivo.js`. Desde 10/09,

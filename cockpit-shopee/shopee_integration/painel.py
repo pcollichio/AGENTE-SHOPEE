@@ -767,7 +767,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
             atualizarBarraSelecao();
           }})
           .catch(function () {{
-            mostrarAviso('Não consegui falar com o servidor de busca. Essa função só funciona depois de publicar o cockpit na Vercel (veja o README).');
+            mostrarAviso('Não consegui falar com o servidor de busca. Essa função só funciona depois de publicado na Vercel (veja o README).');
           }})
           .finally(function () {{
             botaoBuscar.disabled = false;
@@ -816,7 +816,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
         }})
         .catch(function () {{
           botao.textContent = textoOriginal;
-          alert('Não consegui salvar na esteira (essa parte só funciona no cockpit publicado na Vercel — veja o README).');
+          alert('Não consegui salvar na esteira (essa parte só funciona depois de publicado na Vercel — veja o README).');
         }})
         .finally(function () {{
           setTimeout(function () {{

@@ -719,3 +719,34 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   apresentação do Agente Shopee — não renomeia a conta real do
   Instagram/TikTok (`@papairesolve_br`), que é uma decisão de fora
   deste repositório.
+- **Removida a auto-identificação como "coach" e o resto do vocabulário
+  "cockpit" do que o produto exibe/gera.** Pedido do usuário: "nao
+  quero dizer que sou coach, e tbm esquee negocio de cockpit vamos ser
+  simples e produtivos". Trocado em todo texto visível: título da aba
+  do chat ("Chat do coach" → "Chat"), eyebrow ("Agente Shopee · Coach"
+  → "Agente Shopee"), h1 ("Converse com o coach" → "Chat"), a mensagem
+  de saudação ("Sou o coach do seu cockpit..." → direto: "Posso te
+  dizer o que fazer agora..."), mensagens de erro do chat ("Deu um erro
+  ao falar com o coach" → "Deu um erro ao responder"), o rótulo "Coach"
+  no painel de chat lateral do `cockpit.html`, e o prompt de sistema do
+  chat em `api/chat.js` ("Você é o coach do 'Agente Shopee'" → "Você é
+  o Agente Shopee"; tom simplificado pra "direto, prático e simples").
+  Também tirado "cockpit" como auto-referência em avisos de erro
+  ("...só funciona no cockpit publicado na Vercel" → "...só funciona
+  depois de publicado na Vercel", em `painel.py`, `esteira.py` x2 e
+  `importar.html`), no guia da esteira ("o cockpit automatiza" → "o
+  Agente Shopee automatiza"; "autorizar o cockpit a postar" →
+  "autorizar o agente a postar"), no rótulo "Manual (com apoio do
+  cockpit)" do `index.html` → "(com apoio do agente)", e no print de
+  `demo.py`. **Não renomeado** (são identificadores internos, invisíveis
+  pro usuário, e mexer neles é risco desproporcional ao pedido): a
+  branch `claude/shopee-cockpit-connection-g3fqop`, o diretório
+  `cockpit-shopee/`, o arquivo `cockpit.html`, as classes/ids CSS
+  `.menu-cockpit`/`menu-cockpit`, `.msg-coach`/`--bolha-coach`, a chave
+  de `localStorage` `coach-<data>`, e o módulo Python
+  `shopee_integration/coach.py` (motor de recomendações do "O que fazer
+  hoje" — nome interno, não aparece pro usuário). Regenerado localmente
+  `index.html`, `chat.html`, `esteira.html`, `painel_roi.html`;
+  `painel.html` depende da API real (`leva-diaria.yml`). Verificado com
+  Playwright: `chat.html` e `cockpit.html` sem "coach"/"cockpit" em
+  nenhum texto visível.

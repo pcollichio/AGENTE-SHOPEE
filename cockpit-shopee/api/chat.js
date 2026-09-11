@@ -1,6 +1,6 @@
-// Função serverless (Vercel) que dá vida ao chat do coach no index.html.
-// Recebe o histórico de mensagens do navegador, busca os dados reais do
-// cockpit (leva do dia + resumo financeiro, direto do GitHub) e repassa
+// Função serverless (Vercel) que dá vida ao chat no index.html.
+// Recebe o histórico de mensagens do navegador, busca os dados reais
+// (leva do dia + resumo financeiro, direto do GitHub) e repassa
 // tudo pra API da Anthropic com um prompt de sistema fixo em português.
 //
 // A chave da Anthropic vem só de process.env.ANTHROPIC_API_KEY — configure
@@ -9,7 +9,7 @@
 // BUG real corrigido em 11/09: apontava pra "main", branch que não existe
 // neste repositório (só existe claude/shopee-cockpit-connection-g3fqop) —
 // todo fetch aqui sempre falhava (404, silenciado pelo try/catch em
-// buscarTexto), então o coach nunca via a leva/resumo/perfil de verdade,
+// buscarTexto), então o chat nunca via a leva/resumo/perfil de verdade,
 // só o texto de fallback "ainda não há dados". Mesma branch usada por
 // api/selecionar.js e api/atualizar_esteira.js pra escrever.
 const OWNER = "pcollichio";
@@ -31,7 +31,7 @@ const CAMINHO_PERFIL = "cockpit-shopee/perfil_afiliado.json";
 
 // Base de conhecimento fixa sobre o que funciona pra afiliado Shopee em
 // 2026 (pesquisa feita em 11/09, cruzada com a política oficial da
-// Shopee) — o coach usa isso pra montar o plano de ação, depois de
+// Shopee) — usada pra montar o plano de ação, depois de
 // reunir o perfil. Não é lista de produto (seria só orientação de
 // canal/estratégia), então não fere a regra de nunca listar produto em
 // texto no chat.
@@ -57,7 +57,7 @@ fácil (só pra reabrir a janela de 7 dias com o máximo de gente).
 2. Reels/TikTok (topo de funil) — vídeo curto de 15-60s mostrando o
    produto na prática, constância de pelo menos 1 post/dia; público
    de 18-35 anos majoritariamente feminino, bom encaixe com
-   beleza/moda. Já é o formato que o cockpit automatiza (roteiro +
+   beleza/moda. Já é o formato que o Agente Shopee automatiza (roteiro +
    legenda prontos por produto).
 3. Shopee Live (amplificador, exige aparecer e ter alguma audiência
    prévia) — comissão de 3% nas vendas da live, podendo chegar a 30%
@@ -152,18 +152,17 @@ async function montarContexto() {
 
   const partes = [];
   partes.push(
-    "Você é o coach do 'Agente Shopee', ajudando a pessoa a divulgar " +
-    "produtos de afiliado da Shopee — a leva traz os mais vendidos da " +
-    "Shopee em geral (não é mais restrita a um nicho), via Reels no " +
+    "Você é o Agente Shopee, ajudando a pessoa a divulgar produtos de " +
+    "afiliado da Shopee — a leva traz os mais vendidos da Shopee em " +
+    "geral (não é mais restrita a um nicho), via Reels no " +
     "Instagram/TikTok, com roteiro e legenda gerados automaticamente.\n\n" +
     "Meta do North Star: R$10.000 de comissão por mês, com ROI mínimo de 3x " +
     "(cada R$1 investido em impulsionamento deve voltar pelo menos R$3 em " +
     "comissão).\n\n" +
-    "Seu papel é guiar, passo a passo, num tom direto, prático e encorajador " +
-    "em português do Brasil — a pessoa não é técnica, então evite jargão. " +
-    "Responda sempre com base nos dados reais abaixo, nunca invente números. " +
-    "Quando fizer sentido, aponte pra aba certa do cockpit (Produtos, " +
-    "Importar ou ROI) pra próxima ação."
+    "Seja direto, prático e simples — a pessoa não é técnica, então evite " +
+    "jargão e não enrole. Responda sempre com base nos dados reais abaixo, " +
+    "nunca invente números. Quando fizer sentido, aponte pra aba certa " +
+    "(Produtos, Importar ou ROI) pra próxima ação."
   );
 
   if (leva) {
@@ -259,7 +258,7 @@ async function salvarPerfil(campos) {
       method: "PUT",
       headers,
       body: JSON.stringify({
-        message: "Coach atualiza o perfil estratégico do afiliado",
+        message: "Atualiza o perfil estratégico do afiliado",
         content: conteudoBase64,
         branch: BRANCH,
         sha,
@@ -305,9 +304,9 @@ module.exports = async (req, res) => {
     const systemPrompt = await montarContexto();
     const historico = mensagensValidas.slice();
 
-    // Loop de tool use: o coach pode chamar salvar_perfil_afiliado depois de
-    // reunir as respostas na conversa. No máximo algumas idas e voltas —
-    // um coach bem-comportado só chama a ferramenta uma ou duas vezes por
+    // Loop de tool use: o modelo pode chamar salvar_perfil_afiliado depois
+    // de reunir as respostas na conversa. No máximo algumas idas e voltas —
+    // o comportamento esperado é chamar a ferramenta uma ou duas vezes por
     // turno (perfil + eventual ajuste do plano).
     let texto = "";
     for (let volta = 0; volta < 4; volta++) {

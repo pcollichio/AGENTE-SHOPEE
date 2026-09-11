@@ -1,8 +1,8 @@
 """
-Gera o chat.html — a conversa de verdade com o coach. A página é estática
-(só HTML/CSS/JS), mas o JS conversa com api/chat.js (função serverless na
-Vercel), que por sua vez chama a API da Anthropic com o contexto real do
-cockpit (leva do dia + resumo financeiro).
+Gera o chat.html — o chat de verdade com o Agente Shopee. A página é
+estática (só HTML/CSS/JS), mas o JS conversa com api/chat.js (função
+serverless na Vercel), que por sua vez chama a API da Anthropic com o
+contexto real (leva do dia + resumo financeiro).
 """
 
 from . import nav
@@ -14,7 +14,7 @@ def gerar_html():
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chat do coach &middot; Agente Shopee</title>
+<title>Chat &middot; Agente Shopee</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -86,15 +86,15 @@ def gerar_html():
         <path d="M38 62 L54 78 L86 40" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <div class="cabecalho-texto">
-        <p class="eyebrow">Agente Shopee &middot; Coach</p>
-        <h1>Converse com o coach</h1>
+        <p class="eyebrow">Agente Shopee</p>
+        <h1>Chat</h1>
       </div>
     </header>
 
     <div class="caixa-chat">
       <div class="mensagens" id="mensagens">
         <div class="msg msg-coach">
-          <div class="bolha">Oi! Sou o coach do seu cockpit. Posso te dizer o que fazer agora, explicar os números do ROI ou ajudar a decidir o próximo produto. O que você precisa?</div>
+          <div class="bolha">Oi! Posso te dizer o que fazer agora, explicar os números do ROI ou ajudar a decidir o próximo produto. O que você precisa?</div>
         </div>
       </div>
       <div class="sugestoes">
@@ -159,7 +159,7 @@ def gerar_html():
             if (resposta.status === 500 && dados.erro && dados.erro.indexOf('ANTHROPIC_API_KEY') !== -1) {{
               avisoConfig.hidden = false;
             }}
-            adicionarBolha(dados.erro || 'Deu um erro ao falar com o coach.', 'erro');
+            adicionarBolha(dados.erro || 'Deu um erro ao responder.', 'erro');
             return;
           }}
 

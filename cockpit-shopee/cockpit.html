@@ -146,14 +146,13 @@
     </nav>
 
     <main class="area-conteudo">
-      <iframe class="conteudo" id="conteudo" src="index.html" title="Conteúdo do cockpit"></iframe>
+      <iframe class="conteudo" id="conteudo" src="index.html" title="Conteúdo"></iframe>
     </main>
 
     <aside class="painel-chat" id="painel-chat">
       <header class="chat-cabecalho">
         <div class="chat-titulo">
           <span class="eyebrow">Agente Shopee</span>
-          Coach
         </div>
         <button class="btn-fechar-chat" id="btn-fechar-chat" aria-label="Fechar chat">&#10005;</button>
       </header>
@@ -241,7 +240,7 @@
             if (resposta.status === 500 && dados.erro && dados.erro.indexOf('ANTHROPIC_API_KEY') !== -1) {
               avisoConfig.hidden = false;
             }
-            adicionarBolha(dados.erro || 'Deu um erro ao falar com o coach.', 'erro');
+            adicionarBolha(dados.erro || 'Deu um erro ao responder.', 'erro');
             return;
           }
 

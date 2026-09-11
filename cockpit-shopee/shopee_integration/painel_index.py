@@ -1,5 +1,5 @@
 """
-Gera o index.html — o "cockpit central". Não é só um mapa estático: o
+Gera o index.html — a tela inicial. Não é só um mapa estático: o
 topo da página ("O que fazer hoje") é montado a partir dos dados reais
 de financeiro/ROI, funcionando como o agente coach do blueprint.
 """
@@ -238,7 +238,7 @@ def gerar_html():
       <summary>Como a esteira funciona, ponta a ponta</summary>
       <div class="legenda">
         <span><span class="ponto ponto-bom"></span> Automático</span>
-        <span><span class="ponto ponto-manual"></span> Manual (com apoio do cockpit)</span>
+        <span><span class="ponto ponto-manual"></span> Manual (com apoio do agente)</span>
         <span><span class="ponto ponto-proximo"></span> Ainda não construído</span>
       </div>
       <div class="fluxo">{etapas_html}
