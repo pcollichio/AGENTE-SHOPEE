@@ -625,3 +625,53 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   (o `?lp=aff` marca como link de afiliado). `generateShortLink`,
   `originUrl` e `shortLink` confirmados contra a API real; `subIds`
   ainda não testado com valores de verdade (só lista vazia).
+- **Coach do chat ganha perfil estratégico do afiliado + plano de ação
+  personalizado, via tool use.** Usuário pediu pra montar, junto com o
+  Claude, um "plano ideal" pro afiliado bater a meta — pedindo pra
+  pesquisar o que está funcionando hoje (grupos de WhatsApp, tráfego
+  pago, orgânico, live etc.), quais produtos têm mais aderência, e
+  destacou a **janela de atribuição de 7 dias** da Shopee (clicou no
+  seu link, qualquer compra dentro de 7 dias gera comissão pra você,
+  mesmo que não seja do produto divulgado) como possível eixo de
+  estratégia. Pesquisa feita (busca na web) e cruzada com a Central de
+  Ajuda oficial da Shopee: cookie de 7 dias confirmado (atribuição por
+  último clique); canais que mais aparecem funcionando pra afiliado
+  solo, em ordem de prioridade — WhatsApp (lista/grupo temático,
+  recorrência de clique), Reels/TikTok (topo de funil, já automatizado
+  aqui), Shopee Live (até 30% de comissão com parceiro, exige aparecer
+  e ter audiência), tráfego pago (só dentro da política oficial: nunca
+  Google/Bing Ads, anúncio só pela conta/página cadastrada no
+  programa, sem marca Shopee no criativo — já é o formato usado aqui,
+  impulsionar post do Instagram); categorias de maior comissão: beleza
+  (até 30%) e moda feminina (15-25%).
+  Comecei a fazer essas perguntas de perfil (audiência atual, orçamento
+  pra tráfego pago, topa aparecer em vídeo, foco de nicho) diretamente
+  nesta conversa — o usuário interrompeu: "pensando em transformar
+  este agente em um produto SaaS, estas perguntas precisam ser feitas
+  pelo agente para traçar o plano" — ou seja, quem deve perguntar isso
+  é o coach de dentro do produto (`chat.html`), não o Claude numa
+  sessão pontual, já que o objetivo é isso funcionar pra qualquer
+  afiliado que vier a usar o produto (não só pra esta conta).
+  Implementado: (1) **bug real corrigido** em `api/chat.js` — o
+  `RAW_BASE` apontava pra uma branch chamada `main`, que **não existe**
+  neste repositório (só existe `claude/shopee-cockpit-connection-g3fqop`)
+  — todo fetch de contexto (leva do dia, resumo financeiro) sempre
+  falhava silenciosamente (404, engolido pelo try/catch), então o
+  coach nunca via dado real, só o texto de fallback "ainda não há
+  dados" — corrigido pra apontar pra branch certa, mesma usada por
+  `api/selecionar.js`/`api/atualizar_esteira.js`. (2) Novo
+  `perfil_afiliado.json` (ver README.md) guarda o perfil + o
+  `plano_acao` do afiliado. (3) `api/chat.js` ganhou **tool use** da
+  API da Anthropic — uma ferramenta `salvar_perfil_afiliado` que o
+  coach chama depois de reunir as respostas na conversa (uma pergunta
+  de cada vez, não uma lista fria), gravando direto no GitHub via
+  `GITHUB_TOKEN`. (4) O prompt de sistema ganhou a base de conhecimento
+  da pesquisa (`PLAYBOOK_ESTRATEGIA`) e instruções: se não há perfil
+  salvo e o afiliado pedir plano/"o que eu faço", pergunta as 4 coisas
+  uma de cada vez; se já há perfil salvo, usa o `plano_acao` já
+  existente em vez de perguntar de novo. Também corrigido o texto do
+  prompt que ainda descrevia o produto como restrito ao "nicho casa e
+  construção" (desatualizado desde a mudança de 10/09). Ainda não
+  testado ao vivo contra a Vercel real (precisa do deploy com
+  `ANTHROPIC_API_KEY`/`GITHUB_TOKEN` configurados) — validar na
+  próxima vez que o usuário testar o chat.

@@ -64,6 +64,22 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
 - Chat (`chat.html` + `api/chat.js`) e busca ao vivo no site
   (`api/buscar_produto.py`) também rodam na Vercel — todos os três
   (chat, busca, seleção) dependem do deploy estar ativo.
+- **Desde 11/09, o coach do chat monta um plano de ação personalizado
+  pro afiliado**, via tool use da API da Anthropic — pergunta (uma de
+  cada vez, se ainda não souber) audiência atual, orçamento pra
+  tráfego pago, disposição pra aparecer em vídeo/live, e foco de
+  nicho, e salva tudo + o `plano_acao` em `perfil_afiliado.json`
+  (`salvar_perfil_afiliado`, escreve direto no GitHub). Isso foi
+  pedido pra rodar **dentro do produto** (não como pergunta pontual do
+  Claude aqui na sessão), pensando na meta de "envelopar" o cockpit
+  como SaaS pra outros afiliados — qualquer um que usar o chat passa
+  pelo mesmo fluxo de descoberta. O prompt de sistema carrega uma base
+  de conhecimento fixa sobre o que funciona pra afiliado Shopee (janela
+  de atribuição de 7 dias, canais, categorias de maior comissão — ver
+  `PLAYBOOK_ESTRATEGIA` em `api/chat.js` e o histórico da pesquisa em
+  `HISTORICO.md`). De quebra, corrigido um bug real: `api/chat.js`
+  buscava contexto (leva/resumo) na branch `main`, que não existe
+  neste repo — o coach nunca via dado real antes disso.
 - `importar.html` tem um campo de **upload de arquivo** (relatório de
   vendas Shopee, extrato/print do Meta Ads) — envia pro GitHub em
   `financeiro/importados/` via `api/importar_arquivo.js`. Desde 10/09,

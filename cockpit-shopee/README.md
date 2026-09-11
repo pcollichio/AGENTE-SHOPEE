@@ -95,7 +95,11 @@ por uma chamada direta.
   (`README.md` ali explica o formato)
 - `produtos_manuais.txt` / `produtos_excluir.txt` — ajustes finos da
   curadoria automática
-- `api/chat.js` — função serverless (Vercel) que fala com a Anthropic
+- `api/chat.js` — função serverless (Vercel) que fala com a Anthropic;
+  monta o contexto com a leva do dia, o resumo financeiro e o perfil
+  estratégico do afiliado (`perfil_afiliado.json`), e dá ao coach uma
+  ferramenta (`salvar_perfil_afiliado`, tool use da API da Anthropic)
+  pra gravar o perfil/plano coletado na conversa direto no GitHub
 - `api/buscar_produto.py` — função serverless (Vercel) que busca um
   produto específico direto na Shopee, por descrição ou por link
   colado do app
@@ -118,6 +122,15 @@ por uma chamada direta.
   longo do tempo (escrito pelo botão "Salvar seleção na esteira", já
   com o texto de narração e de legenda prontos; é o que o Claude e o
   `esteira.html` leem)
+- `perfil_afiliado.json` — perfil estratégico do afiliado (audiência
+  atual, orçamento pra tráfego pago, se topa aparecer em vídeo/live,
+  foco de nicho) e o `plano_acao` personalizado, montado pelo próprio
+  coach do chat (`api/chat.js`) — quando o afiliado pede um "plano" ou
+  "o que eu faço agora", o coach pergunta isso na conversa (uma
+  pergunta de cada vez) e salva aqui via a ferramenta
+  `salvar_perfil_afiliado`, direto no GitHub (mesmo `GITHUB_TOKEN` de
+  `api/selecionar.js`). Fica salvo entre conversas — o coach não
+  pergunta de novo, só usa/atualiza o plano já salvo.
 
 ## Colocar o cockpit no ar (Vercel)
 
