@@ -551,7 +551,16 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   classificado errado ou em "outros"; testado contra nomes reais da
   última leva (torneira/luminária/organizador → casa_construcao,
   conjunto academia/baby doll → moda, ração → pet, batom → beleza) e
-  bateu certo em todos. Aplicado em três pontos: (1)
+  bateu certo em todos. Rodado contra a leva real do dia (50 produtos)
+  pra calibrar a cobertura: na primeira versão, 34/50 caíam em
+  "outros" — revisados os nomes reais e adicionadas ~35 palavras-chave
+  que apareciam na leva e não estavam cobertas (cobertor, mop, balde,
+  espelho, lixeira, chaleira, espremedor, processador/moedor/picador de
+  alimentos, jogo de chave, marmita, amaciante, máquina de costura para
+  casa_construcao; retinal, óleo facial, sabonete líquido, zero pore,
+  renovador(es) facial(is) para beleza; blusa, muscle tee para moda) —
+  depois do ajuste, só 4/50 ficaram em "outros" contra a mesma leva.
+  Aplicado em três pontos: (1)
   `buscar_leva_lancamento.py` marca `segmento` em cada produto da leva
   automática e dos manuais (`produtos_manuais.txt`); (2)
   `api/buscar_produto.py` (busca ao vivo por link/descrição) marca
