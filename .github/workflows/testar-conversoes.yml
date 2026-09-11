@@ -1,0 +1,60 @@
+name: Testar sincronização de vendas via API (conversionReport)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dias:
+        description: "Quantos dias pra trás buscar"
+        required: false
+        default: "30"
+
+permissions:
+  contents: read
+
+jobs:
+  testar:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cockpit-shopee
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Testar conversionReport direto (sem salvar CSV)
+        env:
+          SHOPEE_APP_ID: ${{ secrets.SHOPEE_APP_ID }}
+          SHOPEE_APP_SECRET: ${{ secrets.SHOPEE_APP_SECRET }}
+          USE_MOCK_DATA: "false"
+        run: |
+          python3 -c "
+          import json
+          import sys
+          from datetime import datetime, timedelta, timezone
+          from shopee_integration import client
+
+          dias = int('${{ inputs.dias }}' or '30')
+          fim = datetime.now(timezone.utc)
+          inicio = fim - timedelta(days=dias)
+
+          print(f'Buscando conversoes de {inicio.date()} ate {fim.date()} ({dias} dias)...')
+          try:
+              pagina = client.buscar_conversoes(int(inicio.timestamp()), int(fim.timestamp()), limit=20)
+          except Exception as e:
+              print(f'ERRO: {e}', file=sys.stderr)
+              sys.exit(1)
+
+          nodes = pagina.get('nodes') or []
+          print(f'{len(nodes)} conversao(oes) encontrada(s) nesta pagina.')
+          print('pageInfo:', json.dumps(pagina.get('pageInfo'), ensure_ascii=False))
+          for n in nodes[:5]:
+              print(json.dumps(n, ensure_ascii=False, indent=2))
+          "
