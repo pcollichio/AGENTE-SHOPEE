@@ -1,5 +1,5 @@
 {
-  "name": "cockpit-papai-resolve",
+  "name": "agente-shopee",
   "private": true,
   "version": "1.0.0",
   "description": "Função serverless do chat do coach (api/chat.js), hospedada na Vercel.",

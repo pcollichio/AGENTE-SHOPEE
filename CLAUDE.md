@@ -1,4 +1,4 @@
-# Cockpit de Afiliação IA-First — Papai Resolve
+# Agente Shopee — Cockpit de Afiliação
 
 Contexto que toda sessão do Claude neste repositório deve carregar
 primeiro. Leia isto e `HISTORICO.md` antes de responder qualquer coisa
@@ -6,10 +6,10 @@ sobre o projeto — evita reexplicar do zero a cada conversa nova.
 
 ## O que é
 
-Cockpit de afiliação pra @papairesolve_br (Shopee). Meta: R$10.000/mês
-de comissão, ROI mínimo 3x. O usuário (dono do projeto) não é técnico,
-usa celular/navegador, prefere resolver tudo puxando o Claude em vez de
-mexer em código ou infraestrutura.
+Agente de afiliação Shopee. Meta: R$10.000/mês de comissão, ROI mínimo
+3x. O usuário (dono do projeto) não é técnico, usa celular/navegador,
+prefere resolver tudo puxando o Claude em vez de mexer em código ou
+infraestrutura.
 
 Desde 10/09 a leva **não é mais restrita ao nicho casa & construção**
 — traz os produtos mais vendidos da Shopee em geral, direto da API
@@ -22,9 +22,13 @@ sugerir arquitetura pra isso.
 
 **Desde 10/09 o produto se chama "Agente Shopee"** (não mais
 "Cockpit") em todo texto visível — título de aba, marca na sidebar,
-eyebrow e rodapé de cada página. "Papai Resolve" continua sendo a voz
-da conta (`@papairesolve_br`), não foi afetado. **Identidade visual
-fixa: fundo laranja (`#ee4d2d`, cor da Shopee) e branco** — cards,
+eyebrow e rodapé de cada página. **Pedido do usuário em 11/09: removido
+todo vínculo com "Papai Resolve"** — a persona/voz de marca que existia
+antes foi descontinuada por completo (não é mais mencionada em nenhum
+texto do produto, no chat, na legenda gerada, nem no `user-agent` das
+funções serverless); ver `HISTORICO.md` (11/09) pro que foi tocado.
+**Identidade visual fixa: fundo laranja (`#ee4d2d`, cor da Shopee) e
+branco** — cards,
 tabelas e inputs brancos com texto escuro; textos que ficam direto
 sobre o fundo laranja (títulos, eyebrow, rodapé) em branco/laranja
 claro. Essa paleta é fixa, não muda com tema claro/escuro do sistema —
@@ -199,7 +203,7 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
   `https://pcollichio.github.io/AGENTE-SHOPEE/cockpit-shopee/cockpit.html`
   (e `/painel.html`, `/painel_roi.html`, etc.)
 
-## Padrão de narração e legenda dos Reels (fixado em 31/08, generalizado e sem persona em 10/09)
+## Padrão de narração e legenda dos Reels (fixado em 31/08, generalizado e sem persona em 10/09, sem hashtag de marca em 11/09)
 
 **Histórico da mudança de 10/09** (dois passos, mesmo dia): primeiro,
 com a leva deixando de ser restrita ao nicho casa & construção, removi
@@ -226,12 +230,12 @@ personagem da narração).
 A **legenda do post** segue a mesma estrutura, sem a abertura: (1) dor,
 em uma linha, com emoji 😩; (2) solução citando o produto pelo nome, com
 emoji ✅; (3) call to action pedindo pra comentar "QUERO" ou ir no link
-da bio, com emoji 🛒; (4) hashtags fixas — `#papairesolve
-#achadosdashopee #shopeebrasil #promoshopee #achadinhos`. A hashtag
-`#papairesolve` continua porque é a marca da conta (@papairesolve_br),
-não a narrativa do roteiro — só o personagem "papai" saiu da narração
-em si. Implementado em `montarLegenda()`, ao lado de `montarRoteiro()`,
-no mesmo arquivo.
+da bio, com emoji 🛒; (4) hashtags fixas — `#achadosdashopee
+#shopeebrasil #promoshopee #achadinhos`. Pedido do usuário em 11/09:
+removida a hashtag `#papairesolve` desse grupo fixo — não deve sobrar
+nenhum vínculo com "Papai Resolve" em nada que o Agente Shopee gera.
+Implementado em `montarLegenda()`, ao lado de `montarRoteiro()`, no
+mesmo arquivo.
 
 Desde 01/09, tanto a narração quanto a legenda são salvas por produto em
 `esteira.json` (campos `narracao`/`legenda`) no momento da seleção no

@@ -1,4 +1,4 @@
-# Histórico do projeto — Cockpit Papai Resolve
+# Histórico do projeto — Agente Shopee
 
 Log cronológico de decisões e marcos, mantido pelo Claude. Toda sessão
 nova deve ler isto (junto com `CLAUDE.md`) antes de agir.
@@ -675,3 +675,47 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   testado ao vivo contra a Vercel real (precisa do deploy com
   `ANTHROPIC_API_KEY`/`GITHUB_TOKEN` configurados) — validar na
   próxima vez que o usuário testar o chat.
+- **Removido todo vínculo com "Papai Resolve" do Agente Shopee.**
+  Pedido do usuário: "quero que retire do agente shopee qq vinculo com
+  papai resolve". A persona/marca "Papai Resolve" — que já vinha sendo
+  esvaziada aos poucos desde 10/09 (primeiro tirada da narração dos
+  Reels, depois do nome do produto) — foi removida por completo de
+  tudo que o produto exibe ou gera: (1) eyebrow/rodapé de todas as
+  páginas (`painel.py`, `esteira.py`, `painel_index.py`,
+  `painel_roi.py`, `chat_page.py`, `cockpit.html`, `importar.html`)
+  perderam o "@papairesolve_br" — ficam só "Agente Shopee"; (2) a
+  hashtag `#papairesolve`, que tinha sido mantida em 10/09 "porque é a
+  marca da conta", foi tirada de `montarLegenda()` em `painel.py`
+  (grupo de hashtags fixo agora é só `#achadosdashopee #shopeebrasil
+  #promoshopee #achadinhos`); (3) o eyebrow do chat/coach ("Papai
+  Resolve · Coach") virou "Agente Shopee · Coach"; (4) o prompt de
+  sistema do coach (`api/chat.js`) parou de mencionar "a marca
+  @papairesolve_br (Papai Resolve)"; (5) o `user-agent` das funções
+  serverless (`api/selecionar.js`, `api/atualizar_esteira.js`,
+  `api/importar_arquivo.js`, `api/excluir_esteira.js`, `api/chat.js`)
+  e o `name` do `package.json` trocaram de `cockpit-papai-resolve`
+  pra `agente-shopee`; (6) título do `CLAUDE.md`, `HISTORICO.md` e
+  `README.md` (`cockpit-shopee/`) atualizados de "Papai Resolve" pra
+  "Agente Shopee". Achado no caminho: 4 produtos ainda não publicados
+  em `esteira.json` guardavam narração/legenda salvas ANTES da
+  remoção da persona em 10/09 (a esteira só atualiza texto quando o
+  produto é selecionado de novo, não retroativamente) — ainda tinham a
+  abertura "Meu papai sempre resolve tudo aqui em casa!" e a hashtag
+  `#papairesolve`, e um deles (Aditivo Impermeabilizante) até citava
+  um link de afiliado desatualizado. Regenerados os 4 (roteiro e
+  legenda) com o template atual, direto em `esteira.json` — o único
+  item já publicado não precisou de ajuste (já tinha sido salvo depois
+  da remoção da persona). **Deixado de propósito, sem alterar**:
+  descrições de investimento reais em `financeiro/resumo.json` e nos
+  HTML gerados a partir dele (ex: "Instagram post: #papairesolve -
+  Instale a sua!...") — são nomes reais de campanhas do Gerenciador de
+  Anúncios da Meta, já rodadas de verdade; mudar isso falsificaria o
+  registro financeiro. Também não mexi nas entradas antigas deste
+  arquivo (`HISTORICO.md`) nem no texto do `CLAUDE.md` que narra o
+  histórico da mudança de persona em 10/09 — são registro do que
+  aconteceu, não branding atual. Regenerado localmente `index.html`,
+  `chat.html`, `esteira.html`, `painel_roi.html`; `painel.html`
+  depende da API real (roda via `leva-diaria.yml`). Isso é só a
+  apresentação do Agente Shopee — não renomeia a conta real do
+  Instagram/TikTok (`@papairesolve_br`), que é uma decisão de fora
+  deste repositório.

@@ -62,7 +62,7 @@ module.exports = async (req, res) => {
         authorization: `Bearer ${token}`,
         accept: "application/vnd.github+json",
         "content-type": "application/json",
-        "user-agent": "cockpit-papai-resolve",
+        "user-agent": "agente-shopee",
       },
       body: JSON.stringify({
         message: `Importa arquivo (${tipo}): ${nomeArquivo}`,

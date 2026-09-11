@@ -38,12 +38,12 @@ ETAPAS = [
     },
     {
         "titulo": "Selecionar o que vai pra esteira", "status": "manual", "status_label": "Manual",
-        "desc": "Você marca os produtos no painel (ou adiciona um específico via <code>produtos_manuais.txt</code>) e baixa a seleção.",
+        "desc": "Você marca os produtos no painel (ou adiciona um específico via <code>produtos_manuais.txt</code>) e salva a seleção.",
         "links": [("painel.html", "Marcar produtos", False)],
     },
     {
         "titulo": "Texto e roteiro", "status": "bom", "status_label": "Automático",
-        "desc": "Ao baixar a seleção, cada produto já sai com o roteiro pronto (Abertura &rarr; Dor &rarr; Solução &rarr; Prova &rarr; Call to action), no modelo Papai Resolve.",
+        "desc": "Ao marcar o produto no painel, ele já sai com o roteiro pronto (Dor &rarr; Solução &rarr; Prova &rarr; Call to action) e a legenda do post, sem precisar escrever nada.",
         "links": [("painel.html", "Fica dentro do painel de produtos", False)],
     },
     {
@@ -219,7 +219,7 @@ def gerar_html():
         <path d="M38 62 L54 78 L86 40" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <div class="cabecalho-texto">
-        <p class="eyebrow">Papai Resolve &middot; Casa &amp; Construção</p>
+        <p class="eyebrow">Agente Shopee</p>
         <h1>Agente Shopee</h1>
       </div>
     </header>
@@ -245,7 +245,7 @@ def gerar_html():
       </div>
     </details>
 
-    <p class="rodape">Agente Shopee &middot; @papairesolve_br &middot; Fase 1</p>
+    <p class="rodape">Agente Shopee &middot; Fase 1</p>
   </div>
 
   <script>

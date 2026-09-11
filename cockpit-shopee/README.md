@@ -1,4 +1,4 @@
-# Cockpit de Afiliação IA-First — Papai Resolve (Fase 1)
+# Agente Shopee — Cockpit de Afiliação IA-First (Fase 1)
 
 ## Comece aqui
 

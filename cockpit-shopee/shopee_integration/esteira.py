@@ -187,7 +187,7 @@ def _linha(p):
         </tr>"""
 
 
-def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
+def gerar_html(esteira_calculada, titulo="Esteira — Agente Shopee"):
     contagem = {"selecionado": 0, "impulsionado": 0, "vendido": 0}
     contagem_conteudo = {"roteiro_pronto": 0, "em_producao": 0, "publicado": 0}
     for p in esteira_calculada:
@@ -323,7 +323,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
     {nav.gerar_menu_html("esteira.html")}
     <header class="cabecalho">
       <div>
-        <p class="eyebrow">Agente Shopee &middot; @papairesolve_br</p>
+        <p class="eyebrow">Agente Shopee</p>
         <h1>Esteira</h1>
       </div>
       <p class="atualizado" id="atualizado-em">Atualizado {date.today().strftime('%d/%m/%Y')} &mdash; verificando dados mais recentes&hellip;</p>
@@ -355,7 +355,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
       <ol>
         <li>
           <b>1. Roteiro e legenda prontos</b>
-          O roteiro (voz de jovem, modelo Papai Resolve) e a legenda do post já saem prontos assim que você seleciona o produto no painel — clique em "Ver textos" na linha do produto, na tabela acima, pra copiar.
+          O roteiro (voz de jovem) e a legenda do post já saem prontos assim que você seleciona o produto no painel — clique em "Ver textos" na linha do produto, na tabela acima, pra copiar.
         </li>
         <li>
           <b>2. Gravar a narração</b>
@@ -381,7 +381,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Papai Resolve"):
       <p class="guia-aviso">O Claude não grava vídeo nem publica nas redes sozinho — essas partes (2, 3 e 4) são manuais. O que o cockpit automatiza é o roteiro, a legenda, a curadoria dos produtos e o acompanhamento de cada um até a venda.</p>
     </div>
 
-    <p class="rodape">Agente Shopee &middot; @papairesolve_br</p>
+    <p class="rodape">Agente Shopee</p>
   </div>
 
   <script>

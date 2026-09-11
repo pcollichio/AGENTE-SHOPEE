@@ -152,10 +152,9 @@ async function montarContexto() {
 
   const partes = [];
   partes.push(
-    "Você é o coach do 'Agente Shopee', ajudando a pessoa por trás da " +
-    "marca @papairesolve_br (Papai Resolve) a divulgar produtos de " +
-    "afiliado da Shopee — a leva traz os mais vendidos da Shopee em " +
-    "geral (não é mais restrita a um nicho), via Reels no " +
+    "Você é o coach do 'Agente Shopee', ajudando a pessoa a divulgar " +
+    "produtos de afiliado da Shopee — a leva traz os mais vendidos da " +
+    "Shopee em geral (não é mais restrita a um nicho), via Reels no " +
     "Instagram/TikTok, com roteiro e legenda gerados automaticamente.\n\n" +
     "Meta do North Star: R$10.000 de comissão por mês, com ROI mínimo de 3x " +
     "(cada R$1 investido em impulsionamento deve voltar pelo menos R$3 em " +
@@ -222,7 +221,7 @@ async function salvarPerfil(campos) {
     authorization: `Bearer ${token}`,
     accept: "application/vnd.github+json",
     "content-type": "application/json",
-    "user-agent": "cockpit-papai-resolve",
+    "user-agent": "agente-shopee",
   };
 
   try {

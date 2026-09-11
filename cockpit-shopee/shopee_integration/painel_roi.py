@@ -132,7 +132,7 @@ def _grafico_svg(serie):
     </script>"""
 
 
-def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard — Papai Resolve"):
+def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard — Agente Shopee"):
     vendas_pendentes = vendas_pendentes or []
     resumo = roi_calc.calcular_resumo(investimentos, vendas, vendas_pendentes)
     por_produto = roi_calc.calcular_roi_por_produto(investimentos, vendas)
@@ -259,7 +259,7 @@ def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard �
     {nav.gerar_menu_html("painel_roi.html")}
     <header class="cabecalho">
       <div>
-        <p class="eyebrow">Agente Shopee &middot; @papairesolve_br</p>
+        <p class="eyebrow">Agente Shopee</p>
         <h1>Dashboard</h1>
       </div>
       <p class="atualizado">Atualizado {date.today().strftime('%d/%m/%Y')}</p>
@@ -307,7 +307,7 @@ def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard �
 """
 
 
-def salvar_painel(investimentos, vendas, caminho, vendas_pendentes=None, titulo="Dashboard — Papai Resolve"):
+def salvar_painel(investimentos, vendas, caminho, vendas_pendentes=None, titulo="Dashboard — Agente Shopee"):
     html = gerar_html(investimentos, vendas, vendas_pendentes=vendas_pendentes, titulo=titulo)
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(html)

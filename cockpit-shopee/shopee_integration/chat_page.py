@@ -86,7 +86,7 @@ def gerar_html():
         <path d="M38 62 L54 78 L86 40" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <div class="cabecalho-texto">
-        <p class="eyebrow">Papai Resolve &middot; Coach</p>
+        <p class="eyebrow">Agente Shopee &middot; Coach</p>
         <h1>Converse com o coach</h1>
       </div>
     </header>

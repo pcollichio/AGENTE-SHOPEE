@@ -29,10 +29,10 @@ TIER_LABELS = {
 # pra esquecer essa narrativa) — agora é direto: Dor → Solução → Prova
 # (visual) → Call to action, sem personagem nem abertura fixa, frases
 # genéricas o bastante pra qualquer produto (roupa, beleza, eletrônico,
-# casa etc.), sem citar um problema específico de categoria. A hashtag
-# `#papairesolve` continua nas legendas — é a marca da conta
-# (@papairesolve_br), não a narrativa do roteiro. Implementado em
-# montarRoteiro()/montarLegenda() abaixo.
+# casa etc.), sem citar um problema específico de categoria. Pedido em
+# 11/09: removido também o vínculo restante com a marca "Papai
+# Resolve" — tirada a hashtag `#papairesolve` das legendas geradas.
+# Implementado em montarRoteiro()/montarLegenda() abaixo.
 
 
 def _linha_produto(produto, posicao, id_prefixo):
@@ -492,7 +492,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
     {nav.gerar_menu_html("painel.html")}
     <header class="cabecalho">
       <div>
-        <p class="eyebrow">Agente Shopee &middot; @papairesolve_br</p>
+        <p class="eyebrow">Agente Shopee</p>
         <h1>{titulo}</h1>
       </div>
       <p class="atualizado">Atualizado&nbsp;{date.today().strftime('%d/%m/%Y')}<br>{len(produtos)} produtos</p>
@@ -607,7 +607,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
         '',
         '\\u{{1F6D2}} Link na bio ou comenta "QUERO" que a gente manda o link!',
         '',
-        '#papairesolve #achadosdashopee #shopeebrasil #promoshopee #achadinhos'
+        '#achadosdashopee #shopeebrasil #promoshopee #achadinhos'
       ].join('\\n');
     }}
 
