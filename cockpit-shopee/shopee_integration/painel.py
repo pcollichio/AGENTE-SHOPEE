@@ -745,12 +745,19 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
               return;
             }}
             var produtos = r.dados.produtos || [];
-            if (produtos.length === 0) {{
+            if (produtos.length === 0 && !r.dados.link_rastreavel_sem_correspondencia) {{
               mostrarAviso('Nenhum produto encontrado para "' + termo + '".');
               return;
             }}
             if (r.dados.correspondencia_exata) {{
               mostrarAviso('Encontrado direto pelo link \\u2713');
+            }} else if (r.dados.link_rastreavel_sem_correspondencia) {{
+              mostrarAviso(
+                'N\\u00e3o achei os detalhes desse produto (nome/pre\\u00e7o/foto) na busca, mas gerei ' +
+                'o link rastre\\u00e1vel certo dele \\u2014 copie e use direto: ' +
+                r.dados.link_rastreavel_sem_correspondencia +
+                ' (ainda n\\u00e3o d\\u00e1 pra adicionar na esteira sem os detalhes, só pelo link).'
+              );
             }} else if (r.dados.termo_usado) {{
               mostrarAviso('Busquei por "' + r.dados.termo_usado + '" (extraído do link) \\u2014 confira se é o produto certo antes de marcar.');
             }}

@@ -239,6 +239,54 @@ def gerar_link_afiliado(product_id, produtos_cache=None):
         )
 
 
+def gerar_link_rastreavel(url_original, sub_ids=None):
+    """
+    Converte um link de produto da Shopee (colado pelo usuário — ex: achou
+    no app e trouxe o link) num link de afiliado rastreável, via a mutation
+    `generateShortLink` da Affiliate API. É o mesmo processo que a própria
+    Shopee oferece no painel de afiliado pra "encurtar e rastrear" qualquer
+    link colado.
+
+    Por quê isso importa: no fluxo de "colar link" (`link_resolver.py` +
+    `api/buscar_produto.py`/`buscar_um_produto.py`), o jeito antigo de achar
+    o link rastreável era buscar de novo por palavra-chave extraída da URL
+    (`buscar_produtos(keyword=...)`) e torcer pra achar o mesmo itemId nos
+    resultados — se a busca por palavra-chave não trouxer aquele item exato
+    entre os resultados (comum, já que a relevância da busca não garante
+    isso), o usuário não tinha como pegar um link rastreável pra aquele
+    produto específico. Chamando essa mutation direto com a URL resolvida,
+    não depende de encontrar o produto de novo por busca — funciona pra
+    qualquer link de produto da Shopee.
+
+    Pedido do usuário em 11/09: "existe um processo na shopee que é a
+    conversão do link para um link de afiliado rastreavel, veja a
+    possibilidade de fazer isso pela API e ja trazer o link certo do
+    produto na esteira".
+
+    NOTA: mutation e nomes de campo (`generateShortLink`, `originUrl`,
+    `subIds`, `shortLink`) ainda NÃO validados contra uma resposta real da
+    Shopee — a sessão do Claude não tem acesso à rede pra API da Shopee pra
+    testar diretamente. Testar via `.github/workflows/busca-manual.yml`
+    (dispara `buscar_um_produto.py` com um link real) antes de confiar no
+    resultado; se a Shopee recusar por campo desconhecido, ajustar aqui
+    conforme a mensagem de erro indicar (mesmo processo usado pra validar
+    `sortType`/`page`, ver NOTA no topo do arquivo).
+    """
+    if config.USE_MOCK_DATA:
+        return f"{url_original}?af_id=SEU_ID_AFILIADO&mock=true"
+
+    mutation = """
+    mutation GerarLinkRastreavel($input: ShortLinkInput!) {
+      generateShortLink(input: $input) {
+        shortLink
+      }
+    }
+    """
+    variables = {"input": {"originUrl": url_original, "subIds": sub_ids or []}}
+    data = _executar_graphql(mutation, variables)
+    return (data.get("generateShortLink") or {}).get("shortLink")
+
+
 def buscar_conversoes(purchase_time_start, purchase_time_end, limit=100, scroll_id=None):
     """
     Busca o relatório de conversões (vendas reais geradas pelos seus links

@@ -147,6 +147,12 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
   por descrição, ou de `produtos_manuais.txt` — usa os mesmos
   `montarRoteiro()`/`montarLegenda()` no momento de salvar, então
   sempre sai com narração e legenda prontas na esteira, sem exceção.
+  Pedido em 11/09: quando o produto vem de um **link colado**, o link
+  de afiliado agora é gerado direto da URL colada
+  (`client.gerar_link_rastreavel()`, mutation `generateShortLink`),
+  em vez de depender de achar o mesmo item de novo numa busca por
+  palavra-chave — ver HISTORICO.md pro motivo e o status de validação
+  contra a API real.
 - Pedido do usuário em 03/09: o botão do painel não baixa mais um
   arquivo `.md` — o usuário reportou problema em incluir produto na
   esteira e apontou o download como causa provável (falha comum em

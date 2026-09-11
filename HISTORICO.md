@@ -576,3 +576,31 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   filtros. `painel.html` só é regenerado com dados reais via
   `leva-diaria.yml` (a sessão do Claude não acessa a API da Shopee
   diretamente).
+- **Geração direta do link rastreável de afiliado, pra link colado.**
+  Usuário: "existe um processo na shopee que é a conversão do link
+  para um link de afiliado rastreavel, veja a possibilidade de fazer
+  isso pela API e ja trazer o link certo do produto na esteira". Pra
+  produtos da leva ou da busca por palavra-chave, o link rastreável já
+  vem pronto (campo `offerLink` de `productOfferV2`, por item — isso já
+  funcionava). O ponto fraco era o fluxo de "colar link" (achar o
+  produto no app e trazer o link): o código antigo só extraía um termo
+  de busca da URL colada e torcia pra achar o mesmo `itemId` de novo
+  entre os resultados de uma busca por palavra-chave — se a busca não
+  trouxesse aquele item exato (comum, relevância de busca não garante
+  isso), não tinha como pegar o link rastreável daquele produto
+  específico. Implementada `client.gerar_link_rastreavel()`, usando a
+  mutation `generateShortLink` da Affiliate API (o mesmo processo que a
+  Shopee oferece no painel de afiliado pra "encurtar e rastrear"
+  qualquer link) — gera o link direto a partir da URL resolvida,
+  **sem depender de achar o produto de novo por busca**. Aplicado em
+  `api/buscar_produto.py` (busca ao vivo no painel) e
+  `buscar_um_produto.py` (busca manual via chat/`busca-manual.yml`):
+  quando o item é encontrado por palavra-chave também, o link gerado
+  direto substitui o `offerLink` da busca (mais garantido, mesma URL
+  colada); quando NÃO é encontrado, em vez de simplesmente mostrar
+  "não achei" como antes, devolve o link rastreável certo separado (com
+  aviso de que faltam os detalhes — nome/preço/foto — pra adicionar
+  automaticamente na esteira). NOTA: mutation/campos
+  (`generateShortLink`, `originUrl`, `subIds`, `shortLink`) ainda não
+  confirmados contra uma resposta real no momento da implementação —
+  ver client.py para o resultado da validação via `busca-manual.yml`.

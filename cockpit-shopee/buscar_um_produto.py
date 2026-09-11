@@ -35,6 +35,7 @@ def main():
         return
 
     item_id_alvo = None
+    link_rastreavel_direto = None
     if link_resolver.eh_link(entrada):
         try:
             url_final = link_resolver.resolver_link(entrada)
@@ -48,6 +49,13 @@ def main():
             return
         print(f'Buscando por: "{termo}"' + (f" (item {item_id_alvo})" if item_id_alvo else ""))
         print()
+        # Gera o link rastreável direto da URL colada (mutation
+        # generateShortLink — ver NOTA em client.py), sem depender de achar
+        # esse mesmo item de novo na busca por palavra-chave abaixo.
+        try:
+            link_rastreavel_direto = client.gerar_link_rastreavel(url_final)
+        except Exception as e:
+            print(f"Aviso: não consegui gerar o link rastreável direto ({e}) — seguindo com a busca por palavra-chave.\n")
     else:
         termo = entrada
 
@@ -58,14 +66,24 @@ def main():
         return
 
     if not produtos:
-        print(f'Nenhum produto encontrado para "{termo}".')
+        if link_rastreavel_direto:
+            print(f'Nenhum produto encontrado para "{termo}", mas o link rastreável do produto colado ficou pronto:')
+            print(f"   {link_rastreavel_direto}")
+        else:
+            print(f'Nenhum produto encontrado para "{termo}".')
         return
 
     if item_id_alvo:
         exato = next((p for p in produtos if p["product_id"] == item_id_alvo), None)
         if exato:
+            if link_rastreavel_direto:
+                exato["affiliate_link"] = link_rastreavel_direto
             print("# Produto encontrado (correspondência exata pelo link)\n")
             produtos = [exato]
+        elif link_rastreavel_direto:
+            print(f'# Não achei os detalhes desse produto (nome/preço/foto) na busca por "{termo}", mas o link rastreável certo dele ficou pronto:')
+            print(f"   {link_rastreavel_direto}\n")
+            print(f'Resultados mais prováveis para "{termo}" (não é o produto colado, cuidado antes de marcar):\n')
         else:
             print(f'# Não achei correspondência exata pelo link — resultados mais prováveis para "{termo}"\n')
     else:

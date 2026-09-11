@@ -60,6 +60,7 @@ class handler(BaseHTTPRequestHandler):
         item_id_alvo = None
         termo = entrada
         veio_de_link = link_resolver.eh_link(entrada)
+        link_rastreavel_direto = None
         if veio_de_link:
             try:
                 url_final = link_resolver.resolver_link(entrada)
@@ -70,6 +71,16 @@ class handler(BaseHTTPRequestHandler):
             if not termo:
                 self._responder(400, {"erro": link_resolver.MENSAGEM_LINK_SEM_NOME})
                 return
+            # Gera o link rastreável direto da URL colada (mutation
+            # generateShortLink — ver NOTA em client.py), em vez de depender
+            # só de achar esse mesmo item de novo na busca por palavra-chave
+            # abaixo. Best-effort: se falhar (mutation ainda não validada
+            # contra a API real, ou erro de rede), segue com o link que a
+            # busca por palavra-chave trouxer, como já funcionava antes.
+            try:
+                link_rastreavel_direto = client.gerar_link_rastreavel(url_final)
+            except Exception as e:
+                print(f"Aviso: gerar_link_rastreavel falhou: {e}", file=sys.stderr)
 
         try:
             produtos = client.buscar_produtos(keyword=termo, limite=8)
@@ -84,7 +95,21 @@ class handler(BaseHTTPRequestHandler):
         if item_id_alvo:
             exato = next((p for p in produtos if p["product_id"] == item_id_alvo), None)
             if exato:
+                if link_rastreavel_direto:
+                    exato["affiliate_link"] = link_rastreavel_direto
                 self._responder(200, {"produtos": [exato], "correspondencia_exata": True})
+                return
+            if link_rastreavel_direto:
+                # Não achamos os detalhes (nome/preço/foto) do produto colado
+                # entre os resultados da busca por palavra-chave, mas
+                # conseguimos gerar o link rastreável exato da URL — devolve
+                # ele separado, pra não perder essa garantia mesmo sem os
+                # detalhes visuais.
+                self._responder(200, {
+                    "produtos": produtos,
+                    "termo_usado": termo,
+                    "link_rastreavel_sem_correspondencia": link_rastreavel_direto,
+                })
                 return
 
         resposta = {"produtos": produtos}
