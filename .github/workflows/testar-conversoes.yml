@@ -29,74 +29,14 @@ jobs:
       - name: Instalar dependências
         run: pip install -r requirements.txt
 
-      - name: Testar conversionReport com queries progressivas (bisseção de campo)
+      - name: Rodar sincronizar_vendas.py de verdade (sem commitar o CSV)
         env:
           SHOPEE_APP_ID: ${{ secrets.SHOPEE_APP_ID }}
           SHOPEE_APP_SECRET: ${{ secrets.SHOPEE_APP_SECRET }}
           USE_MOCK_DATA: "false"
         run: |
-          python3 -c "
-          import json
-          from datetime import datetime, timedelta, timezone
-          from shopee_integration import client
-
-          dias = int('${{ inputs.dias }}' or '30')
-          fim = datetime.now(timezone.utc)
-          inicio = fim - timedelta(days=dias)
-          inicio_ts, fim_ts = str(int(inicio.timestamp())), str(int(fim.timestamp()))
-          print(f'Periodo: {inicio.date()} ate {fim.date()} ({dias} dias)')
-
-          variantes = {
-            'V1 so conversionId': 'conversionId',
-            'V2 + purchaseTime conversionStatus totalCommission': 'conversionId purchaseTime conversionStatus totalCommission',
-            'V3 + orders{orderId}': 'conversionId purchaseTime conversionStatus totalCommission orders { orderId }',
-            'V4 + orders{orderId orderStatus}': 'conversionId purchaseTime conversionStatus totalCommission orders { orderId orderStatus }',
-            'V5 + items{itemId}': 'conversionId purchaseTime conversionStatus totalCommission orders { orderId orderStatus items { itemId } } ',
-            'V6 + items{itemName}': 'conversionId purchaseTime conversionStatus totalCommission orders { orderId orderStatus items { itemId itemName } }',
-            'V7 completa (itemTotalCommission)': 'conversionId purchaseTime conversionStatus totalCommission orders { orderId orderStatus items { itemId itemName itemTotalCommission } }',
-          }
-
-          for nome, campos in variantes.items():
-              query = f'''
-              query BuscarConversoes(\$inicio: Int64, \$fim: Int64, \$limit: Int) {{
-                conversionReport(purchaseTimeStart: \$inicio, purchaseTimeEnd: \$fim, limit: \$limit) {{
-                  nodes {{ {campos} }}
-                  pageInfo {{ hasNextPage scrollId }}
-                }}
-              }}
-              '''
-              try:
-                  dados = client._executar_graphql(query, {'inicio': inicio_ts, 'fim': fim_ts, 'limit': 20})
-                  nodes = (dados.get('conversionReport') or {}).get('nodes') or []
-                  print(f'{nome}: OK, {len(nodes)} node(s)')
-                  if nodes:
-                      print('  exemplo:', json.dumps(nodes[0], ensure_ascii=False))
-              except Exception as e:
-                  print(f'{nome}: ERRO -> {e}')
-
-          print()
-          print('=== V8: query completa + scrollId:null explicito (hipotese do bug) ===')
-          query_com_scroll = f'''
-          query BuscarConversoes(\$inicio: Int64, \$fim: Int64, \$limit: Int, \$scrollId: String) {{
-            conversionReport(purchaseTimeStart: \$inicio, purchaseTimeEnd: \$fim, limit: \$limit, scrollId: \$scrollId) {{
-              nodes {{ conversionId purchaseTime conversionStatus totalCommission orders {{ orderId orderStatus items {{ itemId itemName itemTotalCommission }} }} }}
-              pageInfo {{ hasNextPage scrollId }}
-            }}
-          }}
-          '''
-          try:
-              dados = client._executar_graphql(query_com_scroll, {'inicio': inicio_ts, 'fim': fim_ts, 'limit': 20, 'scrollId': None})
-              nodes = (dados.get('conversionReport') or {}).get('nodes') or []
-              print(f'V8 com scrollId=null: OK, {len(nodes)} node(s)')
-          except Exception as e:
-              print(f'V8 com scrollId=null: ERRO -> {e}')
-
-          print()
-          print('=== V9: chamando client.buscar_conversoes() de verdade (a funcao real) ===')
-          try:
-              pagina = client.buscar_conversoes(int(inicio_ts), int(fim_ts), limit=20, scroll_id=None)
-              nodes = pagina.get('nodes') or []
-              print(f'V9 buscar_conversoes(): OK, {len(nodes)} node(s)')
-          except Exception as e:
-              print(f'V9 buscar_conversoes(): ERRO -> {e}')
-          "
+          sed -i "s/^DIAS_PARA_TRAS = .*/DIAS_PARA_TRAS = ${{ inputs.dias }}/" sincronizar_vendas.py
+          python3 sincronizar_vendas.py
+          echo "--- Conteudo gerado (financeiro/vendas_shopee.csv) ---"
+          cat financeiro/vendas_shopee.csv
+          git diff --stat -- financeiro/vendas_shopee.csv || true

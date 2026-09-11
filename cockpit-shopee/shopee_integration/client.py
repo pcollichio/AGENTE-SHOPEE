@@ -299,12 +299,19 @@ def buscar_conversoes(purchase_time_start, purchase_time_end, limit=100, scroll_
     Returns:
         dict com "nodes" (lista de conversões) e "pageInfo" (paginação)
 
-    NOTA: validado parcialmente contra uma resposta real da Shopee em
-    2026-08-30 — ela apontou dois ajustes (tipo Int64 nas variáveis de
-    data, e o campo chama-se "conversionStatus", não "orderStatus" no
-    nível da conversão) já corrigidos abaixo. O restante dos campos
-    ainda não foi confirmado; se aparecer outro erro de "campo
-    desconhecido", ajuste aqui conforme a mensagem indicar.
+    NOTA: validada contra resposta real da Shopee em 2026-08-30 (dois
+    ajustes: tipo Int64 nas variáveis de data como string, e o campo
+    chama-se "conversionStatus", não "orderStatus" no nível da
+    conversão) e em 2026-09-11 (achado e corrigido o motivo do erro
+    genérico "graphql: got null for non-null" / código 10010 que fazia
+    a sincronização falhar sempre: o argumento `scrollId` da Shopee não
+    aceita receber `null` explícito — só pode ser omitido da query
+    inteiramente na primeira página, ou enviado com um cursor de
+    verdade nas páginas seguintes. Confirmado com dados reais: a conta
+    tem pelo menos 1 conversão real retornada pela API (nome do
+    produto, comissão e status batendo com o que já estava em
+    `financeiro/`). Todos os outros campos da query completa (orders,
+    items, itemTotalCommission etc.) já validados contra resposta real.
     """
     if config.USE_MOCK_DATA:
         raise NotImplementedError(
@@ -312,30 +319,32 @@ def buscar_conversoes(purchase_time_start, purchase_time_end, limit=100, scroll_
             "com USE_MOCK_DATA=false e credenciais reais."
         )
 
-    query = """
-    query BuscarConversoes($inicio: Int64, $fim: Int64, $limit: Int, $scrollId: String) {
-      conversionReport(purchaseTimeStart: $inicio, purchaseTimeEnd: $fim, limit: $limit, scrollId: $scrollId) {
-        nodes {
+    campos_scroll = "$scrollId: String" if scroll_id else ""
+    arg_scroll = ", scrollId: $scrollId" if scroll_id else ""
+    query = f"""
+    query BuscarConversoes($inicio: Int64, $fim: Int64, $limit: Int{", " + campos_scroll if campos_scroll else ""}) {{
+      conversionReport(purchaseTimeStart: $inicio, purchaseTimeEnd: $fim, limit: $limit{arg_scroll}) {{
+        nodes {{
           conversionId
           purchaseTime
           conversionStatus
           totalCommission
-          orders {
+          orders {{
             orderId
             orderStatus
-            items {
+            items {{
               itemId
               itemName
               itemTotalCommission
-            }
-          }
-        }
-        pageInfo {
+            }}
+          }}
+        }}
+        pageInfo {{
           hasNextPage
           scrollId
-        }
-      }
-    }
+        }}
+      }}
+    }}
     """
     variables = {
         # Int64 na Shopee parece exigir o valor como texto (string), não
@@ -343,7 +352,8 @@ def buscar_conversoes(purchase_time_start, purchase_time_end, limit=100, scroll_
         "inicio": str(int(purchase_time_start)),
         "fim": str(int(purchase_time_end)),
         "limit": limit,
-        "scrollId": scroll_id,
     }
+    if scroll_id:
+        variables["scrollId"] = scroll_id
     data = _executar_graphql(query, variables)
     return data.get("conversionReport") or {"nodes": [], "pageInfo": {}}
