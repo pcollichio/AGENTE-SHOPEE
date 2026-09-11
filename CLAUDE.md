@@ -53,10 +53,16 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
 - **Toda decisão e marco importante entra em `HISTORICO.md`**, com
   data. Ao começar uma sessão nova, releia esse arquivo antes de agir.
 - A sessão do Claude tem uma restrição de rede: não acessa a API da
-  Shopee nem carrega imagens externas diretamente. Pra buscar um
-  produto específico sob demanda, dispare o workflow
-  `.github/workflows/busca-manual.yml` (via `actions_run_trigger`,
-  input `termo`) e leia o resultado nos logs do job.
+  Shopee nem carrega imagens externas diretamente — **nem o domínio
+  `vercel.app`** (confirmado em 11/09: `curl`/`WebFetch` pra
+  `agente-shopee.vercel.app` são bloqueados pelo proxy de rede da
+  sessão). Pra buscar um produto específico sob demanda, dispare o
+  workflow `.github/workflows/busca-manual.yml` (via
+  `actions_run_trigger`, input `termo`) e leia o resultado nos logs do
+  job. Pra verificar se o deploy da Vercel está no ar (chat, busca,
+  seleção), dispare `.github/workflows/verificar-conexao.yml` (mesmo
+  jeito, sem input obrigatório) — ele testa a URL de dentro do runner
+  do GitHub Actions, que tem internet normal.
 - **Decisão de 31/08: o cockpit roda na Vercel.** O usuário pediu uma
   conexão de verdade entre o painel (onde ele seleciona produtos) e o
   Claude — decidiu usar a Vercel em vez do fluxo manual por GitHub

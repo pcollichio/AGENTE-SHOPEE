@@ -750,3 +750,25 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   `painel.html` depende da API real (`leva-diaria.yml`). Verificado com
   Playwright: `chat.html` e `cockpit.html` sem "coach"/"cockpit" em
   nenhum texto visível.
+- **Item de menu "Chat" virou "Agente"; novo workflow pra verificar a
+  conexão com o servidor.** Pedido do usuário: "ao invés de chat
+  coloque agente e verifique a conexão com servidor". Renomeado o
+  rótulo de navegação em `shopee_integration/nav.py` (usado por
+  `painel.py`, `esteira.py`, `painel_index.py`, `painel_roi.py` e pelo
+  próprio `chat_page.py`) de "Chat" pra "Agente", além do `<h1>` da
+  página do chat, do botão flutuante de chat em `cockpit.html`
+  ("💬 Chat" → "💬 Agente") e do menu duplicado (estático) em
+  `importar.html`; título da aba do chat simplificado pra "Agente
+  Shopee" (era "Chat · Agente Shopee"). Sobre "verifique a conexão com
+  servidor": tentei testar `https://agente-shopee.vercel.app` direto
+  (via `curl` e via `WebFetch`) e os dois foram **bloqueados pelo proxy
+  de rede da sessão** — a restrição de rede do Claude aqui vai além da
+  API da Shopee, cobre o domínio `vercel.app` inteiro (não documentado
+  antes; `CLAUDE.md` atualizado com isso). Como o runner do GitHub
+  Actions tem internet normal, criado
+  `.github/workflows/verificar-conexao.yml` — dispara 3 testes reais
+  contra o deploy (`cockpit.html`, `api/chat` com uma mensagem de
+  teste, `api/buscar_produto`) e imprime o status HTTP de cada um nos
+  logs, pra qualquer sessão futura (ou o próprio usuário) confirmar se
+  o deploy está no ar sem precisar abrir o navegador. Ainda não
+  disparado contra o deploy real — próximo passo.

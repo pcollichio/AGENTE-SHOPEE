@@ -166,6 +166,16 @@ Vercel (gratuita pra esse uso):
 Depois do primeiro deploy, toda vez que o robô diário (GitHub Actions)
 atualizar o repositório, a Vercel republica sozinha.
 
+**Pra verificar se o deploy está no ar** (a sessão do Claude não
+consegue testar isso diretamente — a rede dela bloqueia domínios
+`vercel.app`): dispare o workflow
+`.github/workflows/verificar-conexao.yml` (via `actions_run_trigger`,
+sem precisar de input — o padrão já aponta pra
+`https://agente-shopee.vercel.app`, ou passe outra URL em `url_base`
+se o domínio for diferente) e leia o resultado nos logs do job. Ele
+testa `cockpit.html`, `api/chat` e `api/buscar_produto` direto do
+runner do GitHub Actions, que tem acesso normal à internet.
+
 ### Criando o `GITHUB_TOKEN`
 
 1. No GitHub, vá em **Settings** (da sua conta, não do repositório) →

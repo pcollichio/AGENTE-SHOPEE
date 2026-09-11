@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-09-11T18:55:55",
+  "atualizado_em": "2026-09-11T23:08:56",
   "resumo": {
     "total_investido": 121.99,
     "total_comissao": 1.8006,
@@ -11,6 +11,13 @@
   },
   "roi_por_produto": [
     {
+      "produto": "Instagram post: #papairesolve - Instale a sua !...",
+      "investido": 37.94,
+      "comissao": 0.0,
+      "roi": 0.0,
+      "status": "critical"
+    },
+    {
       "produto": "Post do Instagram: ￼Fácil de instalar!...",
       "investido": 42.91,
       "comissao": 0.0,
@@ -20,13 +27,6 @@
     {
       "produto": "Post do Instagram: “Adeus mangueira velha que...",
       "investido": 41.14,
-      "comissao": 0.0,
-      "roi": 0.0,
-      "status": "critical"
-    },
-    {
-      "produto": "Instagram post: #papairesolve - Instale a sua !...",
-      "investido": 37.94,
       "comissao": 0.0,
       "roi": 0.0,
       "status": "critical"

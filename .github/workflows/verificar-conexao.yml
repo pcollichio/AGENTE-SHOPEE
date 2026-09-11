@@ -1,0 +1,62 @@
+name: Verificar conexão com o servidor (Vercel)
+
+on:
+  workflow_dispatch:
+    inputs:
+      url_base:
+        description: "URL do deploy na Vercel (sem barra no final)"
+        required: false
+        default: "https://agente-shopee.vercel.app"
+
+permissions:
+  contents: read
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Testar página principal (cockpit.html)
+        run: |
+          URL="${{ inputs.url_base }}/cockpit.html"
+          echo "Testando: $URL"
+          codigo=$(curl -s -o /tmp/pagina.html -w "%{http_code}" --max-time 20 "$URL" || echo "000")
+          echo "Status HTTP: $codigo"
+          if [ "$codigo" = "200" ]; then
+            echo "✅ Página carregou."
+            grep -o "<title>[^<]*</title>" /tmp/pagina.html || true
+          else
+            echo "❌ Não carregou como esperado (status $codigo)."
+          fi
+
+      - name: Testar api/chat (deve responder, mesmo que com erro de configuração)
+        run: |
+          URL="${{ inputs.url_base }}/api/chat"
+          echo "Testando: $URL"
+          resposta=$(curl -s -w "\nHTTP_STATUS:%{http_code}" --max-time 30 \
+            -X POST "$URL" \
+            -H "content-type: application/json" \
+            -d '{"mensagens":[{"role":"user","content":"teste de conexao"}]}' || echo "HTTP_STATUS:000")
+          echo "$resposta"
+          codigo=$(echo "$resposta" | grep -o "HTTP_STATUS:[0-9]*" | cut -d: -f2)
+          if [ "$codigo" = "200" ]; then
+            echo "✅ O chat respondeu normalmente (servidor + ANTHROPIC_API_KEY + GITHUB_TOKEN ok)."
+          elif [ "$codigo" = "500" ] || [ "$codigo" = "502" ]; then
+            echo "⚠️ O servidor respondeu, mas com erro — normalmente falta configurar uma variável de ambiente na Vercel (veja a mensagem de erro acima)."
+          elif [ "$codigo" = "404" ]; then
+            echo "❌ Servidor respondeu 404 — a função api/chat não foi encontrada (deploy pode não ter sido feito, ou a URL está errada)."
+          else
+            echo "❌ Não consegui falar com o servidor (status $codigo) — confira se a URL do deploy está certa e se o projeto está publicado na Vercel."
+          fi
+
+      - name: Testar api/buscar_produto (Python)
+        run: |
+          URL="${{ inputs.url_base }}/api/buscar_produto?q=teste"
+          echo "Testando: $URL"
+          codigo=$(curl -s -o /tmp/busca.json -w "%{http_code}" --max-time 30 "$URL" || echo "000")
+          echo "Status HTTP: $codigo"
+          cat /tmp/busca.json || true
+          if [ "$codigo" = "200" ] || [ "$codigo" = "400" ] || [ "$codigo" = "500" ] || [ "$codigo" = "502" ]; then
+            echo "✅ O servidor respondeu (mesmo que com erro de config ou busca vazia — o importante é que está no ar)."
+          else
+            echo "❌ Não consegui falar com o servidor (status $codigo)."
+          fi

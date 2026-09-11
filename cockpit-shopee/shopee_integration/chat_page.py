@@ -14,7 +14,7 @@ def gerar_html():
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chat &middot; Agente Shopee</title>
+<title>Agente Shopee</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -87,7 +87,7 @@ def gerar_html():
       </svg>
       <div class="cabecalho-texto">
         <p class="eyebrow">Agente Shopee</p>
-        <h1>Chat</h1>
+        <h1>Agente</h1>
       </div>
     </header>
 
