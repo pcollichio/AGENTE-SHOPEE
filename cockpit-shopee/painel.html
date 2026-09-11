@@ -326,7 +326,7 @@
     <nav class="menu-cockpit" id="menu-cockpit"><a class="menu-item" href="index.html">Início</a><a class="menu-item" href="chat.html">Chat</a><a class="menu-item ativo" href="painel.html">Produtos</a><a class="menu-item" href="esteira.html">Esteira</a><a class="menu-item" href="importar.html">Importar</a><a class="menu-item" href="painel_roi.html">Dashboard</a><a class="menu-item" href="https://claude.ai/code/artifact/a5421828-0ecd-4bd1-8c5f-d3a2799c26bf" target="_blank" rel="noopener">Identidade&nbsp;&#8599;</a></nav><script>if (window.self !== window.top) { document.getElementById('menu-cockpit').style.display = 'none'; }</script>
     <header class="cabecalho">
       <div>
-        <p class="eyebrow">Agente Shopee &middot; @papairesolve_br</p>
+        <p class="eyebrow">Agente Shopee</p>
         <h1>Painel Shopee — Mais Vendidos</h1>
       </div>
       <p class="atualizado">Atualizado&nbsp;11/09/2026<br>50 produtos</p>
@@ -1742,7 +1742,7 @@
         '',
         '\u{1F6D2} Link na bio ou comenta "QUERO" que a gente manda o link!',
         '',
-        '#papairesolve #achadosdashopee #shopeebrasil #promoshopee #achadinhos'
+        '#achadosdashopee #shopeebrasil #promoshopee #achadinhos'
       ].join('\n');
     }
 
@@ -1880,12 +1880,19 @@
               return;
             }
             var produtos = r.dados.produtos || [];
-            if (produtos.length === 0) {
+            if (produtos.length === 0 && !r.dados.link_rastreavel_sem_correspondencia) {
               mostrarAviso('Nenhum produto encontrado para "' + termo + '".');
               return;
             }
             if (r.dados.correspondencia_exata) {
               mostrarAviso('Encontrado direto pelo link \u2713');
+            } else if (r.dados.link_rastreavel_sem_correspondencia) {
+              mostrarAviso(
+                'N\u00e3o achei os detalhes desse produto (nome/pre\u00e7o/foto) na busca, mas gerei ' +
+                'o link rastre\u00e1vel certo dele \u2014 copie e use direto: ' +
+                r.dados.link_rastreavel_sem_correspondencia +
+                ' (ainda n\u00e3o d\u00e1 pra adicionar na esteira sem os detalhes, só pelo link).'
+              );
             } else if (r.dados.termo_usado) {
               mostrarAviso('Busquei por "' + r.dados.termo_usado + '" (extraído do link) \u2014 confira se é o produto certo antes de marcar.');
             }
