@@ -770,5 +770,14 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   contra o deploy (`cockpit.html`, `api/chat` com uma mensagem de
   teste, `api/buscar_produto`) e imprime o status HTTP de cada um nos
   logs, pra qualquer sessão futura (ou o próprio usuário) confirmar se
-  o deploy está no ar sem precisar abrir o navegador. Ainda não
-  disparado contra o deploy real — próximo passo.
+  o deploy está no ar sem precisar abrir o navegador. **Disparado e
+  confirmado**: `cockpit.html` → 200 (título "Agente Shopee");
+  `api/chat` → 200, e o chat de verdade respondeu — "✅ Conexão OK!
+  ... Sou o Agente Shopee..." (confirma `ANTHROPIC_API_KEY` e
+  `GITHUB_TOKEN` configurados na Vercel, e que o rename "coach" →
+  "Agente Shopee" já está no ar); `api/buscar_produto` → 502 com um
+  erro real da própria Shopee ("graphql: got null for non-null") pra a
+  palavra-chave de teste "teste" — não é falha de conexão (o endpoint
+  respondeu, com `SHOPEE_APP_ID`/`SECRET` configurados e
+  `USE_MOCK_DATA=false`), é a Shopee reclamando de um termo de busca
+  genérico demais; não investigado a fundo, não fazia parte do pedido.
