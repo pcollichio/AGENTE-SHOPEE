@@ -11,7 +11,7 @@ de conteúdo (criativos e texto), já com roteiro e legenda prontos.
 
 from datetime import date
 
-from . import nav
+from . import nav, segmentos
 
 TIER_LABELS = {
     "baixo": "Baixo",
@@ -40,6 +40,8 @@ def _linha_produto(produto, posicao, id_prefixo):
     nome = (p["name"] or "(sem nome)").replace("<", "&lt;").replace(">", "&gt;")
     loja = (p.get("shop_name") or "").replace("<", "&lt;").replace(">", "&gt;")
     categoria = p.get("termo_busca") or ""
+    segmento = p.get("segmento") or "outros"
+    segmento_label = segmentos.SEGMENTO_LABELS.get(segmento, "Outros")
     row_id = f"{id_prefixo}-{p['product_id']}"
     imagem_url = p.get("image_url") or ""
     if imagem_url:
@@ -47,7 +49,7 @@ def _linha_produto(produto, posicao, id_prefixo):
     else:
         foto_html = '<div class="foto-produto foto-vazia" aria-hidden="true"></div>'
     return f"""
-        <tr data-tier="{p['tier']}" data-comissao="{p['commission_rate']*100:.0f}" data-avaliacao="{p['rating']:.1f}" data-vendidos="{p['total_sold']}">
+        <tr data-tier="{p['tier']}" data-comissao="{p['commission_rate']*100:.0f}" data-avaliacao="{p['rating']:.1f}" data-vendidos="{p['total_sold']}" data-segmento="{segmento}">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="{row_id}"
               data-produto-id="{p['product_id']}"
@@ -65,6 +67,7 @@ def _linha_produto(produto, posicao, id_prefixo):
             <div class="loja">{loja}</div>
           </td>
           <td class="col-tier"><span class="selo selo-{p['tier']}">{TIER_LABELS[p['tier']]}</span></td>
+          <td class="col-segmento">{segmento_label}</td>
           <td class="col-num">R$&nbsp;{p['price']:.2f}</td>
           <td class="col-num destaque">{p['commission_rate']*100:.0f}%</td>
           <td class="col-num">{p['rating']:.1f}&#9733;</td>
@@ -79,7 +82,13 @@ def _tabela(produtos, id_prefixo, com_filtro=True):
     )
     filtro_html = ""
     if com_filtro:
-        filtro_html = """
+        segmentos_presentes = {p.get("segmento") or "outros" for p in produtos}
+        opcoes_segmento = "".join(
+            f'<option value="{chave}">{segmentos.SEGMENTO_LABELS[chave]}</option>'
+            for chave in segmentos.ORDEM_EXIBICAO
+            if chave in segmentos_presentes
+        )
+        filtro_html = f"""
     <div class="filtros-linha">
       <div class="filtros" role="tablist" aria-label="Filtrar por faixa de ticket">
         <button class="filtro ativo" data-filtro="todos" data-alvo="tabela-principal" role="tab" aria-selected="true">Todos</button>
@@ -88,6 +97,11 @@ def _tabela(produtos, id_prefixo, com_filtro=True):
         <button class="filtro" data-filtro="alto" data-alvo="tabela-principal" role="tab" aria-selected="false">Ticket alto</button>
       </div>
       <div class="filtros-select">
+        <label for="filtro-segmento">Segmento</label>
+        <select id="filtro-segmento" data-alvo="tabela-principal">
+          <option value="todos">Todos</option>
+          {opcoes_segmento}
+        </select>
         <label for="filtro-comissao">Comissão mínima</label>
         <select id="filtro-comissao" data-alvo="tabela-principal">
           <option value="0">Todas</option>
@@ -119,7 +133,7 @@ def _tabela(produtos, id_prefixo, com_filtro=True):
       <table>
         <thead>
           <tr>
-            <th></th><th>#</th><th>Foto</th><th>Produto</th><th>Faixa</th><th>Preço</th><th>Comissão</th>
+            <th></th><th>#</th><th>Foto</th><th>Produto</th><th>Faixa</th><th>Segmento</th><th>Preço</th><th>Comissão</th>
             <th>Avaliação</th><th>Vendidos</th><th>Link</th>
           </tr>
         </thead>
@@ -364,6 +378,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
   .destaque {{ font-weight: 600; color: var(--accent-ink); }}
   .nome {{ font-weight: 600; cursor: pointer; }}
   .loja {{ font-size: 0.76rem; color: var(--muted); margin-top: 2px; }}
+  .col-segmento {{ font-size: 0.78rem; color: var(--muted); white-space: nowrap; }}
 
   .selo {{
     display: inline-block;
@@ -520,16 +535,18 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
       var grupoTier = document.querySelectorAll('.filtro[data-alvo="' + alvo + '"]');
       var botaoAtivo = document.querySelector('.filtro.ativo[data-alvo="' + alvo + '"]');
       var tier = botaoAtivo ? botaoAtivo.getAttribute('data-filtro') : 'todos';
+      var segmento = (document.getElementById('filtro-segmento') || {{}}).value || 'todos';
       var comissaoMin = parseFloat((document.getElementById('filtro-comissao') || {{}}).value || '0');
       var avaliacaoMin = parseFloat((document.getElementById('filtro-avaliacao') || {{}}).value || '0');
       var vendidosMin = parseFloat((document.getElementById('filtro-vendidos') || {{}}).value || '0');
 
       document.querySelectorAll('#' + alvo + '-corpo tr').forEach(function (linha) {{
         var bateTier = tier === 'todos' || linha.getAttribute('data-tier') === tier;
+        var bateSegmento = segmento === 'todos' || linha.getAttribute('data-segmento') === segmento;
         var bateComissao = parseFloat(linha.getAttribute('data-comissao') || '0') >= comissaoMin;
         var bateAvaliacao = parseFloat(linha.getAttribute('data-avaliacao') || '0') >= avaliacaoMin;
         var bateVendidos = parseFloat(linha.getAttribute('data-vendidos') || '0') >= vendidosMin;
-        linha.style.display = (bateTier && bateComissao && bateAvaliacao && bateVendidos) ? '' : 'none';
+        linha.style.display = (bateTier && bateSegmento && bateComissao && bateAvaliacao && bateVendidos) ? '' : 'none';
       }});
     }}
 
@@ -546,7 +563,7 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
       }});
     }});
 
-    ['filtro-comissao', 'filtro-avaliacao', 'filtro-vendidos'].forEach(function (id) {{
+    ['filtro-segmento', 'filtro-comissao', 'filtro-avaliacao', 'filtro-vendidos'].forEach(function (id) {{
       var campo = document.getElementById(id);
       if (campo) campo.addEventListener('change', function () {{ aplicarFiltros(campo.getAttribute('data-alvo')); }});
     }});
@@ -618,6 +635,16 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
         return span;
       }}
 
+      // Rótulos de segmento — espelha shopee_integration/segmentos.py
+      // (SEGMENTO_LABELS), só pra exibir aqui no resultado da busca ao vivo.
+      var ROTULOS_SEGMENTO = {{
+        beleza: 'Beleza', casa_construcao: 'Casa & Construção', moda: 'Moda',
+        eletronicos: 'Eletrônicos', pet: 'Pet', infantil: 'Infantil',
+        esporte_lazer: 'Esporte & Lazer', saude: 'Saúde',
+        papelaria_escritorio: 'Papelaria & Escritório', automotivo: 'Automotivo',
+        outros: 'Outros',
+      }};
+
       function montarItem(p) {{
         var rowId = 'busca-' + p.product_id;
 
@@ -657,6 +684,9 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
         var meta = document.createElement('div');
         meta.className = 'resultado-meta';
         meta.appendChild(criarSelo(p.tier));
+        var segmento = document.createElement('span');
+        segmento.textContent = ROTULOS_SEGMENTO[p.segmento] || 'Outros';
+        meta.appendChild(segmento);
         var preco = document.createElement('span');
         preco.textContent = 'R$ ' + Number(p.price || 0).toFixed(2);
         meta.appendChild(preco);

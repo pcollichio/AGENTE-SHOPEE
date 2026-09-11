@@ -29,7 +29,7 @@ import sys
 import unicodedata
 from datetime import date
 
-from shopee_integration import client, config, curadoria, painel
+from shopee_integration import client, config, curadoria, painel, segmentos
 
 # Faixas de ticket médio (em reais)
 TICKET_BAIXO_MAX = 50.0
@@ -128,7 +128,12 @@ def montar_leva_variada():
     produtos = buscar_mais_vendidos()
 
     todos = [
-        {**p, "tier": _classificar_tier(p["price"]), "score": curadoria.calcular_score(p)}
+        {
+            **p,
+            "tier": _classificar_tier(p["price"]),
+            "score": curadoria.calcular_score(p),
+            "segmento": segmentos.inferir_segmento(p["name"]),
+        }
         for p in produtos
     ]
 
@@ -173,7 +178,12 @@ def buscar_produtos_manuais(termos, ids_ja_incluidos=None):
             if p["product_id"] in vistos:
                 continue
             vistos.add(p["product_id"])
-            encontrados.append({**p, "tier": _classificar_tier(p["price"]), "termo_busca": termo})
+            encontrados.append({
+                **p,
+                "tier": _classificar_tier(p["price"]),
+                "termo_busca": termo,
+                "segmento": segmentos.inferir_segmento(p["name"]),
+            })
 
     return encontrados
 

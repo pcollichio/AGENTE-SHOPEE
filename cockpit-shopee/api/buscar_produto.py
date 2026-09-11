@@ -26,7 +26,7 @@ from urllib.parse import urlparse, parse_qs
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from shopee_integration import client, config, link_resolver  # noqa: E402
+from shopee_integration import client, config, link_resolver, segmentos  # noqa: E402
 
 TICKET_BAIXO_MAX = 50.0
 TICKET_MEDIO_MAX = 150.0
@@ -79,6 +79,7 @@ class handler(BaseHTTPRequestHandler):
 
         for p in produtos:
             p["tier"] = _classificar_tier(p["price"])
+            p["segmento"] = segmentos.inferir_segmento(p["name"])
 
         if item_id_alvo:
             exato = next((p for p in produtos if p["product_id"] == item_id_alvo), None)

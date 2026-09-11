@@ -130,7 +130,14 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
   de qualidade continua interativo, no painel. Pedido em 03/09: o
   filtro ganhou um terceiro select, **vendidos mínimo**
   (`data-vendidos` no `<tr>`, select `#filtro-vendidos`), combinável
-  com comissão/avaliação/faixa de preço.
+  com comissão/avaliação/faixa de preço. Pedido em 11/09: mais um
+  filtro, **segmento** (beleza, casa & construção, moda etc.) — como a
+  API não devolve categoria oficial do produto, o segmento é inferido
+  por palavras-chave no nome (`shopee_integration/segmentos.py`,
+  `inferir_segmento()`), aplicado na leva, nos produtos manuais e na
+  busca ao vivo; select `#filtro-segmento`, com opções geradas a partir
+  dos segmentos presentes na leva do dia. É heurística, não categoria
+  oficial — pode classificar errado ou cair em "Outros".
 - Pedido do usuário em 02/09: "o fluxo mais fácil vai ser achar o
   produto no app Shopee e trazer pro agente" — a busca por descrição
   **ou link colado** do produto (usa `shopee_integration/link_resolver.py`,

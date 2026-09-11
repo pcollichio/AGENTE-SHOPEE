@@ -531,3 +531,39 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   Verificado com Playwright: `cockpit.html` (sidebar), `painel_roi.html`
   (Dashboard), `esteira.html` e `importar.html` — fundo laranja, cards
   brancos, texto legível em ambos os contextos.
+
+## 2026-09-11
+
+- **Filtro por segmento de produto no painel** (beleza, casa &
+  construção, moda etc.). Pedido do usuário, depois de ver a leva já
+  trazendo produtos de qualquer categoria: "seria possivel incluir
+  filtro por segmento de produtos, exemplo, beleza, casa e construção,
+  etc". A Shopee Affiliate API (`productOfferV2`) não devolve categoria
+  nenhuma do produto (campo `category` do mapeamento em `client.py`
+  sempre vem `None` — ver NOTA lá), então não tem como filtrar por uma
+  categoria oficial da Shopee. Solução: **novo módulo
+  `shopee_integration/segmentos.py`**, que infere o segmento a partir de
+  palavras-chave no nome do produto (`inferir_segmento()`) — dez
+  segmentos (beleza, casa_construcao, moda, eletronicos, pet, infantil,
+  esporte_lazer, saude, papelaria_escritorio, automotivo) mais "outros"
+  como fallback quando nada bate. É uma heurística, não uma categoria
+  oficial — nome comercial nem sempre é claro, então vai ter caso
+  classificado errado ou em "outros"; testado contra nomes reais da
+  última leva (torneira/luminária/organizador → casa_construcao,
+  conjunto academia/baby doll → moda, ração → pet, batom → beleza) e
+  bateu certo em todos. Aplicado em três pontos: (1)
+  `buscar_leva_lancamento.py` marca `segmento` em cada produto da leva
+  automática e dos manuais (`produtos_manuais.txt`); (2)
+  `api/buscar_produto.py` (busca ao vivo por link/descrição) marca
+  `segmento` nos resultados também; (3) `shopee_integration/painel.py`
+  ganhou uma coluna "Segmento" na tabela, um novo select "Segmento" na
+  linha de filtros (ao lado de comissão/avaliação/vendidos mínimo,
+  combinável com eles e com a faixa de ticket) — as opções do select são
+  geradas dinamicamente a partir dos segmentos que aparecem na leva do
+  dia (não uma lista fixa), e os resultados da busca ao vivo também
+  mostram o rótulo do segmento. Testado localmente com Playwright
+  (dados mock): selecionar "Casa & Construção" no filtro esconde as
+  linhas de outros segmentos corretamente, combinando com os demais
+  filtros. `painel.html` só é regenerado com dados reais via
+  `leva-diaria.yml` (a sessão do Claude não acessa a API da Shopee
+  diretamente).
