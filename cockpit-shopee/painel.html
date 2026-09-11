@@ -205,6 +205,7 @@
   .destaque { font-weight: 600; color: var(--accent-ink); }
   .nome { font-weight: 600; cursor: pointer; }
   .loja { font-size: 0.76rem; color: var(--muted); margin-top: 2px; }
+  .col-segmento { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
 
   .selo {
     display: inline-block;
@@ -328,7 +329,7 @@
         <p class="eyebrow">Agente Shopee &middot; @papairesolve_br</p>
         <h1>Painel Shopee — Mais Vendidos</h1>
       </div>
-      <p class="atualizado">Atualizado&nbsp;10/09/2026<br>50 produtos</p>
+      <p class="atualizado">Atualizado&nbsp;11/09/2026<br>50 produtos</p>
     </header>
 
     <h2 class="titulo-secao">Buscar um produto específico</h2>
@@ -344,10 +345,10 @@
 
     <h2 class="titulo-secao">Leva do dia &mdash; 50 produtos mais vendidos</h2>
     <section class="resumo" aria-label="Resumo da leva">
-      <div class="stat stat-baixo"><div class="n">23</div><div class="l">Ticket baixo (até R$50)</div></div>
-      <div class="stat stat-medio"><div class="n">27</div><div class="l">Ticket médio (R$50&ndash;150)</div></div>
+      <div class="stat stat-baixo"><div class="n">24</div><div class="l">Ticket baixo (até R$50)</div></div>
+      <div class="stat stat-medio"><div class="n">26</div><div class="l">Ticket médio (R$50&ndash;150)</div></div>
       <div class="stat stat-alto"><div class="n">00</div><div class="l">Ticket alto (acima de R$150)</div></div>
-      <div class="stat stat-comissao"><div class="n">18%</div><div class="l">Comissão média da leva</div></div>
+      <div class="stat stat-comissao"><div class="n">19%</div><div class="l">Comissão média da leva</div></div>
     </section>
 
     
@@ -359,6 +360,11 @@
         <button class="filtro" data-filtro="alto" data-alvo="tabela-principal" role="tab" aria-selected="false">Ticket alto</button>
       </div>
       <div class="filtros-select">
+        <label for="filtro-segmento">Segmento</label>
+        <select id="filtro-segmento" data-alvo="tabela-principal">
+          <option value="todos">Todos</option>
+          <option value="casa_construcao">Casa & Construção</option><option value="moda">Moda</option><option value="eletronicos">Eletrônicos</option><option value="saude">Saúde</option><option value="outros">Outros</option>
+        </select>
         <label for="filtro-comissao">Comissão mínima</label>
         <select id="filtro-comissao" data-alvo="tabela-principal">
           <option value="0">Todas</option>
@@ -389,573 +395,546 @@
       <table>
         <thead>
           <tr>
-            <th></th><th>#</th><th>Foto</th><th>Produto</th><th>Faixa</th><th>Preço</th><th>Comissão</th>
+            <th></th><th>#</th><th>Foto</th><th>Produto</th><th>Faixa</th><th>Segmento</th><th>Preço</th><th>Comissão</th>
             <th>Avaliação</th><th>Vendidos</th><th>Link</th>
           </tr>
         </thead>
         <tbody id="tabela-principal-corpo">
-        <tr data-tier="medio" data-comissao="41" data-avaliacao="4.8" data-vendidos="1412">
+        <tr data-tier="medio" data-comissao="41" data-avaliacao="4.8" data-vendidos="1412" data-segmento="casa_construcao">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-20497653715"
               data-produto-id="20497653715"
               data-nome="Painel Ripado Laminado Autocolante Cor Cinamomo Linha Madeto Meu Rodapé | Envio FULL" data-preco="88.82"
               data-comissao="41"
-              data-link="https://s.shopee.com.br/2Vrcfh4xil"
+              data-link="https://s.shopee.com.br/2qUUBWudkN"
               data-categoria="">
           </td>
           <td class="col-pos">01</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/2Vrcfh4xil" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820la-mrrgmy7677k4a8" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/2qUUBWudkN" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820la-mrrgmy7677k4a8" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-20497653715" class="nome">Painel Ripado Laminado Autocolante Cor Cinamomo Linha Madeto Meu Rodapé | Envio FULL</label>
             <div class="loja">Meu Rodapé Loja Oficial</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Casa & Construção</td>
           <td class="col-num">R$&nbsp;88.82</td>
           <td class="col-num destaque">41%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">1,412</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/2Vrcfh4xil" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/2qUUBWudkN" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="23" data-avaliacao="4.9" data-vendidos="7829">
+        <tr data-tier="baixo" data-comissao="23" data-avaliacao="4.9" data-vendidos="7829" data-segmento="casa_construcao">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-23193574821"
               data-produto-id="23193574821"
               data-nome="24 Pcs LouçA De Aço InoxidáVel Colher De Sobremesa Dourada / Luxuoso" data-preco="45.88"
               data-comissao="23"
-              data-link="https://s.shopee.com.br/40gQSRzFfo"
+              data-link="https://s.shopee.com.br/70K39Bei3O"
               data-categoria="">
           </td>
           <td class="col-pos">02</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/40gQSRzFfo" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81ztl-mklyprfdk2rm83" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/70K39Bei3O" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81ztl-mklyprfdk2rm83" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-23193574821" class="nome">24 Pcs LouçA De Aço InoxidáVel Colher De Sobremesa Dourada / Luxuoso</label>
             <div class="loja">NEW WORD MAGAZINE</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Casa & Construção</td>
           <td class="col-num">R$&nbsp;45.88</td>
           <td class="col-num destaque">23%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">7,829</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/40gQSRzFfo" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/70K39Bei3O" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="29" data-avaliacao="4.8" data-vendidos="732">
+        <tr data-tier="medio" data-comissao="29" data-avaliacao="4.8" data-vendidos="732" data-segmento="moda">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-23694205612"
               data-produto-id="23694205612"
-              data-nome="Conjunto Academia Calça e Top Bicolor Fitness Academia Feminina Suplex Premium Zero Transparência" data-preco="89.00"
+              data-nome="Conjunto Academia Calça e Top Bicolor Fitness Academia Feminina Suplex Premium Zero Transparência" data-preco="63.90"
               data-comissao="29"
-              data-link="https://s.shopee.com.br/1qbvsT7V4h"
+              data-link="https://s.shopee.com.br/2gB3zDvH5K"
               data-categoria="">
           </td>
           <td class="col-pos">03</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/1qbvsT7V4h" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820l6-ms8jweppy9z824" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/2gB3zDvH5K" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820l6-ms8jweppy9z824" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-23694205612" class="nome">Conjunto Academia Calça e Top Bicolor Fitness Academia Feminina Suplex Premium Zero Transparência</label>
             <div class="loja">AB FIT MODA</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
-          <td class="col-num">R$&nbsp;89.00</td>
+          <td class="col-segmento">Moda</td>
+          <td class="col-num">R$&nbsp;63.90</td>
           <td class="col-num destaque">29%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">732</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/1qbvsT7V4h" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/2gB3zDvH5K" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="28" data-avaliacao="4.8" data-vendidos="1618">
+        <tr data-tier="medio" data-comissao="28" data-avaliacao="4.9" data-vendidos="223" data-segmento="casa_construcao">
           <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-58261007213"
-              data-produto-id="58261007213"
-              data-nome="Baby Doll Canelado Com Renda Luxo Pijama Short Dool Sensual Fresquinho Rendado Confortável" data-preco="40.90"
+            <input type="checkbox" class="chk-produto" id="tabela-principal-20299494383"
+              data-produto-id="20299494383"
+              data-nome="Esfregador Giratório Elétrico Escova Limpeza Elétrica 360 Graus 25W" data-preco="78.99"
               data-comissao="28"
-              data-link="https://s.shopee.com.br/9zxdhobqLr"
+              data-link="https://s.shopee.com.br/AUtvJcRNwt"
               data-categoria="">
           </td>
           <td class="col-pos">04</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/9zxdhobqLr" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820li-monzys2u3ocld7" alt="" loading="lazy" onerror="this.style.display='none'"></a>
-          </td>
-          <td class="col-nome">
-            <label for="tabela-principal-58261007213" class="nome">Baby Doll Canelado Com Renda Luxo Pijama Short Dool Sensual Fresquinho Rendado Confortável</label>
-            <div class="loja">PINKE </div>
-          </td>
-          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;40.90</td>
-          <td class="col-num destaque">28%</td>
-          <td class="col-num">4.8&#9733;</td>
-          <td class="col-num">1,618</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/9zxdhobqLr" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
-        </tr>
-        <tr data-tier="medio" data-comissao="28" data-avaliacao="4.9" data-vendidos="223">
-          <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-20299494383"
-              data-produto-id="20299494383"
-              data-nome="Esfregador Giratório Elétrico Escova Limpeza Elétrica 360 Graus 25W" data-preco="79.99"
-              data-comissao="28"
-              data-link="https://s.shopee.com.br/4Azqi43no6"
-              data-categoria="">
-          </td>
-          <td class="col-pos">05</td>
-          <td class="col-foto">
-            <a href="https://s.shopee.com.br/4Azqi43no6" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-7rdwa-m14m4ugrkxjib4" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/AUtvJcRNwt" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-7rdwa-m14m4ugrkxjib4" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-20299494383" class="nome">Esfregador Giratório Elétrico Escova Limpeza Elétrica 360 Graus 25W</label>
             <div class="loja">SHR STORE</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
-          <td class="col-num">R$&nbsp;79.99</td>
+          <td class="col-segmento">Casa & Construção</td>
+          <td class="col-num">R$&nbsp;78.99</td>
           <td class="col-num destaque">28%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">223</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/4Azqi43no6" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/AUtvJcRNwt" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="23" data-avaliacao="4.8" data-vendidos="3310">
+        <tr data-tier="medio" data-comissao="23" data-avaliacao="4.8" data-vendidos="3310" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-23093848660"
               data-produto-id="23093848660"
               data-nome="Coberdrom Cobertor Solteiro, Casal, Queen E King Colcha Dupla Face Edredrom Luxo Pele Carneiro Premium" data-preco="89.98"
               data-comissao="23"
-              data-link="https://s.shopee.com.br/4AzqekycKr"
+              data-link="https://s.shopee.com.br/Ln9Cw49oa"
               data-categoria="">
           </td>
-          <td class="col-pos">06</td>
+          <td class="col-pos">05</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/4AzqekycKr" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lb-mp8c10yyx5hde9" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/Ln9Cw49oa" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lb-mp8c10yyx5hde9" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-23093848660" class="nome">Coberdrom Cobertor Solteiro, Casal, Queen E King Colcha Dupla Face Edredrom Luxo Pele Carneiro Premium</label>
             <div class="loja">Ebenézer ShopCapas</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;89.98</td>
           <td class="col-num destaque">23%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">3,310</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/4AzqekycKr" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/Ln9Cw49oa" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="17" data-avaliacao="4.7" data-vendidos="8560">
+        <tr data-tier="medio" data-comissao="24" data-avaliacao="4.9" data-vendidos="1723" data-segmento="saude">
+          <td class="col-check">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-56762439947"
+              data-produto-id="56762439947"
+              data-nome="Adeforte Turbo + Biotina 3ml Original Vitamina Cabelos Pele Unhas" data-preco="57.98"
+              data-comissao="24"
+              data-link="https://s.shopee.com.br/7KwtXndRNU"
+              data-categoria="">
+          </td>
+          <td class="col-pos">06</td>
+          <td class="col-foto">
+            <a href="https://s.shopee.com.br/7KwtXndRNU" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lm-mpmlibinjfgg53" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+          </td>
+          <td class="col-nome">
+            <label for="tabela-principal-56762439947" class="nome">Adeforte Turbo + Biotina 3ml Original Vitamina Cabelos Pele Unhas</label>
+            <div class="loja">DROGARIA MONIFARMA</div>
+          </td>
+          <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Saúde</td>
+          <td class="col-num">R$&nbsp;57.98</td>
+          <td class="col-num destaque">24%</td>
+          <td class="col-num">4.9&#9733;</td>
+          <td class="col-num">1,723</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/7KwtXndRNU" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+        </tr>
+        <tr data-tier="baixo" data-comissao="17" data-avaliacao="4.7" data-vendidos="8560" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-21499491641"
               data-produto-id="21499491641"
               data-nome="Mop C/ cabo de 140 cm + 2 Refis - Rodinhas e Cesto Em Inox - Balde Centrífuga - CH" data-preco="49.90"
               data-comissao="17"
-              data-link="https://s.shopee.com.br/6L4LEjqMw6"
+              data-link="https://s.shopee.com.br/W6ZPF3WTd"
               data-categoria="">
           </td>
           <td class="col-pos">07</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/6L4LEjqMw6" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820m0-mqm69hmdu3uo02" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/W6ZPF3WTd" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820m0-mqm69hmdu3uo02" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-21499491641" class="nome">Mop C/ cabo de 140 cm + 2 Refis - Rodinhas e Cesto Em Inox - Balde Centrífuga - CH</label>
             <div class="loja">Chaicommerce</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;49.90</td>
           <td class="col-num destaque">17%</td>
           <td class="col-num">4.7&#9733;</td>
           <td class="col-num">8,560</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/6L4LEjqMw6" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/W6ZPF3WTd" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="18" data-avaliacao="4.9" data-vendidos="7137">
+        <tr data-tier="baixo" data-comissao="18" data-avaliacao="4.9" data-vendidos="7137" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-20498140657"
               data-produto-id="20498140657"
-              data-nome="Mop Girátorio Cleaner Profissional – Balde com Centrífuga 14L + Refil Duplo e Cabo Reforçado - MN" data-preco="59.90"
+              data-nome="Mop Girátorio Cleaner Profissional – Balde com Centrífuga 14L + Refil Duplo e Cabo Reforçado - MN" data-preco="49.90"
               data-comissao="18"
-              data-link="https://s.shopee.com.br/2LYCTO5b3i"
+              data-link="https://s.shopee.com.br/5AsOxolgmN"
               data-categoria="">
           </td>
           <td class="col-pos">08</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/2LYCTO5b3i" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-7r98o-mbnxm1i5f5ndcc" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/5AsOxolgmN" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-7r98o-mbnxm1i5f5ndcc" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-20498140657" class="nome">Mop Girátorio Cleaner Profissional – Balde com Centrífuga 14L + Refil Duplo e Cabo Reforçado - MN</label>
             <div class="loja">MANIA UTILIDADES E AFINS LTDA</div>
           </td>
-          <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
-          <td class="col-num">R$&nbsp;59.90</td>
+          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
+          <td class="col-num">R$&nbsp;49.90</td>
           <td class="col-num destaque">18%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">7,137</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/2LYCTO5b3i" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/5AsOxolgmN" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="25" data-avaliacao="5.0" data-vendidos="19906">
+        <tr data-tier="medio" data-comissao="25" data-avaliacao="5.0" data-vendidos="19906" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-25293647491"
               data-produto-id="25293647491"
               data-nome="Celimax The Vita A Retinal Shot Tightening Booster 15ml" data-preco="147.00"
               data-comissao="25"
-              data-link="https://s.shopee.com.br/60RUq7vy80"
+              data-link="https://s.shopee.com.br/4LJHyHovhk"
               data-categoria="">
           </td>
           <td class="col-pos">09</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/60RUq7vy80" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134207-825ai-mr9pynhmd43k22" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/4LJHyHovhk" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134207-825ai-mr9pynhmd43k22" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-25293647491" class="nome">Celimax The Vita A Retinal Shot Tightening Booster 15ml</label>
             <div class="loja">koksara.kbeauty</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;147.00</td>
           <td class="col-num destaque">25%</td>
           <td class="col-num">5.0&#9733;</td>
           <td class="col-num">19,906</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/60RUq7vy80" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/4LJHyHovhk" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="23" data-avaliacao="4.8" data-vendidos="1900">
+        <tr data-tier="medio" data-comissao="23" data-avaliacao="4.8" data-vendidos="1900" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-23394689700"
               data-produto-id="23394689700"
               data-nome="Espelho de vidro Oval 80x50 cm Borda Polida Lapidada com Led Banheiro Escritorio sala" data-preco="53.89"
               data-comissao="23"
-              data-link="https://s.shopee.com.br/AKaU6QaZft"
+              data-link="https://s.shopee.com.br/5fofYjjmlG"
               data-categoria="">
           </td>
           <td class="col-pos">10</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/AKaU6QaZft" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81ztc-mjbea0fkfwue8e" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/5fofYjjmlG" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81ztc-mjbea0fkfwue8e" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-23394689700" class="nome">Espelho de vidro Oval 80x50 cm Borda Polida Lapidada com Led Banheiro Escritorio sala</label>
             <div class="loja">DeccoreHHome</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;53.89</td>
           <td class="col-num destaque">23%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">1,900</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/AKaU6QaZft" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/5fofYjjmlG" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="23" data-avaliacao="5.0" data-vendidos="1490">
+        <tr data-tier="medio" data-comissao="23" data-avaliacao="5.0" data-vendidos="1490" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-22394942664"
               data-produto-id="22394942664"
               data-nome="Manta Cobertor Microfibra Casal Queen Super Quentinha Toque Macio Cereja Habitat" data-preco="54.89"
               data-comissao="23"
-              data-link="https://s.shopee.com.br/9KhwuaeNhn"
+              data-link="https://s.shopee.com.br/3VkAyks2A9"
               data-categoria="">
           </td>
           <td class="col-pos">11</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/9KhwuaeNhn" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134201-820m1-mqxmwfekketj5a" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/3VkAyks2A9" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134201-820m1-mqxmwfekketj5a" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-22394942664" class="nome">Manta Cobertor Microfibra Casal Queen Super Quentinha Toque Macio Cereja Habitat</label>
             <div class="loja">Fonte Boa Casa</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;54.89</td>
           <td class="col-num destaque">23%</td>
           <td class="col-num">5.0&#9733;</td>
           <td class="col-num">1,490</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/9KhwuaeNhn" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/3VkAyks2A9" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="23" data-avaliacao="4.6" data-vendidos="1404">
+        <tr data-tier="medio" data-comissao="23" data-avaliacao="4.6" data-vendidos="1404" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-53314415260"
               data-produto-id="53314415260"
-              data-nome="Kit 4 Blusas Feminina Ribana Canelado Básica Casual Estilosa Tendência Verão" data-preco="58.79"
+              data-nome="Kit 4 Blusas Feminina Ribana Canelado Básica Casual Estilosa Tendência Verão" data-preco="59.29"
               data-comissao="23"
-              data-link="https://s.shopee.com.br/6Akv2QvKn3"
+              data-link="https://s.shopee.com.br/4VciAaoIMn"
               data-categoria="">
           </td>
           <td class="col-pos">12</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/6Akv2QvKn3" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lg-mqwe5ry7yy2ub3" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/4VciAaoIMn" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lg-mqwe5ry7yy2ub3" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-53314415260" class="nome">Kit 4 Blusas Feminina Ribana Canelado Básica Casual Estilosa Tendência Verão</label>
             <div class="loja">BOTIQUE TH</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
-          <td class="col-num">R$&nbsp;58.79</td>
+          <td class="col-segmento">Outros</td>
+          <td class="col-num">R$&nbsp;59.29</td>
           <td class="col-num destaque">23%</td>
           <td class="col-num">4.6&#9733;</td>
           <td class="col-num">1,404</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/6Akv2QvKn3" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/4VciAaoIMn" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="13" data-avaliacao="4.9" data-vendidos="10525">
-          <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-22593915398"
-              data-produto-id="22593915398"
-              data-nome="Chaleira Elétrica Jarra Café Chá Inox 110v" data-preco="44.90"
-              data-comissao="13"
-              data-link="https://s.shopee.com.br/6q0bpesnR7"
-              data-categoria="">
-          </td>
-          <td class="col-pos">13</td>
-          <td class="col-foto">
-            <a href="https://s.shopee.com.br/6q0bpesnR7" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820m9-mr7oweocldl204" alt="" loading="lazy" onerror="this.style.display='none'"></a>
-          </td>
-          <td class="col-nome">
-            <label for="tabela-principal-22593915398" class="nome">Chaleira Elétrica Jarra Café Chá Inox 110v</label>
-            <div class="loja">SELLNEEDS</div>
-          </td>
-          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;44.90</td>
-          <td class="col-num destaque">13%</td>
-          <td class="col-num">4.9&#9733;</td>
-          <td class="col-num">10,525</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/6q0bpesnR7" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
-        </tr>
-        <tr data-tier="medio" data-comissao="23" data-avaliacao="4.8" data-vendidos="541">
+        <tr data-tier="medio" data-comissao="23" data-avaliacao="4.8" data-vendidos="541" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-58214638410"
               data-produto-id="58214638410"
               data-nome="Lixeira Retrátil 15L 8L Tampa Click Antiodor Compacta para Banheiro Cozinha Quarto Branca Bege" data-preco="58.00"
               data-comissao="23"
-              data-link="https://s.shopee.com.br/3Vk9uq6L9m"
+              data-link="https://s.shopee.com.br/1qbwzgyRm1"
               data-categoria="">
           </td>
-          <td class="col-pos">14</td>
+          <td class="col-pos">13</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/3Vk9uq6L9m" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820m4-mqw8u69p6j9i74" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/1qbwzgyRm1" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820m4-mqw8u69p6j9i74" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-58214638410" class="nome">Lixeira Retrátil 15L 8L Tampa Click Antiodor Compacta para Banheiro Cozinha Quarto Branca Bege</label>
             <div class="loja">Ultralar Shop</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;58.00</td>
           <td class="col-num destaque">23%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">541</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/3Vk9uq6L9m" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/1qbwzgyRm1" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="19" data-avaliacao="4.7" data-vendidos="4230">
+        <tr data-tier="baixo" data-comissao="13" data-avaliacao="4.9" data-vendidos="10525" data-segmento="outros">
+          <td class="col-check">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-22593915398"
+              data-produto-id="22593915398"
+              data-nome="Chaleira Elétrica Jarra Café Chá Inox 110v" data-preco="44.90"
+              data-comissao="13"
+              data-link="https://s.shopee.com.br/4fw8Mtnf1m"
+              data-categoria="">
+          </td>
+          <td class="col-pos">14</td>
+          <td class="col-foto">
+            <a href="https://s.shopee.com.br/4fw8Mtnf1m" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820m9-mr7oweocldl204" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+          </td>
+          <td class="col-nome">
+            <label for="tabela-principal-22593915398" class="nome">Chaleira Elétrica Jarra Café Chá Inox 110v</label>
+            <div class="loja">SELLNEEDS</div>
+          </td>
+          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
+          <td class="col-num">R$&nbsp;44.90</td>
+          <td class="col-num destaque">13%</td>
+          <td class="col-num">4.9&#9733;</td>
+          <td class="col-num">10,525</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/4fw8Mtnf1m" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+        </tr>
+        <tr data-tier="medio" data-comissao="19" data-avaliacao="4.7" data-vendidos="4230" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-23497309877"
               data-produto-id="23497309877"
-              data-nome="Espremedor Elétrico Laranja Limão Frutas Fazer Sucos Recarregável Usb Cozinha" data-preco="61.99"
+              data-nome="Espremedor Elétrico Laranja Limão Frutas Fazer Sucos Recarregável Usb Cozinha" data-preco="61.69"
               data-comissao="19"
-              data-link="https://s.shopee.com.br/2BEmH56EOf"
+              data-link="https://s.shopee.com.br/5LBpA7l3RA"
               data-categoria="">
           </td>
           <td class="col-pos">15</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/2BEmH56EOf" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-8259f-msgkvfvn2sju02" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/5LBpA7l3RA" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-8259f-msgkvfvn2sju02" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-23497309877" class="nome">Espremedor Elétrico Laranja Limão Frutas Fazer Sucos Recarregável Usb Cozinha</label>
             <div class="loja">BIG MO</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
-          <td class="col-num">R$&nbsp;61.99</td>
+          <td class="col-segmento">Outros</td>
+          <td class="col-num">R$&nbsp;61.69</td>
           <td class="col-num destaque">19%</td>
           <td class="col-num">4.7&#9733;</td>
           <td class="col-num">4,230</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/2BEmH56EOf" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/5LBpA7l3RA" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="19" data-avaliacao="5.0" data-vendidos="3720">
+        <tr data-tier="medio" data-comissao="19" data-avaliacao="5.0" data-vendidos="3720" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-20697874559"
               data-produto-id="20697874559"
               data-nome="kit Coala Home Chá Branco" data-preco="72.90"
               data-comissao="19"
-              data-link="https://s.shopee.com.br/50Yxhb0d7B"
+              data-link="https://s.shopee.com.br/3VkAyks6OR"
               data-categoria="">
           </td>
           <td class="col-pos">16</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/50Yxhb0d7B" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81ztr-ml2ht5dwxpmr20" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/3VkAyks6OR" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81ztr-ml2ht5dwxpmr20" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-20697874559" class="nome">kit Coala Home Chá Branco</label>
             <div class="loja">Coala Essências Oficial</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;72.90</td>
           <td class="col-num destaque">19%</td>
           <td class="col-num">5.0&#9733;</td>
           <td class="col-num">3,720</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/50Yxhb0d7B" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/3VkAyks6OR" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="16" data-avaliacao="4.9" data-vendidos="6587">
+        <tr data-tier="baixo" data-comissao="16" data-avaliacao="4.9" data-vendidos="6587" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-22792887317"
               data-produto-id="22792887317"
               data-nome="Kit 3 Unidades Sabonete Líquido Chá Branco 500 ml" data-preco="44.90"
               data-comissao="16"
-              data-link="https://s.shopee.com.br/4fw7Iz1tn9"
+              data-link="https://s.shopee.com.br/9zxeihTHxk"
               data-categoria="">
           </td>
           <td class="col-pos">17</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/4fw7Iz1tn9" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81zth-ml2gsdt5srnm0f" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/9zxeihTHxk" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81zth-ml2gsdt5srnm0f" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-22792887317" class="nome">Kit 3 Unidades Sabonete Líquido Chá Branco 500 ml</label>
             <div class="loja">Coala Essências Oficial</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;44.90</td>
           <td class="col-num destaque">16%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">6,587</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/4fw7Iz1tn9" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/9zxeihTHxk" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="19" data-avaliacao="4.8" data-vendidos="2239">
+        <tr data-tier="medio" data-comissao="21" data-avaliacao="4.5" data-vendidos="1481" data-segmento="outros">
+          <td class="col-check">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-58209043773"
+              data-produto-id="58209043773"
+              data-nome="Pro Oil Reflections Óleo 100ml" data-preco="69.90"
+              data-comissao="21"
+              data-link="https://s.shopee.com.br/3B7Ka8tN4P"
+              data-categoria="">
+          </td>
+          <td class="col-pos">18</td>
+          <td class="col-foto">
+            <a href="https://s.shopee.com.br/3B7Ka8tN4P" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820l7-mr3dg5ncbtvo71" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+          </td>
+          <td class="col-nome">
+            <label for="tabela-principal-58209043773" class="nome">Pro Oil Reflections Óleo 100ml</label>
+            <div class="loja">FIUSA PERFUMARIA</div>
+          </td>
+          <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Outros</td>
+          <td class="col-num">R$&nbsp;69.90</td>
+          <td class="col-num destaque">21%</td>
+          <td class="col-num">4.5&#9733;</td>
+          <td class="col-num">1,481</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/3B7Ka8tN4P" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+        </tr>
+        <tr data-tier="medio" data-comissao="19" data-avaliacao="4.8" data-vendidos="2239" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-23298363231"
               data-produto-id="23298363231"
               data-nome="Mop Giratório 360 Cabo 140cm Balde Centrífuga Cesto Inox 14L 2 Refis Microfibra Esfregão Spin" data-preco="59.90"
               data-comissao="19"
-              data-link="https://s.shopee.com.br/30ntGc33hm"
+              data-link="https://s.shopee.com.br/5q85l2j9QJ"
               data-categoria="">
           </td>
-          <td class="col-pos">18</td>
+          <td class="col-pos">19</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/30ntGc33hm" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-7r98o-mcjqyiwcabea5c" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/5q85l2j9QJ" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-7r98o-mcjqyiwcabea5c" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-23298363231" class="nome">Mop Giratório 360 Cabo 140cm Balde Centrífuga Cesto Inox 14L 2 Refis Microfibra Esfregão Spin</label>
             <div class="loja">baruchcommerce</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;59.90</td>
           <td class="col-num destaque">19%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">2,239</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/30ntGc33hm" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/5q85l2j9QJ" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="19" data-avaliacao="4.8" data-vendidos="1683">
-          <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-22999032474"
-              data-produto-id="22999032474"
-              data-nome="Garrafa Térmica Prisma 950 ml Para Chás/Café  Design Moderno Cabo Madeira" data-preco="59.90"
-              data-comissao="19"
-              data-link="https://s.shopee.com.br/8AVzWRip4g"
-              data-categoria="">
-          </td>
-          <td class="col-pos">19</td>
-          <td class="col-foto">
-            <a href="https://s.shopee.com.br/8AVzWRip4g" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-823pk-mpb78cwau6tefe" alt="" loading="lazy" onerror="this.style.display='none'"></a>
-          </td>
-          <td class="col-nome">
-            <label for="tabela-principal-22999032474" class="nome">Garrafa Térmica Prisma 950 ml Para Chás/Café  Design Moderno Cabo Madeira</label>
-            <div class="loja">Bhz Store ltda</div>
-          </td>
-          <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
-          <td class="col-num">R$&nbsp;59.90</td>
-          <td class="col-num destaque">19%</td>
-          <td class="col-num">4.8&#9733;</td>
-          <td class="col-num">1,683</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/8AVzWRip4g" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
-        </tr>
-        <tr data-tier="medio" data-comissao="18" data-avaliacao="4.9" data-vendidos="2116">
-          <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-43273031895"
-              data-produto-id="43273031895"
-              data-nome="Jogo com 6 Potes Hermético 1,1 Litro Armazenar Alimento Organizar" data-preco="76.71"
-              data-comissao="18"
-              data-link="https://s.shopee.com.br/20vMB76Iaa"
-              data-categoria="">
-          </td>
-          <td class="col-pos">20</td>
-          <td class="col-foto">
-            <a href="https://s.shopee.com.br/20vMB76Iaa" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mfijgskrvkef8e" alt="" loading="lazy" onerror="this.style.display='none'"></a>
-          </td>
-          <td class="col-nome">
-            <label for="tabela-principal-43273031895" class="nome">Jogo com 6 Potes Hermético 1,1 Litro Armazenar Alimento Organizar</label>
-            <div class="loja">eKing commerce</div>
-          </td>
-          <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
-          <td class="col-num">R$&nbsp;76.71</td>
-          <td class="col-num destaque">18%</td>
-          <td class="col-num">4.9&#9733;</td>
-          <td class="col-num">2,116</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/20vMB76Iaa" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
-        </tr>
-        <tr data-tier="baixo" data-comissao="17" data-avaliacao="4.9" data-vendidos="2976">
-          <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-58262957321"
-              data-produto-id="58262957321"
-              data-nome="Fone de Ouvido Bluetooth Sem Fio J760- Cancelamento de Ruído Conforto" data-preco="48.00"
-              data-comissao="17"
-              data-link="https://s.shopee.com.br/7AdSEGrWlD"
-              data-categoria="">
-          </td>
-          <td class="col-pos">21</td>
-          <td class="col-foto">
-            <a href="https://s.shopee.com.br/7AdSEGrWlD" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lu-mptow8qv0ideee" alt="" loading="lazy" onerror="this.style.display='none'"></a>
-          </td>
-          <td class="col-nome">
-            <label for="tabela-principal-58262957321" class="nome">Fone de Ouvido Bluetooth Sem Fio J760- Cancelamento de Ruído Conforto</label>
-            <div class="loja">𝙨𝙝𝙤𝙥𝙚 𝙨𝙩𝙮𝙡𝙚</div>
-          </td>
-          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;48.00</td>
-          <td class="col-num destaque">17%</td>
-          <td class="col-num">4.9&#9733;</td>
-          <td class="col-num">2,976</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/7AdSEGrWlD" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
-        </tr>
-        <tr data-tier="medio" data-comissao="11" data-avaliacao="4.9" data-vendidos="8651">
+        <tr data-tier="medio" data-comissao="11" data-avaliacao="4.9" data-vendidos="8651" data-segmento="casa_construcao">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-29028867072"
               data-produto-id="29028867072"
               data-nome="Torneira De Cozinha Gourmet Alça Única Com Extensor De Spray Tubo De Água Flexível Superior Prateado Para Ajuste" data-preco="69.99"
               data-comissao="11"
-              data-link="https://s.shopee.com.br/8AVzQ6jODF"
+              data-link="https://s.shopee.com.br/8V8qvwZ4Ev"
               data-categoria="">
           </td>
-          <td class="col-pos">22</td>
+          <td class="col-pos">20</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/8AVzQ6jODF" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-8262u-mjtxop93dsed0a" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/8V8qvwZ4Ev" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-8262u-mjtxop93dsed0a" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-29028867072" class="nome">Torneira De Cozinha Gourmet Alça Única Com Extensor De Spray Tubo De Água Flexível Superior Prateado Para Ajuste</label>
             <div class="loja">Muse.Mall</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Casa & Construção</td>
           <td class="col-num">R$&nbsp;69.99</td>
           <td class="col-num destaque">11%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">8,651</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/8AVzQ6jODF" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/8V8qvwZ4Ev" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="18" data-avaliacao="4.9" data-vendidos="968">
+        <tr data-tier="medio" data-comissao="18" data-avaliacao="4.9" data-vendidos="968" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-18199723451"
               data-produto-id="18199723451"
-              data-nome="Espelho Lopazzi Grande Corpo Inteiro Decorativo Polido Moderno 90x40cm Quarto Sala Banheiro" data-preco="78.89"
+              data-nome="Espelho Lopazzi Grande Corpo Inteiro Decorativo Polido Moderno 90x40cm Quarto Sala Banheiro" data-preco="79.99"
               data-comissao="18"
-              data-link="https://s.shopee.com.br/4qFXRyw4yv"
+              data-link="https://s.shopee.com.br/1AIoK5QUY"
               data-categoria="">
           </td>
-          <td class="col-pos">23</td>
+          <td class="col-pos">21</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/4qFXRyw4yv" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134201-820lk-mr0wpk5f89adf4" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/1AIoK5QUY" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134201-820lk-mr0wpk5f89adf4" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-18199723451" class="nome">Espelho Lopazzi Grande Corpo Inteiro Decorativo Polido Moderno 90x40cm Quarto Sala Banheiro</label>
             <div class="loja">Loja Lopazzi</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
-          <td class="col-num">R$&nbsp;78.89</td>
+          <td class="col-segmento">Outros</td>
+          <td class="col-num">R$&nbsp;79.99</td>
           <td class="col-num destaque">18%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">968</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/4qFXRyw4yv" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/1AIoK5QUY" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="13" data-avaliacao="4.9" data-vendidos="5825">
+        <tr data-tier="medio" data-comissao="13" data-avaliacao="4.9" data-vendidos="5825" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-22898373049"
               data-produto-id="22898373049"
-              data-nome="Espelho Orgânico 120X50cm e 95x40cm Lapidado Moderno Grande Forms C/ SUPORTE ou LED TOUCH (FORM SUPORTE) OU LED" data-preco="79.99"
+              data-nome="Espelho Orgânico 120X50cm e 95x40cm Lapidado Moderno Grande Forms C/ SUPORTE ou LED TOUCH (FORM SUPORTE) OU LED" data-preco="78.99"
               data-comissao="13"
               data-link="https://s.shopee.com.br/8V8poii7XL"
               data-categoria="">
           </td>
-          <td class="col-pos">24</td>
+          <td class="col-pos">22</td>
           <td class="col-foto">
             <a href="https://s.shopee.com.br/8V8poii7XL" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820ll-mslrmo2fppfq1b" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
@@ -964,310 +943,348 @@
             <div class="loja">AGUNBAGUM</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
-          <td class="col-num">R$&nbsp;79.99</td>
+          <td class="col-segmento">Outros</td>
+          <td class="col-num">R$&nbsp;78.99</td>
           <td class="col-num destaque">13%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">5,825</td>
           <td class="col-link"><a href="https://s.shopee.com.br/8V8poii7XL" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="13" data-avaliacao="4.9" data-vendidos="4487">
-          <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-23098172010"
-              data-produto-id="23098172010"
-              data-nome="Kit Conjunto De 19 Peças Utensílios Cozinha Silicone Tabua Cor Preto" data-preco="66.99"
-              data-comissao="13"
-              data-link="https://s.shopee.com.br/3LQjiX6yUl"
-              data-categoria="">
-          </td>
-          <td class="col-pos">25</td>
-          <td class="col-foto">
-            <a href="https://s.shopee.com.br/3LQjiX6yUl" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mihcvwmnxatdeb" alt="" loading="lazy" onerror="this.style.display='none'"></a>
-          </td>
-          <td class="col-nome">
-            <label for="tabela-principal-23098172010" class="nome">Kit Conjunto De 19 Peças Utensílios Cozinha Silicone Tabua Cor Preto</label>
-            <div class="loja">HELPLO</div>
-          </td>
-          <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
-          <td class="col-num">R$&nbsp;66.99</td>
-          <td class="col-num destaque">13%</td>
-          <td class="col-num">4.9&#9733;</td>
-          <td class="col-num">4,487</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/3LQjiX6yUl" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
-        </tr>
-        <tr data-tier="medio" data-comissao="13" data-avaliacao="4.6" data-vendidos="4025">
+        <tr data-tier="medio" data-comissao="13" data-avaliacao="4.6" data-vendidos="4025" data-segmento="casa_construcao">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-58251353658"
               data-produto-id="58251353658"
               data-nome="Varal De Chão Com Abas Reforçado Dobrável Aço Secalux 12kg Varal de Apartamento Retratil" data-preco="59.90"
               data-comissao="13"
-              data-link="https://s.shopee.com.br/70K21xsA6A"
+              data-link="https://s.shopee.com.br/4AzrlypZ2l"
               data-categoria="">
           </td>
-          <td class="col-pos">26</td>
+          <td class="col-pos">23</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/70K21xsA6A" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mhqf3kve4phd06" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/4AzrlypZ2l" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mhqf3kve4phd06" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-58251353658" class="nome">Varal De Chão Com Abas Reforçado Dobrável Aço Secalux 12kg Varal de Apartamento Retratil</label>
             <div class="loja">Big_ecommerce</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Casa & Construção</td>
           <td class="col-num">R$&nbsp;59.90</td>
           <td class="col-num destaque">13%</td>
           <td class="col-num">4.6&#9733;</td>
           <td class="col-num">4,025</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/70K21xsA6A" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/4AzrlypZ2l" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="13" data-avaliacao="4.9" data-vendidos="3126">
+        <tr data-tier="baixo" data-comissao="16" data-avaliacao="4.9" data-vendidos="168" data-segmento="outros">
+          <td class="col-check">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-18498130564"
+              data-produto-id="18498130564"
+              data-nome="Kit 3un Downy amaciante concentrado fragrância brisa de verão 500mL" data-preco="49.89"
+              data-comissao="16"
+              data-link="https://s.shopee.com.br/9peEWOTvIh"
+              data-categoria="">
+          </td>
+          <td class="col-pos">24</td>
+          <td class="col-foto">
+            <a href="https://s.shopee.com.br/9peEWOTvIh" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-7r98o-m8na2pgw51n51c" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+          </td>
+          <td class="col-nome">
+            <label for="tabela-principal-18498130564" class="nome">Kit 3un Downy amaciante concentrado fragrância brisa de verão 500mL</label>
+            <div class="loja">Supermercado do Chico</div>
+          </td>
+          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
+          <td class="col-num">R$&nbsp;49.89</td>
+          <td class="col-num destaque">16%</td>
+          <td class="col-num">4.9&#9733;</td>
+          <td class="col-num">168</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/9peEWOTvIh" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+        </tr>
+        <tr data-tier="baixo" data-comissao="13" data-avaliacao="4.9" data-vendidos="3126" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-43124797776"
               data-produto-id="43124797776"
-              data-nome="Espelho Decorativo Redondo para Escritório Sala Quarto Banheiro c/ Led 60cm 50cm 40cm 30cm + Suporte" data-preco="44.42"
+              data-nome="Espelho Decorativo Redondo para Escritório Sala Quarto Banheiro c/ Led 60cm 50cm 40cm 30cm + Suporte" data-preco="44.12"
               data-comissao="13"
-              data-link="https://s.shopee.com.br/4Vch3MxLex"
+              data-link="https://s.shopee.com.br/gPzbY2t8c"
               data-categoria="">
           </td>
-          <td class="col-pos">27</td>
+          <td class="col-pos">25</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/4Vch3MxLex" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mfy5748s7f2d56" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/gPzbY2t8c" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mfy5748s7f2d56" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-43124797776" class="nome">Espelho Decorativo Redondo para Escritório Sala Quarto Banheiro c/ Led 60cm 50cm 40cm 30cm + Suporte</label>
             <div class="loja">Rei dos Vidros</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;44.42</td>
+          <td class="col-segmento">Outros</td>
+          <td class="col-num">R$&nbsp;44.12</td>
           <td class="col-num destaque">13%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">3,126</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/4Vch3MxLex" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/gPzbY2t8c" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="13" data-avaliacao="4.9" data-vendidos="2859">
+        <tr data-tier="medio" data-comissao="13" data-avaliacao="4.9" data-vendidos="2859" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-23095162038"
               data-produto-id="23095162038"
               data-nome="Lixeira com Sensor Automático 16L Recarregável Abertura Inteligente para Cozinha Banheiro Quarto Escritório" data-preco="68.40"
               data-comissao="13"
-              data-link="https://s.shopee.com.br/2qUT7c8sVi"
+              data-link="https://s.shopee.com.br/3B7Ka8tIq3"
               data-categoria="">
           </td>
-          <td class="col-pos">28</td>
+          <td class="col-pos">26</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/2qUT7c8sVi" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lt-mr5ij2qm2bd37d" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/3B7Ka8tIq3" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lt-mr5ij2qm2bd37d" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-23095162038" class="nome">Lixeira com Sensor Automático 16L Recarregável Abertura Inteligente para Cozinha Banheiro Quarto Escritório</label>
             <div class="loja">Loja Oficial N&M 2</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;68.40</td>
           <td class="col-num destaque">13%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">2,859</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/2qUT7c8sVi" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/3B7Ka8tIq3" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="11" data-avaliacao="4.9" data-vendidos="3533">
+        <tr data-tier="medio" data-comissao="13" data-avaliacao="4.9" data-vendidos="1925" data-segmento="outros">
           <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-26027645226"
-              data-produto-id="26027645226"
-              data-nome="Torneira De Cozinha Gourmet Com Mesa Removível/Pulverizador De Parede" data-preco="69.99"
-              data-comissao="11"
-              data-link="https://s.shopee.com.br/6fhBdLp6G4"
+            <input type="checkbox" class="chk-produto" id="tabela-principal-58256293907"
+              data-produto-id="58256293907"
+              data-nome="Espelho Orgânico 120x50 e 80x40 Com Moldura EM COURO Corpo Inteiro Moderno Luxo" data-preco="79.90"
+              data-comissao="13"
+              data-link="https://s.shopee.com.br/2BEnOIxB63"
               data-categoria="">
           </td>
-          <td class="col-pos">29</td>
+          <td class="col-pos">27</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/6fhBdLp6G4" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-82616-mjtz4g2so2rrb5" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/2BEnOIxB63" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lt-mlgb72rszg1y0c" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
-            <label for="tabela-principal-26027645226" class="nome">Torneira De Cozinha Gourmet Com Mesa Removível/Pulverizador De Parede</label>
-            <div class="loja">Muse.Mall</div>
+            <label for="tabela-principal-58256293907" class="nome">Espelho Orgânico 120x50 e 80x40 Com Moldura EM COURO Corpo Inteiro Moderno Luxo</label>
+            <div class="loja">Florence Comercial</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
-          <td class="col-num">R$&nbsp;69.99</td>
-          <td class="col-num destaque">11%</td>
+          <td class="col-segmento">Outros</td>
+          <td class="col-num">R$&nbsp;79.90</td>
+          <td class="col-num destaque">13%</td>
           <td class="col-num">4.9&#9733;</td>
-          <td class="col-num">3,533</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/6fhBdLp6G4" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-num">1,925</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/2BEnOIxB63" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="26" data-avaliacao="4.9" data-vendidos="7734">
+        <tr data-tier="baixo" data-comissao="26" data-avaliacao="4.9" data-vendidos="7734" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-23994387054"
               data-produto-id="23994387054"
               data-nome="Kit Dupla Renovadores Faciais Kokeshi Pele Porcelana Olhos Gueixa" data-preco="39.90"
               data-comissao="26"
-              data-link="https://s.shopee.com.br/gPyUKBwRU"
+              data-link="https://s.shopee.com.br/30nuNpu0PM"
               data-categoria="">
           </td>
-          <td class="col-pos">30</td>
+          <td class="col-pos">28</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/gPyUKBwRU" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820l6-mq3nf4vg8k5f75" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/30nuNpu0PM" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820l6-mq3nf4vg8k5f75" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-23994387054" class="nome">Kit Dupla Renovadores Faciais Kokeshi Pele Porcelana Olhos Gueixa</label>
             <div class="loja">KOKESHI OFICIAL</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;39.90</td>
           <td class="col-num destaque">26%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">7,734</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/gPyUKBwRU" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/30nuNpu0PM" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="13" data-avaliacao="4.8" data-vendidos="24772">
+        <tr data-tier="medio" data-comissao="10" data-avaliacao="4.8" data-vendidos="3537" data-segmento="casa_construcao">
+          <td class="col-check">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-23194236443"
+              data-produto-id="23194236443"
+              data-nome="Câmera Segurança Prova D'água Infravermelho Lâmpada Externa 360 Sem Fio Wifi 2.4G G4" data-preco="59.99"
+              data-comissao="10"
+              data-link="https://s.shopee.com.br/7VGJk6co2X"
+              data-categoria="">
+          </td>
+          <td class="col-pos">29</td>
+          <td class="col-foto">
+            <a href="https://s.shopee.com.br/7VGJk6co2X" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lh-mn27up3guuwyfb" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+          </td>
+          <td class="col-nome">
+            <label for="tabela-principal-23194236443" class="nome">Câmera Segurança Prova D'água Infravermelho Lâmpada Externa 360 Sem Fio Wifi 2.4G G4</label>
+            <div class="loja">zakkatt</div>
+          </td>
+          <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Casa & Construção</td>
+          <td class="col-num">R$&nbsp;59.99</td>
+          <td class="col-num destaque">10%</td>
+          <td class="col-num">4.8&#9733;</td>
+          <td class="col-num">3,537</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/7VGJk6co2X" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+        </tr>
+        <tr data-tier="baixo" data-comissao="13" data-avaliacao="4.8" data-vendidos="24772" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-22392992790"
               data-produto-id="22392992790"
               data-nome="Batedor Misturador Mixer Elétrico para Bebidas Leite Café Clara de Ovo 2 em 1" data-preco="18.99"
               data-comissao="13"
-              data-link="https://s.shopee.com.br/7AdSEGnCFD"
+              data-link="https://s.shopee.com.br/3g3bB3rT3Q"
               data-categoria="">
           </td>
-          <td class="col-pos">31</td>
+          <td class="col-pos">30</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/7AdSEGnCFD" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-7rd48-lupf3z3a40mxf1" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/3g3bB3rT3Q" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-7rd48-lupf3z3a40mxf1" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-22392992790" class="nome">Batedor Misturador Mixer Elétrico para Bebidas Leite Café Clara de Ovo 2 em 1</label>
             <div class="loja">Isabela Top</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;18.99</td>
           <td class="col-num destaque">13%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">24,772</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/7AdSEGnCFD" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/3g3bB3rT3Q" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="11" data-avaliacao="4.9" data-vendidos="867">
+        <tr data-tier="baixo" data-comissao="28" data-avaliacao="4.6" data-vendidos="2837" data-segmento="eletronicos">
           <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-28777555161"
-              data-produto-id="28777555161"
-              data-nome="Torneira Cozinha Gourmet Mixer Chuveiro Duo Spray Preto Premium Extraíveis Torneiras" data-preco="69.99"
-              data-comissao="11"
-              data-link="https://s.shopee.com.br/5AsNttzzmC"
+            <input type="checkbox" class="chk-produto" id="tabela-principal-22498946021"
+              data-produto-id="22498946021"
+              data-nome="Carregador Portátil Mini Power Bank 10000mAh Com 02 Saídas Tipo-C / Lightning" data-preco="32.99"
+              data-comissao="28"
+              data-link="https://s.shopee.com.br/1BMGCT0z7h"
+              data-categoria="">
+          </td>
+          <td class="col-pos">31</td>
+          <td class="col-foto">
+            <a href="https://s.shopee.com.br/1BMGCT0z7h" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mf41ipxjrwg70d" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+          </td>
+          <td class="col-nome">
+            <label for="tabela-principal-22498946021" class="nome">Carregador Portátil Mini Power Bank 10000mAh Com 02 Saídas Tipo-C / Lightning</label>
+            <div class="loja">XQW - ELETRÔNICOS E VARIEDADES</div>
+          </td>
+          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Eletrônicos</td>
+          <td class="col-num">R$&nbsp;32.99</td>
+          <td class="col-num destaque">28%</td>
+          <td class="col-num">4.6&#9733;</td>
+          <td class="col-num">2,837</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/1BMGCT0z7h" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+        </tr>
+        <tr data-tier="baixo" data-comissao="33" data-avaliacao="4.9" data-vendidos="230" data-segmento="outros">
+          <td class="col-check">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-23193828041"
+              data-produto-id="23193828041"
+              data-nome="Cozedor De Ovos Elétrico 110V Para 7 Ovos Com Desligamento Automático Tampa Transparente Cozinha Saudável e Praticidade" data-preco="35.91"
+              data-comissao="33"
+              data-link="https://s.shopee.com.br/4fw8MtnanE"
               data-categoria="">
           </td>
           <td class="col-pos">32</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/5AsNttzzmC" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/cn-11134207-820l4-mjtzcdzxl34418" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/4fw8MtnanE" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lt-mok4fa2d7a4l37" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
-            <label for="tabela-principal-28777555161" class="nome">Torneira Cozinha Gourmet Mixer Chuveiro Duo Spray Preto Premium Extraíveis Torneiras</label>
-            <div class="loja">Muse.Mall</div>
+            <label for="tabela-principal-23193828041" class="nome">Cozedor De Ovos Elétrico 110V Para 7 Ovos Com Desligamento Automático Tampa Transparente Cozinha Saudável e Praticidade</label>
+            <div class="loja">Kluvon</div>
           </td>
-          <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
-          <td class="col-num">R$&nbsp;69.99</td>
-          <td class="col-num destaque">11%</td>
+          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
+          <td class="col-num">R$&nbsp;35.91</td>
+          <td class="col-num destaque">33%</td>
           <td class="col-num">4.9&#9733;</td>
-          <td class="col-num">867</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/5AsNttzzmC" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-num">230</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/4fw8MtnanE" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="24" data-avaliacao="4.9" data-vendidos="6469">
+        <tr data-tier="baixo" data-comissao="28" data-avaliacao="4.6" data-vendidos="1962" data-segmento="eletronicos">
           <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-22198124723"
-              data-produto-id="22198124723"
-              data-nome="Tapioqueira Peneira Polvilhador Armazena Tapioca Beiju Farinha Cozinha Utensilio Cores Aleatorias" data-preco="20.00"
-              data-comissao="24"
-              data-link="https://s.shopee.com.br/9V1N6tdkMo"
+            <input type="checkbox" class="chk-produto" id="tabela-principal-22499247158"
+              data-produto-id="22499247158"
+              data-nome="Carregador Portátil Mini Power Bank 10000mAh Com 02 Saídas Tipo-C / Lightning" data-preco="31.99"
+              data-comissao="28"
+              data-link="https://s.shopee.com.br/8plhKYXnYx"
               data-categoria="">
           </td>
           <td class="col-pos">33</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/9V1N6tdkMo" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820la-mlhvrnja7jet76" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/8plhKYXnYx" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-81zvk-mik9ovwbhszk62" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
-            <label for="tabela-principal-22198124723" class="nome">Tapioqueira Peneira Polvilhador Armazena Tapioca Beiju Farinha Cozinha Utensilio Cores Aleatorias</label>
-            <div class="loja">SHOP JI</div>
+            <label for="tabela-principal-22499247158" class="nome">Carregador Portátil Mini Power Bank 10000mAh Com 02 Saídas Tipo-C / Lightning</label>
+            <div class="loja">SHR ELETRONICOS</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;20.00</td>
-          <td class="col-num destaque">24%</td>
-          <td class="col-num">4.9&#9733;</td>
-          <td class="col-num">6,469</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/9V1N6tdkMo" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-segmento">Eletrônicos</td>
+          <td class="col-num">R$&nbsp;31.99</td>
+          <td class="col-num destaque">28%</td>
+          <td class="col-num">4.6&#9733;</td>
+          <td class="col-num">1,962</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/8plhKYXnYx" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="8" data-avaliacao="4.8" data-vendidos="9465">
+        <tr data-tier="medio" data-comissao="8" data-avaliacao="4.8" data-vendidos="9465" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-23892669902"
               data-produto-id="23892669902"
-              data-nome="3L Picador De Alimentos Moedor De Carne Mixer Elétrica Processador Cozinha Casa Alho - 110v-220v" data-preco="69.00"
+              data-nome="3L Picador De Alimentos Moedor De Carne Mixer Elétrica Processador Cozinha Casa Alho - 110v-220v" data-preco="66.88"
               data-comissao="8"
-              data-link="https://s.shopee.com.br/2Vrcm24OZj"
+              data-link="https://s.shopee.com.br/6q0cwsfLOL"
               data-categoria="">
           </td>
           <td class="col-pos">34</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/2Vrcm24OZj" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820m8-mmcgl3nag8au55" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/6q0cwsfLOL" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820m8-mmcgl3nag8au55" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-23892669902" class="nome">3L Picador De Alimentos Moedor De Carne Mixer Elétrica Processador Cozinha Casa Alho - 110v-220v</label>
             <div class="loja">Mercado Estelar</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
-          <td class="col-num">R$&nbsp;69.00</td>
+          <td class="col-segmento">Outros</td>
+          <td class="col-num">R$&nbsp;66.88</td>
           <td class="col-num destaque">8%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">9,465</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/2Vrcm24OZj" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/6q0cwsfLOL" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="28" data-avaliacao="4.8" data-vendidos="1259">
-          <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-14828351521"
-              data-produto-id="14828351521"
-              data-nome="Kit 04 Almofadas Decorativa Estampa Digital Com e Sem Enchimento" data-preco="38.90"
-              data-comissao="28"
-              data-link="https://s.shopee.com.br/60RUq7rdc0"
-              data-categoria="">
-          </td>
-          <td class="col-pos">35</td>
-          <td class="col-foto">
-            <a href="https://s.shopee.com.br/60RUq7rdc0" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lo-mr8tafkodl3bda" alt="" loading="lazy" onerror="this.style.display='none'"></a>
-          </td>
-          <td class="col-nome">
-            <label for="tabela-principal-14828351521" class="nome">Kit 04 Almofadas Decorativa Estampa Digital Com e Sem Enchimento</label>
-            <div class="loja">Vitoria Home</div>
-          </td>
-          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;38.90</td>
-          <td class="col-num destaque">28%</td>
-          <td class="col-num">4.8&#9733;</td>
-          <td class="col-num">1,259</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/60RUq7rdc0" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
-        </tr>
-        <tr data-tier="medio" data-comissao="20" data-avaliacao="5.0" data-vendidos="6817">
+        <tr data-tier="medio" data-comissao="20" data-avaliacao="5.0" data-vendidos="6817" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-25155478447"
               data-produto-id="25155478447"
               data-nome="MEDICUBE zero pore pad 2.0,zero pore pad mild 3types(original pad/refill)" data-preco="144.98"
               data-comissao="20"
-              data-link="https://s.shopee.com.br/AUtuIjZwKu"
+              data-link="https://s.shopee.com.br/8AW0XKaGgT"
               data-categoria="">
           </td>
-          <td class="col-pos">36</td>
+          <td class="col-pos">35</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/AUtuIjZwKu" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134207-7rdxs-mcudbphhjtqme1" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/8AW0XKaGgT" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134207-7rdxs-mcudbphhjtqme1" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-25155478447" class="nome">MEDICUBE zero pore pad 2.0,zero pore pad mild 3types(original pad/refill)</label>
             <div class="loja">koksara.kbeauty</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;144.98</td>
           <td class="col-num destaque">20%</td>
           <td class="col-num">5.0&#9733;</td>
           <td class="col-num">6,817</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/AUtuIjZwKu" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/8AW0XKaGgT" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="13" data-avaliacao="4.6" data-vendidos="12958">
+        <tr data-tier="baixo" data-comissao="13" data-avaliacao="4.6" data-vendidos="12958" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-58203349505"
               data-produto-id="58203349505"
-              data-nome="Porta Frios Duplo Preto para Presunto e Queijo Com Fundo Removível Para Conservar e Organizar a Geladeira Hermetico" data-preco="17.89"
+              data-nome="Porta Frios Duplo Preto para Presunto e Queijo Com Fundo Removível Para Conservar e Organizar a Geladeira Hermetico" data-preco="17.70"
               data-comissao="13"
               data-link="https://s.shopee.com.br/1LffNt8pwO"
               data-categoria="">
           </td>
-          <td class="col-pos">37</td>
+          <td class="col-pos">36</td>
           <td class="col-foto">
             <a href="https://s.shopee.com.br/1LffNt8pwO" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820l9-ml6ctmoc7ojo37" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
@@ -1276,323 +1293,362 @@
             <div class="loja">Vip  Todo Dia</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;17.89</td>
+          <td class="col-segmento">Outros</td>
+          <td class="col-num">R$&nbsp;17.70</td>
           <td class="col-num destaque">13%</td>
           <td class="col-num">4.6&#9733;</td>
           <td class="col-num">12,958</td>
           <td class="col-link"><a href="https://s.shopee.com.br/1LffNt8pwO" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="23" data-avaliacao="4.9" data-vendidos="2338">
-          <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-22097923147"
-              data-produto-id="22097923147"
-              data-nome="Creme Anti-Estrias - Diga Adeus às Estrias! Previne Novas Estrias & Reforça a Elasticidade Da Pele" data-preco="38.90"
-              data-comissao="23"
-              data-link="https://s.shopee.com.br/2BEmNQ5fFd"
-              data-categoria="">
-          </td>
-          <td class="col-pos">38</td>
-          <td class="col-foto">
-            <a href="https://s.shopee.com.br/2BEmNQ5fFd" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820me-mmrrtbtgn37lec" alt="" loading="lazy" onerror="this.style.display='none'"></a>
-          </td>
-          <td class="col-nome">
-            <label for="tabela-principal-22097923147" class="nome">Creme Anti-Estrias - Diga Adeus às Estrias! Previne Novas Estrias & Reforça a Elasticidade Da Pele</label>
-            <div class="loja">JM-Cosmético</div>
-          </td>
-          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;38.90</td>
-          <td class="col-num destaque">23%</td>
-          <td class="col-num">4.9&#9733;</td>
-          <td class="col-num">2,338</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/2BEmNQ5fFd" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
-        </tr>
-        <tr data-tier="baixo" data-comissao="19" data-avaliacao="4.8" data-vendidos="5599">
+        <tr data-tier="baixo" data-comissao="19" data-avaliacao="4.8" data-vendidos="5599" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-29535501772"
               data-produto-id="29535501772"
               data-nome="40 Peças / 46 Peças Jogo De Chave Catraca Caixa De Ferramentas Completa Reversível Soquetes Maleta" data-preco="29.90"
               data-comissao="19"
-              data-link="https://s.shopee.com.br/1BMF8YFDtY"
+              data-link="https://s.shopee.com.br/2qUUBWuZVx"
               data-categoria="">
           </td>
-          <td class="col-pos">39</td>
+          <td class="col-pos">37</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/1BMF8YFDtY" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-7rfi6-m96pnweedbdz0a" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/2qUUBWuZVx" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-7rfi6-m96pnweedbdz0a" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-29535501772" class="nome">40 Peças / 46 Peças Jogo De Chave Catraca Caixa De Ferramentas Completa Reversível Soquetes Maleta</label>
             <div class="loja">HONG11.br</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;29.90</td>
           <td class="col-num destaque">19%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">5,599</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/1BMF8YFDtY" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/2qUUBWuZVx" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="8" data-avaliacao="4.7" data-vendidos="4484">
+        <tr data-tier="baixo" data-comissao="8" data-avaliacao="4.7" data-vendidos="4484" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-58251974520"
               data-produto-id="58251974520"
               data-nome="Kit 3 Blusas Feminina Muscle Tee Moderna Casual 100% Algodão - F00" data-preco="47.99"
               data-comissao="8"
-              data-link="https://s.shopee.com.br/5q84dosGx5"
+              data-link="https://s.shopee.com.br/50YylVmOLo"
               data-categoria="">
           </td>
-          <td class="col-pos">40</td>
+          <td class="col-pos">38</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/5q84dosGx5" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lz-moftar7ni39id6" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/50YylVmOLo" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lz-moftar7ni39id6" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-58251974520" class="nome">Kit 3 Blusas Feminina Muscle Tee Moderna Casual 100% Algodão - F00</label>
             <div class="loja">Uzze.K </div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;47.99</td>
           <td class="col-num destaque">8%</td>
           <td class="col-num">4.7&#9733;</td>
           <td class="col-num">4,484</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/5q84dosGx5" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/50YylVmOLo" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="18" data-avaliacao="4.9" data-vendidos="6457">
-          <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-22394343234"
-              data-produto-id="22394343234"
-              data-nome="Kit 4 Rolos de Sacos de Lixo 10L – 160 Unidades | Neutraliza Odores | Ideal para Pia e Banheiro" data-preco="28.69"
-              data-comissao="18"
-              data-link="https://s.shopee.com.br/80CZK8jSPf"
-              data-categoria="">
-          </td>
-          <td class="col-pos">41</td>
-          <td class="col-foto">
-            <a href="https://s.shopee.com.br/80CZK8jSPf" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mh5k70jhwveo39" alt="" loading="lazy" onerror="this.style.display='none'"></a>
-          </td>
-          <td class="col-nome">
-            <label for="tabela-principal-22394343234" class="nome">Kit 4 Rolos de Sacos de Lixo 10L – 160 Unidades | Neutraliza Odores | Ideal para Pia e Banheiro</label>
-            <div class="loja">evolutecommerce</div>
-          </td>
-          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;28.69</td>
-          <td class="col-num destaque">18%</td>
-          <td class="col-num">4.9&#9733;</td>
-          <td class="col-num">6,457</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/80CZK8jSPf" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
-        </tr>
-        <tr data-tier="baixo" data-comissao="21" data-avaliacao="4.9" data-vendidos="2617">
+        <tr data-tier="baixo" data-comissao="21" data-avaliacao="4.9" data-vendidos="2617" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-45610825194"
               data-produto-id="45610825194"
               data-nome="Kit 10 Marmitas Potes 750ml Travas Laterais hermeticas - Livres de BPA Alimentos organiza congelador - KAZIVA" data-preco="39.90"
               data-comissao="21"
-              data-link="https://s.shopee.com.br/AAH3u7bD0s"
+              data-link="https://s.shopee.com.br/3LQkmRsjjO"
               data-categoria="">
           </td>
-          <td class="col-pos">42</td>
+          <td class="col-pos">39</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/AAH3u7bD0s" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-822wz-mofgh74zvzex31" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/3LQkmRsjjO" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-822wz-mofgh74zvzex31" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-45610825194" class="nome">Kit 10 Marmitas Potes 750ml Travas Laterais hermeticas - Livres de BPA Alimentos organiza congelador - KAZIVA</label>
             <div class="loja">Gaby Reborn</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;39.90</td>
           <td class="col-num destaque">21%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">2,617</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/AAH3u7bD0s" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/3LQkmRsjjO" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="21" data-avaliacao="4.7" data-vendidos="2329">
+        <tr data-tier="medio" data-comissao="21" data-avaliacao="4.7" data-vendidos="2329" data-segmento="casa_construcao">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-53409645629"
               data-produto-id="53409645629"
               data-nome="Cortina Sala e Quarto Linho com Forro Microfibra Premium de Luxo" data-preco="128.99"
               data-comissao="21"
-              data-link="https://s.shopee.com.br/9AOWbwfaBP"
+              data-link="https://s.shopee.com.br/8KpQjdZhZs"
               data-categoria="">
           </td>
-          <td class="col-pos">43</td>
+          <td class="col-pos">40</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/9AOWbwfaBP" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820mb-mnrg9mz3ml8gbb" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/8KpQjdZhZs" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820mb-mnrg9mz3ml8gbb" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-53409645629" class="nome">Cortina Sala e Quarto Linho com Forro Microfibra Premium de Luxo</label>
             <div class="loja">Samuel Bordados</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Casa & Construção</td>
           <td class="col-num">R$&nbsp;128.99</td>
           <td class="col-num destaque">21%</td>
           <td class="col-num">4.7&#9733;</td>
           <td class="col-num">2,329</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/9AOWbwfaBP" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/8KpQjdZhZs" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="medio" data-comissao="8" data-avaliacao="4.8" data-vendidos="2707">
+        <tr data-tier="baixo" data-comissao="14" data-avaliacao="4.7" data-vendidos="9081" data-segmento="moda">
+          <td class="col-check">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-22098878065"
+              data-produto-id="22098878065"
+              data-nome="Chinelo Bandeirinha Original Sandalia De Dedo Unissex Verão. Presente para o Dia dos Pais" data-preco="19.90"
+              data-comissao="14"
+              data-link="https://s.shopee.com.br/8plhKYXjKf"
+              data-categoria="">
+          </td>
+          <td class="col-pos">41</td>
+          <td class="col-foto">
+            <a href="https://s.shopee.com.br/8plhKYXjKf" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-824hw-me1mqqajx1c73f" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+          </td>
+          <td class="col-nome">
+            <label for="tabela-principal-22098878065" class="nome">Chinelo Bandeirinha Original Sandalia De Dedo Unissex Verão. Presente para o Dia dos Pais</label>
+            <div class="loja">Ferrari_Shopping</div>
+          </td>
+          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Moda</td>
+          <td class="col-num">R$&nbsp;19.90</td>
+          <td class="col-num destaque">14%</td>
+          <td class="col-num">4.7&#9733;</td>
+          <td class="col-num">9,081</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/8plhKYXjKf" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+        </tr>
+        <tr data-tier="medio" data-comissao="8" data-avaliacao="4.8" data-vendidos="2707" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-21298769599"
               data-produto-id="21298769599"
               data-nome="Mini Maquina De Costura Elétrica Bivolt  + Pedal Portátil" data-preco="56.88"
               data-comissao="8"
-              data-link="https://s.shopee.com.br/6VNlR2u479"
+              data-link="https://s.shopee.com.br/7fZjwPcAha"
               data-categoria="">
           </td>
-          <td class="col-pos">44</td>
+          <td class="col-pos">42</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/6VNlR2u479" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-7r98o-lqdqo46che7379" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/7fZjwPcAha" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-7r98o-lqdqo46che7379" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-21298769599" class="nome">Mini Maquina De Costura Elétrica Bivolt  + Pedal Portátil</label>
             <div class="loja">tangshop_brasil</div>
           </td>
           <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;56.88</td>
           <td class="col-num destaque">8%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">2,707</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/6VNlR2u479" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/7fZjwPcAha" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="18" data-avaliacao="4.9" data-vendidos="4280">
+        <tr data-tier="baixo" data-comissao="18" data-avaliacao="4.9" data-vendidos="4280" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-22993477756"
               data-produto-id="22993477756"
               data-nome="Kit 05 pacotes de Toalhas Umedecidas/ Lenços  Baby free c/100- (sem tampa flip-top)" data-preco="30.50"
               data-comissao="18"
-              data-link="https://s.shopee.com.br/2gB2s04KNg"
+              data-link="https://s.shopee.com.br/9peEWOTzXJ"
               data-categoria="">
           </td>
-          <td class="col-pos">45</td>
+          <td class="col-pos">43</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/2gB2s04KNg" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lh-mqypkrp6vnrb00" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/9peEWOTzXJ" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lh-mqypkrp6vnrb00" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-22993477756" class="nome">Kit 05 pacotes de Toalhas Umedecidas/ Lenços  Baby free c/100- (sem tampa flip-top)</label>
             <div class="loja">PLUMA_BABy</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;30.50</td>
           <td class="col-num destaque">18%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">4,280</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/2gB2s04KNg" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/9peEWOTzXJ" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="11" data-avaliacao="4.9" data-vendidos="11176">
+        <tr data-tier="baixo" data-comissao="18" data-avaliacao="4.7" data-vendidos="4246" data-segmento="casa_construcao">
+          <td class="col-check">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-23797173395"
+              data-produto-id="23797173395"
+              data-nome="Mangueira Jardim Reforçada Trançada Completa 05/10/15/20/25/30/35/50 Metros" data-preco="16.90"
+              data-comissao="18"
+              data-link="https://s.shopee.com.br/2LYDabwXl2"
+              data-categoria="">
+          </td>
+          <td class="col-pos">44</td>
+          <td class="col-foto">
+            <a href="https://s.shopee.com.br/2LYDabwXl2" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820m5-mldkkkytkpona7" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+          </td>
+          <td class="col-nome">
+            <label for="tabela-principal-23797173395" class="nome">Mangueira Jardim Reforçada Trançada Completa 05/10/15/20/25/30/35/50 Metros</label>
+            <div class="loja">LK ECOM</div>
+          </td>
+          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Casa & Construção</td>
+          <td class="col-num">R$&nbsp;16.90</td>
+          <td class="col-num destaque">18%</td>
+          <td class="col-num">4.7&#9733;</td>
+          <td class="col-num">4,246</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/2LYDabwXl2" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+        </tr>
+        <tr data-tier="baixo" data-comissao="11" data-avaliacao="4.9" data-vendidos="11176" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-23199020709"
               data-produto-id="23199020709"
               data-nome="Cozedor de Ovos Elétrico Portátil Cozinha à Vapor 110V/220V Cores disponíveis （Branco Azul Rosa Amarelo）" data-preco="29.98"
               data-comissao="11"
-              data-link="https://s.shopee.com.br/8KpPikiBjh"
+              data-link="https://s.shopee.com.br/8fSH8FYMfc"
               data-categoria="">
           </td>
-          <td class="col-pos">46</td>
+          <td class="col-pos">45</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/8KpPikiBjh" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mfytb2po8gzk07" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/8fSH8FYMfc" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mfytb2po8gzk07" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-23199020709" class="nome">Cozedor de Ovos Elétrico Portátil Cozinha à Vapor 110V/220V Cores disponíveis （Branco Azul Rosa Amarelo）</label>
             <div class="loja">PENGFA TECH LTDA</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;29.98</td>
           <td class="col-num destaque">11%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">11,176</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/8KpPikiBjh" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/8fSH8FYMfc" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="13" data-avaliacao="4.8" data-vendidos="8314">
+        <tr data-tier="baixo" data-comissao="19" data-avaliacao="4.7" data-vendidos="2564" data-segmento="outros">
+          <td class="col-check">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-18931705150"
+              data-produto-id="18931705150"
+              data-nome="Mini Processador Triturador Sem Fio Elétrico 250ML De Alimentos Para Legumes Alho Gengibre" data-preco="23.88"
+              data-comissao="19"
+              data-link="https://s.shopee.com.br/1gIWnNz0ss"
+              data-categoria="">
+          </td>
+          <td class="col-pos">46</td>
+          <td class="col-foto">
+            <a href="https://s.shopee.com.br/1gIWnNz0ss" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820mg-mnxpmvljjwucb8" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+          </td>
+          <td class="col-nome">
+            <label for="tabela-principal-18931705150" class="nome">Mini Processador Triturador Sem Fio Elétrico 250ML De Alimentos Para Legumes Alho Gengibre</label>
+            <div class="loja">RISESHOP_brasil</div>
+          </td>
+          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
+          <td class="col-num">R$&nbsp;23.88</td>
+          <td class="col-num destaque">19%</td>
+          <td class="col-num">4.7&#9733;</td>
+          <td class="col-num">2,564</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/1gIWnNz0ss" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+        </tr>
+        <tr data-tier="baixo" data-comissao="13" data-avaliacao="4.8" data-vendidos="8314" data-segmento="casa_construcao">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-22816294190"
               data-produto-id="22816294190"
               data-nome="Mop Spray Com Reservatório Esfregão Vassoura Mágica" data-preco="39.99"
               data-comissao="13"
-              data-link="https://s.shopee.com.br/5foeRVsuI2"
+              data-link="https://s.shopee.com.br/3qN1NMqpiT"
               data-categoria="">
           </td>
           <td class="col-pos">47</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/5foeRVsuI2" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820m2-mool78g30vsz1c" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/3qN1NMqpiT" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820m2-mool78g30vsz1c" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-22816294190" class="nome">Mop Spray Com Reservatório Esfregão Vassoura Mágica</label>
             <div class="loja">SELLNEEDS</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Casa & Construção</td>
           <td class="col-num">R$&nbsp;39.99</td>
           <td class="col-num destaque">13%</td>
           <td class="col-num">4.8&#9733;</td>
           <td class="col-num">8,314</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/5foeRVsuI2" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/3qN1NMqpiT" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="18" data-avaliacao="4.7" data-vendidos="3122">
-          <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-58250403906"
-              data-produto-id="58250403906"
-              data-nome="Mangueira De Jardim Reforçada Trançada Completa 10/15/20/25/30/35/50 Metros" data-preco="16.90"
-              data-comissao="18"
-              data-link="https://s.shopee.com.br/9AOWiHf12m"
-              data-categoria="">
-          </td>
-          <td class="col-pos">48</td>
-          <td class="col-foto">
-            <a href="https://s.shopee.com.br/9AOWiHf12m" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mgqwmtfzjs3p61" alt="" loading="lazy" onerror="this.style.display='none'"></a>
-          </td>
-          <td class="col-nome">
-            <label for="tabela-principal-58250403906" class="nome">Mangueira De Jardim Reforçada Trançada Completa 10/15/20/25/30/35/50 Metros</label>
-            <div class="loja">Na Net Utilidades</div>
-          </td>
-          <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;16.90</td>
-          <td class="col-num destaque">18%</td>
-          <td class="col-num">4.7&#9733;</td>
-          <td class="col-num">3,122</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/9AOWiHf12m" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
-        </tr>
-        <tr data-tier="baixo" data-comissao="14" data-avaliacao="4.9" data-vendidos="6686">
+        <tr data-tier="baixo" data-comissao="14" data-avaliacao="4.9" data-vendidos="6686" data-segmento="outros">
           <td class="col-check">
             <input type="checkbox" class="chk-produto" id="tabela-principal-23294540537"
               data-produto-id="23294540537"
               data-nome="Kit 4 Sacos de Lixo Perfumados Lavanda | 160 Sacos | Pia e Banheiro | 34x38cm | Neutraliza Odores" data-preco="27.99"
               data-comissao="14"
-              data-link="https://s.shopee.com.br/3g3a3q0WLq"
+              data-link="https://s.shopee.com.br/2VrdmuvuQ5"
               data-categoria="">
           </td>
-          <td class="col-pos">49</td>
+          <td class="col-pos">48</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/3g3a3q0WLq" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mfyyp9j2nk7bf2" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/2VrdmuvuQ5" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mfyyp9j2nk7bf2" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
             <label for="tabela-principal-23294540537" class="nome">Kit 4 Sacos de Lixo Perfumados Lavanda | 160 Sacos | Pia e Banheiro | 34x38cm | Neutraliza Odores</label>
             <div class="loja">JF ECOMMERCE</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
+          <td class="col-segmento">Outros</td>
           <td class="col-num">R$&nbsp;27.99</td>
           <td class="col-num destaque">14%</td>
           <td class="col-num">4.9&#9733;</td>
           <td class="col-num">6,686</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/3g3a3q0WLq" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-link"><a href="https://s.shopee.com.br/2VrdmuvuQ5" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
-        <tr data-tier="baixo" data-comissao="13" data-avaliacao="4.8" data-vendidos="6962">
+        <tr data-tier="medio" data-comissao="10" data-avaliacao="4.3" data-vendidos="692" data-segmento="casa_construcao">
           <td class="col-check">
-            <input type="checkbox" class="chk-produto" id="tabela-principal-58205832467"
-              data-produto-id="58205832467"
-              data-nome="Escova de Silicone 2 em 1 para Vaso Sanitário - Base de Banheiro Privada, Alta Eficiênci" data-preco="14.99"
-              data-comissao="13"
-              data-link="https://s.shopee.com.br/BThzkDHJJ"
+            <input type="checkbox" class="chk-produto" id="tabela-principal-58202344032"
+              data-produto-id="58202344032"
+              data-nome="Robô Aspirador 3 em 1 Varre, Aspira e limpar  - Limpeza Automática Inteligente e Silenciosa" data-preco="51.99"
+              data-comissao="10"
+              data-link="https://s.shopee.com.br/1LfgOm0HYm"
+              data-categoria="">
+          </td>
+          <td class="col-pos">49</td>
+          <td class="col-foto">
+            <a href="https://s.shopee.com.br/1LfgOm0HYm" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-81z1k-mikpid5hf6ki16" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+          </td>
+          <td class="col-nome">
+            <label for="tabela-principal-58202344032" class="nome">Robô Aspirador 3 em 1 Varre, Aspira e limpar  - Limpeza Automática Inteligente e Silenciosa</label>
+            <div class="loja">Y&C SHOP</div>
+          </td>
+          <td class="col-tier"><span class="selo selo-medio">Médio</span></td>
+          <td class="col-segmento">Casa & Construção</td>
+          <td class="col-num">R$&nbsp;51.99</td>
+          <td class="col-num destaque">10%</td>
+          <td class="col-num">4.3&#9733;</td>
+          <td class="col-num">692</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/1LfgOm0HYm" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+        </tr>
+        <tr data-tier="baixo" data-comissao="17" data-avaliacao="4.9" data-vendidos="2976" data-segmento="eletronicos">
+          <td class="col-check">
+            <input type="checkbox" class="chk-produto" id="tabela-principal-58262957321"
+              data-produto-id="58262957321"
+              data-nome="Fone de Ouvido Bluetooth Sem Fio J760- Cancelamento de Ruído Conforto" data-preco="39.54"
+              data-comissao="17"
+              data-link="https://s.shopee.com.br/AUtvJcRSBN"
               data-categoria="">
           </td>
           <td class="col-pos">50</td>
           <td class="col-foto">
-            <a href="https://s.shopee.com.br/BThzkDHJJ" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/sg-11134201-8260s-ml5a6t2qwff3f8" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+            <a href="https://s.shopee.com.br/AUtvJcRSBN" target="_blank" rel="noopener"><img class="foto-produto" src="https://cf.shopee.com.br/file/br-11134207-820lu-mptow8qv0ideee" alt="" loading="lazy" onerror="this.style.display='none'"></a>
           </td>
           <td class="col-nome">
-            <label for="tabela-principal-58205832467" class="nome">Escova de Silicone 2 em 1 para Vaso Sanitário - Base de Banheiro Privada, Alta Eficiênci</label>
-            <div class="loja">DUSKS STORE</div>
+            <label for="tabela-principal-58262957321" class="nome">Fone de Ouvido Bluetooth Sem Fio J760- Cancelamento de Ruído Conforto</label>
+            <div class="loja">𝙨𝙝𝙤𝙥𝙚 𝙨𝙩𝙮𝙡𝙚</div>
           </td>
           <td class="col-tier"><span class="selo selo-baixo">Baixo</span></td>
-          <td class="col-num">R$&nbsp;14.99</td>
-          <td class="col-num destaque">13%</td>
-          <td class="col-num">4.8&#9733;</td>
-          <td class="col-num">6,962</td>
-          <td class="col-link"><a href="https://s.shopee.com.br/BThzkDHJJ" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
+          <td class="col-segmento">Eletrônicos</td>
+          <td class="col-num">R$&nbsp;39.54</td>
+          <td class="col-num destaque">17%</td>
+          <td class="col-num">4.9&#9733;</td>
+          <td class="col-num">2,976</td>
+          <td class="col-link"><a href="https://s.shopee.com.br/AUtvJcRSBN" target="_blank" rel="noopener">Abrir&nbsp;&#8599;</a></td>
         </tr>
         </tbody>
       </table>
@@ -1614,16 +1670,18 @@
       var grupoTier = document.querySelectorAll('.filtro[data-alvo="' + alvo + '"]');
       var botaoAtivo = document.querySelector('.filtro.ativo[data-alvo="' + alvo + '"]');
       var tier = botaoAtivo ? botaoAtivo.getAttribute('data-filtro') : 'todos';
+      var segmento = (document.getElementById('filtro-segmento') || {}).value || 'todos';
       var comissaoMin = parseFloat((document.getElementById('filtro-comissao') || {}).value || '0');
       var avaliacaoMin = parseFloat((document.getElementById('filtro-avaliacao') || {}).value || '0');
       var vendidosMin = parseFloat((document.getElementById('filtro-vendidos') || {}).value || '0');
 
       document.querySelectorAll('#' + alvo + '-corpo tr').forEach(function (linha) {
         var bateTier = tier === 'todos' || linha.getAttribute('data-tier') === tier;
+        var bateSegmento = segmento === 'todos' || linha.getAttribute('data-segmento') === segmento;
         var bateComissao = parseFloat(linha.getAttribute('data-comissao') || '0') >= comissaoMin;
         var bateAvaliacao = parseFloat(linha.getAttribute('data-avaliacao') || '0') >= avaliacaoMin;
         var bateVendidos = parseFloat(linha.getAttribute('data-vendidos') || '0') >= vendidosMin;
-        linha.style.display = (bateTier && bateComissao && bateAvaliacao && bateVendidos) ? '' : 'none';
+        linha.style.display = (bateTier && bateSegmento && bateComissao && bateAvaliacao && bateVendidos) ? '' : 'none';
       });
     }
 
@@ -1640,7 +1698,7 @@
       });
     });
 
-    ['filtro-comissao', 'filtro-avaliacao', 'filtro-vendidos'].forEach(function (id) {
+    ['filtro-segmento', 'filtro-comissao', 'filtro-avaliacao', 'filtro-vendidos'].forEach(function (id) {
       var campo = document.getElementById(id);
       if (campo) campo.addEventListener('change', function () { aplicarFiltros(campo.getAttribute('data-alvo')); });
     });
@@ -1712,6 +1770,16 @@
         return span;
       }
 
+      // Rótulos de segmento — espelha shopee_integration/segmentos.py
+      // (SEGMENTO_LABELS), só pra exibir aqui no resultado da busca ao vivo.
+      var ROTULOS_SEGMENTO = {
+        beleza: 'Beleza', casa_construcao: 'Casa & Construção', moda: 'Moda',
+        eletronicos: 'Eletrônicos', pet: 'Pet', infantil: 'Infantil',
+        esporte_lazer: 'Esporte & Lazer', saude: 'Saúde',
+        papelaria_escritorio: 'Papelaria & Escritório', automotivo: 'Automotivo',
+        outros: 'Outros',
+      };
+
       function montarItem(p) {
         var rowId = 'busca-' + p.product_id;
 
@@ -1751,6 +1819,9 @@
         var meta = document.createElement('div');
         meta.className = 'resultado-meta';
         meta.appendChild(criarSelo(p.tier));
+        var segmento = document.createElement('span');
+        segmento.textContent = ROTULOS_SEGMENTO[p.segmento] || 'Outros';
+        meta.appendChild(segmento);
         var preco = document.createElement('span');
         preco.textContent = 'R$ ' + Number(p.price || 0).toFixed(2);
         meta.appendChild(preco);
