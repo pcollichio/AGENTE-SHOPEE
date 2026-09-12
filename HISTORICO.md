@@ -976,3 +976,18 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   upload de arquivo, que já escreve direto no GitHub via
   `api/importar_arquivo.js`. Removido o JS morto (`gerarLinha`,
   `copiar`, `escaparCsv`) e o CSS que só servia às seções removidas.
+
+- **Organizados os filtros de `painel.html`** — usuário reportou (com
+  print) que o filtro estava "meio estranho" no celular: os rótulos
+  (Segmento, Comissão mínima, Avaliação mínima, Vendidos mínimo) e os
+  selects quebravam linha no meio um do outro, numa lista corrida.
+  Causa: cada rótulo e cada select eram itens soltos num flex com
+  `flex-wrap`, então a quebra de linha caía no meio de um par. Cada
+  rótulo+select agora fica dentro de um `.campo-filtro` (rótulo em
+  cima, select embaixo, dentro de um cartão com fundo/borda) — quebra
+  como bloco inteiro, em grade 2x2 no celular. Corrigido tanto no
+  gerador (`shopee_integration/painel.py`) quanto direto no
+  `painel.html` já commitado (pra já sair certo, sem esperar a leva de
+  amanhã de manhã regenerar). Testado com Playwright: filtro por
+  segmento continua funcionando (50 → 2 produtos ao filtrar "moda"),
+  sem erro de JS.

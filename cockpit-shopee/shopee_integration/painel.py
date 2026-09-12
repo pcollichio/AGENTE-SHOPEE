@@ -97,35 +97,43 @@ def _tabela(produtos, id_prefixo, com_filtro=True):
         <button class="filtro" data-filtro="alto" data-alvo="tabela-principal" role="tab" aria-selected="false">Ticket alto</button>
       </div>
       <div class="filtros-select">
-        <label for="filtro-segmento">Segmento</label>
-        <select id="filtro-segmento" data-alvo="tabela-principal">
-          <option value="todos">Todos</option>
-          {opcoes_segmento}
-        </select>
-        <label for="filtro-comissao">Comissão mínima</label>
-        <select id="filtro-comissao" data-alvo="tabela-principal">
-          <option value="0">Todas</option>
-          <option value="10">10%+</option>
-          <option value="20">20%+</option>
-          <option value="30">30%+</option>
-          <option value="40">40%+</option>
-        </select>
-        <label for="filtro-avaliacao">Avaliação mínima</label>
-        <select id="filtro-avaliacao" data-alvo="tabela-principal">
-          <option value="0">Todas</option>
-          <option value="4">4.0+&#9733;</option>
-          <option value="4.5">4.5+&#9733;</option>
-          <option value="4.8">4.8+&#9733;</option>
-        </select>
-        <label for="filtro-vendidos">Vendidos mínimo</label>
-        <select id="filtro-vendidos" data-alvo="tabela-principal">
-          <option value="0">Todos</option>
-          <option value="50">50+</option>
-          <option value="100">100+</option>
-          <option value="300">300+</option>
-          <option value="500">500+</option>
-          <option value="1000">1000+</option>
-        </select>
+        <div class="campo-filtro">
+          <label for="filtro-segmento">Segmento</label>
+          <select id="filtro-segmento" data-alvo="tabela-principal">
+            <option value="todos">Todos</option>
+            {opcoes_segmento}
+          </select>
+        </div>
+        <div class="campo-filtro">
+          <label for="filtro-comissao">Comissão mínima</label>
+          <select id="filtro-comissao" data-alvo="tabela-principal">
+            <option value="0">Todas</option>
+            <option value="10">10%+</option>
+            <option value="20">20%+</option>
+            <option value="30">30%+</option>
+            <option value="40">40%+</option>
+          </select>
+        </div>
+        <div class="campo-filtro">
+          <label for="filtro-avaliacao">Avaliação mínima</label>
+          <select id="filtro-avaliacao" data-alvo="tabela-principal">
+            <option value="0">Todas</option>
+            <option value="4">4.0+&#9733;</option>
+            <option value="4.5">4.5+&#9733;</option>
+            <option value="4.8">4.8+&#9733;</option>
+          </select>
+        </div>
+        <div class="campo-filtro">
+          <label for="filtro-vendidos">Vendidos mínimo</label>
+          <select id="filtro-vendidos" data-alvo="tabela-principal">
+            <option value="0">Todos</option>
+            <option value="50">50+</option>
+            <option value="100">100+</option>
+            <option value="300">300+</option>
+            <option value="500">500+</option>
+            <option value="1000">1000+</option>
+          </select>
+        </div>
       </div>
     </div>"""
     return f"""{filtro_html}
@@ -326,16 +334,24 @@ def gerar_html(produtos, extras=None, titulo="Painel Shopee — Mais Vendidos"):
   .filtro:hover {{ color: var(--text); }}
   .filtro:focus-visible {{ outline: 2px solid var(--focus); outline-offset: 2px; }}
   .filtro.ativo {{ background: var(--accent); color: #fff; }}
-  .filtros-select {{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }}
-  .filtros-select label {{
-    font-family: "IBM Plex Sans", sans-serif; font-size: 0.82rem; font-weight: 600; color: var(--on-bg-muted);
+  .filtros-select {{
+    display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap;
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px;
   }}
-  .filtros-select select {{
-    font-family: "IBM Plex Sans", sans-serif; font-size: 0.84rem; color: var(--text);
-    background: var(--card); border: 1px solid var(--border); border-radius: 6px;
-    padding: 6px 10px; cursor: pointer;
+  .campo-filtro {{ display: flex; flex-direction: column; gap: 4px; min-width: 130px; flex: 1 1 130px; }}
+  .campo-filtro label {{
+    font-family: "IBM Plex Sans", sans-serif; font-size: 0.72rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); white-space: nowrap;
   }}
-  .filtros-select select:focus-visible {{ outline: 2px solid var(--focus); outline-offset: 1px; }}
+  .campo-filtro select {{
+    font-family: "IBM Plex Sans", sans-serif; font-size: 0.86rem; color: var(--text);
+    background: #ffffff; border: 1px solid var(--border); border-radius: 6px;
+    padding: 7px 10px; cursor: pointer; width: 100%;
+  }}
+  .campo-filtro select:focus-visible {{ outline: 2px solid var(--focus); outline-offset: 1px; }}
+  @media (max-width: 480px) {{
+    .campo-filtro {{ min-width: 0; flex-basis: calc(50% - 8px); }}
+  }}
 
   .tabela-scroll {{
     overflow-x: auto;
