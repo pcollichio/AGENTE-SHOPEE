@@ -861,3 +861,23 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
      Documentação atualizada: `README.md`, `financeiro/README.md` e
      `CLAUDE.md` — as duas fontes (manual e automática) agora aparecem
      como convivendo, não uma substituindo a outra.
+
+- **Validação de ponta a ponta confirmada e bug real encontrado nela.**
+  Rodado `.github/workflows/testar-conversoes.yml` contra o commit que
+  liga a sincronização (60 dias, script novo de merge/dedupe): achou 9
+  conversões — 1 confirmada nova e 7 pendentes novas — e, rodando de
+  novo na mesma execução, **0 novas em ambos** (dedupe funcionando).
+  Na inspeção do resultado real, apareceu um caso não previsto: o
+  mesmo `conversion_id` (`242592015131160`) voltou da API associado a
+  **dois produtos diferentes com status diferentes entre si** (um
+  "Escova Elétrica..." confirmado, um "Porta Aliança..." ainda
+  pendente) — ou seja, `conversion_id` sozinho não é garantia de
+  correspondência 1:1 com um único produto/status. Isso quebrava o
+  filtro de "graduação" adicionado hoje mais cedo:
+  `roi.carregar_vendas_pendentes()` excluía um pedido pendente inteiro
+  só por outro produto, com o mesmo `conversion_id`, já ter confirmado
+  — contando a MENOS na comissão pendente mostrada no Dashboard.
+  Corrigido casando por (`conversion_id`, `produto`) em vez de só
+  `conversion_id`. Testado localmente (`gerar_roi.py`) sem regressão
+  nos números já commitados (R$121,99 investido / R$1,80 comissão /
+  R$26,41 pendente, iguais a antes).

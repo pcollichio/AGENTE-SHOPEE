@@ -140,7 +140,10 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
   vira "Pendente" e depois "Concluído" (a sincronização roda todo dia,
   então isso acontece com frequência) não conta em dobro:
   `roi.carregar_vendas_pendentes()` exclui da conta pendente qualquer
-  `conversion_id` que já apareça em `vendas_shopee.csv`. Ver
+  (`conversion_id`, `produto`) que já apareça em `vendas_shopee.csv` —
+  casado pelos dois campos, não só `conversion_id` sozinho, porque a
+  validação real em 12/09 achou casos de um mesmo `conversion_id` com
+  mais de um produto e status diferentes entre si. Ver
   `financeiro/README.md` e `HISTORICO.md` (11/09 e 12/09) pros
   detalhes.
 - `cockpit-shopee/financeiro/resumo.json` — resumo do ROI em JSON

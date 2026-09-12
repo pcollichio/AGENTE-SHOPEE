@@ -90,13 +90,20 @@ def carregar_vendas_pendentes(caminho=CAMINHO_VENDAS_PENDENTES, caminho_shopee=C
     arquivo). Servem só pra mostrar no Dashboard quanto tem "em
     trânsito", separado do que já é garantido. Um pedido "graduado" de
     pendente pra confirmado (a sincronização via API roda todo dia,
-    então isso acontece o tempo todo) é excluído daqui pelo
-    `conversion_id` já aparecer em `vendas_shopee.csv` — senão a
-    comissão apareceria contada duas vezes (uma como pendente, outra já
-    como confirmada de verdade)."""
+    então isso acontece o tempo todo) é excluído daqui.
+
+    NOTA (12/09): a exclusão casa por (`conversion_id`, `produto`), não
+    só `conversion_id` — validado contra a API real que um mesmo
+    `conversion_id` pode agrupar mais de um produto/pedido com status
+    diferentes entre si (um confirmado, outro ainda pendente). Casando
+    só por `conversion_id` faria o produto ainda pendente sumir do
+    Dashboard assim que QUALQUER produto daquele mesmo conversion_id
+    confirmasse — contando a menos o que ainda está em trânsito."""
     linhas = _ler_csv(caminho)
     ja_confirmados = {
-        l.get("conversion_id") for l in _ler_csv(caminho_shopee) if l.get("conversion_id")
+        (l.get("conversion_id"), l.get("produto", "").strip())
+        for l in _ler_csv(caminho_shopee)
+        if l.get("conversion_id")
     }
     return [
         {
@@ -106,7 +113,8 @@ def carregar_vendas_pendentes(caminho=CAMINHO_VENDAS_PENDENTES, caminho_shopee=C
             "observacao": f"Shopee, pedido {l.get('conversion_id', '')} (pendente)",
         }
         for l in linhas
-        if l.get("data") and l.get("conversion_id") not in ja_confirmados
+        if l.get("data")
+        and (l.get("conversion_id"), l.get("produto", "").strip()) not in ja_confirmados
     ]
 
 
