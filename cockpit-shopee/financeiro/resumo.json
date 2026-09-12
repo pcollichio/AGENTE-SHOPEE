@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-09-12T14:33:43",
+  "atualizado_em": "2026-09-12T16:41:05",
   "resumo": {
     "total_investido": 121.99,
     "total_comissao": 4.2009,
@@ -7,19 +7,19 @@
     "comissao_mes_atual": 4.2009,
     "progresso_meta": 0.00042008999999999997,
     "meta_mensal": 10000.0,
-    "comissao_pendente": 52.215599999999995
+    "comissao_pendente": 25.807949999999998
   },
   "roi_por_produto": [
     {
-      "produto": "Instagram post: #papairesolve - Instale a sua !...",
-      "investido": 37.94,
+      "produto": "Post do Instagram: “Adeus mangueira velha que...",
+      "investido": 41.14,
       "comissao": 0.0,
       "roi": 0.0,
       "status": "critical"
     },
     {
-      "produto": "Post do Instagram: “Adeus mangueira velha que...",
-      "investido": 41.14,
+      "produto": "Instagram post: #papairesolve - Instale a sua !...",
+      "investido": 37.94,
       "comissao": 0.0,
       "roi": 0.0,
       "status": "critical"
@@ -32,16 +32,16 @@
       "status": "critical"
     },
     {
-      "produto": "cabelo Jumbo hiper X 400 gramas para trança",
+      "produto": "Escova Elétrica de Limpeza 5 em 1 Sem Fio Recarregável Multiuso para Cozinha Banheiro Azulejo",
       "investido": 0.0,
-      "comissao": 0.5997,
+      "comissao": 3.6012,
       "roi": null,
       "status": "warning"
     },
     {
-      "produto": "Escova Elétrica de Limpeza 5 em 1 Sem Fio Recarregável Multiuso para Cozinha Banheiro Azulejo",
+      "produto": "cabelo Jumbo hiper X 400 gramas para trança",
       "investido": 0.0,
-      "comissao": 3.6012,
+      "comissao": 0.5997,
       "roi": null,
       "status": "warning"
     }

@@ -37,6 +37,17 @@
     font-size: 1.5rem; font-weight: 600; }
   .stat .l { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
 
+  .filtro-data { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: var(--card);
+    border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-bottom: 20px; }
+  .filtro-data label { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+  .filtro-data input[type="date"] { font-family: "IBM Plex Sans", sans-serif; font-size: 0.85rem;
+    padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; background: #ffffff; color: var(--text); }
+  .btn-limpar-filtro { font-family: "IBM Plex Sans", sans-serif; font-size: 0.8rem; font-weight: 600;
+    border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; cursor: pointer;
+    background: transparent; color: var(--muted); }
+  .btn-limpar-filtro:hover { background: var(--accent-soft); color: var(--accent-ink); }
+  .filtro-nota { font-size: 0.76rem; color: var(--muted); font-style: italic; margin-left: auto; }
+
   .meta-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px;
     padding: 20px 24px; margin-bottom: 24px; }
   .meta-topo { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
@@ -102,20 +113,29 @@
       <p class="atualizado">Atualizado 12/09/2026</p>
     </header>
 
+    <div class="filtro-data">
+      <label for="filtro-data-de">De</label>
+      <input type="date" id="filtro-data-de">
+      <label for="filtro-data-ate">até</label>
+      <input type="date" id="filtro-data-ate">
+      <button type="button" class="btn-limpar-filtro" id="btn-limpar-filtro-data">Limpar</button>
+      <span class="filtro-nota" id="filtro-nota" hidden>Mostrando só o período selecionado — o gráfico abaixo continua sempre no mês corrente.</span>
+    </div>
+
     <div class="meta-card">
       <div class="meta-topo">
-        <span class="meta-titulo">Meta mensal &middot; R$ 10000</span>
-        <span class="meta-valor">R$ 4.20 (0%)</span>
+        <span class="meta-titulo" id="meta-titulo" data-original="Meta mensal &amp;middot; R$ 10000">Meta mensal &middot; R$ 10000</span>
+        <span class="meta-valor" id="meta-valor" data-original="R$ 4.20 (0%)">R$ 4.20 (0%)</span>
       </div>
-      <div class="barra-bg"><div class="barra-fill" style="width:0.0%"></div></div>
-      <p class="pendente-nota">+ R$ 52.22 pendente na Shopee (pedido ainda não concluído — não entra na meta nem no ROI até confirmar)</p>
+      <div class="barra-bg"><div class="barra-fill" id="barra-fill" data-original-width="0.0%" style="width:0.0%"></div></div>
+      <p class="pendente-nota" id="pendente-nota">+ R$ 25.81 pendente na Shopee (pedido ainda não concluído — não entra na meta nem no ROI até confirmar)</p>
     </div>
 
     <section class="resumo">
-      <div class="stat"><div class="n">R$ 121.99</div><div class="l">Total investido</div></div>
-      <div class="stat"><div class="n">R$ 4.20</div><div class="l">Total em comissão</div></div>
-      <div class="stat"><div class="n">0.0x</div><div class="l">ROI médio (meta: 3x)</div></div>
-      <div class="stat"><div class="n">R$ 1.40</div><div class="l">Comissão média por venda</div></div>
+      <div class="stat"><div class="n" id="stat-investido">R$ 121.99</div><div class="l">Total investido</div></div>
+      <div class="stat"><div class="n" id="stat-comissao">R$ 4.20</div><div class="l">Total em comissão</div></div>
+      <div class="stat"><div class="n" id="stat-roi-medio">0.0x</div><div class="l">ROI médio (meta: 3x)</div></div>
+      <div class="stat"><div class="n" id="stat-comissao-media">R$ 1.40</div><div class="l">Comissão média por venda</div></div>
     </section>
 
     <div class="secao-titulo">Funil da esteira</div>
@@ -182,10 +202,10 @@
     <div class="tabela-scroll">
       <table>
         <thead><tr><th>Produto</th><th>Investido</th><th>Comissão</th><th>ROI</th><th>Status</th></tr></thead>
-        <tbody>
+        <tbody id="tabela-produtos-corpo">
         <tr>
-          <td class="col-nome">Instagram post: #papairesolve - Instale a sua !...</td>
-          <td class="col-num">R$&nbsp;37.94</td>
+          <td class="col-nome">Post do Instagram: “Adeus mangueira velha que...</td>
+          <td class="col-num">R$&nbsp;41.14</td>
           <td class="col-num">R$&nbsp;0.00</td>
           <td class="col-num destaque">0.0x</td>
           <td class="col-status">
@@ -196,8 +216,8 @@
           </td>
         </tr>
         <tr>
-          <td class="col-nome">Post do Instagram: “Adeus mangueira velha que...</td>
-          <td class="col-num">R$&nbsp;41.14</td>
+          <td class="col-nome">Instagram post: #papairesolve - Instale a sua !...</td>
+          <td class="col-num">R$&nbsp;37.94</td>
           <td class="col-num">R$&nbsp;0.00</td>
           <td class="col-num destaque">0.0x</td>
           <td class="col-status">
@@ -220,9 +240,9 @@
           </td>
         </tr>
         <tr>
-          <td class="col-nome">cabelo Jumbo hiper X 400 gramas para trança</td>
+          <td class="col-nome">Escova Elétrica de Limpeza 5 em 1 Sem Fio Recarregável Multiuso para Cozinha Banheiro Azulejo</td>
           <td class="col-num">R$&nbsp;0.00</td>
-          <td class="col-num">R$&nbsp;0.60</td>
+          <td class="col-num">R$&nbsp;3.60</td>
           <td class="col-num destaque">—</td>
           <td class="col-status">
             <span class="status status-warning">
@@ -232,9 +252,9 @@
           </td>
         </tr>
         <tr>
-          <td class="col-nome">Escova Elétrica de Limpeza 5 em 1 Sem Fio Recarregável Multiuso para Cozinha Banheiro Azulejo</td>
+          <td class="col-nome">cabelo Jumbo hiper X 400 gramas para trança</td>
           <td class="col-num">R$&nbsp;0.00</td>
-          <td class="col-num">R$&nbsp;3.60</td>
+          <td class="col-num">R$&nbsp;0.60</td>
           <td class="col-num destaque">—</td>
           <td class="col-status">
             <span class="status status-warning">
@@ -248,5 +268,120 @@
 
     <p class="rodape">Dados de financeiro/investimentos.csv e financeiro/vendas.csv (manuais) + financeiro/vendas_shopee.csv (importado de relatório da Shopee via importar_extratos.py).</p>
   </div>
+
+  <script>
+    var TRANSACOES = [{"tipo": "investimento", "data": "2026-09-06", "produto": "Post do Instagram: ￼Fácil de instalar!...", "valor": 42.91}, {"tipo": "investimento", "data": "2026-09-06", "produto": "Post do Instagram: “Adeus mangueira velha que...", "valor": 41.14}, {"tipo": "investimento", "data": "2026-09-07", "produto": "Instagram post: #papairesolve - Instale a sua !...", "valor": 36.14}, {"tipo": "investimento", "data": "2026-09-06", "produto": "Instagram post: #papairesolve - Instale a sua !...", "valor": 1.8}, {"tipo": "venda", "data": "2026-09-10", "produto": "Escova Elétrica de Limpeza 5 em 1 Sem Fio Recarregável Multiuso para Cozinha Banheiro Azulejo", "valor": 1.8006}, {"tipo": "venda", "data": "2026-09-08", "produto": "Escova Elétrica de Limpeza 5 em 1 Sem Fio Recarregável Multiuso para Cozinha Banheiro Azulejo", "valor": 1.8006}, {"tipo": "venda", "data": "2026-09-07", "produto": "cabelo Jumbo hiper X 400 gramas para trança", "valor": 0.5997}, {"tipo": "pendente", "data": "2026-09-09", "produto": "Bolsa Maternidade Personalizada Primavera Mundo Encantado Menina", "valor": 7.0962}, {"tipo": "pendente", "data": "2026-09-09", "produto": "PROGRESSIVA GLOSS QUIABO HIDRALIZE ou VIVANCE 1LITRO - ALINHAMENTO E HIDRATAÇÃO - LISO COMPLETO", "valor": 3.9582}, {"tipo": "pendente", "data": "2026-09-09", "produto": "Banheira Bebe Suporte Almofada Dobrável Com Termometro Banho Premium", "valor": 10.7958}, {"tipo": "pendente", "data": "2026-09-08", "produto": "Porta Aliança Casamento Personalizado Acrílico Marmorizado Dourado Luxo Com Iniciais e Data Noivos", "valor": 1.6812}, {"tipo": "pendente", "data": "2026-09-07", "produto": "Cabelo Cacheado Bio Orgânico Na Tela Maya Curly 300g 60cm", "valor": 1.647}, {"tipo": "pendente", "data": "2026-09-07", "produto": "Kit 2 Perfurador Furador de Papel Alicate 1 Furo em Metal Aço Resistente MasterPrint", "valor": 0.62955}];
+    var META_MENSAL = 10000.0;
+    var ROI_META = 3.0;
+    var STATUS_JS = {"good": {"cor": "#0ca30c", "rotulo": "Dentro da meta (3x+)"}, "warning": {"cor": "#fab219", "rotulo": "Abaixo da meta"}, "critical": {"cor": "#d03b3b", "rotulo": "No prejuízo"}};
+    var STATUS_ICONE_JS = {"good": "<path d=\"M4 10l4 4 8-8\" stroke=\"currentColor\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>", "warning": "<path d=\"M10 6v6M10 15h.01\" stroke=\"currentColor\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M10 2 1 17h18L10 2z\" stroke=\"currentColor\" stroke-width=\"1.6\" fill=\"none\" stroke-linejoin=\"round\"/>", "critical": "<path d=\"M6 6l8 8M14 6l-8 8\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"/>"};
+
+    function escaparHtml(t) {
+      return String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function statusRoi(roi) {
+      if (roi === null || roi === undefined) return 'warning';
+      if (roi >= ROI_META) return 'good';
+      if (roi >= 1.0) return 'warning';
+      return 'critical';
+    }
+
+    function linhaProdutoHtml(p) {
+      var status = STATUS_JS[p.status];
+      var roiTexto = (p.roi !== null && p.roi !== undefined) ? p.roi.toFixed(1) + 'x' : '\u2014';
+      return '<tr>' +
+        '<td class="col-nome">' + escaparHtml(p.produto) + '</td>' +
+        '<td class="col-num">R$&nbsp;' + p.investido.toFixed(2) + '</td>' +
+        '<td class="col-num">R$&nbsp;' + p.comissao.toFixed(2) + '</td>' +
+        '<td class="col-num destaque">' + roiTexto + '</td>' +
+        '<td class="col-status"><span class="status status-' + p.status + '">' +
+          '<svg width="14" height="14" viewBox="0 0 20 20" fill="none">' + STATUS_ICONE_JS[p.status] + '</svg> ' +
+          status.rotulo + '</span></td>' +
+      '</tr>';
+    }
+
+    function dentroDoIntervalo(data, de, ate) {
+      return (!de || data >= de) && (!ate || data <= ate);
+    }
+
+    function aplicarFiltroData() {
+      var de = document.getElementById('filtro-data-de').value;
+      var ate = document.getElementById('filtro-data-ate').value;
+      var filtroAtivo = !!(de || ate);
+
+      var filtradas = TRANSACOES.filter(function (t) { return dentroDoIntervalo(t.data, de, ate); });
+      var investimentos = filtradas.filter(function (t) { return t.tipo === 'investimento'; });
+      var vendas = filtradas.filter(function (t) { return t.tipo === 'venda'; });
+      var pendentes = filtradas.filter(function (t) { return t.tipo === 'pendente'; });
+
+      var totalInvestido = investimentos.reduce(function (s, i) { return s + i.valor; }, 0);
+      var totalComissao = vendas.reduce(function (s, v) { return s + v.valor; }, 0);
+      var comissaoPendente = pendentes.reduce(function (s, p) { return s + p.valor; }, 0);
+      var roiMedio = totalInvestido > 0 ? totalComissao / totalInvestido : null;
+      var comissaoMedia = vendas.length ? totalComissao / vendas.length : null;
+
+      document.getElementById('stat-investido').textContent = 'R$ ' + totalInvestido.toFixed(2);
+      document.getElementById('stat-comissao').textContent = 'R$ ' + totalComissao.toFixed(2);
+      document.getElementById('stat-roi-medio').textContent = roiMedio !== null ? roiMedio.toFixed(1) + 'x' : '\u2014';
+      document.getElementById('stat-comissao-media').textContent = comissaoMedia !== null ? 'R$ ' + comissaoMedia.toFixed(2) : '\u2014';
+
+      var metaTitulo = document.getElementById('meta-titulo');
+      var metaValor = document.getElementById('meta-valor');
+      var barraFill = document.getElementById('barra-fill');
+      if (filtroAtivo) {
+        metaTitulo.textContent = 'Comissão no período selecionado';
+        var pct = META_MENSAL ? Math.min(totalComissao / META_MENSAL, 1) * 100 : 0;
+        metaValor.textContent = 'R$ ' + totalComissao.toFixed(2) + ' (' + pct.toFixed(0) + '%)';
+        barraFill.style.width = pct.toFixed(1) + '%';
+      } else {
+        metaTitulo.innerHTML = metaTitulo.getAttribute('data-original');
+        metaValor.innerHTML = metaValor.getAttribute('data-original');
+        barraFill.style.width = barraFill.getAttribute('data-original-width');
+      }
+
+      var pendenteNota = document.getElementById('pendente-nota');
+      if (comissaoPendente > 0) {
+        pendenteNota.hidden = false;
+        pendenteNota.textContent = '+ R$ ' + comissaoPendente.toFixed(2) + ' pendente na Shopee (pedido ainda não concluído — não entra na meta nem no ROI até confirmar)';
+      } else {
+        pendenteNota.hidden = true;
+      }
+
+      document.getElementById('filtro-nota').hidden = !filtroAtivo;
+
+      var investidoPorProduto = {};
+      var comissaoPorProduto = {};
+      investimentos.forEach(function (i) { investidoPorProduto[i.produto] = (investidoPorProduto[i.produto] || 0) + i.valor; });
+      vendas.forEach(function (v) { comissaoPorProduto[v.produto] = (comissaoPorProduto[v.produto] || 0) + v.valor; });
+      var produtos = {};
+      Object.keys(investidoPorProduto).forEach(function (p) { produtos[p] = true; });
+      Object.keys(comissaoPorProduto).forEach(function (p) { produtos[p] = true; });
+
+      var linhas = Object.keys(produtos).map(function (produto) {
+        var investido = investidoPorProduto[produto] || 0;
+        var comissao = comissaoPorProduto[produto] || 0;
+        var roi = investido > 0 ? comissao / investido : null;
+        return { produto: produto, investido: investido, comissao: comissao, roi: roi, status: statusRoi(roi) };
+      });
+      linhas.sort(function (a, b) {
+        if ((a.roi === null) !== (b.roi === null)) return a.roi === null ? 1 : -1;
+        return (b.roi || 0) - (a.roi || 0);
+      });
+
+      var corpo = document.getElementById('tabela-produtos-corpo');
+      corpo.innerHTML = linhas.length
+        ? linhas.map(linhaProdutoHtml).join('')
+        : '<tr><td colspan="5" class="vazio">Nenhum investimento ou venda no período selecionado.</td></tr>';
+    }
+
+    document.getElementById('filtro-data-de').addEventListener('change', aplicarFiltroData);
+    document.getElementById('filtro-data-ate').addEventListener('change', aplicarFiltroData);
+    document.getElementById('btn-limpar-filtro-data').addEventListener('click', function () {
+      document.getElementById('filtro-data-de').value = '';
+      document.getElementById('filtro-data-ate').value = '';
+      aplicarFiltroData();
+    });
+  </script>
 </body>
 </html>

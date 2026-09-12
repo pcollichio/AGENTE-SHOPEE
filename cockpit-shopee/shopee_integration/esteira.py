@@ -158,7 +158,7 @@ def _linha(p):
     bloco_narracao = _bloco_texto("Narração (voz de jovem)", p.get("narracao", ""), produto_id, "narracao")
     bloco_legenda = _bloco_texto("Legenda (post)", p.get("legenda", ""), produto_id, "legenda")
     return f"""
-        <tr>
+        <tr data-selecionado-em="{data_sel}" data-status="{p['status']}">
           <td class="col-status">
             <span class="status status-{status['classe']}">
               <svg width="14" height="14" viewBox="0 0 20 20" fill="none">{icone}</svg>
@@ -248,6 +248,16 @@ def gerar_html(esteira_calculada, titulo="Esteira — Agente Shopee"):
 
   .descricao-secao {{ font-size: 0.85rem; color: var(--on-bg-muted); margin: 0 0 18px; max-width: 68ch; }}
 
+  .filtro-data {{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: var(--card);
+    border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; }}
+  .filtro-data label {{ font-size: 0.8rem; font-weight: 600; color: var(--muted); }}
+  .filtro-data input[type="date"] {{ font-family: "IBM Plex Sans", sans-serif; font-size: 0.85rem;
+    padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; background: #ffffff; color: var(--text); }}
+  .btn-limpar-filtro {{ font-family: "IBM Plex Sans", sans-serif; font-size: 0.8rem; font-weight: 600;
+    border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; cursor: pointer;
+    background: transparent; color: var(--muted); margin-left: auto; }}
+  .btn-limpar-filtro:hover {{ background: var(--accent-soft); color: var(--accent-ink); }}
+
   .tabela-scroll {{ overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--card); }}
   table {{ width: 100%; border-collapse: collapse; min-width: 820px; }}
   th, td {{ padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 0.88rem; }}
@@ -336,6 +346,14 @@ def gerar_html(esteira_calculada, titulo="Esteira — Agente Shopee"):
       <div class="stat stat-impulsionado"><div class="n">{contagem.get('impulsionado', 0):02d}</div><div class="l">Impulsionado, aguardando venda</div></div>
       <div class="stat stat-vendido"><div class="n">{contagem.get('vendido', 0):02d}</div><div class="l">Já vendeu</div></div>
     </section>
+
+    <div class="filtro-data">
+      <label for="filtro-data-de">Selecionado de</label>
+      <input type="date" id="filtro-data-de">
+      <label for="filtro-data-ate">até</label>
+      <input type="date" id="filtro-data-ate">
+      <button type="button" class="btn-limpar-filtro" id="btn-limpar-filtro-data">Limpar</button>
+    </div>
 
     <div class="tabela-scroll">
       <table>
@@ -429,7 +447,7 @@ def gerar_html(esteira_calculada, titulo="Esteira — Agente Shopee"):
         (jaPublicado ? ' disabled' : '') +
         ' title="' + (jaPublicado ? 'J\\u00e1 publicado \\u2014 n\\u00e3o d\\u00e1 pra excluir' : 'Remove esse produto da esteira') + '">Excluir</button>';
 
-      return '<tr>' +
+      return '<tr data-selecionado-em="' + dataSel + '" data-status="' + p.status + '">' +
         '<td class="col-status"><span class="status status-' + status.classe + '">' +
           '<svg width="14" height="14" viewBox="0 0 20 20" fill="none">' + icone + '</svg>' + status.rotulo + '</span></td>' +
         '<td class="col-nome"><a href="' + (link || '#') + '" target="_blank" rel="noopener">' + nome + '</a>' + linkHtml + '</td>' +
@@ -519,6 +537,38 @@ def gerar_html(esteira_calculada, titulo="Esteira — Agente Shopee"):
 
     ativarAcoesLinha(document);
 
+    function aplicarFiltroData() {{
+      var de = document.getElementById('filtro-data-de').value;
+      var ate = document.getElementById('filtro-data-ate').value;
+      var contagem = {{ selecionado: 0, impulsionado: 0, vendido: 0 }};
+
+      document.querySelectorAll('#corpo-esteira tr[data-selecionado-em]').forEach(function (linha) {{
+        var data = linha.getAttribute('data-selecionado-em');
+        var dentroDoIntervalo = (!de || data >= de) && (!ate || data <= ate);
+        linha.hidden = !dentroDoIntervalo;
+        if (dentroDoIntervalo) {{
+          var status = linha.getAttribute('data-status');
+          contagem[status] = (contagem[status] || 0) + 1;
+        }}
+      }});
+
+      var elSel = document.querySelector('.stat-selecionado .n');
+      var elImp = document.querySelector('.stat-impulsionado .n');
+      var elVen = document.querySelector('.stat-vendido .n');
+      if (elSel) elSel.textContent = String(contagem.selecionado).padStart(2, '0');
+      if (elImp) elImp.textContent = String(contagem.impulsionado).padStart(2, '0');
+      if (elVen) elVen.textContent = String(contagem.vendido).padStart(2, '0');
+    }}
+
+    document.getElementById('filtro-data-de').addEventListener('change', aplicarFiltroData);
+    document.getElementById('filtro-data-ate').addEventListener('change', aplicarFiltroData);
+    document.getElementById('btn-limpar-filtro-data').addEventListener('click', function () {{
+      document.getElementById('filtro-data-de').value = '';
+      document.getElementById('filtro-data-ate').value = '';
+      aplicarFiltroData();
+    }});
+    aplicarFiltroData();
+
     function renderizarEsteira(itens) {{
       var corpo = document.getElementById('corpo-esteira');
       if (!corpo) return;
@@ -526,16 +576,8 @@ def gerar_html(esteira_calculada, titulo="Esteira — Agente Shopee"):
         ? itens.map(montarLinhaEsteira).join('')
         : '<tr><td colspan="11" class="vazio">Nenhum produto na esteira ainda. Marque produtos no painel e clique em "Salvar seleção na esteira".</td></tr>';
 
-      var contagem = {{ selecionado: 0, impulsionado: 0, vendido: 0 }};
-      itens.forEach(function (p) {{ contagem[p.status] = (contagem[p.status] || 0) + 1; }});
-      var elSel = document.querySelector('.stat-selecionado .n');
-      var elImp = document.querySelector('.stat-impulsionado .n');
-      var elVen = document.querySelector('.stat-vendido .n');
-      if (elSel) elSel.textContent = String(contagem.selecionado).padStart(2, '0');
-      if (elImp) elImp.textContent = String(contagem.impulsionado).padStart(2, '0');
-      if (elVen) elVen.textContent = String(contagem.vendido).padStart(2, '0');
-
       ativarAcoesLinha(corpo);
+      aplicarFiltroData();
     }}
 
     var elAtualizado = document.getElementById('atualizado-em');

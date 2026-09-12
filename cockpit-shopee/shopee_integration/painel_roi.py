@@ -132,6 +132,21 @@ def _grafico_svg(serie):
     </script>"""
 
 
+def _transacoes_json(investimentos, vendas, vendas_pendentes):
+    """Lista crua (data + produto + valor) de investimentos/vendas/pendentes
+    — embutida na página pra recalcular os cards e a tabela de ROI no
+    navegador quando o usuário aplica o filtro de data (pedido do
+    usuário em 12/09), sem precisar de outra chamada ao servidor."""
+    transacoes = []
+    for i in investimentos:
+        transacoes.append({"tipo": "investimento", "data": i["data"], "produto": i["produto"], "valor": i["valor"]})
+    for v in vendas:
+        transacoes.append({"tipo": "venda", "data": v["data"], "produto": v["produto"], "valor": v["valor"]})
+    for p in vendas_pendentes:
+        transacoes.append({"tipo": "pendente", "data": p["data"], "produto": p["produto"], "valor": p["valor"]})
+    return json.dumps(transacoes, ensure_ascii=False)
+
+
 def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard — Agente Shopee"):
     vendas_pendentes = vendas_pendentes or []
     resumo = roi_calc.calcular_resumo(investimentos, vendas, vendas_pendentes)
@@ -160,13 +175,6 @@ def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard �
 
     comissao_media_venda = (resumo["total_comissao"] / len(vendas)) if vendas else None
     comissao_media_texto = f"R$ {comissao_media_venda:.2f}" if comissao_media_venda is not None else "—"
-
-    pendente_html = ""
-    if resumo["comissao_pendente"] > 0:
-        pendente_html = (
-            f'<p class="pendente-nota">+ R$ {resumo["comissao_pendente"]:.2f} pendente '
-            f'na Shopee (pedido ainda não concluído — não entra na meta nem no ROI até confirmar)</p>'
-        )
 
     return f"""<!doctype html>
 <html lang="pt-br">
@@ -206,6 +214,17 @@ def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard �
   .stat .n {{ font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums;
     font-size: 1.5rem; font-weight: 600; }}
   .stat .l {{ font-size: 0.75rem; color: var(--muted); margin-top: 4px; }}
+
+  .filtro-data {{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; background: var(--card);
+    border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-bottom: 20px; }}
+  .filtro-data label {{ font-size: 0.8rem; font-weight: 600; color: var(--muted); }}
+  .filtro-data input[type="date"] {{ font-family: "IBM Plex Sans", sans-serif; font-size: 0.85rem;
+    padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; background: #ffffff; color: var(--text); }}
+  .btn-limpar-filtro {{ font-family: "IBM Plex Sans", sans-serif; font-size: 0.8rem; font-weight: 600;
+    border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; cursor: pointer;
+    background: transparent; color: var(--muted); }}
+  .btn-limpar-filtro:hover {{ background: var(--accent-soft); color: var(--accent-ink); }}
+  .filtro-nota {{ font-size: 0.76rem; color: var(--muted); font-style: italic; margin-left: auto; }}
 
   .meta-card {{ background: var(--card); border: 1px solid var(--border); border-radius: 10px;
     padding: 20px 24px; margin-bottom: 24px; }}
@@ -265,20 +284,29 @@ def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard �
       <p class="atualizado">Atualizado {date.today().strftime('%d/%m/%Y')}</p>
     </header>
 
+    <div class="filtro-data">
+      <label for="filtro-data-de">De</label>
+      <input type="date" id="filtro-data-de">
+      <label for="filtro-data-ate">até</label>
+      <input type="date" id="filtro-data-ate">
+      <button type="button" class="btn-limpar-filtro" id="btn-limpar-filtro-data">Limpar</button>
+      <span class="filtro-nota" id="filtro-nota" hidden>Mostrando só o período selecionado — o gráfico abaixo continua sempre no mês corrente.</span>
+    </div>
+
     <div class="meta-card">
       <div class="meta-topo">
-        <span class="meta-titulo">Meta mensal &middot; R$ {resumo['meta_mensal']:.0f}</span>
-        <span class="meta-valor">R$ {resumo['comissao_mes_atual']:.2f} ({progresso_pct:.0f}%)</span>
+        <span class="meta-titulo" id="meta-titulo" data-original="Meta mensal &amp;middot; R$ {resumo['meta_mensal']:.0f}">Meta mensal &middot; R$ {resumo['meta_mensal']:.0f}</span>
+        <span class="meta-valor" id="meta-valor" data-original="R$ {resumo['comissao_mes_atual']:.2f} ({progresso_pct:.0f}%)">R$ {resumo['comissao_mes_atual']:.2f} ({progresso_pct:.0f}%)</span>
       </div>
-      <div class="barra-bg"><div class="barra-fill" style="width:{progresso_pct:.1f}%"></div></div>
-      {pendente_html}
+      <div class="barra-bg"><div class="barra-fill" id="barra-fill" data-original-width="{progresso_pct:.1f}%" style="width:{progresso_pct:.1f}%"></div></div>
+      <p class="pendente-nota" id="pendente-nota"{' hidden' if resumo['comissao_pendente'] <= 0 else ''}>+ R$ {resumo['comissao_pendente']:.2f} pendente na Shopee (pedido ainda não concluído — não entra na meta nem no ROI até confirmar)</p>
     </div>
 
     <section class="resumo">
-      <div class="stat"><div class="n">R$ {resumo['total_investido']:.2f}</div><div class="l">Total investido</div></div>
-      <div class="stat"><div class="n">R$ {resumo['total_comissao']:.2f}</div><div class="l">Total em comissão</div></div>
-      <div class="stat"><div class="n">{roi_medio_texto}</div><div class="l">ROI médio (meta: 3x)</div></div>
-      <div class="stat"><div class="n">{comissao_media_texto}</div><div class="l">Comissão média por venda</div></div>
+      <div class="stat"><div class="n" id="stat-investido">R$ {resumo['total_investido']:.2f}</div><div class="l">Total investido</div></div>
+      <div class="stat"><div class="n" id="stat-comissao">R$ {resumo['total_comissao']:.2f}</div><div class="l">Total em comissão</div></div>
+      <div class="stat"><div class="n" id="stat-roi-medio">{roi_medio_texto}</div><div class="l">ROI médio (meta: 3x)</div></div>
+      <div class="stat"><div class="n" id="stat-comissao-media">{comissao_media_texto}</div><div class="l">Comissão média por venda</div></div>
     </section>
 
     <div class="secao-titulo">Funil da esteira</div>
@@ -296,12 +324,127 @@ def gerar_html(investimentos, vendas, vendas_pendentes=None, titulo="Dashboard �
     <div class="tabela-scroll">
       <table>
         <thead><tr><th>Produto</th><th>Investido</th><th>Comissão</th><th>ROI</th><th>Status</th></tr></thead>
-        <tbody>{linhas_produtos}</tbody>
+        <tbody id="tabela-produtos-corpo">{linhas_produtos}</tbody>
       </table>
     </div>
 
     <p class="rodape">Dados de financeiro/investimentos.csv e financeiro/vendas.csv (manuais) + financeiro/vendas_shopee.csv (importado de relatório da Shopee via importar_extratos.py).</p>
   </div>
+
+  <script>
+    var TRANSACOES = {_transacoes_json(investimentos, vendas, vendas_pendentes)};
+    var META_MENSAL = {resumo['meta_mensal']};
+    var ROI_META = {roi_calc.ROI_META};
+    var STATUS_JS = {json.dumps(STATUS, ensure_ascii=False)};
+    var STATUS_ICONE_JS = {json.dumps(STATUS_ICONE, ensure_ascii=False)};
+
+    function escaparHtml(t) {{
+      return String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }}
+
+    function statusRoi(roi) {{
+      if (roi === null || roi === undefined) return 'warning';
+      if (roi >= ROI_META) return 'good';
+      if (roi >= 1.0) return 'warning';
+      return 'critical';
+    }}
+
+    function linhaProdutoHtml(p) {{
+      var status = STATUS_JS[p.status];
+      var roiTexto = (p.roi !== null && p.roi !== undefined) ? p.roi.toFixed(1) + 'x' : '\\u2014';
+      return '<tr>' +
+        '<td class="col-nome">' + escaparHtml(p.produto) + '</td>' +
+        '<td class="col-num">R$&nbsp;' + p.investido.toFixed(2) + '</td>' +
+        '<td class="col-num">R$&nbsp;' + p.comissao.toFixed(2) + '</td>' +
+        '<td class="col-num destaque">' + roiTexto + '</td>' +
+        '<td class="col-status"><span class="status status-' + p.status + '">' +
+          '<svg width="14" height="14" viewBox="0 0 20 20" fill="none">' + STATUS_ICONE_JS[p.status] + '</svg> ' +
+          status.rotulo + '</span></td>' +
+      '</tr>';
+    }}
+
+    function dentroDoIntervalo(data, de, ate) {{
+      return (!de || data >= de) && (!ate || data <= ate);
+    }}
+
+    function aplicarFiltroData() {{
+      var de = document.getElementById('filtro-data-de').value;
+      var ate = document.getElementById('filtro-data-ate').value;
+      var filtroAtivo = !!(de || ate);
+
+      var filtradas = TRANSACOES.filter(function (t) {{ return dentroDoIntervalo(t.data, de, ate); }});
+      var investimentos = filtradas.filter(function (t) {{ return t.tipo === 'investimento'; }});
+      var vendas = filtradas.filter(function (t) {{ return t.tipo === 'venda'; }});
+      var pendentes = filtradas.filter(function (t) {{ return t.tipo === 'pendente'; }});
+
+      var totalInvestido = investimentos.reduce(function (s, i) {{ return s + i.valor; }}, 0);
+      var totalComissao = vendas.reduce(function (s, v) {{ return s + v.valor; }}, 0);
+      var comissaoPendente = pendentes.reduce(function (s, p) {{ return s + p.valor; }}, 0);
+      var roiMedio = totalInvestido > 0 ? totalComissao / totalInvestido : null;
+      var comissaoMedia = vendas.length ? totalComissao / vendas.length : null;
+
+      document.getElementById('stat-investido').textContent = 'R$ ' + totalInvestido.toFixed(2);
+      document.getElementById('stat-comissao').textContent = 'R$ ' + totalComissao.toFixed(2);
+      document.getElementById('stat-roi-medio').textContent = roiMedio !== null ? roiMedio.toFixed(1) + 'x' : '\\u2014';
+      document.getElementById('stat-comissao-media').textContent = comissaoMedia !== null ? 'R$ ' + comissaoMedia.toFixed(2) : '\\u2014';
+
+      var metaTitulo = document.getElementById('meta-titulo');
+      var metaValor = document.getElementById('meta-valor');
+      var barraFill = document.getElementById('barra-fill');
+      if (filtroAtivo) {{
+        metaTitulo.textContent = 'Comissão no período selecionado';
+        var pct = META_MENSAL ? Math.min(totalComissao / META_MENSAL, 1) * 100 : 0;
+        metaValor.textContent = 'R$ ' + totalComissao.toFixed(2) + ' (' + pct.toFixed(0) + '%)';
+        barraFill.style.width = pct.toFixed(1) + '%';
+      }} else {{
+        metaTitulo.innerHTML = metaTitulo.getAttribute('data-original');
+        metaValor.innerHTML = metaValor.getAttribute('data-original');
+        barraFill.style.width = barraFill.getAttribute('data-original-width');
+      }}
+
+      var pendenteNota = document.getElementById('pendente-nota');
+      if (comissaoPendente > 0) {{
+        pendenteNota.hidden = false;
+        pendenteNota.textContent = '+ R$ ' + comissaoPendente.toFixed(2) + ' pendente na Shopee (pedido ainda não concluído — não entra na meta nem no ROI até confirmar)';
+      }} else {{
+        pendenteNota.hidden = true;
+      }}
+
+      document.getElementById('filtro-nota').hidden = !filtroAtivo;
+
+      var investidoPorProduto = {{}};
+      var comissaoPorProduto = {{}};
+      investimentos.forEach(function (i) {{ investidoPorProduto[i.produto] = (investidoPorProduto[i.produto] || 0) + i.valor; }});
+      vendas.forEach(function (v) {{ comissaoPorProduto[v.produto] = (comissaoPorProduto[v.produto] || 0) + v.valor; }});
+      var produtos = {{}};
+      Object.keys(investidoPorProduto).forEach(function (p) {{ produtos[p] = true; }});
+      Object.keys(comissaoPorProduto).forEach(function (p) {{ produtos[p] = true; }});
+
+      var linhas = Object.keys(produtos).map(function (produto) {{
+        var investido = investidoPorProduto[produto] || 0;
+        var comissao = comissaoPorProduto[produto] || 0;
+        var roi = investido > 0 ? comissao / investido : null;
+        return {{ produto: produto, investido: investido, comissao: comissao, roi: roi, status: statusRoi(roi) }};
+      }});
+      linhas.sort(function (a, b) {{
+        if ((a.roi === null) !== (b.roi === null)) return a.roi === null ? 1 : -1;
+        return (b.roi || 0) - (a.roi || 0);
+      }});
+
+      var corpo = document.getElementById('tabela-produtos-corpo');
+      corpo.innerHTML = linhas.length
+        ? linhas.map(linhaProdutoHtml).join('')
+        : '<tr><td colspan="5" class="vazio">Nenhum investimento ou venda no período selecionado.</td></tr>';
+    }}
+
+    document.getElementById('filtro-data-de').addEventListener('change', aplicarFiltroData);
+    document.getElementById('filtro-data-ate').addEventListener('change', aplicarFiltroData);
+    document.getElementById('btn-limpar-filtro-data').addEventListener('click', function () {{
+      document.getElementById('filtro-data-de').value = '';
+      document.getElementById('filtro-data-ate').value = '';
+      aplicarFiltroData();
+    }});
+  </script>
 </body>
 </html>
 """

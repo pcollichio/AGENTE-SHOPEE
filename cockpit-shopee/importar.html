@@ -45,25 +45,12 @@
     background: #ffffff; color: var(--text);
   }
   .campo input:focus { outline: 2px solid var(--focus); outline-offset: 1px; }
-  .linha-dupla { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
   .btn-gerar { font-family: "IBM Plex Sans", sans-serif; font-size: 0.88rem; font-weight: 600;
     background: var(--accent); color: #fff; border: none; padding: 11px 20px; border-radius: 7px;
     cursor: pointer; margin-top: 6px; }
   .btn-gerar:hover { background: var(--accent-ink); }
-
-  .resultado { margin-top: 18px; display: none; }
-  .resultado.visivel { display: block; }
-  .resultado-linha {
-    font-family: "IBM Plex Mono", monospace; font-size: 0.85rem; background: #f7f3f1;
-    border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px;
-    word-break: break-all; margin-bottom: 10px;
-  }
-  .btn-copiar { font-family: "IBM Plex Sans", sans-serif; font-size: 0.82rem; font-weight: 600;
-    background: transparent; color: var(--accent-ink); border: 1px solid var(--accent-ink);
-    padding: 8px 16px; border-radius: 6px; cursor: pointer; }
-  .btn-copiar:hover { background: var(--accent-soft); }
-  .btn-copiar.copiado { color: var(--sucesso); border-color: var(--sucesso); }
+  .btn-gerar:disabled { opacity: 0.5; cursor: not-allowed; }
 
   .instrucao { font-size: 0.82rem; color: var(--on-bg-muted); margin-top: 12px; line-height: 1.5; }
   .instrucao a { color: var(--on-bg); }
@@ -93,71 +80,8 @@
     <header class="cabecalho">
       <p class="eyebrow">Agente Shopee</p>
       <h1>Importar dados</h1>
-      <p class="subtitulo">Preenche o formulário, copia a linha gerada e cola no arquivo certo do GitHub. Sem precisar me chamar toda vez.</p>
+      <p class="subtitulo">Envia o arquivo de vendas ou de anúncios — é a única forma de importar dados por aqui.</p>
     </header>
-
-    <section class="cartao">
-      <h2>Registrar investimento (impulsionamento)</h2>
-      <p class="destino">Vai para <code>financeiro/investimentos.csv</code></p>
-      <div class="linha-dupla">
-        <div class="campo">
-          <label for="inv-data">Data</label>
-          <input type="date" id="inv-data">
-        </div>
-        <div class="campo">
-          <label for="inv-valor">Valor investido (R$)</label>
-          <input type="number" id="inv-valor" step="0.01" placeholder="20.00">
-        </div>
-      </div>
-      <div class="campo">
-        <label for="inv-produto">Produto ou campanha</label>
-        <input type="text" id="inv-produto" placeholder="Sifão Ajustável Universal">
-      </div>
-      <div class="campo">
-        <label for="inv-obs">Observação (opcional)</label>
-        <input type="text" id="inv-obs" placeholder="Impulsionamento post Instagram">
-      </div>
-      <button class="btn-gerar" onclick="gerarLinha('inv')">Gerar linha</button>
-      <div class="resultado" id="inv-resultado">
-        <div class="resultado-linha" id="inv-linha"></div>
-        <button class="btn-copiar" id="inv-btn-copiar" onclick="copiar('inv')">Copiar linha</button>
-      </div>
-    </section>
-
-    <section class="cartao">
-      <h2>Registrar venda (comissão confirmada)</h2>
-      <p class="destino">Vai para <code>financeiro/vendas.csv</code></p>
-      <div class="linha-dupla">
-        <div class="campo">
-          <label for="ven-data">Data</label>
-          <input type="date" id="ven-data">
-        </div>
-        <div class="campo">
-          <label for="ven-valor">Comissão recebida (R$)</label>
-          <input type="number" id="ven-valor" step="0.01" placeholder="15.50">
-        </div>
-      </div>
-      <div class="campo">
-        <label for="ven-produto">Produto</label>
-        <input type="text" id="ven-produto" placeholder="Sifão Ajustável Universal">
-      </div>
-      <div class="campo">
-        <label for="ven-obs">Observação (opcional)</label>
-        <input type="text" id="ven-obs" placeholder="Confirmado no painel Shopee">
-      </div>
-      <button class="btn-gerar" onclick="gerarLinha('ven')">Gerar linha</button>
-      <div class="resultado" id="ven-resultado">
-        <div class="resultado-linha" id="ven-linha"></div>
-        <button class="btn-copiar" id="ven-btn-copiar" onclick="copiar('ven')">Copiar linha</button>
-      </div>
-    </section>
-
-    <p class="instrucao">
-      <b>Como colar no GitHub:</b> abra o arquivo (<code>financeiro/investimentos.csv</code> ou
-      <code>financeiro/vendas.csv</code>) no repositório, clique no ícone de lápis (editar),
-      clique no final da última linha, aperte Enter para pular linha, cole (Ctrl+V ou Cmd+V),
-      e clique em "Commit changes" no final da página.
-    </p>
 
     <section class="cartao">
       <h2>Importar arquivo (relatório de vendas ou de anúncios)</h2>
@@ -178,50 +102,10 @@
       <p class="instrucao" id="arq-status"></p>
     </section>
 
-    <p class="rodape">As duas primeiras seções geram só o texto da linha — nada é salvo automaticamente. A seção de arquivo envia direto pro GitHub.</p>
+    <p class="rodape">O arquivo enviado vai direto pro GitHub.</p>
   </div>
 
   <script>
-    function escaparCsv(valor) {
-      valor = (valor || '').trim();
-      if (valor.includes(',') || valor.includes('"')) {
-        return '"' + valor.replace(/"/g, '""') + '"';
-      }
-      return valor;
-    }
-
-    function gerarLinha(prefixo) {
-      var data = document.getElementById(prefixo + '-data').value;
-      var produto = document.getElementById(prefixo + '-produto').value;
-      var valor = document.getElementById(prefixo + '-valor').value;
-      var obs = document.getElementById(prefixo + '-obs').value;
-
-      if (!data || !produto || !valor) {
-        alert('Preenche pelo menos a data, o produto e o valor.');
-        return;
-      }
-
-      var valorNum = parseFloat(valor).toFixed(2);
-      var linha = [data, escaparCsv(produto), valorNum, escaparCsv(obs)].join(',');
-
-      document.getElementById(prefixo + '-linha').textContent = linha;
-      document.getElementById(prefixo + '-resultado').classList.add('visivel');
-      var btn = document.getElementById(prefixo + '-btn-copiar');
-      btn.textContent = 'Copiar linha';
-      btn.classList.remove('copiado');
-    }
-
-    function copiar(prefixo) {
-      var texto = document.getElementById(prefixo + '-linha').textContent;
-      var btn = document.getElementById(prefixo + '-btn-copiar');
-      navigator.clipboard.writeText(texto).then(function () {
-        btn.textContent = 'Copiado!';
-        btn.classList.add('copiado');
-      }).catch(function () {
-        alert('Não consegui copiar automaticamente. Seleciona o texto acima e copia manualmente.');
-      });
-    }
-
     (function () {
       var campoArquivo = document.getElementById('arq-arquivo');
       var campoTipo = document.getElementById('arq-tipo');

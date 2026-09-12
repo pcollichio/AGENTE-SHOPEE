@@ -20,10 +20,30 @@ pode ir na query quando há um cursor de verdade) que travava toda
 busca antes disso. Testado de ponta a ponta: a mesma venda já
 confirmada manualmente (R$1,80, "Escova Elétrica de Limpeza...") veio
 certinha pela API.
+
+NOTA (12/09): achado em produção, no primeiro dia rodando de verdade,
+um bug sério — o `conversionId` que a API devolve pra um pedido NÃO é
+o mesmo valor que está na coluna do relatório exportado que
+`importar_extratos.py` lê pro import manual (mesma venda, dois
+"IDs" diferentes, um alfanumérico curto tipo "260909H7BDM6RH" no
+relatório exportado, outro numérico longo tipo "242592015131160" na
+API). Resultado: o dedupe por `conversion_id` sozinho não pegava, e a
+sincronização automática recriava, com um ID novo, toda venda que já
+tinha sido importada manualmente — dobrando `comissao_pendente` no
+primeiro dia (ver `HISTORICO.md`, 12/09, pro relato completo e a
+limpeza feita nos CSVs). Corrigido acrescentando um dedupe por
+"assinatura" (data + produto + valor, dentro do MESMO arquivo/status)
+além do `conversion_id` — pega o duplicado mesmo com ID diferente, sem
+bloquear uma venda que realmente gradua de pendente pra confirmada
+(essa comparação continua sendo feita à parte, em
+`roi.carregar_vendas_pendentes()`, também corrigida pra usar a mesma
+assinatura).
 """
 
+import csv
 import sys
 import time
+import unicodedata
 from datetime import datetime, timedelta, timezone
 
 from shopee_integration import client, config
@@ -50,6 +70,37 @@ STATUS_PENDENTES = ["pending"]
 def _status_bate(status, termos):
     status = (status or "").lower()
     return any(termo in status for termo in termos)
+
+
+def _normalizar_produto(nome):
+    nome = unicodedata.normalize("NFKD", nome or "")
+    nome = "".join(c for c in nome if not unicodedata.combining(c))
+    return nome.strip().lower()
+
+
+def _assinatura(data, produto, valor):
+    try:
+        valor = round(float(valor), 2)
+    except (TypeError, ValueError):
+        valor = 0.0
+    return (data, _normalizar_produto(produto), valor)
+
+
+def _assinaturas_existentes(caminho, campo_valor):
+    """Lê um CSV de financeiro/ e devolve o conjunto de assinaturas
+    (data, produto normalizado, valor) já presentes nele — usado pra
+    pegar duplicata mesmo quando o `conversion_id` é diferente (ver NOTA
+    no topo do arquivo: a API e o relatório exportado usam esquemas de
+    ID diferentes pro mesmo pedido)."""
+    try:
+        with open(caminho, encoding="utf-8", newline="") as f:
+            linhas = list(csv.DictReader(f))
+    except FileNotFoundError:
+        return set()
+    return {
+        _assinatura(l.get("data", "").strip(), l.get("produto", ""), l.get(campo_valor))
+        for l in linhas
+    }
 
 
 def buscar_todas_conversoes(inicio_ts, fim_ts):
@@ -136,9 +187,19 @@ def main():
 
     ja_confirmadas = _ids_ja_importados(CAMINHO_VENDAS_SHOPEE, "conversion_id")
     ja_pendentes = _ids_ja_importados(CAMINHO_VENDAS_PENDENTES, "conversion_id")
+    assinaturas_confirmadas = _assinaturas_existentes(CAMINHO_VENDAS_SHOPEE, "comissao_recebida")
+    assinaturas_pendentes = _assinaturas_existentes(CAMINHO_VENDAS_PENDENTES, "comissao_prevista")
 
-    novas_confirmadas = [l for l in confirmadas if l[3] not in ja_confirmadas]
-    novas_pendentes = [l for l in pendentes if l[3] not in ja_pendentes]
+    novas_confirmadas = [
+        l for l in confirmadas
+        if l[3] not in ja_confirmadas
+        and _assinatura(l[0], l[1], l[2]) not in assinaturas_confirmadas
+    ]
+    novas_pendentes = [
+        l for l in pendentes
+        if l[3] not in ja_pendentes
+        and _assinatura(l[0], l[1], l[2]) not in assinaturas_pendentes
+    ]
 
     if novas_confirmadas:
         _acrescentar_csv(

@@ -6,6 +6,7 @@ usados pelo painel de ROI.
 
 import csv
 import json
+import unicodedata
 from collections import defaultdict
 from datetime import date, datetime
 
@@ -32,6 +33,21 @@ def _float_seguro(valor):
         return float(valor)
     except (TypeError, ValueError):
         return 0.0
+
+
+def _normalizar_produto(nome):
+    nome = unicodedata.normalize("NFKD", nome or "")
+    nome = "".join(c for c in nome if not unicodedata.combining(c))
+    return nome.strip().lower()
+
+
+def _assinatura_venda(data, produto, valor):
+    """(data, produto normalizado, valor arredondado) — identifica a
+    mesma venda real mesmo quando veio por fontes diferentes com
+    `conversion_id` diferente entre si (ver NOTA em
+    `sincronizar_vendas.py`, 12/09: a API da Shopee e o relatório
+    exportado usam esquemas de ID diferentes pro mesmo pedido)."""
+    return (data, _normalizar_produto(produto), round(_float_seguro(valor), 2))
 
 
 def carregar_investimentos(caminho=CAMINHO_INVESTIMENTOS):
@@ -92,18 +108,28 @@ def carregar_vendas_pendentes(caminho=CAMINHO_VENDAS_PENDENTES, caminho_shopee=C
     pendente pra confirmado (a sincronização via API roda todo dia,
     então isso acontece o tempo todo) é excluído daqui.
 
-    NOTA (12/09): a exclusão casa por (`conversion_id`, `produto`), não
-    só `conversion_id` — validado contra a API real que um mesmo
-    `conversion_id` pode agrupar mais de um produto/pedido com status
-    diferentes entre si (um confirmado, outro ainda pendente). Casando
-    só por `conversion_id` faria o produto ainda pendente sumir do
-    Dashboard assim que QUALQUER produto daquele mesmo conversion_id
-    confirmasse — contando a menos o que ainda está em trânsito."""
+    NOTA (12/09): a exclusão casa por (`conversion_id`, `produto`) OU
+    por assinatura (data + produto normalizado + valor) — validado
+    contra a API real que um mesmo `conversion_id` pode agrupar mais de
+    um produto/pedido com status diferentes entre si (um confirmado,
+    outro ainda pendente), então casar só por `conversion_id` faria o
+    produto ainda pendente sumir assim que QUALQUER produto daquele
+    mesmo conversion_id confirmasse. Além disso, achado em produção no
+    mesmo dia que a API e o relatório exportado dão `conversion_id`
+    DIFERENTE pro mesmo pedido real — só casando também por assinatura
+    (sem depender do ID) que o pedido que já confirmou por um caminho
+    some da lista de pendente do outro. Ver `sincronizar_vendas.py` e
+    `HISTORICO.md` (12/09)."""
     linhas = _ler_csv(caminho)
-    ja_confirmados = {
+    linhas_confirmadas = _ler_csv(caminho_shopee)
+    ja_confirmados_por_id = {
         (l.get("conversion_id"), l.get("produto", "").strip())
-        for l in _ler_csv(caminho_shopee)
+        for l in linhas_confirmadas
         if l.get("conversion_id")
+    }
+    ja_confirmados_por_assinatura = {
+        _assinatura_venda(l.get("data", "").strip(), l.get("produto", ""), l.get("comissao_recebida"))
+        for l in linhas_confirmadas
     }
     return [
         {
@@ -114,7 +140,9 @@ def carregar_vendas_pendentes(caminho=CAMINHO_VENDAS_PENDENTES, caminho_shopee=C
         }
         for l in linhas
         if l.get("data")
-        and (l.get("conversion_id"), l.get("produto", "").strip()) not in ja_confirmados
+        and (l.get("conversion_id"), l.get("produto", "").strip()) not in ja_confirmados_por_id
+        and _assinatura_venda(l.get("data", "").strip(), l.get("produto", ""), l.get("comissao_prevista"))
+        not in ja_confirmados_por_assinatura
     ]
 
 

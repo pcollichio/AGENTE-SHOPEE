@@ -103,7 +103,11 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
   pra lista completa do que mudou e do que ficou de propósito.
 - `importar.html` tem um campo de **upload de arquivo** (relatório de
   vendas Shopee, extrato/print do Meta Ads) — envia pro GitHub em
-  `financeiro/importados/` via `api/importar_arquivo.js`. Desde 10/09,
+  `financeiro/importados/` via `api/importar_arquivo.js`. **É a única
+  forma de importar dados nessa página** — removidas em 12/09 (pedido
+  do usuário: "isso não vai acontecer") as duas seções que só geravam
+  uma linha de CSV pro usuário copiar e colar manualmente no GitHub.
+  Desde 10/09,
   os dois formatos reais já são conhecidos e têm parser:
   `importar_extratos.py caminho/do/arquivo` (`.csv` = comissões da
   Shopee, `.xlsx` = Gerenciador de Anúncios da Meta) — rode com esse
@@ -143,9 +147,18 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
   (`conversion_id`, `produto`) que já apareça em `vendas_shopee.csv` —
   casado pelos dois campos, não só `conversion_id` sozinho, porque a
   validação real em 12/09 achou casos de um mesmo `conversion_id` com
-  mais de um produto e status diferentes entre si. Ver
-  `financeiro/README.md` e `HISTORICO.md` (11/09 e 12/09) pros
-  detalhes.
+  mais de um produto e status diferentes entre si. **Achado em produção
+  no primeiro dia rodando de verdade (12/09), mais sério**: a API e o
+  relatório exportado dão `conversion_id` DIFERENTE pro MESMO pedido
+  real — isso passou direto pelo dedupe por ID e dobrou
+  `comissao_pendente` (R$26,41 → R$52,22) no primeiro dia. Corrigido
+  com um segundo critério de dedupe por assinatura (data + produto
+  normalizado + valor, sem depender do ID) em `sincronizar_vendas.py`
+  (dentro do mesmo arquivo/status) e em
+  `roi.carregar_vendas_pendentes()` (contra `vendas_shopee.csv`);
+  CSVs já commitados foram limpos manualmente (6 linhas duplicadas
+  removidas de `vendas_pendentes.csv`). Ver `financeiro/README.md` e
+  `HISTORICO.md` (11/09 e 12/09) pros detalhes.
 - `cockpit-shopee/financeiro/resumo.json` — resumo do ROI em JSON
   (inclui `comissao_pendente`, desde 10/09).
 - `cockpit-shopee/esteira.json` — lista viva (acumulada, não
@@ -166,7 +179,9 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
   no painel só aparecia aqui no dia seguinte ("a esteira não está
   atualizando", reportado pelo usuário). Se a busca falhar (ex: página
   estática do GitHub Pages, sem Vercel), mantém o último snapshot
-  gerado e avisa no lugar de "Atualizado". Mostra status financeiro
+  gerado e avisa no lugar de "Atualizado". Desde 12/09, tem um filtro
+  por data (De/Até, com Limpar) que esconde linhas fora do intervalo e
+  recalcula os 3 contadores do topo só com o que está visível. Mostra status financeiro
   calculado automaticamente (selecionado / impulsionado / vendido),
   cruzando `esteira.json` com o financeiro, um seletor manual de etapa
   de conteúdo por produto, o link de afiliado com botão de copiar
@@ -238,9 +253,22 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
   legenda dos Reels" abaixo — `GANCHOS_ROTEIRO` (por categoria de
   nicho) foi removido e substituído por um roteiro genérico, que serve
   pra qualquer produto.
-- Links publicados: GitHub Pages em
-  `https://pcollichio.github.io/AGENTE-SHOPEE/cockpit-shopee/cockpit.html`
-  (e `/painel.html`, `/painel_roi.html`, etc.)
+- **Link principal a usar/enviar pro usuário (corrigido em 12/09):
+  `https://agente-shopee.vercel.app/cockpit.html`** — não o do GitHub
+  Pages. Os dois hospedam o mesmo HTML, mas o chat, a esteira ao vivo,
+  salvar seleção e importar arquivo chamam caminho relativo
+  (`/api/chat`, `/api/esteira` etc.), que só existe na Vercel; abertos
+  a partir do GitHub Pages, esses `fetch` caem no próprio domínio do
+  GitHub Pages (sem função nenhuma lá) e falham silenciosamente — foi
+  exatamente isso que o usuário viu como "o agente não está
+  funcionando" em 12/09 (a API em si respondia normal quando testada
+  direto na Vercel via `verificar-conexao.yml`; só o link que ele tinha
+  em mãos, do GitHub Pages, é que não tinha como falar com ela). GitHub
+  Pages em `https://pcollichio.github.io/AGENTE-SHOPEE/cockpit-shopee/cockpit.html`
+  continua existindo como espelho estático (útil se a Vercel cair), mas
+  nele o chat, a esteira ao vivo, seleção e importação de arquivo não
+  funcionam — só a leitura das páginas geradas (leva, ROI, esteira do
+  último snapshot).
 
 ## Padrão de narração e legenda dos Reels (fixado em 31/08, generalizado e sem persona em 10/09, sem hashtag de marca em 11/09)
 

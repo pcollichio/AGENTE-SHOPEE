@@ -894,3 +894,85 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   gerar roteiro (pra gravação) e legenda; gravar, editar e publicar o
   vídeo continuam manuais, do jeito que já era (ver guia embutido em
   `esteira.html`). Nenhuma integração de vídeo por IA foi implementada.
+
+- **Bug sério achado e corrigido no primeiro dia rodando a
+  sincronização automática de vendas de verdade.** O usuário reportou
+  "estamos com valor menor no relatório" mostrando um print do
+  Insights da própria Shopee (R$28,2 de comissão estimada nos últimos
+  30 dias) — comparando com isso, investigado o que `leva-diaria.yml`
+  tinha rodado hoje de manhã (primeira vez com `sincronizar_vendas.py`
+  ativo de verdade). Achado o oposto do que o usuário via no Dashboard
+  (número pequeno demais na comissão confirmada) **e** um problema
+  real na direção contrária: `comissao_pendente` tinha praticamente
+  DOBRADO (de R$26,41 pra R$52,22) porque a API da Shopee devolve um
+  `conversionId` DIFERENTE do que está na coluna do relatório
+  exportado pra exatamente o mesmo pedido (confirmado comparando
+  produto+data+valor idênticos sob dois IDs diferentes — ex:
+  "Bolsa Maternidade..." de R$7,0962 em 09/09 aparecia com
+  `conversion_id` `260910KGMRWK3Q` (import manual) E `242670712127647`
+  (sincronização via API)). Como o dedupe de `sincronizar_vendas.py`
+  só olhava `conversion_id`, toda venda pendente já importada
+  manualmente foi recriada com ID novo, dobrando o valor. Um caso
+  ("cabelo Jumbo hiper X...") também ficou contado ao mesmo tempo como
+  pendente (linha antiga, manual) E confirmado (linha nova, API) — uma
+  venda genuinamente graduada de pendente pra confirmada, mas sem a
+  linha antiga ser removida.
+  **Corrigido em dois lugares:** (1) `sincronizar_vendas.py` ganhou um
+  segundo dedupe por "assinatura" (data + produto normalizado + valor,
+  dentro do mesmo arquivo/status) além do `conversion_id`, pra pegar
+  duplicata mesmo com ID diferente sem bloquear uma graduação real de
+  pendente pra confirmado; (2) `roi.carregar_vendas_pendentes()` ganhou
+  o mesmo critério de assinatura (além do `conversion_id` já usado),
+  pra excluir da lista de pendente um pedido que já confirmou por um
+  `conversion_id` diferente. Validado simulando localmente o cenário
+  exato do bug (a mesma venda "recebida de novo" com ID novo — passou
+  a ser bloqueada) e uma venda genuinamente nova (passou normal).
+  **Limpeza manual dos CSVs já commitados**: removidas as 6 linhas
+  duplicadas (Bolsa Maternidade, PROGRESSIVA, Banheira Bebe, Porta
+  Aliança, Cabelo Cacheado, Kit 2 Perfurador) de
+  `financeiro/vendas_pendentes.csv`, voltando `comissao_pendente` pra
+  R$25,81 (a diferença de R$26,41 é a graduação real do "cabelo
+  Jumbo"). `financeiro/vendas_shopee.csv` não precisou de limpeza (as
+  linhas ali são todas de vendas reais distintas). Revalidado de ponta
+  a ponta contra a API real via `testar-conversoes.yml` depois do
+  fix, pra confirmar que não volta a duplicar.
+
+- **Link do cockpit corrigido — a causa real de "o agente não está
+  funcionando".** `verificar-conexao.yml` mostrou que `api/chat`
+  respondia normal (200, resposta real da Anthropic) quando testado
+  direto na URL da Vercel — só que o link que o usuário tinha em mãos
+  (dado nesta mesma sessão, mais cedo) era o do GitHub Pages. O chat
+  (e a esteira ao vivo, salvar seleção, importar arquivo) chamam
+  caminho relativo (`/api/chat` etc.), que só existe na Vercel — aberto
+  a partir do GitHub Pages, o `fetch` cai no próprio domínio do GitHub
+  Pages (sem função nenhuma lá) e falha. `CLAUDE.md` atualizado: o link
+  a usar/enviar pro usuário de agora em diante é
+  `https://agente-shopee.vercel.app/cockpit.html`, não o do GitHub
+  Pages (que continua existindo só como espelho estático, sem chat,
+  esteira ao vivo, seleção ou importação de arquivo funcionando).
+
+- **Filtro por data no Dashboard e na Esteira** (pedido do usuário).
+  `esteira.html`: cada linha ganhou `data-selecionado-em`/`data-status`
+  no `<tr>`; dois campos de data (De/Até) + botão Limpar escondem as
+  linhas fora do intervalo e recalculam os 3 contadores
+  (selecionado/impulsionado/vendido) só com o que está visível — funciona
+  tanto na tabela renderizada pelo servidor quanto na atualizada ao
+  vivo via `/api/esteira`. `painel_roi.html`: a página agora embute a
+  lista crua de investimentos/vendas/pendentes (com data) em JSON;
+  aplicar o filtro recalcula no navegador os 4 cards (investido,
+  comissão, ROI médio, comissão média), a nota de pendente e a tabela
+  de ROI por produto pro período escolhido, e troca "Meta mensal" por
+  "Comissão no período selecionado". O gráfico "Comissão acumulada"
+  continua sempre mostrando o mês corrente (não foi filtrado — refazer
+  a área/linha do SVG em JS pro período arbitrário ficou de fora por
+  ora); um aviso aparece avisando disso quando o filtro está ativo.
+  Testado com Playwright localmente nas duas páginas.
+
+- **`importar.html` simplificado** (pedido do usuário: "deixe somente
+  a opção para importar arquivos... exclua registrar pois isso não vai
+  acontecer"). Removidas as duas seções que só geravam o texto de uma
+  linha de CSV pro usuário copiar e colar manualmente no GitHub
+  ("Registrar investimento" e "Registrar venda") — ficou só a seção de
+  upload de arquivo, que já escreve direto no GitHub via
+  `api/importar_arquivo.js`. Removido o JS morto (`gerarLinha`,
+  `copiar`, `escaparCsv`) e o CSS que só servia às seções removidas.
