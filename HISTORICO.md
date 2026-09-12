@@ -881,3 +881,16 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   `conversion_id`. Testado localmente (`gerar_roi.py`) sem regressão
   nos números já commitados (R$121,99 investido / R$1,80 comissão /
   R$26,41 pendente, iguais a antes).
+
+- **Avaliada e descartada, por ora, a geração automática do vídeo em
+  si (não só do roteiro).** Pesquisadas ferramentas de vídeo por IA
+  que trariam acabamento "impecável" a partir das fotos de produto
+  (HeyGen, Creatify, Arcads — categoria "UGC ad generator"): HeyGen se
+  destacou por ter API self-serve de verdade (pré-paga, sem
+  assinatura, ~US$0,05/segundo, ~R$15–20 por Reel de 60s) e suporte
+  nativo a português do Brasil; Creatify e Arcads prendem o acesso de
+  API real a plano Enterprise/consulta de vendas. **Decisão do
+  usuário: deixar essa etapa de fora** — o agente continua só até
+  gerar roteiro (pra gravação) e legenda; gravar, editar e publicar o
+  vídeo continuam manuais, do jeito que já era (ver guia embutido em
+  `esteira.html`). Nenhuma integração de vídeo por IA foi implementada.
