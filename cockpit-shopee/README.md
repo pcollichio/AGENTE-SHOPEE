@@ -87,10 +87,16 @@ por uma chamada direta.
 - `importar_extratos.py` — importa o relatório de comissões da Shopee
   (.csv) e o relatório do Gerenciador de Anúncios da Meta (.xlsx) pros
   CSVs de `financeiro/`, sem precisar digitar nada à mão (idempotente —
-  rodar de novo não duplica)
-- `sincronizar_vendas.py` — tenta puxar vendas reais direto da Shopee
-  (experimental, ainda sendo validado contra a API — `importar_extratos.py`
-  é o caminho que já funciona, via relatório exportado)
+  rodar de novo não duplica). Continua disponível como opção manual —
+  útil pra puxar histórico de antes da sincronização automática existir,
+  ou se ela ficar fora do ar por um tempo.
+- `sincronizar_vendas.py` — puxa vendas confirmadas e pendentes direto
+  da Shopee (via `conversionReport`) e acrescenta nos mesmos CSVs que
+  `importar_extratos.py` usa, com o mesmo dedupe por `conversion_id` —
+  os dois convivem sem duplicar nada, não importa a ordem em que rodam.
+  Roda sozinho todo dia dentro de `leva-diaria.yml`, antes do ROI ser
+  recalculado; dá pra rodar à mão também. Validado contra a API real em
+  11/09 (ver `HISTORICO.md`).
 - `financeiro/` — onde ficam os dados de investimento e vendas
   (`README.md` ali explica o formato)
 - `produtos_manuais.txt` / `produtos_excluir.txt` — ajustes finos da

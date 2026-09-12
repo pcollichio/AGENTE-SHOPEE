@@ -29,7 +29,7 @@ jobs:
       - name: Instalar dependências
         run: pip install -r requirements.txt
 
-      - name: Rodar sincronizar_vendas.py de verdade (sem commitar o CSV)
+      - name: Rodar sincronizar_vendas.py de verdade (sem commitar nada)
         env:
           SHOPEE_APP_ID: ${{ secrets.SHOPEE_APP_ID }}
           SHOPEE_APP_SECRET: ${{ secrets.SHOPEE_APP_SECRET }}
@@ -37,6 +37,11 @@ jobs:
         run: |
           sed -i "s/^DIAS_PARA_TRAS = .*/DIAS_PARA_TRAS = ${{ inputs.dias }}/" sincronizar_vendas.py
           python3 sincronizar_vendas.py
-          echo "--- Conteudo gerado (financeiro/vendas_shopee.csv) ---"
+          echo "--- financeiro/vendas_shopee.csv (confirmadas) ---"
           cat financeiro/vendas_shopee.csv
-          git diff --stat -- financeiro/vendas_shopee.csv || true
+          echo "--- financeiro/vendas_pendentes.csv (pendentes) ---"
+          cat financeiro/vendas_pendentes.csv
+          echo "--- diff contra o que já estava commitado ---"
+          git diff --stat -- financeiro/vendas_shopee.csv financeiro/vendas_pendentes.csv || true
+          echo "--- rodando de novo, pra confirmar que não duplica (dedupe) ---"
+          python3 sincronizar_vendas.py

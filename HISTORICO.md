@@ -819,3 +819,45 @@ Com isso, os 5 itens pedidos em 31/08 estão todos resolvidos.
   `vendas_pendentes.csv`, informativo) teria que ganhar o mesmo
   tratamento aqui se quiser manter esse recurso. Nada disso decidido
   ainda — só a viabilidade técnica confirmada.
+
+## 2026-09-12
+
+- **Sincronização automática de vendas via API ligada ao fluxo real,
+  convivendo com o import manual.** Pedido do usuário: "Liga mas
+  mantenha a opção de import". Resolvidos os três pontos que ficaram
+  em aberto em 11/09:
+  1. **`sincronizar_vendas.py` reescrito** pra não sobrescrever mais o
+     CSV inteiro a cada rodada (`salvar_csv()` antigo abria em modo
+     "w") — agora importa `_acrescentar_csv()`/`_ids_ja_importados()`
+     direto de `importar_extratos.py` e usa a MESMA regra de dedupe por
+     `conversion_id`, nos MESMOS arquivos (`vendas_shopee.csv`,
+     `vendas_pendentes.csv`), com o MESMO formato de linha (coluna
+     `observacao`, não mais `order_status`) — os dois métodos de
+     importação agora escrevem no mesmo lugar, do mesmo jeito, sem
+     duplicar não importa a ordem ou combinação em que rodam. Separa
+     `conversionStatus` "COMPLETED" (→ confirmada) de "PENDING" (→
+     pendente); qualquer outro status (cancelada etc.) é ignorado.
+  2. **Ligado em `leva-diaria.yml`**: novo passo "Sincronizar vendas
+     via API" antes de `gerar_roi.py` (pra já entrar no cálculo do
+     dia) — roda todo dia às 9h, junto com a leva. Erro da API não
+     derruba o workflow (só avisa e segue) — o import manual continua
+     como plano B se a sincronização automática ficar fora do ar. Os
+     dois arquivos de venda (antes esquecidos no `git add` do passo
+     final) agora entram no commit diário.
+  3. **Corrigido o "pedido gradua de pendente pra confirmado" ficar
+     contado em dobro** — como a sincronização roda todo dia, isso
+     passa a ser comum (um pedido "Pendente" hoje pode aparecer
+     "Concluído" amanhã). `roi.carregar_vendas_pendentes()` agora
+     exclui da conta de "pendente" qualquer `conversion_id` que já
+     apareça em `vendas_shopee.csv` — sem precisar apagar a linha
+     antiga do pendente à mão, e sem editar CSV depois de escrito
+     (mantém o hábito do projeto de nunca sobrescrever arquivo
+     financeiro, só filtra na hora de calcular). Testado localmente
+     (`gerar_roi.py`): números batem com o que já estava, sem
+     regressão. Validado o script novo de ponta a ponta via
+     `.github/workflows/testar-conversoes.yml` antes de mexer no
+     workflow diário de verdade, incluindo rodar duas vezes seguidas
+     pra confirmar que a segunda rodada não duplica nada (dedupe).
+     Documentação atualizada: `README.md`, `financeiro/README.md` e
+     `CLAUDE.md` — as duas fontes (manual e automática) agora aparecem
+     como convivendo, não uma substituindo a outra.

@@ -34,31 +34,39 @@ data,produto,comissao_recebida,observacao
 
 Mesmas regras de formato do arquivo acima.
 
-## `vendas_shopee.csv` e `vendas_pendentes.csv` — importados de relatório (não editar à mão)
+## `vendas_shopee.csv` e `vendas_pendentes.csv` — automático + manual (não editar à mão)
 
-Desde 10/09, rodando `python importar_extratos.py caminho/do/relatorio.csv`
-com o **relatório de comissões de afiliado** exportado do painel da
-Shopee (Portal de Afiliados → Relatórios → Comissão), o sistema separa
-os pedidos por status:
+Esses dois arquivos são alimentados por **duas fontes que convivem**,
+sem duplicar:
 
-- **Concluído** → vira venda de verdade em `vendas_shopee.csv` (conta
-  no ROI e na meta mensal).
+1. **Automática (desde 12/09)**: `sincronizar_vendas.py` roda sozinho
+   todo dia (dentro de `leva-diaria.yml`, antes do ROI ser
+   recalculado), buscando direto na API da Shopee.
+2. **Manual**: rodando `python importar_extratos.py caminho/do/relatorio.csv`
+   com o **relatório de comissões de afiliado** exportado do painel da
+   Shopee (Portal de Afiliados → Relatórios → Comissão) — via upload em
+   `importar.html`. Continua disponível pra puxar histórico de antes de
+   12/09, ou se a sincronização automática ficar fora do ar.
+
+As duas fontes separam os pedidos pelo mesmo critério de status:
+
+- **Concluído/Confirmado** → vira venda de verdade em `vendas_shopee.csv`
+  (conta no ROI e na meta mensal).
 - **Pendente** → vai pra `vendas_pendentes.csv` (só aparece como "R$X
   pendente" no Dashboard — ainda pode ser cancelado, então não conta
-  no ROI nem na meta até aparecer como Concluído num relatório futuro).
-- **Cancelado** → ignorado.
+  no ROI nem na meta até confirmar). Se um pedido pendente depois vira
+  confirmado, ele some da conta de "pendente" automaticamente (o
+  cálculo do ROI ignora, em `vendas_pendentes.csv`, qualquer pedido que
+  já apareça confirmado em `vendas_shopee.csv`) — não precisa apagar a
+  linha antiga à mão.
+- **Cancelado/Rejeitado** → ignorado.
 
-Rodar de novo com um relatório mais recente (que repete pedidos
-antigos) não duplica nada — o script usa o ID do pedido como chave.
-Esses dois arquivos são **separados** do `vendas.csv` de propósito —
-assim a importação nunca apaga o que você digitou manualmente. O
-painel de ROI soma `vendas.csv` + `vendas_shopee.csv` (não soma
-`vendas_pendentes.csv`, que é só informativo).
-
-(`sincronizar_vendas.py`, uma tentativa anterior de puxar vendas direto
-da API em vez de relatório exportado, continua no repositório mas
-nunca foi validada contra uma resposta real — o caminho do relatório
-exportado funcionou de primeira e é o que está em uso.)
+Rodar de novo (manual ou automático, em qualquer ordem) não duplica
+nada — os dois usam o ID do pedido (`conversion_id`) como chave.
+Ambos os arquivos são **separados** do `vendas.csv` de propósito —
+assim nem a importação nem a sincronização apagam o que você digitou
+manualmente. O painel de ROI soma `vendas.csv` + `vendas_shopee.csv`
+(não soma `vendas_pendentes.csv`, que é só informativo).
 
 ## Gasto com anúncios — importado do gerenciador da Meta
 

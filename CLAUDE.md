@@ -118,25 +118,31 @@ ver detalhes e o histórico completo do retema em `HISTORICO.md`
   workflow.
 - `cockpit-shopee/leva_do_dia.md` — leva de produtos do dia (atualizada
   às 9h por `leva-diaria.yml`).
-- `cockpit-shopee/financeiro/` — investimento e vendas. `investimentos.csv`
-  e `vendas.csv` são manuais; desde 10/09, `vendas_shopee.csv` (venda
-  confirmada) e `vendas_pendentes.csv` (não confirmada, só informativa,
-  fora do ROI/meta) vêm de `importar_extratos.py`, a partir do
-  relatório de comissões exportado do painel de afiliado da Shopee —
-  ver `financeiro/README.md`. **Pedido do usuário em 11/09: reavaliada
-  a sincronização automática via API** (`sincronizar_vendas.py` +
-  `client.buscar_conversoes()`, abandonada em 30/08 por um erro
-  genérico) — achado e corrigido o bug real: a Shopee rejeita
-  `scrollId: null` explícito, só aceita o argumento omitido (1ª página)
-  ou com um cursor de verdade (páginas seguintes). Testado de ponta a
-  ponta contra a API real via `.github/workflows/testar-conversoes.yml`:
-  bate exatamente com a venda já importada manualmente. **Funciona
-  agora, mas ainda não está ligada ao fluxo real** — `importar_extratos.py`
-  manual continua sendo o caminho oficial até decidir com o usuário se
-  troca, se os dois convivem (risco de duplicar), e como isso rodaria
-  automaticamente (precisaria de um passo de commit num workflow
-  agendado); ver `HISTORICO.md` (11/09) pros detalhes e os pontos em
-  aberto antes de mudar o fluxo.
+- `cockpit-shopee/financeiro/` — investimento e vendas.
+  `investimentos.csv` e `vendas.csv` são manuais. `vendas_shopee.csv`
+  (venda confirmada) e `vendas_pendentes.csv` (não confirmada, só
+  informativa, fora do ROI/meta) têm **duas fontes que convivem**: (1)
+  `importar_extratos.py`, manual, a partir do relatório de comissões
+  exportado do painel de afiliado da Shopee (`importar.html` faz o
+  upload do arquivo); (2) **desde 12/09, `sincronizar_vendas.py`,
+  automático via API**, rodando sozinho todo dia dentro de
+  `leva-diaria.yml` (antes de `gerar_roi.py`). As duas escrevem nos
+  mesmos arquivos com o mesmo dedupe por `conversion_id` — não
+  duplicam, não importa a ordem ou se as duas rodam pro mesmo pedido. A
+  sincronização automática foi abandonada em 30/08 por um erro
+  genérico da Shopee ("got null for non-null") — achado em 11/09 que a
+  causa era simples: o argumento `scrollId` não aceita `null` explícito
+  (só pode ser omitido na 1ª página, ou mandado com um cursor de
+  verdade nas seguintes); corrigido em `client.buscar_conversoes()` e
+  validado contra a API real (bateu com a venda já importada
+  manualmente). Pedido do usuário em 12/09: "Liga [a sincronização]
+  mas mantenha a opção de import" — as duas ficam ativas. Um pedido que
+  vira "Pendente" e depois "Concluído" (a sincronização roda todo dia,
+  então isso acontece com frequência) não conta em dobro:
+  `roi.carregar_vendas_pendentes()` exclui da conta pendente qualquer
+  `conversion_id` que já apareça em `vendas_shopee.csv`. Ver
+  `financeiro/README.md` e `HISTORICO.md` (11/09 e 12/09) pros
+  detalhes.
 - `cockpit-shopee/financeiro/resumo.json` — resumo do ROI em JSON
   (inclui `comissao_pendente`, desde 10/09).
 - `cockpit-shopee/esteira.json` — lista viva (acumulada, não

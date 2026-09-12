@@ -50,12 +50,13 @@ def carregar_investimentos(caminho=CAMINHO_INVESTIMENTOS):
 
 def carregar_vendas(caminho=CAMINHO_VENDAS, caminho_shopee=CAMINHO_VENDAS_SHOPEE):
     """Junta as vendas digitadas manualmente (vendas.csv) com as vindas da
-    Shopee (vendas_shopee.csv — desde 10/09, escrito por
-    `importar_extratos.py` a partir do relatório de comissões exportado
-    do painel de afiliado, só linhas com status "Concluído"; o
-    `sincronizar_vendas.py` experimental também escreveria aqui, se
-    algum dia for validado) — são arquivos separados de propósito, pra
-    a importação/sincronização nunca sobrescrever o que você digitou."""
+    Shopee (vendas_shopee.csv — só linhas confirmadas, escritas tanto
+    por `importar_extratos.py` (import manual do relatório exportado)
+    quanto por `sincronizar_vendas.py` (automático via API, desde
+    12/09, rodando todo dia dentro de `leva-diaria.yml`) — os dois
+    escrevem no mesmo arquivo, sem duplicar (dedupe por `conversion_id`
+    nos dois lados) — são arquivos separados de `vendas.csv` de
+    propósito, pra nunca sobrescrever o que você digitou à mão."""
     linhas_manuais = _ler_csv(caminho)
     linhas_shopee = _ler_csv(caminho_shopee)
 
@@ -82,13 +83,21 @@ def carregar_vendas(caminho=CAMINHO_VENDAS, caminho_shopee=CAMINHO_VENDAS_SHOPEE
     return vendas
 
 
-def carregar_vendas_pendentes(caminho=CAMINHO_VENDAS_PENDENTES):
+def carregar_vendas_pendentes(caminho=CAMINHO_VENDAS_PENDENTES, caminho_shopee=CAMINHO_VENDAS_SHOPEE):
     """Vendas com status "Pendente" no relatório de comissões da Shopee —
     ainda podem ser canceladas, então NÃO contam no ROI nem na meta
     mensal (`calcular_resumo`/`calcular_roi_por_produto` não leem este
     arquivo). Servem só pra mostrar no Dashboard quanto tem "em
-    trânsito", separado do que já é garantido."""
+    trânsito", separado do que já é garantido. Um pedido "graduado" de
+    pendente pra confirmado (a sincronização via API roda todo dia,
+    então isso acontece o tempo todo) é excluído daqui pelo
+    `conversion_id` já aparecer em `vendas_shopee.csv` — senão a
+    comissão apareceria contada duas vezes (uma como pendente, outra já
+    como confirmada de verdade)."""
     linhas = _ler_csv(caminho)
+    ja_confirmados = {
+        l.get("conversion_id") for l in _ler_csv(caminho_shopee) if l.get("conversion_id")
+    }
     return [
         {
             "data": l.get("data", "").strip(),
@@ -97,7 +106,7 @@ def carregar_vendas_pendentes(caminho=CAMINHO_VENDAS_PENDENTES):
             "observacao": f"Shopee, pedido {l.get('conversion_id', '')} (pendente)",
         }
         for l in linhas
-        if l.get("data")
+        if l.get("data") and l.get("conversion_id") not in ja_confirmados
     ]
 
 
